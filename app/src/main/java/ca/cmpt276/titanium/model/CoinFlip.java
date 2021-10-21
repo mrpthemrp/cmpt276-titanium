@@ -1,10 +1,10 @@
 package ca.cmpt276.titanium.model;
 
 public class CoinFlip {
-    private final int uniqueId = 0; // change, just initialized to prevent errors in Children
+    private final int uniqueId;
 
     public CoinFlip(int uniqueId) {
-
+        this.uniqueId = uniqueId;
     }
 
     public int getUniqueId() {
