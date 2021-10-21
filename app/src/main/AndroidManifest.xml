@@ -12,16 +12,19 @@
         android:theme="@style/Theme.Titanium">
         <activity
             android:name=".ui.CoinActivity"
+            android:screenOrientation="portrait"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity" />
         <activity
             android:name=".ui.TimerActivity"
+            android:screenOrientation="portrait"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity" />
         <activity
             android:name=".ui.MenuActivity"
+            android:screenOrientation="portrait"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true">
             <intent-filter>
