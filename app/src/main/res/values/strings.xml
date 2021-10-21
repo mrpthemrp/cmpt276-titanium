@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Practical Parent</string>
+
+    <!-- Activity: Main Menu Strings -->
+    <string name="menuTimerBtn">Timeout Timer</string>
+    <string name="menuFlipCoinBtn">Flip Coin</string>
+
 </resources>

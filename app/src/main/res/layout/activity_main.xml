@@ -2,12 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu_FAB"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MenuActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/menuFAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -17,4 +18,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_add_24"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/menuGoToTimer"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginBottom="184dp"
+        android:text="@string/menuTimerBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/menuGoToFlipCoin"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_marginEnd="69dp"
+        android:layout_marginBottom="111dp"
+        android:text="@string/menuFlipCoinBtn"
+        app:layout_constraintBottom_toTopOf="@+id/menuFAB"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
