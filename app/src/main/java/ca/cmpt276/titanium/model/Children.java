@@ -65,11 +65,23 @@ public class Children {
                 return children.get(i);
             }
         }
+
         return null;
     }
 
-    public void removeChild(Context context, Child child) {
-        Children.children.remove(child);
+    public void removeChild(Context context, int id) {
+        Child badChild = null;
+
+        for (int i = 0; i < children.size(); i++) {
+            if (id == children.get(i).getId()) {
+                badChild = Children.children.get(i);
+            }
+        }
+
+        if (badChild != null) { // do ArrayLists do nothing when provided with null object?
+            Children.children.remove(badChild);
+        }
+
         saveData(context);
     }
 
@@ -84,11 +96,23 @@ public class Children {
                 return coinFlips.get(i);
             }
         }
+
         return null;
     }
 
-    public void removeCoinFlip(Context context, CoinFlip coinFlip) {
-        Children.coinFlips.remove(coinFlip);
+    public void removeCoinFlip(Context context, int id) {
+        CoinFlip deletedCoinFlip = null;
+
+        for (int i = 0; i < coinFlips.size(); i++) {
+            if (id == coinFlips.get(i).getId()) {
+                deletedCoinFlip = coinFlips.get(i);
+            }
+        }
+
+        if (deletedCoinFlip != null) { // do ArrayLists do nothing when provided with null object?
+            Children.coinFlips.remove(deletedCoinFlip);
+        }
+
         saveData(context);
     }
 }
