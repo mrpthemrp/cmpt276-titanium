@@ -54,14 +54,24 @@ public class Children {
         prefsEditor.apply();
     }
 
+    public int generateUniqueChildId() {
+        int uniqueId = 0;
+
+        if (children != null && !children.isEmpty()) {
+            uniqueId = children.get(children.size() - 1).getUniqueId() + 1;
+        }
+
+        return uniqueId;
+    }
+
     public void addChild(Context context, Child child) {
         Children.children.add(child);
         saveData(context);
     }
 
-    public Child getChild(Context context, int id) {
+    public Child getChild(Context context, int uniqueId) {
         for (int i = 0; i < children.size(); i++) {
-            if (id == children.get(i).getId()) {
+            if (uniqueId == children.get(i).getUniqueId()) {
                 return children.get(i);
             }
         }
@@ -69,20 +79,30 @@ public class Children {
         return null;
     }
 
-    public void removeChild(Context context, int id) {
+    public void removeChild(Context context, int uniqueId) {
         Child badChild = null;
 
         for (int i = 0; i < children.size(); i++) {
-            if (id == children.get(i).getId()) {
+            if (uniqueId == children.get(i).getUniqueId()) {
                 badChild = Children.children.get(i);
             }
         }
 
-        if (badChild != null) { // do ArrayLists do nothing when provided with null object?
+        if (badChild != null) {
             Children.children.remove(badChild);
         }
 
         saveData(context);
+    }
+
+    public int generateUniqueCoinFlipId() {
+        int uniqueId = 0;
+
+        if (coinFlips != null && !coinFlips.isEmpty()) {
+            uniqueId = coinFlips.get(coinFlips.size() - 1).getUniqueId() + 1;
+        }
+
+        return uniqueId;
     }
 
     public void addCoinFlip(Context context, CoinFlip coinFlip) {
@@ -90,9 +110,9 @@ public class Children {
         saveData(context);
     }
 
-    public CoinFlip getCoinFlip(int id) {
+    public CoinFlip getCoinFlip(int uniqueId) {
         for (int i = 0; i < coinFlips.size(); i++) {
-            if (id == coinFlips.get(i).getId()) {
+            if (uniqueId == coinFlips.get(i).getUniqueId()) {
                 return coinFlips.get(i);
             }
         }
@@ -100,16 +120,16 @@ public class Children {
         return null;
     }
 
-    public void removeCoinFlip(Context context, int id) {
+    public void removeCoinFlip(Context context, int uniqueId) {
         CoinFlip deletedCoinFlip = null;
 
         for (int i = 0; i < coinFlips.size(); i++) {
-            if (id == coinFlips.get(i).getId()) {
+            if (uniqueId == coinFlips.get(i).getUniqueId()) {
                 deletedCoinFlip = coinFlips.get(i);
             }
         }
 
-        if (deletedCoinFlip != null) { // do ArrayLists do nothing when provided with null object?
+        if (deletedCoinFlip != null) {
             Children.coinFlips.remove(deletedCoinFlip);
         }
 
