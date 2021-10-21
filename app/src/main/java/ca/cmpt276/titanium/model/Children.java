@@ -54,7 +54,7 @@ public class Children {
         prefsEditor.apply();
     }
 
-    public int generateUniqueChildId() {
+    private int generateUniqueChildId() {
         int uniqueId = 0;
 
         if (children != null && !children.isEmpty()) {
@@ -64,8 +64,9 @@ public class Children {
         return uniqueId;
     }
 
-    public void addChild(Context context, Child child) {
-        Children.children.add(child);
+    public void addChild(Context context, String name) {
+        Child newChild = new Child(name, generateUniqueChildId());
+        Children.children.add(newChild);
         saveData(context);
     }
 
@@ -95,7 +96,7 @@ public class Children {
         saveData(context);
     }
 
-    public int generateUniqueCoinFlipId() {
+    private int generateUniqueCoinFlipId() {
         int uniqueId = 0;
 
         if (coinFlips != null && !coinFlips.isEmpty()) {
@@ -105,8 +106,9 @@ public class Children {
         return uniqueId;
     }
 
-    public void addCoinFlip(Context context, CoinFlip coinFlip) {
-        Children.coinFlips.add(coinFlip);
+    public void addCoinFlip(Context context) {
+        CoinFlip newCoinFlip = new CoinFlip(generateUniqueCoinFlipId());
+        Children.coinFlips.add(newCoinFlip);
         saveData(context);
     }
 
