@@ -1,8 +1,10 @@
-package ca.cmpt276.titanium;
+package ca.cmpt276.titanium.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import ca.cmpt276.titanium.R;
 
 public class MenuActivity extends AppCompatActivity {
 

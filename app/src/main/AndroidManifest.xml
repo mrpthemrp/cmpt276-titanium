@@ -11,17 +11,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Titanium">
         <activity
-            android:name=".CoinActivity"
+            android:name=".ui.CoinActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:parentActivityName=".MenuActivity" />
+            android:parentActivityName=".ui.MenuActivity" />
         <activity
-            android:name=".TimerActivity"
+            android:name=".ui.TimerActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:parentActivityName=".MenuActivity" />
+            android:parentActivityName=".ui.MenuActivity" />
         <activity
-            android:name=".MenuActivity"
+            android:name=".ui.MenuActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true">
             <intent-filter>
