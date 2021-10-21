@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class Children {
-    private static Children instance;
+    private static final Children instance = new Children();
     private static ArrayList<Child> children = new ArrayList<>();
     private static ArrayList<CoinFlip> coinFlips = new ArrayList<>();
 
@@ -16,14 +16,12 @@ public class Children {
 
     }
 
-    public static Children getInstance() {
-        if (instance == null) {
-            instance = new Children();
-        }
+    public static Children getInstance(Context context) {
+        loadSavedData(context);
         return instance;
     }
 
-    public void loadSavedData(Context context) {
+    private static void loadSavedData(Context context) {
         SharedPreferences prefs = context.getSharedPreferences("ca.cmpt276.titanium", Context.MODE_PRIVATE);
 
         String childrenJson = prefs.getString("children", null);
@@ -61,7 +59,7 @@ public class Children {
         saveData(context);
     }
 
-    public Child getChild(int id) {
+    public Child getChild(Context context, int id) {
         for (int i = 0; i < children.size(); i++) {
             if (id == children.get(i).getId()) {
                 return children.get(i);
