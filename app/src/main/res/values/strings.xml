@@ -4,5 +4,6 @@
     <!-- Activity: Main Menu Strings -->
     <string name="menuTimerBtn">Timeout Timer</string>
     <string name="menuFlipCoinBtn">Flip Coin</string>
+    <string name="menuHeader">Main Menu</string>
 
 </resources>
