@@ -4,9 +4,9 @@ public class Child {
     private final int uniqueId;
     private String name;
 
-    public Child(String name, int uniqueId) {
-        this.name = name;
+    public Child(int uniqueId, String name) {
         this.uniqueId = uniqueId;
+        this.name = name;
     }
 
     public int getUniqueId() {
