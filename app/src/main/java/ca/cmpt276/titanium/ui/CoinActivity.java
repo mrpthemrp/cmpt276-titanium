@@ -13,4 +13,8 @@ public class CoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin);
     }
+
+    //Note to Harris: feel free to change the coin from imageview to anything else!
+    //Also once everything is merged, you'll have to create a child icon in the top
+    //right corner. - deborah, Oct 21, 2021
 }
