@@ -5,6 +5,14 @@
     <string name="menuTimerBtn">TIMEOUT TIMER</string>
     <string name="menuFlipCoinBtn">FLIP COIN</string>
     <string name="menuHeader">Main Menu</string>
+
     <string name="coinResult">RESULT</string>
     <string name="coinTapToFlip">Tap to flip!</string>
+
+    <string name="timerTitle">Timer</string>
+    <string name="timerStart">Start</string>
+    <string name="timerPause">Pause</string>
+    <string name="timerEnd">Cancel</string>
+    <string name="timerCounter">TIME PLACEHOLDER 00:00</string>
+
 </resources>

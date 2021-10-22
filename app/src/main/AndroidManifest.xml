@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+\<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.cmpt276.titanium">
 
@@ -19,6 +19,7 @@
         <activity
             android:name=".ui.TimerActivity"
             android:screenOrientation="portrait"
+            android:label="@string/timerTitle"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity" />
