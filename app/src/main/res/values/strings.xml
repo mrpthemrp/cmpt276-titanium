@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Practical Parent</string>
-<<<<<<< HEAD
 
     <!-- Activity: Main Menu Strings -->
     <string name="menuTimerBtn">TIMEOUT TIMER</string>

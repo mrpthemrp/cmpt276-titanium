@@ -14,11 +14,12 @@ public class CoinFlip {
     private final Child childWhoFlips;
     private final LocalDateTime timeOfFlip;
     private final Coin coinSideLandedOn;
+    private final int uniqueId;
 
     // TODO: This constructor is just a placeholder so our code will compile, need to clarify coin
     // flip logic with Brian
     public CoinFlip(int uniqueId) {
-
+        this.uniqueId = uniqueId;
     }
 
     public CoinFlip(Child childWhoFlips, LocalDateTime timeOfFlip, Coin coinSideLandedOn) {
@@ -40,5 +41,9 @@ public class CoinFlip {
 
     public Coin getCoinSideLandedOn() {
         return coinSideLandedOn;
+    }
+
+    public int getUniqueId() {
+        return uniqueId;
     }
 }
