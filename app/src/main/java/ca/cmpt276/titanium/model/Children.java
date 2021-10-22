@@ -2,6 +2,7 @@ package ca.cmpt276.titanium.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
@@ -10,36 +11,34 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Children {
-    private static final Children instance = new Children();
     private static final Logger logger = Logger.getLogger(Children.class.getName());
+    private static Children instance;
+    private static SharedPreferences prefs;
+    private static SharedPreferences.Editor prefsEditor;
     private static ArrayList<Child> children = new ArrayList<>();
     private static ArrayList<CoinFlip> coinFlips = new ArrayList<>();
-    private static TimerInfo currentTimerInfo = new TimerInfo();
-    private static TimerInfo nextTimerInfo = new TimerInfo();
 
-    public Children() {
-
+    private Children(Context context) {
+        Children.prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Children.prefsEditor = prefs.edit();
     }
 
     public static Children getInstance(Context context) {
-        loadSavedData(context);
+        if (instance == null) {
+            Children.instance = new Children(context);
+        }
+
+        loadSavedData();
         return instance;
     }
 
-    private static void loadSavedData(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(
-                "ca.cmpt276.titanium",
-                Context.MODE_PRIVATE);
-
+    private static void loadSavedData() {
         String childrenJson = prefs.getString("children", null);
         String coinFlipsJson = prefs.getString("coin_flips", null);
-        String currentTimerInfoJson = prefs.getString("current_timer_info", null);
-        String nextTimerInfoJson = prefs.getString("next_timer_info", null);
 
         Gson gson = new Gson();
         Type childrenType = new TypeToken<ArrayList<Child>>(){}.getType();
         Type coinFlipsType = new TypeToken<ArrayList<CoinFlip>>(){}.getType();
-        Type timerInfoType = new TypeToken<ArrayList<TimerInfo>>(){}.getType();
 
         if (childrenJson != null) {
             Children.children = gson.fromJson(childrenJson, childrenType);
@@ -52,38 +51,15 @@ public class Children {
         } else {
             logger.log(Level.INFO, "No CoinFlip objects were loaded into Children.coinFlips");
         }
-
-        if (currentTimerInfoJson != null) {
-            Children.currentTimerInfo = gson.fromJson(currentTimerInfoJson, timerInfoType);
-        } else {
-            logger.log(Level.INFO, "No TimerInfo object was loaded into " +
-                    "Children.currentTimerInfo");
-        }
-
-        if (nextTimerInfoJson != null) {
-            Children.nextTimerInfo = gson.fromJson(nextTimerInfoJson, timerInfoType);
-        } else {
-            logger.log(Level.INFO, "No TimerInfo object was loaded into " +
-                    "Children.nextTimerInfo");
-        }
     }
 
-    public void saveData(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(
-                "ca.cmpt276.titanium",
-                Context.MODE_PRIVATE);
-        SharedPreferences.Editor prefsEditor = prefs.edit();
-
+    public void saveData() {
         Gson gson = new Gson();
         String childrenJson = gson.toJson(children);
         String coinFlipsJson = gson.toJson(coinFlips);
-        String currentTimerInfoJson = gson.toJson(currentTimerInfo);
-        String nextTimerInfoJson = gson.toJson(nextTimerInfo);
 
         prefsEditor.putString("children", childrenJson);
         prefsEditor.putString("coin_flips", coinFlipsJson);
-        prefsEditor.putString("current_timer_info", currentTimerInfoJson);
-        prefsEditor.putString("next_timer_info", nextTimerInfoJson);
 
         prefsEditor.apply();
     }
@@ -100,13 +76,13 @@ public class Children {
         return uniqueId;
     }
 
-    public void addChild(Context context, String name) {
+    public void addChild(String name) {
         Child newChild = new Child(generateUniqueChildId(), name);
         Children.children.add(newChild);
-        saveData(context);
+        saveData();
     }
 
-    public Child getChild(Context context, int uniqueId) {
+    public Child getChild(int uniqueId) {
         for (int i = 0; i < children.size(); i++) {
             if (uniqueId == children.get(i).getUniqueId()) {
                 return children.get(i);
@@ -117,7 +93,7 @@ public class Children {
         return null;
     }
 
-    public void removeChild(Context context, int uniqueId) {
+    public void removeChild(int uniqueId) {
         Child badChildIndex = null;
 
         for (int i = 0; i < children.size(); i++) {
@@ -133,7 +109,7 @@ public class Children {
                     "unique ID from Children.children");
         }
 
-        saveData(context);
+        saveData();
     }
 
     private int generateUniqueCoinFlipId() {
@@ -148,10 +124,10 @@ public class Children {
         return uniqueId;
     }
 
-    public void addCoinFlip(Context context) {
+    public void addCoinFlip() {
         CoinFlip newCoinFlip = new CoinFlip(generateUniqueCoinFlipId());
         Children.coinFlips.add(newCoinFlip);
-        saveData(context);
+        saveData();
     }
 
     public CoinFlip getCoinFlip(int uniqueId) {
@@ -166,7 +142,7 @@ public class Children {
         return null;
     }
 
-    public void removeCoinFlip(Context context, int uniqueId) {
+    public void removeCoinFlip(int uniqueId) {
         CoinFlip deletedCoinFlipIndex = null;
 
         for (int i = 0; i < coinFlips.size(); i++) {
@@ -182,14 +158,6 @@ public class Children {
                     "unique ID from Children.coinFlips");
         }
 
-        saveData(context);
-    }
-
-    public TimerInfo getCurrentTimerInfo() {
-        return currentTimerInfo;
-    }
-
-    public TimerInfo getNextTimerInfo() {
-        return nextTimerInfo;
+        saveData();
     }
 }
