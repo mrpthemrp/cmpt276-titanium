@@ -1,14 +1,16 @@
-package ca.cmpt276.titanium;
+package ca.cmpt276.titanium.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class CoinActivity extends AppCompatActivity {
+import ca.cmpt276.titanium.R;
+
+public class TimerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_coin);
+        setContentView(R.layout.activity_timer);
     }
 }
