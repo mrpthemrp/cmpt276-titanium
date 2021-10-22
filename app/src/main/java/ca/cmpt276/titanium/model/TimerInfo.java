@@ -9,18 +9,14 @@ public class TimerInfo {
     private static SharedPreferences prefs;
     private static SharedPreferences.Editor prefsEditor;
 
-    private TimerInfo() {
-
+    private TimerInfo(Context context) {
+        TimerInfo.prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        TimerInfo.prefsEditor = prefs.edit();
     }
 
     public static TimerInfo getInstance(Context context) {
         if (instance == null) {
-            TimerInfo.instance = new TimerInfo();
-        }
-
-        if (prefs == null || prefsEditor == null) {
-            TimerInfo.prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            TimerInfo.prefsEditor = prefs.edit();
+            TimerInfo.instance = new TimerInfo(context);
         }
 
         return instance;
@@ -48,8 +44,10 @@ public class TimerInfo {
         return prefs.getBoolean("is_running", false);
     }
 
-    public void setRunning(boolean isRunning) {
-        prefsEditor.putBoolean("is_running", isRunning);
+    public void setRunning() {
+        prefsEditor.putBoolean("is_running", true);
+        prefsEditor.putBoolean("is_paused", false);
+        prefsEditor.putBoolean("is_stopped", false);
         prefsEditor.apply();
     }
 
@@ -57,8 +55,21 @@ public class TimerInfo {
         return prefs.getBoolean("is_paused", false);
     }
 
-    public void setPaused(boolean isPaused) {
-        prefsEditor.putBoolean("is_paused", isPaused);
+    public void setPaused() {
+        prefsEditor.putBoolean("is_running", false);
+        prefsEditor.putBoolean("is_paused", true);
+        prefsEditor.putBoolean("is_stopped", false);
+        prefsEditor.apply();
+    }
+
+    public boolean isStopped() {
+        return prefs.getBoolean("is_stopped", true);
+    }
+
+    public void setStopped() {
+        prefsEditor.putBoolean("is_running", false);
+        prefsEditor.putBoolean("is_paused", false);
+        prefsEditor.putBoolean("is_stopped", true);
         prefsEditor.apply();
     }
 
