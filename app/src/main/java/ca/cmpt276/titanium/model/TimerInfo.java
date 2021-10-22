@@ -3,8 +3,8 @@ package ca.cmpt276.titanium.model;
 public class TimerInfo {
     private int durationSeconds;
     private int remainingSeconds;
-    private boolean isRunning = false;
-    private boolean isPaused = false;
+    private boolean running = false;
+    private boolean paused = false;
 
     public TimerInfo(int durationSeconds) {
         this.durationSeconds = durationSeconds;
@@ -28,18 +28,18 @@ public class TimerInfo {
     }
 
     public boolean isRunning() {
-        return isRunning;
+        return running;
     }
 
-    public void setRunning(boolean isRunning) {
-        this.isRunning = isRunning;
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 
     public boolean isPaused() {
-        return isPaused;
+        return paused;
     }
 
-    public void setPaused(boolean isPaused) {
-        this.isPaused = isPaused;
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 }
