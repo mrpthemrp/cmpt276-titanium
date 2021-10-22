@@ -11,10 +11,11 @@ import java.util.logging.Logger;
 
 public class Children {
     private static final Children instance = new Children();
-    private static final Timer timerInstance = Timer.getInstance();
     private static final Logger logger = Logger.getLogger(Children.class.getName());
     private static ArrayList<Child> children = new ArrayList<>();
     private static ArrayList<CoinFlip> coinFlips = new ArrayList<>();
+    private static TimerInfo currentTimerInfo = new TimerInfo();
+    private static TimerInfo nextTimerInfo = new TimerInfo();
 
     public Children() {
 
@@ -25,19 +26,20 @@ public class Children {
         return instance;
     }
 
-    public static Timer getTimerInstance() {
-        return timerInstance;
-    }
-
     private static void loadSavedData(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences("ca.cmpt276.titanium", Context.MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences(
+                "ca.cmpt276.titanium",
+                Context.MODE_PRIVATE);
 
         String childrenJson = prefs.getString("children", null);
         String coinFlipsJson = prefs.getString("coin_flips", null);
+        String currentTimerInfoJson = prefs.getString("current_timer_info", null);
+        String nextTimerInfoJson = prefs.getString("next_timer_info", null);
 
         Gson gson = new Gson();
         Type childrenType = new TypeToken<ArrayList<Child>>(){}.getType();
         Type coinFlipsType = new TypeToken<ArrayList<CoinFlip>>(){}.getType();
+        Type timerInfoType = new TypeToken<ArrayList<TimerInfo>>(){}.getType();
 
         if (childrenJson != null) {
             Children.children = gson.fromJson(childrenJson, childrenType);
@@ -50,18 +52,38 @@ public class Children {
         } else {
             logger.log(Level.INFO, "No CoinFlip objects were loaded into Children.coinFlips");
         }
+
+        if (currentTimerInfoJson != null) {
+            Children.currentTimerInfo = gson.fromJson(currentTimerInfoJson, timerInfoType);
+        } else {
+            logger.log(Level.INFO, "No TimerInfo object was loaded into " +
+                    "Children.currentTimerInfo");
+        }
+
+        if (nextTimerInfoJson != null) {
+            Children.nextTimerInfo = gson.fromJson(nextTimerInfoJson, timerInfoType);
+        } else {
+            logger.log(Level.INFO, "No TimerInfo object was loaded into " +
+                    "Children.nextTimerInfo");
+        }
     }
 
-    private void saveData(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences("ca.cmpt276.titanium", Context.MODE_PRIVATE);
+    public void saveData(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(
+                "ca.cmpt276.titanium",
+                Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = prefs.edit();
 
         Gson gson = new Gson();
         String childrenJson = gson.toJson(children);
         String coinFlipsJson = gson.toJson(coinFlips);
+        String currentTimerInfoJson = gson.toJson(currentTimerInfo);
+        String nextTimerInfoJson = gson.toJson(nextTimerInfo);
 
         prefsEditor.putString("children", childrenJson);
         prefsEditor.putString("coin_flips", coinFlipsJson);
+        prefsEditor.putString("current_timer_info", currentTimerInfoJson);
+        prefsEditor.putString("next_timer_info", nextTimerInfoJson);
 
         prefsEditor.apply();
     }
@@ -107,7 +129,8 @@ public class Children {
         if (badChildIndex != null) {
             Children.children.remove(badChildIndex);
         } else {
-            logger.log(Level.WARNING, "Attempted to remove Child object with nonexistent unique ID from Children.children");
+            logger.log(Level.WARNING, "Attempted to remove Child object with nonexistent " +
+                    "unique ID from Children.children");
         }
 
         saveData(context);
@@ -138,7 +161,8 @@ public class Children {
             }
         }
 
-        logger.log(Level.WARNING, "Attempted to get CoinFlip object with nonexistent unique ID");
+        logger.log(Level.WARNING, "Attempted to get CoinFlip object with nonexistent unique " +
+                "ID");
         return null;
     }
 
@@ -154,9 +178,18 @@ public class Children {
         if (deletedCoinFlipIndex != null) {
             Children.coinFlips.remove(deletedCoinFlipIndex);
         } else {
-            logger.log(Level.WARNING, "Attempted to remove CoinFlip object with nonexistent unique ID from Children.coinFlips");
+            logger.log(Level.WARNING, "Attempted to remove CoinFlip object with nonexistent " +
+                    "unique ID from Children.coinFlips");
         }
 
         saveData(context);
+    }
+
+    public TimerInfo getCurrentTimerInfo() {
+        return currentTimerInfo;
+    }
+
+    public TimerInfo getNextTimerInfo() {
+        return nextTimerInfo;
     }
 }
