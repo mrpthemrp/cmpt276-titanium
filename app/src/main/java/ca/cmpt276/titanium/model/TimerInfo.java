@@ -1,14 +1,29 @@
 package ca.cmpt276.titanium.model;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 public class TimerInfo {
-    private final SharedPreferences prefs;
-    private final SharedPreferences.Editor prefsEditor;
+    private static TimerInfo instance;
+    private static SharedPreferences prefs;
+    private static SharedPreferences.Editor prefsEditor;
 
-    public TimerInfo(SharedPreferences prefs) {
-        this.prefs = prefs;
-        this.prefsEditor = prefs.edit();
+    private TimerInfo() {
+
+    }
+
+    public static TimerInfo getInstance(Context context) {
+        if (instance == null) {
+            TimerInfo.instance = new TimerInfo();
+        }
+
+        if (prefs == null || prefsEditor == null) {
+            TimerInfo.prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            TimerInfo.prefsEditor = prefs.edit();
+        }
+
+        return instance;
     }
 
     public int getDurationSeconds() {
