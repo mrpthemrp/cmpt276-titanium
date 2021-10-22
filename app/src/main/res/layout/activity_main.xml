@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="177dp"
         android:layout_marginEnd="178dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="25dp"
         android:clickable="true"
         android:src="@drawable/ic_baseline_add_24"
         app:backgroundTint="@color/green_300"
@@ -26,11 +26,15 @@
         android:id="@+id/menuGoToTimer"
         android:layout_width="125dp"
         android:layout_height="125dp"
-        android:layout_marginStart="53dp"
+        android:layout_marginStart="40dp"
         android:layout_marginBottom="165dp"
         android:fontFamily="sans-serif-medium"
         android:text="@string/menuTimerBtn"
-        android:textSize="18sp"
+        android:textSize="10sp"
+        app:cornerRadius="15dp"
+        app:icon="@drawable/ic_baseline_timer_24"
+        app:iconGravity="textTop"
+        app:iconSize="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -38,11 +42,11 @@
         android:id="@+id/menuGoToFlipCoin"
         android:layout_width="125dp"
         android:layout_height="125dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginEnd="40dp"
         android:layout_marginBottom="165dp"
-        android:fontFamily="sans-serif-medium"
         android:text="@string/menuFlipCoinBtn"
-        android:textSize="20sp"
+        android:textSize="10sp"
+        app:cornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -63,14 +67,31 @@
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TableRow
+    <HorizontalScrollView
         android:id="@+id/menuViewAllChildrenScroll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
+        android:layout_marginBottom="16dp"
+        android:fadeScrollbars="true"
+        android:scrollbars="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/menuHeaderText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <TableRow
+            android:id="@+id/menuRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toTopOf="@id/menuHeaderText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </HorizontalScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
