@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 public class Children {
     private static final Children instance = new Children();
+    private static final Timer timerInstance = Timer.getInstance();
     private static final Logger logger = Logger.getLogger(Children.class.getName());
     private static ArrayList<Child> children = new ArrayList<>();
     private static ArrayList<CoinFlip> coinFlips = new ArrayList<>();
@@ -22,6 +23,10 @@ public class Children {
     public static Children getInstance(Context context) {
         loadSavedData(context);
         return instance;
+    }
+
+    public static Timer getTimerInstance() {
+        return timerInstance;
     }
 
     private static void loadSavedData(Context context) {
