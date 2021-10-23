@@ -7,25 +7,36 @@
     tools:context=".ui.CoinActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/coinHeads"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="151dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="70dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_coin_heads" />
+        app:srcCompat="@drawable/ic_coin_heads"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
 
     <TextView
         android:id="@+id/coinFlipResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="123dp"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="123dp"
-        android:text="@string/coinResult"
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/flipButton" />
+
+    <Button
+        android:id="@+id/flipButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/flip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coinHeads"
+        tools:ignore="TextContrastCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>
