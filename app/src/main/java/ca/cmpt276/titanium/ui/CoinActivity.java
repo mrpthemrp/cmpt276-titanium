@@ -34,7 +34,6 @@ public class CoinActivity extends AppCompatActivity {
         coinResult = findViewById(R.id.coinFlipResult);
 
         flipButtonClick();
-
     }
 
     //Note to Harris: feel free to change the coin from imageview to anything else!
@@ -73,6 +72,4 @@ public class CoinActivity extends AppCompatActivity {
     Runnable result = () -> coinResult.setVisibility(View.VISIBLE);
     Runnable displayHeads = () -> coin.setImageResource(R.drawable.ic_coin_heads);
     Runnable displayTails = () -> coin.setImageResource(R.drawable.ic_coin_tails);
-
-
 }
