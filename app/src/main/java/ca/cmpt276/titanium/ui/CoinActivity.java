@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -15,7 +18,7 @@ import ca.cmpt276.titanium.R;
 public class CoinActivity extends AppCompatActivity {
 
     Button flipButton;
-    ImageView coinHead, coinTails;
+    ImageView coin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +26,7 @@ public class CoinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_coin);
 
         flipButton = findViewById(R.id.flipButton);
-        coinHead = findViewById(R.id.coinHeads);
-        coinTails = findViewById(R.id.coinTails);
+        coin = findViewById(R.id.coinHeads);
 
         flipButtonClick();
 
@@ -42,15 +44,18 @@ public class CoinActivity extends AppCompatActivity {
     private void flipTheCoin(){
         Random rand = new Random();
         int coinSide = rand.nextInt(2);
+        Animation animation = AnimationUtils.loadAnimation(CoinActivity.this, R.anim.fade);
+        coin.startAnimation(animation);
 
         // heads == 0
         if(coinSide == 0){
-
+            coin.setImageResource(R.drawable.ic_coin_heads);
         }
 
         // tails == 1
-
-
+        else{
+            coin.setImageResource(R.drawable.ic_coin_tails);
+        }
     }
 
     private void flipButtonClick(){

@@ -7,17 +7,6 @@
     tools:context=".ui.CoinActivity">
 
     <ImageView
-        android:id="@+id/coinTails"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="70dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_coin_tails"
-        tools:ignore="ContentDescription,ImageContrastCheck" />
-
-    <ImageView
         android:id="@+id/coinHeads"
         android:layout_width="300dp"
         android:layout_height="300dp"
