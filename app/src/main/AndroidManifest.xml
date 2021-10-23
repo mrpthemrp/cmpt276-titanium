@@ -11,23 +11,32 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Titanium">
         <activity
+            android:name=".ui.EditChildActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.RemoveChildActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.AddChildActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.CoinActivity"
-            android:screenOrientation="portrait"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:parentActivityName=".ui.MenuActivity" />
+            android:parentActivityName=".ui.MenuActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.TimerActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/timerTitle"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:parentActivityName=".ui.MenuActivity" />
+            android:label="@string/timerTitle"
+            android:parentActivityName=".ui.MenuActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MenuActivity"
-            android:screenOrientation="portrait"
             android:configChanges="keyboard|keyboardHidden"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
