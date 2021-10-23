@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.Random;
 
@@ -17,8 +18,11 @@ import ca.cmpt276.titanium.R;
 
 public class CoinActivity extends AppCompatActivity {
 
-    Button flipButton;
-    ImageView coin;
+    private Button flipButton;
+    private ImageView coin;
+    private TextView coinResult;
+    private static final String HEADS = "HEADS";
+    private static final String TAILS = "TAILS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +31,9 @@ public class CoinActivity extends AppCompatActivity {
 
         flipButton = findViewById(R.id.flipButton);
         coin = findViewById(R.id.coinHeads);
+        coinResult = findViewById(R.id.coinFlipResult);
 
         flipButtonClick();
-
 
     }
 
@@ -50,19 +54,24 @@ public class CoinActivity extends AppCompatActivity {
         // heads == 0
         if(coinSide == 0){
             coin.setImageResource(R.drawable.ic_coin_heads);
+            coinResult.setVisibility(View.INVISIBLE);
+            coinResult.setText(HEADS);
+            coinResult.postDelayed(result, 500);
         }
 
         // tails == 1
         else{
             coin.setImageResource(R.drawable.ic_coin_tails);
+            coinResult.setVisibility(View.INVISIBLE);
+            coinResult.setText(TAILS);
+            coinResult.postDelayed(result, 500);
         }
     }
 
     private void flipButtonClick(){
-        flipButton.setOnClickListener(view -> {
-            flipTheCoin();
-        });
+        flipButton.setOnClickListener(view -> flipTheCoin());
     }
 
+    Runnable result = () -> coinResult.setVisibility(View.VISIBLE);
 
 }
