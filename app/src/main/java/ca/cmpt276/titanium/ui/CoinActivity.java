@@ -48,24 +48,22 @@ public class CoinActivity extends AppCompatActivity {
     private void flipTheCoin(){
         Random rand = new Random();
         int coinSide = rand.nextInt(2);
-        Animation animation = AnimationUtils.loadAnimation(CoinActivity.this, R.anim.fade);
+        Animation animation = AnimationUtils.loadAnimation(CoinActivity.this, R.anim.flipanim);
         coin.startAnimation(animation);
+        coinResult.setVisibility(View.INVISIBLE);
 
         // heads == 0
         if(coinSide == 0){
-            coin.setImageResource(R.drawable.ic_coin_heads);
-            coinResult.setVisibility(View.INVISIBLE);
             coinResult.setText(HEADS);
-            coinResult.postDelayed(result, 500);
+            coin.postDelayed(displayHeads, 1600);
         }
 
         // tails == 1
         else{
-            coin.setImageResource(R.drawable.ic_coin_tails);
-            coinResult.setVisibility(View.INVISIBLE);
             coinResult.setText(TAILS);
-            coinResult.postDelayed(result, 500);
+            coin.postDelayed(displayTails, 1600);
         }
+        coinResult.postDelayed(result, 1600);
     }
 
     private void flipButtonClick(){
@@ -73,5 +71,8 @@ public class CoinActivity extends AppCompatActivity {
     }
 
     Runnable result = () -> coinResult.setVisibility(View.VISIBLE);
+    Runnable displayHeads = () -> coin.setImageResource(R.drawable.ic_coin_heads);
+    Runnable displayTails = () -> coin.setImageResource(R.drawable.ic_coin_tails);
+
 
 }

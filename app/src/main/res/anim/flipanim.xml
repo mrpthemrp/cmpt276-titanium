@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Rotate along the y axis idea derived from-->
+<!--https://stackoverflow.com/questions/6135930/showing-both-sides-of-a-coin-being-flipped-using-android-standard-animation-->
+
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <scale
+        android:fromXScale="1.0"
+        android:toXScale="1.0"
+        android:fromYScale="1.0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:repeatCount="15"
+        android:duration="80"
+        />
+    <scale
+        android:fromXScale="1.0"
+        android:fromYScale="1.0"
+        android:toXScale="1.0"
+        android:toYScale="1.0"
+        android:repeatCount="1"
+        android:repeatMode="reverse"
+        android:duration="500"
+        />
+    <translate
+        android:toYDelta="-20%"
+        android:repeatMode="reverse"
+        android:repeatCount="1"
+        android:duration="800"
+        />
+</set>
