@@ -11,10 +11,10 @@ public class CoinFlip {
         HEADS,
         TAILS
     }
-    private final Child childWhoFlips;
-    private final LocalDateTime timeOfFlip;
-    private final Coin coinSideLandedOn;
-    private final int uniqueId;
+    private Child childWhoFlips;
+    private LocalDateTime timeOfFlip;
+    private Coin coinSideLandedOn;
+    private int uniqueId;
 
     // TODO: This constructor is just a placeholder so our code will compile, need to clarify coin
     // flip logic with Brian
