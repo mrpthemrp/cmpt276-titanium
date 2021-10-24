@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableRow;
@@ -53,25 +52,14 @@ public class MenuActivity extends AppCompatActivity {
         TableRow scroll = findViewById(R.id.menuRow);
         for(int i =0; i<numOfChildren;i++){
             Button child = new Button(this);
-            child.setLayoutParams(new TableRow.LayoutParams(
-                    TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.MATCH_PARENT,
-                    1.0f
-            ));
-            child.setBackground(getResources().getDrawable(R.drawable.ic_baseline_circle_green_24,getTheme()));
-            child.setText("TEST VALUE");
-            child.setWidth(105);
-            child.setHeight(105);
-
             //need to get child
 
+            child.setLayoutParams(new TableRow.LayoutParams(300, 300,1.0f));
+            child.setBackground(getResources().getDrawable(R.drawable.ic_baseline_circle_green_24,getTheme()));
+            child.setText("TEST VALUE");
+            child.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-            child.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(MenuActivity.this, "Child Clicked!", Toast.LENGTH_SHORT).show();
-                }
-            });
+            child.setOnClickListener(view -> Toast.makeText(MenuActivity.this, "Child Clicked!", Toast.LENGTH_SHORT).show());
 
             scroll.addView(child);
         }
