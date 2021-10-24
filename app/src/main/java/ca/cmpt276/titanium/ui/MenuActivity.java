@@ -54,11 +54,15 @@ public class MenuActivity extends AppCompatActivity {
         for(int i =0; i<numOfChildren;i++){
             Button child = new Button(this);
             child.setLayoutParams(new TableRow.LayoutParams(
-                    TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.MATCH_PARENT,
                     1.0f
             ));
+            child.setBackground(getResources().getDrawable(R.drawable.ic_baseline_circle_green_24,getTheme()));
             child.setText("TEST VALUE");
+            child.setWidth(105);
+            child.setHeight(105);
+
             //need to get child
 
 
