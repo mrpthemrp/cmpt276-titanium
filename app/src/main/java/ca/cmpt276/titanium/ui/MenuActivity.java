@@ -2,6 +2,7 @@ package ca.cmpt276.titanium.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +26,7 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setupAtttributes();
+        setupAttributes();
 
         //set up children data
         //numOfChildren =childrenData.getNumOfChildren();
@@ -37,7 +38,7 @@ public class MenuActivity extends AppCompatActivity {
         timerButtonClick();
     }
 
-    private void setupAtttributes() {
+    private void setupAttributes() {
         this.childrenData = Children.getInstance(this);
         this.flipCoinButton = findViewById(R.id.menuGoToFlipCoin);
         this.timerButton = findViewById(R.id.menuGoToTimer);
@@ -45,7 +46,14 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void setupFAB() {
+        this.mainMenuFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View popup = MenuActivity.this.getLayoutInflater().inflate(R.layout.fab_pop_up, null);
 
+                Toast.makeText(MenuActivity.this,"FAB clicked.",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void flipCoinButtonClick(){
