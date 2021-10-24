@@ -101,7 +101,10 @@ public class MenuActivity extends AppCompatActivity {
             child.setText("TEST VALUE");
             child.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-            child.setOnClickListener(view -> Toast.makeText(MenuActivity.this, "Child Clicked!", Toast.LENGTH_SHORT).show());
+            child.setOnClickListener(view -> {
+                Intent intent = ViewChildActivity.makeIntent(this);
+                startActivity(intent);
+            });
 
             scroll.addView(child);
         }

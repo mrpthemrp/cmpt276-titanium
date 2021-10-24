@@ -11,28 +11,40 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Titanium">
         <activity
-            android:name=".ui.EditChildActivity"
+            android:name=".ui.ViewChildActivity"
+            android:exported="true"
+            android:label="@string/menuViewChild"
             android:configChanges="keyboard|keyboardHidden"
-            android:theme="@style/Theme.Titanium.FAB"
+            android:parentActivityName=".ui.MenuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Titanium.FAB"/>
+        <activity
+            android:name=".ui.EditChildActivity"
+            android:label="@string/fabEdit"
+            android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Titanium.FAB" />
         <activity
             android:name=".ui.RemoveChildActivity"
             android:configChanges="keyboard|keyboardHidden"
-            android:theme="@style/Theme.Titanium.FAB"
             android:exported="true"
+            android:label="@string/fabRemove"
             android:parentActivityName=".ui.MenuActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Titanium.FAB" />
         <activity
             android:name=".ui.AddChildActivity"
+            android:label="@string/fabAdd"
             android:configChanges="keyboard|keyboardHidden"
-            android:theme="@style/Theme.Titanium.FAB"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Titanium.FAB" />
         <activity
             android:name=".ui.CoinActivity"
+            android:label="@string/menuFlipCoinBtn"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"
@@ -47,6 +59,7 @@
             android:theme="@style/Theme.Titanium.Calm" />
         <activity
             android:name=".ui.MenuActivity"
+            android:label="@string/menuHeader"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:screenOrientation="portrait">

@@ -8,15 +8,15 @@ import android.os.Bundle;
 
 import ca.cmpt276.titanium.R;
 
-public class RemoveChildActivity extends AppCompatActivity {
+public class ViewChildActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_child);
     }
-
     public static Intent makeIntent(Context c){
-        return new Intent(c, RemoveChildActivity.class);
+        return new Intent(c, ViewChildActivity.class);
     }
+
 }
