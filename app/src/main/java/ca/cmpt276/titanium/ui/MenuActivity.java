@@ -8,16 +8,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 
 public class MenuActivity extends AppCompatActivity {
     private int numOfChildren;
-    private Children childrenData;
+    private Children childrenInstance;
+    private ArrayList<Child> children;
     private Button flipCoinButton, timerButton, add, edit, remove;
     private FloatingActionButton mainMenuFAB;
     private LinearLayout fabOptions;
@@ -50,7 +53,8 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void setupAttributes() {
-        this.childrenData = Children.getInstance(this);
+        this.childrenInstance = Children.getInstance(this);
+        this.children = this.childrenInstance.getChildren();
         this.flipCoinButton = findViewById(R.id.menuGoToFlipCoin);
         this.timerButton = findViewById(R.id.menuGoToTimer);
         this.mainMenuFAB = findViewById(R.id.menuFAB);
@@ -95,7 +99,7 @@ public class MenuActivity extends AppCompatActivity {
         for(int i =0; i<numOfChildren;i++){
             Button child = new Button(this);
             //need to get child
-
+            child.setId();
             child.setLayoutParams(new TableRow.LayoutParams(300, 300,1.0f));
             child.setBackground(getResources().getDrawable(R.drawable.ic_baseline_circle_green_24,getTheme()));
             child.setText("TEST VALUE");

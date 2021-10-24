@@ -164,4 +164,8 @@ public class Children {
 
         saveData();
     }
+
+    public static ArrayList<Child> getChildren() {
+        return children;
+    }
 }
