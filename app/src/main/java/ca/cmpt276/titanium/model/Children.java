@@ -76,8 +76,8 @@ public class Children {
         return uniqueId;
     }
 
-    public void addChild(String name) {
-        Child newChild = new Child(generateUniqueChildId(), name);
+    public void addChild(String name, boolean isSelected) {
+        Child newChild = new Child(generateUniqueChildId(), name, isSelected);
         Children.children.add(newChild);
         saveData();
     }
@@ -91,6 +91,10 @@ public class Children {
 
         logger.log(Level.WARNING, "Attempted to get Child object with nonexistent unique ID");
         return null;
+    }
+
+    public int getNumOfChildren(){
+        return this.children.size();
     }
 
     public void removeChild(int uniqueId) {
@@ -159,5 +163,9 @@ public class Children {
         }
 
         saveData();
+    }
+
+    public static ArrayList<Child> getChildren() {
+        return children;
     }
 }

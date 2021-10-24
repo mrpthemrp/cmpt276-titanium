@@ -24,6 +24,9 @@ public class CoinActivity extends AppCompatActivity {
     private static final String HEADS = "HEADS";
     private static final String TAILS = "TAILS";
 
+    private Runnable result = () -> coinResult.setVisibility(View.VISIBLE);
+    private Runnable displayHeads = () -> coin.setImageResource(R.drawable.ic_coin_heads);
+    private Runnable displayTails = () -> coin.setImageResource(R.drawable.ic_coin_tails);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +38,6 @@ public class CoinActivity extends AppCompatActivity {
 
         flipButtonClick();
     }
-
-    //Note to Harris: feel free to change the coin from imageview to anything else!
-    //Also once everything is merged, you'll have to create a child icon in the top
-    //right corner. - deborah, Oct 21, 2021
 
     public static Intent makeLaunchIntent(Context c){
         return new Intent(c, CoinActivity.class);
@@ -69,7 +68,4 @@ public class CoinActivity extends AppCompatActivity {
         flipButton.setOnClickListener(view -> flipTheCoin());
     }
 
-    Runnable result = () -> coinResult.setVisibility(View.VISIBLE);
-    Runnable displayHeads = () -> coin.setImageResource(R.drawable.ic_coin_heads);
-    Runnable displayTails = () -> coin.setImageResource(R.drawable.ic_coin_tails);
 }

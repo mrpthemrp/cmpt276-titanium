@@ -1,40 +1,37 @@
 package ca.cmpt276.titanium.ui;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-
-import androidx.appcompat.app.AppCompatActivity;
+import android.widget.TextView;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 
-public class EditChildActivity extends AppCompatActivity {
+public class ViewChildActivity extends AppCompatActivity {
     private Children instance = Children.getInstance(this);
-    private EditText childName;
+    private TextView childName;
     private Child selectedChild;
-    private Button edit;
+    private Button view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_child);
 
-        //setup text watcher!!
-
         findSelectedChild();
         setupScreenText();
-        setupButton();
     }
-
-    private void setupButton() {
-        edit.setOnClickListener(view -> {
-            instance.saveData();
-            selectedChild.setSelected(false);
-            finish();
-        });
+    @Override
+    protected void onStop() {
+        selectedChild.setSelected(false);
+        this.childName.setEnabled(true);
+        super.onStop();
     }
 
     private void findSelectedChild() {
@@ -48,13 +45,14 @@ public class EditChildActivity extends AppCompatActivity {
     private void setupScreenText() {
         this.childName = findViewById(R.id.childName);
         this.childName.setText(selectedChild.getName());
+        this.childName.setEnabled(false);
 
-        this.edit = findViewById(R.id.viewFunctionBtn);
-        this.edit.setText(getResources().getString(R.string.viewSave));
+        this.view = findViewById(R.id.viewFunctionBtn);
+        this.view.setVisibility(View.INVISIBLE);
     }
 
     public static Intent makeIntent(Context c){
-        return new Intent(c, EditChildActivity.class);
+        return new Intent(c, ViewChildActivity.class);
     }
 
 }
