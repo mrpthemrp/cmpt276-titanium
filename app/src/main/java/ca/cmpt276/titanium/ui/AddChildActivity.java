@@ -52,7 +52,7 @@ public class AddChildActivity extends AppCompatActivity {
         instance.addChild(name,true);
         findSelectedChild();
         System.out.println("getName() "+selectedChild.getName());
-//        this.childName.setText(selectedChild.getName());
+        //this.childName.setText(selectedChild.getName());
     }
 
     private void setupScreenText() {
