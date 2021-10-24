@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TableRow;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
 
@@ -16,22 +18,34 @@ public class MenuActivity extends AppCompatActivity {
     private int numOfChildren;
     private Children childrenData;
     private Button flipCoinButton, timerButton;
+    private FloatingActionButton mainMenuFAB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setupAtttributes();
+
         //set up children data
-        childrenData = Children.getInstance(this);
         //numOfChildren =childrenData.getNumOfChildren();
         numOfChildren = 5;
         setupScrollAllChildren();
+        setupFAB();
 
-        flipCoinButton = findViewById(R.id.menuGoToFlipCoin);
         flipCoinButtonClick();
-        timerButton = findViewById(R.id.menuGoToTimer);
         timerButtonClick();
+    }
+
+    private void setupAtttributes() {
+        this.childrenData = Children.getInstance(this);
+        this.flipCoinButton = findViewById(R.id.menuGoToFlipCoin);
+        this.timerButton = findViewById(R.id.menuGoToTimer);
+        this.mainMenuFAB = findViewById(R.id.menuFAB);
+    }
+
+    private void setupFAB() {
+
     }
 
     private void flipCoinButtonClick(){

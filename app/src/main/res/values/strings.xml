@@ -1,14 +1,19 @@
 <resources>
     <string name="app_name">Practical Parent</string>
 
-    <!-- Activity: Main Menu Strings -->
+    <!-- Main Menu Strings -->
     <string name="menuTimerBtn">TIMEOUT TIMER</string>
     <string name="menuFlipCoinBtn">FLIP COIN</string>
     <string name="menuHeader">Main Menu</string>
+    <string name="fabAdd">Add Child</string>
+    <string name="fabEdit">Edit Child</string>
+    <string name="fabRemove">Remove Child</string>
 
+    <!-- Coin Flip Strings -->
     <string name="coinResult">RESULT</string>
     <string name="coinTapToFlip">Tap to flip!</string>
 
+    <!-- Timer Strings -->
     <string name="timerTitle">Timer</string>
     <string name="timerStart">Start</string>
     <string name="timerPause">Pause</string>
@@ -18,4 +23,5 @@
 
     <string name="prefs_package_name">ca.cmpt276.titanium</string>
     <string name="flip">Flip</string>
+
 </resources>
