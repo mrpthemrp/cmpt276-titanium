@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -60,6 +62,22 @@ public class AddChildActivity extends AppCompatActivity {
         this.add = findViewById(R.id.viewFunctionBtn);
         this.add.setText(getResources().getString(R.string.viewSave));
     }
+
+    public TextWatcher childWatch = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+        }
+    };
+
 
     public static Intent makeIntent(Context c){
         return new Intent(c, AddChildActivity.class);
