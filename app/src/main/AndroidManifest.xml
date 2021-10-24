@@ -12,12 +12,15 @@
         android:theme="@style/Theme.Titanium">
         <activity
             android:name=".ui.EditChildActivity"
+            android:theme="@style/Theme.Titanium.FAB"
             android:exported="true" />
         <activity
             android:name=".ui.RemoveChildActivity"
+            android:theme="@style/Theme.Titanium.FAB"
             android:exported="true" />
         <activity
             android:name=".ui.AddChildActivity"
+            android:theme="@style/Theme.Titanium.FAB"
             android:exported="true" />
         <activity
             android:name=".ui.CoinActivity"
