@@ -11,7 +11,7 @@
         android:id="@+id/timerCircle"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="135dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,12 +22,14 @@
         android:id="@+id/timerCancelBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:text="@android:string/cancel"
+        android:textColor="@color/white"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerPlayBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/timerPlayBtn"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/timerDummyText"
@@ -39,7 +41,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/timerCircle"
         app:layout_constraintEnd_toEndOf="@+id/timerCircle"
         app:layout_constraintStart_toStartOf="@+id/timerCircle"
-        app:layout_constraintTop_toTopOf="@+id/timerCircle" />
+        app:layout_constraintTop_toTopOf="@+id/timerCircle"
+        tools:ignore="TextContrastCheck" />
 
     <ImageView
         android:id="@+id/timerPlayBtn"
@@ -49,6 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timerCircle"
-        app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
+        app:srcCompat="@drawable/ic_baseline_play_arrow_24"
+        tools:ignore="ImageContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
