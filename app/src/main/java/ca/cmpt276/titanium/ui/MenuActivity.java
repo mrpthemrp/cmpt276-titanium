@@ -10,17 +10,20 @@ import android.widget.Button;
 import android.widget.TableRow;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.Children;
 
 public class MenuActivity extends AppCompatActivity {
-    private int numOfAddedChildren; // will change
-    Button flipCoinButton, timerButton;
+    private int numOfChildren;
+    private Children childrenData;
+    private Button flipCoinButton, timerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        numOfAddedChildren=10;//will change
+        childrenData = Children.getInstance(this);
+        numOfChildren =childrenData.getNumOfChildren();
         setupScrollAllChildren();
 
         flipCoinButton = findViewById(R.id.menuGoToFlipCoin);
@@ -45,7 +48,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private void setupScrollAllChildren() {
         TableRow scroll = findViewById(R.id.menuRow);
-        for(int i =0; i<numOfAddedChildren;i++){
+        for(int i =0; i<numOfChildren;i++){
             View child = LayoutInflater.from(this).inflate(R.layout.child_icon,null);
             //onclick not working, fix if possible otherwise leave.
             scroll.addView(child);

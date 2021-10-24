@@ -93,6 +93,10 @@ public class Children {
         return null;
     }
 
+    public int getNumOfChildren(){
+        return this.children.size();
+    }
+
     public void removeChild(int uniqueId) {
         Child badChildIndex = null;
 

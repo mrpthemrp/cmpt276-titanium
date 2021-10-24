@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -35,10 +36,6 @@ public class CoinActivity extends AppCompatActivity {
 
         flipButtonClick();
     }
-
-    //Note to Harris: feel free to change the coin from imageview to anything else!
-    //Also once everything is merged, you'll have to create a child icon in the top
-    //right corner. - deborah, Oct 21, 2021
 
     public static Intent makeLaunchIntent(Context c){
         return new Intent(c, CoinActivity.class);
