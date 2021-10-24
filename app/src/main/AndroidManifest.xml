@@ -12,16 +12,25 @@
         android:theme="@style/Theme.Titanium">
         <activity
             android:name=".ui.EditChildActivity"
+            android:configChanges="keyboard|keyboardHidden"
             android:theme="@style/Theme.Titanium.FAB"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.MenuActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.RemoveChildActivity"
+            android:configChanges="keyboard|keyboardHidden"
             android:theme="@style/Theme.Titanium.FAB"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.MenuActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.AddChildActivity"
+            android:configChanges="keyboard|keyboardHidden"
             android:theme="@style/Theme.Titanium.FAB"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.MenuActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.CoinActivity"
             android:configChanges="keyboard|keyboardHidden"
