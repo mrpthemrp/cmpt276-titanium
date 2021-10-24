@@ -28,7 +28,7 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerPlayBtn"
+        app:layout_constraintTop_toBottomOf="@+id/timerPlayPauseBtn"
         tools:ignore="TextContrastCheck" />
 
     <TextView
@@ -45,7 +45,7 @@
         tools:ignore="TextContrastCheck" />
 
     <ImageView
-        android:id="@+id/timerPlayBtn"
+        android:id="@+id/timerPlayPauseBtn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
