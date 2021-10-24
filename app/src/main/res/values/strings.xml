@@ -26,8 +26,9 @@
     <string name="flip">Flip</string>
 
     <!-- View Child Strings-->
-    <string name="viewDummyText">TITLE TITLE</string>
+    <string name="viewDummyText">Child Name</string>
     <string name="viewSave">SAVE</string>
     <string name="viewRemove">REMOVE</string>
+    <string name="viewRemoveMessage">Press on button to remove.</string>
 
 </resources>

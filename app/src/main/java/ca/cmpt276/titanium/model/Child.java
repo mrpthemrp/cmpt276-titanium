@@ -5,10 +5,10 @@ public class Child {
     private String name;
     private boolean isSelected;
 
-    public Child(int uniqueId, String name) {
+    public Child(int uniqueId, String name,boolean isSelected) {
         this.uniqueId = uniqueId;
         this.name = name;
-        this.isSelected = false;
+        this.isSelected = isSelected;
     }
 
     public int getUniqueId() {

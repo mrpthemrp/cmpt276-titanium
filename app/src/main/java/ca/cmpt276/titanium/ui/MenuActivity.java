@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -25,6 +26,7 @@ public class MenuActivity extends AppCompatActivity {
     private FloatingActionButton mainMenuFAB;
     private LinearLayout fabOptions;
     private boolean optionsOpen;
+    private TableRow scroll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +35,11 @@ public class MenuActivity extends AppCompatActivity {
 
         setupAttributes();
 
-        //set up children data
-        //numOfChildren =childrenData.getNumOfChildren();
-        numOfChildren = 5;
+        numOfChildren =childrenInstance.getNumOfChildren();
 
-        setupScrollAllChildren();
+        if(this.numOfChildren>0){
+            setupScrollAllChildren();
+        }
         setupFAB();
         setupOptionButtons();
 
@@ -49,6 +51,7 @@ public class MenuActivity extends AppCompatActivity {
     protected void onResume() {
         this.fabOptions.setVisibility(View.INVISIBLE);
         this.optionsOpen = false;
+        this.scroll.refreshDrawableState();
         super.onResume();
     }
 
@@ -95,17 +98,19 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void setupScrollAllChildren() {
-        TableRow scroll = findViewById(R.id.menuRow);
+        scroll = findViewById(R.id.menuRow);
         for(int i =0; i<numOfChildren;i++){
+            final int INDEX = i;
             Button child = new Button(this);
-            //need to get child
-            child.setId();
+            Child childData = children.get(i);
+            child.setId(childData.getUniqueId());
             child.setLayoutParams(new TableRow.LayoutParams(300, 300,1.0f));
             child.setBackground(getResources().getDrawable(R.drawable.ic_baseline_circle_green_24,getTheme()));
-            child.setText("TEST VALUE");
+            child.setText(childData.getName());
             child.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             child.setOnClickListener(view -> {
+                children.get(INDEX).setSelected(true);
                 Intent intent = ViewChildActivity.makeIntent(this);
                 startActivity(intent);
             });
@@ -123,15 +128,23 @@ public class MenuActivity extends AppCompatActivity {
         });
 
         this.edit.setOnClickListener(view -> {
-            this.edit.setFocusable(true);
-            Intent intent = EditChildActivity.makeIntent(MenuActivity.this);
-            startActivity(intent);
+            if(this.numOfChildren>0){
+                this.edit.setFocusable(true);
+                Intent intent = EditChildActivity.makeIntent(MenuActivity.this);
+                startActivity(intent);
+            }else{
+                Toast.makeText(this, "No children added, function unavailable.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         this.remove.setOnClickListener(view -> {
-            this.remove.setFocusable(true);
-            Intent intent = RemoveChildActivity.makeIntent(MenuActivity.this);
-            startActivity(intent);
+            if(this.numOfChildren>0){
+                this.remove.setFocusable(true);
+                Intent intent = RemoveChildActivity.makeIntent(MenuActivity.this);
+                startActivity(intent);
+            }else{
+                Toast.makeText(this, "No children added, function unavailable.", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

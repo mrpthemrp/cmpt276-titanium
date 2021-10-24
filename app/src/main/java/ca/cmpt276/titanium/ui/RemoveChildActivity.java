@@ -5,24 +5,58 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.Child;
+import ca.cmpt276.titanium.model.Children;
 
 public class RemoveChildActivity extends AppCompatActivity {
-    private TextView childName;
-    private int childIndex;
+    private Children instance = Children.getInstance(this);
+    private EditText childName;
+    private Child selectedChild;
+    private Button remove;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_child);
 
+        findSelectedChild();
         setupScreenText();
+        setupButton();
+    }
+
+    private void setupButton() {
+        remove.setOnClickListener(view -> {
+            removeChildNow();
+            finish();
+        });
+    }
+
+    private void removeChildNow() {
+        instance.removeChild(childName.getId());
+        instance.saveData();
+    }
+
+    private void findSelectedChild() {
+        for(int i =0; i< instance.getNumOfChildren();i++){
+            if(Children.getChildren().get(i).isSelected()){
+                this.selectedChild = instance.getChild(i);
+            }
+        }
     }
 
     private void setupScreenText() {
+        this.childName = findViewById(R.id.childName);
+        this.childName.setText(selectedChild.getName());
+        this.childName.setEnabled(false);
+        findViewById(R.id.viewRemoveMessage).setVisibility(View.VISIBLE);
 
+        this.remove = findViewById(R.id.viewFunctionBtn);
+        this.remove.setText(getResources().getString(R.string.viewRemove));
     }
 
     public static Intent makeIntent(Context c){
