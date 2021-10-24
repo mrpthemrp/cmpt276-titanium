@@ -17,7 +17,10 @@ public class AddChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_child);
 
+        setupScreenText();
+    }
 
+    private void setupScreenText() {
     }
 
 

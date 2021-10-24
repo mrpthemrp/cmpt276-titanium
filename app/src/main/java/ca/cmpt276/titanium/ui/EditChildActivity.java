@@ -14,6 +14,11 @@ public class EditChildActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_child);
+
+        setupScreenText();
+    }
+
+    private void setupScreenText() {
     }
 
     public static Intent makeIntent(Context c){
