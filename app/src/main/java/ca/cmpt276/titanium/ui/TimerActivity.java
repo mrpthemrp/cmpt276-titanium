@@ -5,16 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import ca.cmpt276.titanium.R;
 
 public class TimerActivity extends AppCompatActivity {
     private ImageView playPause;
+    private EditText hour, minute,second;
     private Button cancelBtn;
-    private boolean isPause;
+    //private long hours, minutes, seconds;
+    private boolean isPause;//get from sharedPreferences?
+    private boolean inputIsSet;
+    private CountDownTimer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +32,24 @@ public class TimerActivity extends AppCompatActivity {
         setupAttributes();
         setupPlayPause();
         setupCancelBtn();
+        //make below a method onc shared preferences is sorted out
+        if(!this.inputIsSet){
+            setupInput(); //this method implements text watcher
+        }
     }
 
     private void setupAttributes() {
         this.playPause = findViewById(R.id.timerPlayPauseBtn);
         this.cancelBtn = findViewById(R.id.timerCancelBtn);
+        this.hour = findViewById(R.id.timerInputHour);
+        this.minute = findViewById(R.id.timerInputMin);
+        this.second = findViewById(R.id.timerInputSec);
         this.isPause = false;
+        this.inputIsSet = false;
+    }
+
+    private void setupInput() {
+        //to do
     }
 
     private void setupCancelBtn() {
@@ -40,9 +60,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void setupPlayPause() {
-        this.playPause.setOnClickListener(view -> {
-            setPlayPause();
-        });
+        this.playPause.setOnClickListener(view -> setPlayPause());
     }
 
     private void setPlayPause() {
