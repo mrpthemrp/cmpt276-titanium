@@ -1,6 +1,7 @@
 package ca.cmpt276.titanium.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
@@ -20,6 +21,7 @@ public class MenuActivity extends AppCompatActivity {
     private Children childrenData;
     private Button flipCoinButton, timerButton;
     private FloatingActionButton mainMenuFAB;
+    private ConstraintLayout menuLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +45,13 @@ public class MenuActivity extends AppCompatActivity {
         this.flipCoinButton = findViewById(R.id.menuGoToFlipCoin);
         this.timerButton = findViewById(R.id.menuGoToTimer);
         this.mainMenuFAB = findViewById(R.id.menuFAB);
+        this.menuLayout = findViewById(R.id.menuLayout);
     }
 
     private void setupFAB() {
-        this.mainMenuFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                View popup = MenuActivity.this.getLayoutInflater().inflate(R.layout.fab_pop_up, null);
-
-                Toast.makeText(MenuActivity.this,"FAB clicked.",Toast.LENGTH_SHORT).show();
-            }
+        this.mainMenuFAB.setOnClickListener(view -> {
+            View popup = MenuActivity.this.getLayoutInflater().inflate(R.layout.fab_pop_up, null);
+            this.menuLayout.addView(popup);
         });
     }
 
