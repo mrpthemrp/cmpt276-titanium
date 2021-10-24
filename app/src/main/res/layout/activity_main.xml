@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.MenuActivity">
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/menuFAB"
         android:layout_width="wrap_content"
@@ -100,5 +101,57 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:dividerPadding="40dp"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:contextClickable="true"
+        app:layout_constraintBottom_toTopOf="@id/menuFAB"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/fabAdd"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="@string/fabAdd"
+            android:textAllCaps="true"
+            android:theme="@style/Colour.Green"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/ic_baseline_add_24"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/fabEdit"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="@string/fabEdit"
+            android:textAllCaps="true"
+            android:theme="@style/Colour.Green"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/ic_baseline_edit_24"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/fabRemove"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="@string/fabRemove"
+            android:textAllCaps="true"
+            android:theme="@style/Colour.Green"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/ic_baseline_remove_24"
+            tools:ignore="TextContrastCheck" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

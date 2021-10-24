@@ -1,6 +1,9 @@
 package ca.cmpt276.titanium.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import ca.cmpt276.titanium.R;
@@ -15,5 +18,10 @@ public class AddChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_child);
 
 
+    }
+
+
+    public static Intent makeIntent(Context c){
+        return new Intent(c, AddChildActivity.class);
     }
 }

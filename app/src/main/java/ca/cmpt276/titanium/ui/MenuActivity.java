@@ -1,13 +1,12 @@
 package ca.cmpt276.titanium.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
 
@@ -19,9 +18,10 @@ import ca.cmpt276.titanium.model.Children;
 public class MenuActivity extends AppCompatActivity {
     private int numOfChildren;
     private Children childrenData;
-    private Button flipCoinButton, timerButton;
+    private Button flipCoinButton, timerButton, add, edit, remove;
     private FloatingActionButton mainMenuFAB;
-    private ConstraintLayout menuLayout;
+    private LinearLayout fabOptions;
+    private boolean optionsOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +33,20 @@ public class MenuActivity extends AppCompatActivity {
         //set up children data
         //numOfChildren =childrenData.getNumOfChildren();
         numOfChildren = 5;
+
         setupScrollAllChildren();
         setupFAB();
+        setupOptionButtons();
 
         flipCoinButtonClick();
         timerButtonClick();
+    }
+
+    @Override
+    protected void onResume() {
+        this.fabOptions.setVisibility(View.INVISIBLE);
+        this.optionsOpen = false;
+        super.onResume();
     }
 
     private void setupAttributes() {
@@ -45,14 +54,26 @@ public class MenuActivity extends AppCompatActivity {
         this.flipCoinButton = findViewById(R.id.menuGoToFlipCoin);
         this.timerButton = findViewById(R.id.menuGoToTimer);
         this.mainMenuFAB = findViewById(R.id.menuFAB);
-        this.menuLayout = findViewById(R.id.menuLayout);
+        this.fabOptions = findViewById(R.id.linearLayoutContainer);
+        this.add = findViewById(R.id.fabAdd);
+        this.edit = findViewById(R.id.fabEdit);
+        this.remove = findViewById(R.id.fabRemove);
+        this.optionsOpen = false;
     }
 
     private void setupFAB() {
         this.mainMenuFAB.setOnClickListener(view -> {
-            View popup = MenuActivity.this.getLayoutInflater().inflate(R.layout.fab_pop_up, null);
-            this.menuLayout.addView(popup);
+            this.mainMenuFAB.setFocusable(true);
+            if(optionsOpen){
+                closeOptions();
+            }
+            else{
+                openOptions();
+            }
         });
+
+        //add animation for the linearlayout to popup
+
     }
 
     private void flipCoinButtonClick(){
@@ -84,5 +105,38 @@ public class MenuActivity extends AppCompatActivity {
 
             scroll.addView(child);
         }
+    }
+
+    private void setupOptionButtons() {
+
+        this.add.setOnClickListener(view -> {
+            this.add.setFocusable(true);
+            Intent intent = AddChildActivity.makeIntent(MenuActivity.this);
+            startActivity(intent);
+        });
+
+        this.edit.setOnClickListener(view -> {
+            this.edit.setFocusable(true);
+            Intent intent = EditChildActivity.makeIntent(MenuActivity.this);
+            startActivity(intent);
+        });
+
+        this.remove.setOnClickListener(view -> {
+            this.remove.setFocusable(true);
+            Intent intent = RemoveChildActivity.makeIntent(MenuActivity.this);
+            startActivity(intent);
+        });
+    }
+
+    private void openOptions(){
+        this.mainMenuFAB.setFocusable(true);
+        this.fabOptions.setVisibility(View.VISIBLE);
+        this.optionsOpen=true;
+    }
+
+    private void closeOptions(){
+        this.mainMenuFAB.setFocusable(false);
+        this.fabOptions.setVisibility(View.INVISIBLE);
+        this.optionsOpen=false;
     }
 }

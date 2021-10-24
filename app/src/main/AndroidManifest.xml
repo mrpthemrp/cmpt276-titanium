@@ -31,8 +31,8 @@
             android:exported="true"
             android:label="@string/timerTitle"
             android:parentActivityName=".ui.MenuActivity"
-            android:theme="@style/Theme.Titanium.Calm"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Titanium.Calm" />
         <activity
             android:name=".ui.MenuActivity"
             android:configChanges="keyboard|keyboardHidden"
