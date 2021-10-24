@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
@@ -22,8 +23,10 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //set up children data
         childrenData = Children.getInstance(this);
-        numOfChildren =childrenData.getNumOfChildren();
+        //numOfChildren =childrenData.getNumOfChildren();
+        numOfChildren = 5;
         setupScrollAllChildren();
 
         flipCoinButton = findViewById(R.id.menuGoToFlipCoin);
@@ -49,8 +52,23 @@ public class MenuActivity extends AppCompatActivity {
     private void setupScrollAllChildren() {
         TableRow scroll = findViewById(R.id.menuRow);
         for(int i =0; i<numOfChildren;i++){
-            View child = LayoutInflater.from(this).inflate(R.layout.child_icon,null);
-            //onclick not working, fix if possible otherwise leave.
+            Button child = new Button(this);
+            child.setLayoutParams(new TableRow.LayoutParams(
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    1.0f
+            ));
+            child.setText("TEST VALUE");
+            //need to get child
+
+
+            child.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(MenuActivity.this, "Child Clicked!", Toast.LENGTH_SHORT).show();
+                }
+            });
+
             scroll.addView(child);
         }
     }
