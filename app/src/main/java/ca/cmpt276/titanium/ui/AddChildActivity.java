@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -25,16 +27,16 @@ public class AddChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_child);
 
-        //setup text watcher!
-        newName="Bob the Builder";//dummy
+        childName = findViewById(R.id.childName);
+        childName.addTextChangedListener(childWatch);
 
-        addChild(newName);
         setupScreenText();
         setupButton();
     }
 
     private void setupButton() {
         add.setOnClickListener(view -> {
+            addChild(newName);
             instance.saveData();
             finish();
         });
@@ -50,16 +52,33 @@ public class AddChildActivity extends AppCompatActivity {
         instance.addChild(name,true);
         findSelectedChild();
         System.out.println("getName() "+selectedChild.getName());
-//        this.childName.setText(selectedChild.getName());
+        //this.childName.setText(selectedChild.getName());
     }
 
     private void setupScreenText() {
         this.childName = findViewById(R.id.childName);
-        this.childName.setText(selectedChild.getName());
+        if(selectedChild != null){
+            this.childName.setText(selectedChild.getName());
+        }
 
         this.add = findViewById(R.id.viewFunctionBtn);
         this.add.setText(getResources().getString(R.string.viewSave));
     }
+
+    public TextWatcher childWatch = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            newName = childName.getText().toString();
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+        }
+    };
 
     public static Intent makeIntent(Context c){
         return new Intent(c, AddChildActivity.class);
