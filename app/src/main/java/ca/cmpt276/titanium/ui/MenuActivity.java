@@ -3,7 +3,7 @@ package ca.cmpt276.titanium.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.Bundle;Z
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -37,9 +37,8 @@ public class MenuActivity extends AppCompatActivity {
 
         numOfChildren =childrenInstance.getNumOfChildren();
 
-        if(this.numOfChildren>0){
-            setupScrollAllChildren();
-        }
+        setupScrollAllChildren();
+
         setupFAB();
         setupOptionButtons();
 
@@ -57,7 +56,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private void setupAttributes() {
         this.childrenInstance = Children.getInstance(this);
-        this.children = this.childrenInstance.getChildren();
+        this.children = childrenInstance.getChildren();
         this.flipCoinButton = findViewById(R.id.menuGoToFlipCoin);
         this.timerButton = findViewById(R.id.menuGoToTimer);
         this.mainMenuFAB = findViewById(R.id.menuFAB);
