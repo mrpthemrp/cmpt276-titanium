@@ -27,16 +27,16 @@ public class AddChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_child);
 
-        //setup text watcher!
-        newName="Bob the Builder";//dummy
+        childName = findViewById(R.id.childName);
+        childName.addTextChangedListener(childWatch);
 
-        addChild(newName);
         setupScreenText();
         setupButton();
     }
 
     private void setupButton() {
         add.setOnClickListener(view -> {
+            addChild(newName);
             instance.saveData();
             finish();
         });
@@ -57,7 +57,9 @@ public class AddChildActivity extends AppCompatActivity {
 
     private void setupScreenText() {
         this.childName = findViewById(R.id.childName);
-        this.childName.setText(selectedChild.getName());
+        if(selectedChild != null){
+            this.childName.setText(selectedChild.getName());
+        }
 
         this.add = findViewById(R.id.viewFunctionBtn);
         this.add.setText(getResources().getString(R.string.viewSave));
@@ -70,14 +72,13 @@ public class AddChildActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            newName = childName.getText().toString();
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
         }
     };
-
 
     public static Intent makeIntent(Context c){
         return new Intent(c, AddChildActivity.class);

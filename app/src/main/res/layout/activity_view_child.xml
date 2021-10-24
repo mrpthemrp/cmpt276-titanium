@@ -34,7 +34,7 @@
         android:layout_marginTop="80dp"
         android:background="@android:color/transparent"
         android:fontFamily="sans-serif-medium"
-        android:hint="Child Name"
+        android:hint="@string/viewDummyText"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
