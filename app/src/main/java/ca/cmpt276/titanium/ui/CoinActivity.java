@@ -89,11 +89,13 @@ public class CoinActivity extends AppCompatActivity {
         }
         coinResult.postDelayed(result, 1600);
 
-//      if there are no children configured, we don't need to save any info (?)
+        // If there are no children configured, we don't need to save any info (?)
         if (!Children.getChildren().isEmpty()) {
             LocalDateTime timeOfFlip = LocalDateTime.now();
+
             Child childOfNextTurn = getChildOfNextTurn();
-            // Coin.TAILS is hard-coded for now until we can retrieve "Coin sideThatChildPicks"
+            // TODO: Remove Coin.TAILS once sideThatChildPicks can be retrieved
+            // childOfNextTurn will always return null until adding child is implemented
             CoinFlip coinFlip = new CoinFlip(childOfNextTurn, Coin.TAILS, timeOfFlip, coinSideLandedOn);
 
             coinFlipHistory.addCoinFlipToHistory(coinFlip);
@@ -120,7 +122,11 @@ public class CoinActivity extends AppCompatActivity {
 
     private Child getChildOfLastTurn() {
         int sizeOfCoinFlips = CoinFlipHistory.getCoinFlipHistory().size();
-        Child childToPickLastTurn = CoinFlipHistory.getCoinFlipHistory().get(sizeOfCoinFlips - 1).getChildWhoPicksSide();
-        return childToPickLastTurn;
+        if (sizeOfCoinFlips != 0) {
+            Child childToPickLastTurn = CoinFlipHistory.getCoinFlipHistory().get(sizeOfCoinFlips - 1).getChildWhoPicksSide();
+            return childToPickLastTurn;
+        }
+
+        return null;
     }
 }
