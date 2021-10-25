@@ -89,7 +89,7 @@ public class CoinActivity extends AppCompatActivity {
         }
         coinResult.postDelayed(result, 1600);
 
-//         if there are no children configured, we don't need to save any info (?)
+//      if there are no children configured, we don't need to save any info (?)
         if (!Children.getChildren().isEmpty()) {
             LocalDateTime timeOfFlip = LocalDateTime.now();
             Child childOfNextTurn = getChildOfNextTurn();
@@ -98,7 +98,6 @@ public class CoinActivity extends AppCompatActivity {
 
             coinFlipHistory.addCoinFlipToHistory(coinFlip);
         }
-
     }
 
     private void flipButtonClick(){

@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,13 +17,20 @@ public class CoinFlipHistory {
     private static final String EMPTY_STRING = "";
     private static List<CoinFlip> coinFlipHistory;
 
+    private GsonBuilder gsonBuilder;
     private Gson gson;
     private SharedPreferences sharedPreferences;
 
     public CoinFlipHistory(Context context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         coinFlipHistory = new ArrayList<>();
-        gson = new Gson();
+
+        gsonBuilder = new GsonBuilder();
+        gson = gsonBuilder
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
+                .setPrettyPrinting()
+                .create();
 
         initializeCoinFlipHistory();
     }
