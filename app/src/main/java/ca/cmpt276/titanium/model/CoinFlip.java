@@ -3,27 +3,16 @@ package ca.cmpt276.titanium.model;
 import java.time.LocalDateTime;
 import java.util.Random;
 
-/**
- * This class represents a coin flip for an individual round.
- */
 public class CoinFlip {
-    private enum Coin {
-        HEADS,
-        TAILS
-    }
-    private Child childWhoFlips;
+    private Child childWhoPicksSide;
+    private Coin sideThatChildPicks;
     private LocalDateTime timeOfFlip;
     private Coin coinSideLandedOn;
-    private int uniqueId;
 
-    // TODO: This constructor is just a placeholder so our code will compile, need to clarify coin
-    // flip logic with Brian
-    public CoinFlip(int uniqueId) {
-        this.uniqueId = uniqueId;
-    }
-
-    public CoinFlip(Child childWhoFlips, LocalDateTime timeOfFlip, Coin coinSideLandedOn) {
-        this.childWhoFlips = childWhoFlips;
+    public CoinFlip(Child childWhoPicksSide, Coin sideThatChildPicks,
+                    LocalDateTime timeOfFlip, Coin coinSideLandedOn) {
+        this.childWhoPicksSide = childWhoPicksSide;
+        this.sideThatChildPicks = sideThatChildPicks;
         this.timeOfFlip = timeOfFlip;
         this.coinSideLandedOn = coinSideLandedOn;
     }
@@ -35,15 +24,19 @@ public class CoinFlip {
         return coin;
     }
 
+    public void setCoinSideLandedOn() {
+        coinSideLandedOn = flipCoin();
+    }
+
+    public Child getChildWhoPicksSide() {
+        return childWhoPicksSide;
+    }
+
     public LocalDateTime getTimeOfFlip() {
         return timeOfFlip;
     }
 
     public Coin getCoinSideLandedOn() {
         return coinSideLandedOn;
-    }
-
-    public int getUniqueId() {
-        return uniqueId;
     }
 }
