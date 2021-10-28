@@ -17,7 +17,7 @@
             android:configChanges="keyboard|keyboardHidden"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Titanium.FAB"/>
+            android:theme="@style/Theme.Titanium.Child"/>
         <activity
             android:name=".ui.EditChildActivity"
             android:label="@string/fabEdit"
@@ -25,7 +25,7 @@
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Titanium.FAB" />
+            android:theme="@style/Theme.Titanium.Child" />
         <activity
             android:name=".ui.RemoveChildActivity"
             android:configChanges="keyboard|keyboardHidden"
@@ -33,7 +33,7 @@
             android:label="@string/fabRemove"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Titanium.FAB" />
+            android:theme="@style/Theme.Titanium.Child" />
         <activity
             android:name=".ui.AddChildActivity"
             android:label="@string/fabAdd"
@@ -41,7 +41,7 @@
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Titanium.FAB" />
+            android:theme="@style/Theme.Titanium.Child" />
         <activity
             android:name=".ui.CoinActivity"
             android:label="@string/menuFlipCoinBtn"
