@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
@@ -17,6 +19,7 @@ public class EditChildActivity extends AppCompatActivity {
     private EditText childName;
     private Child selectedChild;
     private Button edit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,9 +27,19 @@ public class EditChildActivity extends AppCompatActivity {
 
         //setup text watcher!!
 
+        setupActionBar();
         findSelectedChild();
         setupScreenText();
         setupButton();
+    }
+
+    private void setupActionBar() {
+        Toolbar customMenu = findViewById(R.id.customToolbar);
+        setSupportActionBar(customMenu);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(R.string.menuEdit);
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupButton() {
@@ -38,8 +51,8 @@ public class EditChildActivity extends AppCompatActivity {
     }
 
     private void findSelectedChild() {
-        for(int i =0; i< instance.getNumOfChildren();i++){
-            if(Children.getChildren().get(i).isSelected()){
+        for (int i = 0; i < instance.getNumOfChildren(); i++) {
+            if (Children.getChildren().get(i).isSelected()) {
                 this.selectedChild = instance.getChild(i);
             }
         }
@@ -53,7 +66,7 @@ public class EditChildActivity extends AppCompatActivity {
         this.edit.setText(getResources().getString(R.string.viewSave));
     }
 
-    public static Intent makeIntent(Context c){
+    public static Intent makeIntent(Context c) {
         return new Intent(c, EditChildActivity.class);
     }
 

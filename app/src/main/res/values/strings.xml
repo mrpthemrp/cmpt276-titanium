@@ -5,9 +5,9 @@
     <string name="menuTimerBtn">Timeout Timer</string>
     <string name="menuFlipCoinBtn">Flip Coin</string>
     <string name="menuHeader">Main Menu</string>
-    <string name="fabAdd">Add Child</string>
-    <string name="fabEdit">Edit Child</string>
-    <string name="fabRemove">Remove Child</string>
+    <string name="menuAdd">Add Child</string>
+    <string name="menuEdit">Edit Child</string>
+    <string name="menuRemove">Remove Child</string>
     <string name="menuViewChild">View Child</string>
 
     <!-- Coin Flip Strings -->

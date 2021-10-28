@@ -1,6 +1,8 @@
 package ca.cmpt276.titanium.ui;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +15,6 @@ import android.widget.EditText;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
-
 
 public class AddChildActivity extends AppCompatActivity {
     private Children instance = Children.getInstance(this);
@@ -30,8 +31,18 @@ public class AddChildActivity extends AppCompatActivity {
         childName = findViewById(R.id.childName);
         childName.addTextChangedListener(childWatch);
 
+        setupActionBar();
         setupScreenText();
         setupButton();
+    }
+
+    private void setupActionBar() {
+        Toolbar customMenu = findViewById(R.id.customToolbar);
+        setSupportActionBar(customMenu);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(R.string.menuAdd);
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupButton() {
@@ -41,23 +52,26 @@ public class AddChildActivity extends AppCompatActivity {
             finish();
         });
     }
+
     private void findSelectedChild() {
-        for(int i =0; i< instance.getNumOfChildren();i++){
-            if(Children.getChildren().get(i).isSelected()){
+        for (int i = 0; i < instance.getNumOfChildren(); i++) {
+            if (Children.getChildren().get(i).isSelected()) {
                 this.selectedChild = instance.getChild(i);
             }
         }
     }
+
     private void addChild(String name) {
-        instance.addChild(name,true);
+        instance.addChild(name, true);
         findSelectedChild();
-        System.out.println("getName() "+selectedChild.getName());
+        System.out.println("getName() " + selectedChild.getName());
         //this.childName.setText(selectedChild.getName());
     }
 
     private void setupScreenText() {
+
         this.childName = findViewById(R.id.childName);
-        if(selectedChild != null){
+        if (selectedChild != null) {
             this.childName.setText(selectedChild.getName());
         }
 
@@ -80,7 +94,7 @@ public class AddChildActivity extends AppCompatActivity {
         }
     };
 
-    public static Intent makeIntent(Context c){
+    public static Intent makeIntent(Context c) {
         return new Intent(c, AddChildActivity.class);
     }
 }
