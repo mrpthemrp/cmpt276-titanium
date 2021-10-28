@@ -1,6 +1,8 @@
 package ca.cmpt276.titanium.ui;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +15,6 @@ import android.widget.EditText;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
-
 
 public class AddChildActivity extends AppCompatActivity {
     private Children instance = Children.getInstance(this);
@@ -30,8 +31,18 @@ public class AddChildActivity extends AppCompatActivity {
         childName = findViewById(R.id.childName);
         childName.addTextChangedListener(childWatch);
 
+        setupActionBar();
         setupScreenText();
         setupButton();
+    }
+
+    private void setupActionBar() {
+        Toolbar customMenu = findViewById(R.id.customToolbar);
+        setSupportActionBar(customMenu);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(R.string.menuAdd);
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupButton() {
@@ -56,6 +67,7 @@ public class AddChildActivity extends AppCompatActivity {
     }
 
     private void setupScreenText() {
+
         this.childName = findViewById(R.id.childName);
         if(selectedChild != null){
             this.childName.setText(selectedChild.getName());

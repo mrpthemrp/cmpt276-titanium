@@ -12,17 +12,25 @@
         android:theme="@style/Theme.Titanium">
         <activity
             android:name=".ui.ViewChildActivity"
+            android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:label="@string/menuViewChild"
-            android:configChanges="keyboard|keyboardHidden"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Titanium.Child"/>
+            android:theme="@style/Theme.Titanium.Child" />
         <activity
-            android:name=".ui.EditChildActivity"
-            android:label="@string/fabEdit"
+            android:name=".ui.AddChildActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
+            android:label="@string/menuAdd"
+            android:parentActivityName=".ui.MenuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Titanium.Child" />
+        <activity
+            android:name=".ui.EditChildActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:exported="true"
+            android:label="@string/menuEdit"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Titanium.Child" />
@@ -30,23 +38,15 @@
             android:name=".ui.RemoveChildActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:label="@string/fabRemove"
-            android:parentActivityName=".ui.MenuActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Titanium.Child" />
-        <activity
-            android:name=".ui.AddChildActivity"
-            android:label="@string/fabAdd"
-            android:configChanges="keyboard|keyboardHidden"
-            android:exported="true"
+            android:label="@string/menuRemove"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Titanium.Child" />
         <activity
             android:name=".ui.CoinActivity"
-            android:label="@string/menuFlipCoinBtn"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
+            android:label="@string/menuFlipCoinBtn"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -59,9 +59,9 @@
             android:theme="@style/Theme.Titanium.Calm" />
         <activity
             android:name=".ui.MenuActivity"
-            android:label="@string/menuHeader"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
+            android:label="@string/menuHeader"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -22,10 +21,8 @@ public class MenuActivity extends AppCompatActivity {
     private int numOfChildren;
     private Children childrenInstance;
     private ArrayList<Child> children;
-    private Button flipCoinButton, timerButton, add, edit, remove;
+    private Button flipCoinButton, timerButton;
     private FloatingActionButton mainMenuFAB;
-    private LinearLayout fabOptions;
-    private boolean optionsOpen;
     private TableRow scroll;
 
     @Override
@@ -40,16 +37,13 @@ public class MenuActivity extends AppCompatActivity {
         setupScrollAllChildren();
 
         setupFAB();
-        setupOptionButtons();
-
         flipCoinButtonClick();
         timerButtonClick();
     }
 
     @Override
     protected void onResume() {
-        this.fabOptions.setVisibility(View.INVISIBLE);
-        this.optionsOpen = false;
+        this.mainMenuFAB.setFocusable(false);
         this.scroll.refreshDrawableState();
         super.onResume();
     }
@@ -60,25 +54,14 @@ public class MenuActivity extends AppCompatActivity {
         this.flipCoinButton = findViewById(R.id.menuGoToFlipCoin);
         this.timerButton = findViewById(R.id.menuGoToTimer);
         this.mainMenuFAB = findViewById(R.id.menuFAB);
-        this.fabOptions = findViewById(R.id.linearLayoutContainer);
-        this.add = findViewById(R.id.fabAdd);
-        this.edit = findViewById(R.id.fabEdit);
-        this.remove = findViewById(R.id.fabRemove);
-        this.optionsOpen = false;
     }
 
     private void setupFAB() {
         this.mainMenuFAB.setOnClickListener(view -> {
             this.mainMenuFAB.setFocusable(true);
-            if(optionsOpen){
-                closeOptions();
-            }
-            else{
-                openOptions();
-            }
+            Intent intent = AddChildActivity.makeIntent(MenuActivity.this);
+            startActivity(intent);
         });
-
-        //add animation for the linearlayout to popup
 
     }
 
@@ -116,46 +99,5 @@ public class MenuActivity extends AppCompatActivity {
 
             scroll.addView(child);
         }
-    }
-
-    private void setupOptionButtons() {
-
-        this.add.setOnClickListener(view -> {
-            this.add.setFocusable(true);
-            Intent intent = AddChildActivity.makeIntent(MenuActivity.this);
-            startActivity(intent);
-        });
-
-        this.edit.setOnClickListener(view -> {
-            if(this.numOfChildren>0){
-                this.edit.setFocusable(true);
-                Intent intent = EditChildActivity.makeIntent(MenuActivity.this);
-                startActivity(intent);
-            }else{
-                Toast.makeText(this, "No children added, function unavailable.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        this.remove.setOnClickListener(view -> {
-            if(this.numOfChildren>0){
-                this.remove.setFocusable(true);
-                Intent intent = RemoveChildActivity.makeIntent(MenuActivity.this);
-                startActivity(intent);
-            }else{
-                Toast.makeText(this, "No children added, function unavailable.", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void openOptions(){
-        this.mainMenuFAB.setFocusable(true);
-        this.fabOptions.setVisibility(View.VISIBLE);
-        this.optionsOpen=true;
-    }
-
-    private void closeOptions(){
-        this.mainMenuFAB.setFocusable(false);
-        this.fabOptions.setVisibility(View.INVISIBLE);
-        this.optionsOpen=false;
     }
 }
