@@ -54,8 +54,8 @@ public class RemoveChildActivity extends AppCompatActivity {
     }
 
     private void findSelectedChild() {
-        for(int i =0; i< instance.getNumOfChildren();i++){
-            if(Children.getChildren().get(i).isSelected()){
+        for (int i = 0; i < instance.getNumOfChildren(); i++) {
+            if (Children.getChildren().get(i).isSelected()) {
                 this.selectedChild = instance.getChild(i);
             }
         }
@@ -71,7 +71,7 @@ public class RemoveChildActivity extends AppCompatActivity {
         this.remove.setText(getResources().getString(R.string.viewRemove));
     }
 
-    public static Intent makeIntent(Context c){
+    public static Intent makeIntent(Context c) {
         return new Intent(c, RemoveChildActivity.class);
     }
 }

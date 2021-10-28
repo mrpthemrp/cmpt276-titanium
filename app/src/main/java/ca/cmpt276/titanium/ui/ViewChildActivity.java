@@ -44,7 +44,7 @@ public class ViewChildActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.child_menu_options,menu);
+        inflater.inflate(R.menu.child_menu_options, menu);
         return true;
     }
 
@@ -80,8 +80,8 @@ public class ViewChildActivity extends AppCompatActivity {
     }
 
     private void findSelectedChild() {
-        for(int i =0; i< instance.getNumOfChildren();i++){
-            if(Children.getChildren().get(i).isSelected()){
+        for (int i = 0; i < instance.getNumOfChildren(); i++) {
+            if (Children.getChildren().get(i).isSelected()) {
                 this.selectedChild = instance.getChild(i);
             }
         }
@@ -96,7 +96,7 @@ public class ViewChildActivity extends AppCompatActivity {
         this.view.setVisibility(View.INVISIBLE);
     }
 
-    public static Intent makeIntent(Context c){
+    public static Intent makeIntent(Context c) {
         return new Intent(c, ViewChildActivity.class);
     }
 

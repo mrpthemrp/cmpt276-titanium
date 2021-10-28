@@ -19,6 +19,7 @@ public class EditChildActivity extends AppCompatActivity {
     private EditText childName;
     private Child selectedChild;
     private Button edit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +51,8 @@ public class EditChildActivity extends AppCompatActivity {
     }
 
     private void findSelectedChild() {
-        for(int i =0; i< instance.getNumOfChildren();i++){
-            if(Children.getChildren().get(i).isSelected()){
+        for (int i = 0; i < instance.getNumOfChildren(); i++) {
+            if (Children.getChildren().get(i).isSelected()) {
                 this.selectedChild = instance.getChild(i);
             }
         }
@@ -65,7 +66,7 @@ public class EditChildActivity extends AppCompatActivity {
         this.edit.setText(getResources().getString(R.string.viewSave));
     }
 
-    public static Intent makeIntent(Context c){
+    public static Intent makeIntent(Context c) {
         return new Intent(c, EditChildActivity.class);
     }
 

@@ -52,24 +52,26 @@ public class AddChildActivity extends AppCompatActivity {
             finish();
         });
     }
+
     private void findSelectedChild() {
-        for(int i =0; i< instance.getNumOfChildren();i++){
-            if(Children.getChildren().get(i).isSelected()){
+        for (int i = 0; i < instance.getNumOfChildren(); i++) {
+            if (Children.getChildren().get(i).isSelected()) {
                 this.selectedChild = instance.getChild(i);
             }
         }
     }
+
     private void addChild(String name) {
-        instance.addChild(name,true);
+        instance.addChild(name, true);
         findSelectedChild();
-        System.out.println("getName() "+selectedChild.getName());
+        System.out.println("getName() " + selectedChild.getName());
         //this.childName.setText(selectedChild.getName());
     }
 
     private void setupScreenText() {
 
         this.childName = findViewById(R.id.childName);
-        if(selectedChild != null){
+        if (selectedChild != null) {
             this.childName.setText(selectedChild.getName());
         }
 
@@ -92,7 +94,7 @@ public class AddChildActivity extends AppCompatActivity {
         }
     };
 
-    public static Intent makeIntent(Context c){
+    public static Intent makeIntent(Context c) {
         return new Intent(c, AddChildActivity.class);
     }
 }

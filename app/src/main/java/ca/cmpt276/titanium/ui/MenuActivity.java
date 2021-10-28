@@ -32,7 +32,7 @@ public class MenuActivity extends AppCompatActivity {
 
         setupAttributes();
 
-        numOfChildren =childrenInstance.getNumOfChildren();
+        numOfChildren = childrenInstance.getNumOfChildren();
 
         setupScrollAllChildren();
 
@@ -65,14 +65,14 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
-    private void flipCoinButtonClick(){
+    private void flipCoinButtonClick() {
         flipCoinButton.setOnClickListener(view -> {
             Intent i = CoinActivity.makeLaunchIntent(MenuActivity.this);
             startActivity(i);
         });
     }
 
-    private void timerButtonClick(){
+    private void timerButtonClick() {
         timerButton.setOnClickListener(view -> {
             Intent i = TimerActivity.makeLaunchIntent(MenuActivity.this);
             startActivity(i);
@@ -81,13 +81,13 @@ public class MenuActivity extends AppCompatActivity {
 
     private void setupScrollAllChildren() {
         scroll = findViewById(R.id.menuRow);
-        for(int i =0; i<numOfChildren;i++){
+        for (int i = 0; i < numOfChildren; i++) {
             final int INDEX = i;
             Button child = new Button(this);
             Child childData = children.get(i);
             child.setId(childData.getUniqueId());
-            child.setLayoutParams(new TableRow.LayoutParams(300, 300,1.0f));
-            child.setBackground(getResources().getDrawable(R.drawable.ic_baseline_circle_green_24,getTheme()));
+            child.setLayoutParams(new TableRow.LayoutParams(300, 300, 1.0f));
+            child.setBackground(getResources().getDrawable(R.drawable.ic_baseline_circle_green_24, getTheme()));
             child.setText(childData.getName());
             child.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
