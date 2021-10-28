@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
@@ -33,12 +31,12 @@ public class ViewChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_child);
 
         setupActionBar();
-        setupTextAndButton();
+        setupButton();
         findSelectedChild();
         setupScreenText();
     }
 
-    private void setupTextAndButton() {
+    private void setupButton() {
         this.view = findViewById(R.id.viewFunctionBtn);
         view.setVisibility(View.INVISIBLE);
     }
@@ -63,14 +61,12 @@ public class ViewChildActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.optionsEdit:
-                Toast.makeText(this, "Edit pressed!", Toast.LENGTH_SHORT).show();
-//                Intent intent1 = EditChildActivity.makeIntent(ViewChildActivity.this);
-//                startActivity(intent1);
+                Intent intent1 = EditChildActivity.makeIntent(ViewChildActivity.this);
+                startActivity(intent1);
                 return true;
             case R.id.optionsRemove:
-                Toast.makeText(this, "Remove pressed!", Toast.LENGTH_SHORT).show();
-//                Intent intent2 = RemoveChildActivity.makeIntent(ViewChildActivity.this);
-//                startActivity(intent2);
+                Intent intent2 = RemoveChildActivity.makeIntent(ViewChildActivity.this);
+                startActivity(intent2);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -79,7 +75,6 @@ public class ViewChildActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        selectedChild.setSelected(false);
         this.childName.setEnabled(true);
         super.onStop();
     }

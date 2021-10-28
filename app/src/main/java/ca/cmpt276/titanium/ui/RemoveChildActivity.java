@@ -1,6 +1,8 @@
 package ca.cmpt276.titanium.ui;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,9 +26,19 @@ public class RemoveChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_child);
 
+        setupActionBar();
         findSelectedChild();
         setupScreenText();
         setupButton();
+    }
+
+    private void setupActionBar() {
+        Toolbar customMenu = findViewById(R.id.customToolbar);
+        setSupportActionBar(customMenu);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(R.string.menuRemove);
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupButton() {

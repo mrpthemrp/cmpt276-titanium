@@ -29,7 +29,7 @@
     </style>
 
     <!-- View, Add, Edit, Remove Child Theme -->
-    <style name="Theme.Titanium.Child" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+    <style name="Theme.Titanium.Child" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green_200</item>
         <item name="colorPrimaryVariant">@color/green_300</item>
@@ -41,5 +41,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
+
+    <style name="Theme.Titanium.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
 </resources>
