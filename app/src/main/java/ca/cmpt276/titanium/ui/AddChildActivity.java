@@ -49,6 +49,8 @@ public class AddChildActivity extends AppCompatActivity {
         add.setOnClickListener(view -> {
             addChild(newName);
             instance.saveData();
+            Intent intent = MenuActivity.makeIntent(AddChildActivity.this);
+            startActivity(intent);
             finish();
         });
     }

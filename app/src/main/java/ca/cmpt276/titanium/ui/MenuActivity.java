@@ -2,11 +2,11 @@ package ca.cmpt276.titanium.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TableRow;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,8 +44,13 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         this.mainMenuFAB.setFocusable(false);
-        this.scroll.refreshDrawableState();
         super.onResume();
+        refreshState();
+
+    }
+
+    private void refreshState() {
+        // need to refresh state
     }
 
     private void setupAttributes() {
@@ -92,12 +97,16 @@ public class MenuActivity extends AppCompatActivity {
             child.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             child.setOnClickListener(view -> {
-                children.get(INDEX).setSelected(true);
+                children.get(child).setSelected(true);
                 Intent intent = ViewChildActivity.makeIntent(this);
                 startActivity(intent);
             });
 
             scroll.addView(child);
         }
+    }
+
+    public static Intent makeIntent(Context c) {
+        return new Intent(c, MenuActivity.class);
     }
 }
