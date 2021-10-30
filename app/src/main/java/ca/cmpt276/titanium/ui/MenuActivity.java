@@ -94,11 +94,7 @@ public class MenuActivity extends AppCompatActivity {
             childButton.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             childButton.setOnClickListener(view -> {
-                String childJson = GSON.toJson(child);
-
-                Intent viewChildIntent = ViewChildActivity.makeIntent(this);
-                viewChildIntent.putExtra("child_json", childJson);
-
+                Intent viewChildIntent = ViewChildActivity.makeIntent(this, child);
                 startActivity(viewChildIntent);
             });
 

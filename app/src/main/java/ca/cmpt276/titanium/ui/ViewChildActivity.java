@@ -1,97 +1,92 @@
 package ca.cmpt276.titanium.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 import com.google.gson.Gson;
+import java.util.Objects;
 
 public class ViewChildActivity extends AppCompatActivity {
-    private Children children;
-    private TextView childName;
-    private Child childBeingViewed;
-    private Button view;
-    private String childJson;
     private static final Gson GSON = new Gson();
+
+    private final Children children = Children.getInstance(this);
+    private Child childBeingViewed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_child);
-
-        this.childJson = getIntent().getStringExtra("child_json");
-        this.childBeingViewed = GSON.fromJson(childJson, Child.class);
-        this.children = Children.getInstance(this);
-
         setupActionBar();
-        setupButton();
-        setupScreenText();
-    }
 
-    private void setupButton() {
-        this.view = findViewById(R.id.viewFunctionBtn);
-        view.setVisibility(View.INVISIBLE);
+        String childBeingViewedJson = getIntent().getStringExtra("child_json");
+        this.childBeingViewed = GSON.fromJson(childBeingViewedJson, Child.class);
+        setChildInfo();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.child_menu_options, menu);
+        getMenuInflater().inflate(R.menu.menu_view_child, menu);
         return true;
-    }
-
-    private void setupActionBar() {
-        Toolbar customMenu = findViewById(R.id.customToolbar);
-        setSupportActionBar(customMenu);
-
-        ActionBar ab = getSupportActionBar();
-        ab.setTitle(R.string.menuViewChild);
-        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.optionsEdit:
-                Intent editChildIntent = EditChildActivity.makeIntent(ViewChildActivity.this);
-                editChildIntent.putExtra("child_json", childJson);
-                startActivity(editChildIntent);
-                return true;
-            case R.id.optionsRemove:
-                Intent removeChildIntent = RemoveChildActivity.makeIntent(ViewChildActivity.this);
-                removeChildIntent.putExtra("child_json", childJson);
-                startActivity(removeChildIntent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.optionsEdit) {
+            Intent editChildIntent = EditChildActivity.makeIntent(this, childBeingViewed);
+            startActivity(editChildIntent);
+            return true;
+        } else if (item.getItemId() == R.id.optionsRemove) {
+            removeChild();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
-    private void setupScreenText() {
-        this.childName = findViewById(R.id.childName);
-        this.childName.setText(childBeingViewed.getName());
-        this.childName.setEnabled(false);
+    private void setupActionBar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle(R.string.menuViewChild);
 
-        this.view = findViewById(R.id.viewFunctionBtn);
-        this.view.setVisibility(View.INVISIBLE);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
-    public static Intent makeIntent(Context c) {
-        return new Intent(c, ViewChildActivity.class);
+    private void setChildInfo() {
+        TextView childName = findViewById(R.id.childName);
+        childName.setText(childBeingViewed.getName());
     }
 
+    private void removeChild() {
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_baseline_delete_24_black)
+                .setTitle("Delete " + childBeingViewed.getName())
+                .setMessage("Are you sure? This cannot be reversed.")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    children.removeChild(childBeingViewed.getUniqueId());
+                    Toast.makeText(this, "Child deleted", Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    public static Intent makeIntent(Context context, Child child) {
+        String childJson = GSON.toJson(child);
+
+        Intent viewChildIntent = new Intent(context, ViewChildActivity.class);
+        viewChildIntent.putExtra("child_json", childJson);
+
+        return viewChildIntent;
+    }
 }
