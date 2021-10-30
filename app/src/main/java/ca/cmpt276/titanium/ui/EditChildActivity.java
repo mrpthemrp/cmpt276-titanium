@@ -45,11 +45,17 @@ public class EditChildActivity extends AppCompatActivity {
 
     private void setupButton() {
         edit.setOnClickListener(view -> {
+            updateChildName();
             children.saveData();
             Intent intent = MenuActivity.makeIntent(EditChildActivity.this);
             startActivity(intent);
             finish();
         });
+    }
+
+    private void updateChildName(){
+        int id = childBeingEdited.getUniqueId();
+        children.getChild(id).setName(childName.getText().toString());
     }
 
     private void setupScreenText() {
