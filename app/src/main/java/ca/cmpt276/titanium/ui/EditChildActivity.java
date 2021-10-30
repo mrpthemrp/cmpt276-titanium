@@ -26,8 +26,6 @@ public class EditChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_child);
 
-        //setup text watcher!!
-
         String childJson = getIntent().getStringExtra("child_json");
         this.childBeingEdited = GSON.fromJson(childJson, Child.class);
 
@@ -48,6 +46,8 @@ public class EditChildActivity extends AppCompatActivity {
     private void setupButton() {
         edit.setOnClickListener(view -> {
             children.saveData();
+            Intent intent = MenuActivity.makeIntent(EditChildActivity.this);
+            startActivity(intent);
             finish();
         });
     }
