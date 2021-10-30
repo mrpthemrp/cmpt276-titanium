@@ -15,8 +15,9 @@
         android:layout_marginEnd="178dp"
         android:layout_marginBottom="25dp"
         android:clickable="true"
+        android:contentDescription="@string/contentDescriptionFAB"
         android:src="@drawable/ic_baseline_add_24"
-        app:backgroundTint="@color/green_300"
+        app:backgroundTint="?attr/colorSecondary"
         app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,15 +30,18 @@
         android:layout_height="125dp"
         android:layout_marginStart="40dp"
         android:layout_marginBottom="165dp"
+        android:background="?attr/colorPrimary"
         android:fontFamily="sans-serif-medium"
         android:text="@string/menuTimerBtn"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="10sp"
         app:cornerRadius="15dp"
         app:icon="@drawable/ic_baseline_timer_24"
         app:iconGravity="textTop"
         app:iconSize="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/menuGoToFlipCoin"
@@ -45,14 +49,17 @@
         android:layout_height="125dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="165dp"
+        android:background="?attr/colorPrimary"
         android:text="@string/menuFlipCoinBtn"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="12sp"
         app:cornerRadius="15dp"
         app:icon="@drawable/ic_coin_icon"
         app:iconGravity="textTop"
         app:iconSize="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/menuHeaderText"
@@ -63,8 +70,8 @@
         android:layout_marginBottom="64dp"
         android:fontFamily="sans-serif-medium"
         android:text="@string/menuHeader"
+        android:textColor="?attr/colorPrimary"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="@color/teal_600"
         android:typeface="normal"
         app:layout_constraintBottom_toTopOf="@+id/menuGoToTimer"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,7 +116,7 @@
         android:layout_marginTop="15dp"
         android:visibility="invisible"
         android:text="@string/menuChildrenText"
-        android:textColor="@color/teal_600"
+        android:textColor="?attr/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

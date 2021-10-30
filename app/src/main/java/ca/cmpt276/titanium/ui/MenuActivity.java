@@ -2,6 +2,7 @@ package ca.cmpt276.titanium.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableRow;
@@ -72,6 +73,7 @@ public class MenuActivity extends AppCompatActivity {
             childButton.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_circle_green_24, getTheme()));
 
             childButton.setText(child.getName());
+            childButton.setTextColor(getResources().getColor(R.color.black,getTheme()));
             childButton.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             childButton.setOnClickListener(view -> {
