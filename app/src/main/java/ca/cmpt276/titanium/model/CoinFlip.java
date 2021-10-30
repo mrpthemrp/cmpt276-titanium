@@ -1,19 +1,20 @@
 package ca.cmpt276.titanium.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class CoinFlip {
     private Child childWhoPicksSide;
     private Coin sideThatChildPicks;
-    private LocalDateTime timeOfFlip;
+    private String timeOfFlip;
     private Coin coinSideLandedOn;
 
     public CoinFlip(Child childWhoPicksSide, Coin sideThatChildPicks,
                     LocalDateTime timeOfFlip, Coin coinSideLandedOn) {
         this.childWhoPicksSide = childWhoPicksSide;
         this.sideThatChildPicks = sideThatChildPicks;
-        this.timeOfFlip = timeOfFlip;
+        this.timeOfFlip = timeOfFlip.format(DateTimeFormatter.ofPattern("d::MMM::uuuu HH::mm::ss"));
         this.coinSideLandedOn = coinSideLandedOn;
     }
 
@@ -32,7 +33,7 @@ public class CoinFlip {
         return childWhoPicksSide;
     }
 
-    public LocalDateTime getTimeOfFlip() {
+    public String getTimeOfFlip() {
         return timeOfFlip;
     }
 
