@@ -17,13 +17,16 @@ public class MenuActivity extends AppCompatActivity {
     private static final int CHILD_BUTTON_WIDTH = 300;
     private static final float CHILD_BUTTON_ALPHA = 1.0f;
 
-    private final Children children = Children.getInstance(this);
-    private final TableRow childScrollView = findViewById(R.id.menuRow);
+    private Children children;
+    private TableRow childScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.children = Children.getInstance(this);
+        this.childScrollView = findViewById(R.id.menuRow);
 
         children.loadSavedData();
 

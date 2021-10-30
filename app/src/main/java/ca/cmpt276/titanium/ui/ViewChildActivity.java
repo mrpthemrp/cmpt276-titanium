@@ -77,15 +77,15 @@ public class ViewChildActivity extends AppCompatActivity {
 
     private void launchDeleteChildPrompt() {
         new AlertDialog.Builder(this)
-                .setIcon(R.drawable.ic_baseline_delete_24_black)
+                .setIcon(R.drawable.ic_baseline_delete_black_24)
                 .setTitle(getString(R.string.delete_child_prompt_title) + childBeingViewed.getName())
                 .setMessage(R.string.delete_child_prompt_message)
-                .setPositiveButton(R.string.delete_child_prompt_positive, (dialog, which) -> {
+                .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
                     children.removeChild(childBeingViewed.getUniqueId());
                     Toast.makeText(this, R.string.delete_child_prompt_toast, Toast.LENGTH_SHORT).show();
                     finish();
                 })
-                .setNegativeButton(R.string.delete_child_prompt_negative, null)
+                .setNegativeButton(R.string.prompt_negative, null)
                 .show();
     }
 
