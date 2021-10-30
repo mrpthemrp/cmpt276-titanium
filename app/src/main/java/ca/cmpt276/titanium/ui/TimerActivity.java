@@ -1,23 +1,24 @@
 package ca.cmpt276.titanium.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import ca.cmpt276.titanium.R;
 
 public class TimerActivity extends AppCompatActivity {
     private ImageView playPause;
-    private EditText hour, minute,second;
+    private EditText hour;
+    private EditText minute;
+    private EditText second;
     private Button cancelBtn;
     //private long hours, minutes, seconds;
     private boolean isPause;//get from sharedPreferences?
@@ -65,11 +66,11 @@ public class TimerActivity extends AppCompatActivity {
 
     private void setPlayPause() {
         if(this.isPause){
-            this.playPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_pause_24, getTheme()));
+            this.playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_pause_24, getTheme()));
             this.isPause =false;
         }
         else{
-            this.playPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_play_arrow_24, getTheme()));
+            this.playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_play_arrow_24, getTheme()));
             this.isPause =true;
         }
     }

@@ -5,9 +5,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class CoinFlip {
-    private Child childWhoPicksSide;
-    private Coin sideThatChildPicks;
-    private String timeOfFlip;
+    private final Child childWhoPicksSide;
+    private final Coin sideThatChildPicks;
+    private final String timeOfFlip;
     private Coin coinSideLandedOn;
 
     public CoinFlip(Child childWhoPicksSide, Coin sideThatChildPicks,
@@ -21,8 +21,7 @@ public class CoinFlip {
     public Coin flipCoin() {
         Coin[] coins = Coin.values();
         Random random = new Random();
-        Coin coin = coins[random.nextInt(coins.length)];
-        return coin;
+        return coins[random.nextInt(coins.length)];
     }
 
     public void setCoinSideLandedOn() {

@@ -5,6 +5,7 @@
     <string name="menuHeader">Main Menu</string>
     <string name="menuTimerBtn">Timeout Timer</string>
     <string name="menuFlipCoinBtn">Flip Coin</string>
+    <string name="menuRemove">Remove Child</string>
 
     <!-- Coin Flip Strings -->
     <string name="coinResult">RESULT</string>

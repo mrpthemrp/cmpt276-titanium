@@ -85,7 +85,7 @@ public class Children {
     }
 
     public int getNumOfChildren(){
-        return this.children.size();
+        return Children.children.size();
     }
 
     public void removeChild(int uniqueId) {

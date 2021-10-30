@@ -1,31 +1,22 @@
 package ca.cmpt276.titanium.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableRow;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MenuActivity extends AppCompatActivity {
     private Children children;
     private Button flipCoinButton, timerButton;
     private FloatingActionButton mainMenuFAB;
     private TableRow scroll;
-    private static final Gson GSON = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +33,18 @@ public class MenuActivity extends AppCompatActivity {
         setupFAB();
         flipCoinButtonClick();
         timerButtonClick();
-        setupScrollAllChildren();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        scroll.removeAllViews();
         setupScrollAllChildren();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        scroll.removeAllViews();
     }
 
     @Override
@@ -83,11 +78,10 @@ public class MenuActivity extends AppCompatActivity {
     private void setupScrollAllChildren() {
         scroll = findViewById(R.id.menuRow);
         for (int i = 0; i < children.getNumOfChildren(); i++) {
-            final int INDEX = i;
             Button childButton = new Button(this);
-            Child child = children.getChildren().get(INDEX);
+            Child child = children.getChildren().get(i);
             childButton.setLayoutParams(new TableRow.LayoutParams(300, 300, 1.0f));
-            childButton.setBackground(getResources().getDrawable(R.drawable.ic_baseline_circle_green_24, getTheme()));
+            childButton.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_circle_green_24, getTheme()));
             childButton.setText(child.getName());
             childButton.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 

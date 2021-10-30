@@ -1,34 +1,24 @@
 package ca.cmpt276.titanium.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
+import androidx.appcompat.app.AppCompatActivity;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.Coin;
 import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class CoinActivity extends AppCompatActivity {
     private Button flipButton;
@@ -36,13 +26,13 @@ public class CoinActivity extends AppCompatActivity {
     private TextView coinResult;
     private static final String HEADS = "HEADS";
     private static final String TAILS = "TAILS";
-    private Children children = Children.getInstance(this);
+    private final Children children = Children.getInstance(this);
 
     private CoinFlipHistory coinFlipHistory;
 
-    private Runnable result = () -> coinResult.setVisibility(View.VISIBLE);
-    private Runnable displayHeads = () -> coin.setImageResource(R.drawable.ic_coin_heads);
-    private Runnable displayTails = () -> coin.setImageResource(R.drawable.ic_coin_tails);
+    private final Runnable result = () -> coinResult.setVisibility(View.VISIBLE);
+    private final Runnable displayHeads = () -> coin.setImageResource(R.drawable.ic_coin_heads);
+    private final Runnable displayTails = () -> coin.setImageResource(R.drawable.ic_coin_tails);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +64,7 @@ public class CoinActivity extends AppCompatActivity {
 //             Coin sideThatChildPicks = ...;
 //        }
 
-        Coin coinSideLandedOn = null;
+        Coin coinSideLandedOn;
         // heads == 0
         if (coinSide == 0){
             coinResult.setText(HEADS);
