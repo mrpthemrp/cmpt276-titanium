@@ -23,7 +23,7 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_menu);
 
         this.children = Children.getInstance(this);
         this.childScrollView = findViewById(R.id.menuRow);

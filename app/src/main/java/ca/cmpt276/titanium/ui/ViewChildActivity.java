@@ -26,7 +26,7 @@ public class ViewChildActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_child);
+        setContentView(R.layout.activity_child);
         setupActionBar();
 
         this.childUniqueId = getIntent().getIntExtra("child_unique_id", INVALID_UNIQUE_ID);
@@ -41,7 +41,7 @@ public class ViewChildActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_view_child, menu);
+        getMenuInflater().inflate(R.menu.menu_child, menu);
         return true;
     }
 
