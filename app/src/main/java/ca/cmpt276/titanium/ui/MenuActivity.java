@@ -28,6 +28,9 @@ public class MenuActivity extends AppCompatActivity {
         this.children = Children.getInstance(this);
         this.childScrollView = findViewById(R.id.menuRow);
 
+        if(this.children.getChildren().size()>0){
+            findViewById(R.id.menuTextChildrenList).setVisibility(View.VISIBLE);
+        }
         children.loadSavedData();
 
         FloatingActionButton addChildButton = findViewById(R.id.menuFAB);
@@ -45,6 +48,13 @@ public class MenuActivity extends AppCompatActivity {
         super.onResume();
         this.childScrollView.removeAllViews();
         displayChildren();
+
+        if(this.children.getChildren().size()>0){
+            findViewById(R.id.menuTextChildrenList).setVisibility(View.VISIBLE);
+        }
+        else{
+            findViewById(R.id.menuTextChildrenList).setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

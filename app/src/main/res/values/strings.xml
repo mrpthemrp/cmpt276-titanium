@@ -6,6 +6,7 @@
     <string name="menuTimerBtn">Timeout Timer</string>
     <string name="menuFlipCoinBtn">Flip Coin</string>
     <string name="menuRemove">Remove Child</string>
+    <string name="menuChildrenText">Added Children: </string>
 
     <!-- Coin Flip Strings -->
     <string name="coinResult">RESULT</string>

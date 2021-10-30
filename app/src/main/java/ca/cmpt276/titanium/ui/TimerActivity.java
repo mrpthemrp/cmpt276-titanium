@@ -55,7 +55,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private void setupCancelBtn() {
         this.cancelBtn.setOnClickListener(view -> {
-            //only change it if play button is pause, otherwise it won't need to change.
+            //only change if the timer is running
             if(!this.isPause){
                 setPlayPause();
                 Toast.makeText(TimerActivity.this, R.string.timer_cancelled_toast, Toast.LENGTH_SHORT).show();
