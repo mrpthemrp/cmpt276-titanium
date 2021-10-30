@@ -13,38 +13,40 @@ import ca.cmpt276.titanium.model.Children;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MenuActivity extends AppCompatActivity {
-    private Children children;
-    private Button flipCoinButton, timerButton;
-    private FloatingActionButton mainMenuFAB;
-    private TableRow scroll;
+    private static final int CHILD_BUTTON_HEIGHT = 300;
+    private static final int CHILD_BUTTON_WIDTH = 300;
+    private static final float CHILD_BUTTON_ALPHA = 1.0f;
+
+    private final Children children = Children.getInstance(this);
+    private final TableRow childScrollView = findViewById(R.id.menuRow);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.children = Children.getInstance(this);
-        this.flipCoinButton = findViewById(R.id.menuGoToFlipCoin);
-        this.timerButton = findViewById(R.id.menuGoToTimer);
-        this.mainMenuFAB = findViewById(R.id.menuFAB);
-
         children.loadSavedData();
 
-        setupFAB();
-        flipCoinButtonClick();
-        timerButtonClick();
+        FloatingActionButton addChildButton = findViewById(R.id.menuFAB);
+        addChildButton.setOnClickListener(view -> startActivity(AddChildActivity.makeIntent(this)));
+
+        Button coinFlipButton = findViewById(R.id.menuGoToFlipCoin);
+        coinFlipButton.setOnClickListener(view -> startActivity(CoinActivity.makeIntent(this)));
+
+        Button timerButton = findViewById(R.id.menuGoToTimer);
+        timerButton.setOnClickListener(view -> startActivity(TimerActivity.makeIntent(this)));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setupScrollAllChildren();
+        displayChildren();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        scroll.removeAllViews();
+        this.childScrollView.removeAllViews();
     }
 
     @Override
@@ -53,35 +55,14 @@ public class MenuActivity extends AppCompatActivity {
         children.saveData();
     }
 
-    private void setupFAB() {
-        this.mainMenuFAB.setOnClickListener(view -> {
-            Intent intent = AddChildActivity.makeIntent(MenuActivity.this);
-            startActivity(intent);
-        });
-
-    }
-
-    private void flipCoinButtonClick() {
-        flipCoinButton.setOnClickListener(view -> {
-            Intent i = CoinActivity.makeLaunchIntent(MenuActivity.this);
-            startActivity(i);
-        });
-    }
-
-    private void timerButtonClick() {
-        timerButton.setOnClickListener(view -> {
-            Intent i = TimerActivity.makeLaunchIntent(MenuActivity.this);
-            startActivity(i);
-        });
-    }
-
-    private void setupScrollAllChildren() {
-        scroll = findViewById(R.id.menuRow);
-        for (int i = 0; i < children.getNumOfChildren(); i++) {
-            Button childButton = new Button(this);
+    private void displayChildren() {
+        for (int i = 0; i < children.getChildren().size(); i++) {
             Child child = children.getChildren().get(i);
-            childButton.setLayoutParams(new TableRow.LayoutParams(300, 300, 1.0f));
+
+            Button childButton = new Button(this);
+            childButton.setLayoutParams(new TableRow.LayoutParams(CHILD_BUTTON_WIDTH, CHILD_BUTTON_HEIGHT, CHILD_BUTTON_ALPHA));
             childButton.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_circle_green_24, getTheme()));
+
             childButton.setText(child.getName());
             childButton.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
@@ -90,7 +71,7 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(viewChildIntent);
             });
 
-            scroll.addView(childButton);
+            childScrollView.addView(childButton);
         }
     }
 }

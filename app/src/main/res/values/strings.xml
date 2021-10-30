@@ -37,5 +37,6 @@
 
     <string name="menuEdit">Edit Child</string>
     <string name="edit_child_toast">Child updated</string>
+    <string name="timer_cancelled_toast">Timer cancelled</string>
 
 </resources>

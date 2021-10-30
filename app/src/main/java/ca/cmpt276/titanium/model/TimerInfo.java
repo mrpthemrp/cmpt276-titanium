@@ -5,6 +5,11 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class TimerInfo {
+    private static final int INVALID_SECONDS = -1;
+    private static final boolean DEFAULT_RUNNING = false;
+    private static final boolean DEFAULT_PAUSED = false;
+    private static final boolean DEFAULT_STOPPED = true;
+
     private static TimerInfo instance;
     private static SharedPreferences prefs;
     private static SharedPreferences.Editor prefsEditor;
@@ -23,7 +28,7 @@ public class TimerInfo {
     }
 
     public int getDurationSeconds() {
-        return prefs.getInt("duration_seconds", -1);
+        return prefs.getInt("duration_seconds", INVALID_SECONDS);
     }
 
     public void setDurationSeconds(int durationSeconds) {
@@ -32,7 +37,7 @@ public class TimerInfo {
     }
 
     public int getRemainingSeconds() {
-        return prefs.getInt("remaining_seconds", -1);
+        return prefs.getInt("remaining_seconds", INVALID_SECONDS);
     }
 
     public void setRemainingSeconds(int remainingSeconds) {
@@ -41,7 +46,7 @@ public class TimerInfo {
     }
 
     public boolean isRunning() {
-        return prefs.getBoolean("is_running", false);
+        return prefs.getBoolean("is_running", DEFAULT_RUNNING);
     }
 
     public void setRunning() {
@@ -52,7 +57,7 @@ public class TimerInfo {
     }
 
     public boolean isPaused() {
-        return prefs.getBoolean("is_paused", false);
+        return prefs.getBoolean("is_paused", DEFAULT_PAUSED);
     }
 
     public void setPaused() {
@@ -63,7 +68,7 @@ public class TimerInfo {
     }
 
     public boolean isStopped() {
-        return prefs.getBoolean("is_stopped", true);
+        return prefs.getBoolean("is_stopped", DEFAULT_STOPPED);
     }
 
     public void setStopped() {
@@ -74,7 +79,7 @@ public class TimerInfo {
     }
 
     public int getNextDurationSeconds() {
-        return prefs.getInt("next_duration_seconds", -1);
+        return prefs.getInt("next_duration_seconds", INVALID_SECONDS);
     }
 
     public void setNextDurationSeconds(int nextDurationSeconds) {

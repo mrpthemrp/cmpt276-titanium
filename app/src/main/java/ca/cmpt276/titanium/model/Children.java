@@ -3,10 +3,8 @@ package ca.cmpt276.titanium.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -33,7 +31,7 @@ public class Children {
     }
 
     public void loadSavedData() {
-        String childrenJson = prefs.getString("children", null);
+        String childrenJson = prefs.getString("children_json", null);
 
         Gson gson = new Gson();
         Type childrenType = new TypeToken<ArrayList<Child>>(){}.getType();
@@ -50,7 +48,7 @@ public class Children {
         Gson gson = new Gson();
         String childrenJson = gson.toJson(children);
 
-        prefsEditor.putString("children", childrenJson);
+        prefsEditor.putString("children_json", childrenJson);
 
         prefsEditor.apply();
     }
@@ -82,10 +80,6 @@ public class Children {
 
         logger.log(Level.WARNING, "Attempted to get Child object with nonexistent unique ID");
         return null;
-    }
-
-    public int getNumOfChildren(){
-        return Children.children.size();
     }
 
     public void removeChild(int uniqueId) {

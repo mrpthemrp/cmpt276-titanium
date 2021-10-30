@@ -55,7 +55,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private void setupCancelBtn() {
         this.cancelBtn.setOnClickListener(view -> {
-            Toast.makeText(TimerActivity.this, "Timer cancelled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TimerActivity.this, R.string.timer_cancelled_toast, Toast.LENGTH_SHORT).show();
             setPlayPause();
         });
     }
@@ -75,7 +75,7 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-    public static Intent makeLaunchIntent(Context c){
+    public static Intent makeIntent(Context c){
         return new Intent(c, TimerActivity.class);
     }
 }

@@ -48,7 +48,7 @@ public class CoinActivity extends AppCompatActivity {
         flipButtonClick();
     }
 
-    public static Intent makeLaunchIntent(Context c){
+    public static Intent makeIntent(Context c){
         return new Intent(c, CoinActivity.class);
     }
 
