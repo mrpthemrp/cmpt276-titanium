@@ -9,16 +9,17 @@ import android.widget.EditText;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
+import com.google.gson.Gson;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 
 public class EditChildActivity extends AppCompatActivity {
-    private Children instance = Children.getInstance(this);
+    private Children children = Children.getInstance(this);
     private EditText childName;
-    private Child selectedChild;
+    private Child childBeingEdited;
     private Button edit;
+    private static final Gson GSON = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +28,10 @@ public class EditChildActivity extends AppCompatActivity {
 
         //setup text watcher!!
 
+        String childJson = getIntent().getStringExtra("child_json");
+        this.childBeingEdited = GSON.fromJson(childJson, Child.class);
+
         setupActionBar();
-        findSelectedChild();
         setupScreenText();
         setupButton();
     }
@@ -44,23 +47,14 @@ public class EditChildActivity extends AppCompatActivity {
 
     private void setupButton() {
         edit.setOnClickListener(view -> {
-            instance.saveData();
-            selectedChild.setSelected(false);
+            children.saveData();
             finish();
         });
     }
 
-    private void findSelectedChild() {
-        for (int i = 0; i < instance.getNumOfChildren(); i++) {
-            if (Children.getChildren().get(i).isSelected()) {
-                this.selectedChild = instance.getChild(i);
-            }
-        }
-    }
-
     private void setupScreenText() {
         this.childName = findViewById(R.id.childName);
-        this.childName.setText(selectedChild.getName());
+        this.childName.setText(childBeingEdited.getName());
 
         this.edit = findViewById(R.id.viewFunctionBtn);
         this.edit.setText(getResources().getString(R.string.viewSave));

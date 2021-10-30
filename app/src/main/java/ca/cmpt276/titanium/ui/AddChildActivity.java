@@ -17,7 +17,7 @@ import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 
 public class AddChildActivity extends AppCompatActivity {
-    private Children instance = Children.getInstance(this);
+    private Children children = Children.getInstance(this);
     private EditText childName;
     private String newName;
     private Child selectedChild;
@@ -48,24 +48,12 @@ public class AddChildActivity extends AppCompatActivity {
     private void setupButton() {
         add.setOnClickListener(view -> {
             addChild(newName);
-            instance.saveData();
-            Intent intent = MenuActivity.makeIntent(AddChildActivity.this);
-            startActivity(intent);
             finish();
         });
     }
 
-    private void findSelectedChild() {
-        for (int i = 0; i < instance.getNumOfChildren(); i++) {
-            if (Children.getChildren().get(i).isSelected()) {
-                this.selectedChild = instance.getChild(i);
-            }
-        }
-    }
-
     private void addChild(String name) {
-        instance.addChild(name, true);
-        findSelectedChild();
+        children.addChild(name);
         System.out.println("getName() " + selectedChild.getName());
         //this.childName.setText(selectedChild.getName());
     }

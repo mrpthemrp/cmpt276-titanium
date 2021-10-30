@@ -10,7 +10,10 @@ import android.widget.Button;
 import android.widget.TableRow;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import ca.cmpt276.titanium.R;
@@ -19,51 +22,48 @@ import ca.cmpt276.titanium.model.Children;
 
 public class MenuActivity extends AppCompatActivity {
     private int numOfChildren;
-    private Children childrenInstance;
-    private ArrayList<Child> children;
+    private Children children;
     private Button flipCoinButton, timerButton;
     private FloatingActionButton mainMenuFAB;
     private TableRow scroll;
+    private static final Gson GSON = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setupAttributes();
+        this.children = Children.getInstance(this);
+        this.flipCoinButton = findViewById(R.id.menuGoToFlipCoin);
+        this.timerButton = findViewById(R.id.menuGoToTimer);
+        this.mainMenuFAB = findViewById(R.id.menuFAB);
 
-        numOfChildren = childrenInstance.getNumOfChildren();
-
-        setupScrollAllChildren();
+        children.loadSavedData();
+        numOfChildren = children.getNumOfChildren();
 
         setupFAB();
         flipCoinButtonClick();
         timerButtonClick();
+        setupScrollAllChildren();
     }
 
     @Override
     protected void onResume() {
-        this.mainMenuFAB.setFocusable(false);
         super.onResume();
-        refreshState();
-
+        //this.mainMenuFAB.setFocusable(false);
+        scroll.removeAllViews();
+        setupScrollAllChildren();
     }
 
-    private void refreshState() {
-        // need to refresh state
-    }
-
-    private void setupAttributes() {
-        this.childrenInstance = Children.getInstance(this);
-        this.children = childrenInstance.getChildren();
-        this.flipCoinButton = findViewById(R.id.menuGoToFlipCoin);
-        this.timerButton = findViewById(R.id.menuGoToTimer);
-        this.mainMenuFAB = findViewById(R.id.menuFAB);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        children.saveData();
     }
 
     private void setupFAB() {
         this.mainMenuFAB.setOnClickListener(view -> {
-            this.mainMenuFAB.setFocusable(true);
+            //this.mainMenuFAB.setFocusable(true);
             Intent intent = AddChildActivity.makeIntent(MenuActivity.this);
             startActivity(intent);
         });
@@ -88,21 +88,23 @@ public class MenuActivity extends AppCompatActivity {
         scroll = findViewById(R.id.menuRow);
         for (int i = 0; i < numOfChildren; i++) {
             final int INDEX = i;
-            Button child = new Button(this);
-            Child childData = children.get(i);
-            child.setId(childData.getUniqueId());
-            child.setLayoutParams(new TableRow.LayoutParams(300, 300, 1.0f));
-            child.setBackground(getResources().getDrawable(R.drawable.ic_baseline_circle_green_24, getTheme()));
-            child.setText(childData.getName());
-            child.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            Button childButton = new Button(this);
+            Child child = children.getChildren().get(INDEX);
+            childButton.setLayoutParams(new TableRow.LayoutParams(300, 300, 1.0f));
+            childButton.setBackground(getResources().getDrawable(R.drawable.ic_baseline_circle_green_24, getTheme()));
+            childButton.setText(child.getName());
+            childButton.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-            child.setOnClickListener(view -> {
-                children.get(child).setSelected(true);
-                Intent intent = ViewChildActivity.makeIntent(this);
-                startActivity(intent);
+            childButton.setOnClickListener(view -> {
+                String childJson = GSON.toJson(child);
+
+                Intent viewChildIntent = ViewChildActivity.makeIntent(this);
+                viewChildIntent.putExtra("child_json", childJson);
+
+                startActivity(viewChildIntent);
             });
 
-            scroll.addView(child);
+            scroll.addView(childButton);
         }
     }
 

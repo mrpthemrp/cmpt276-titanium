@@ -36,6 +36,7 @@ public class CoinActivity extends AppCompatActivity {
     private TextView coinResult;
     private static final String HEADS = "HEADS";
     private static final String TAILS = "TAILS";
+    private Children children = Children.getInstance(this);
 
     private CoinFlipHistory coinFlipHistory;
 
@@ -90,7 +91,7 @@ public class CoinActivity extends AppCompatActivity {
         coinResult.postDelayed(result, 1600);
 
         // If there are no children configured, we don't need to save any info (?)
-        if (!Children.getChildren().isEmpty()) {
+        if (!children.getChildren().isEmpty()) {
             LocalDateTime timeOfFlip = LocalDateTime.now();
 
             Child childOfNextTurn = getChildOfNextTurn();
@@ -109,7 +110,7 @@ public class CoinActivity extends AppCompatActivity {
     private Child getChildOfNextTurn() {
         Child childToPickLastTurn = getChildOfLastTurn();
         Child childOfNextTurn = null;
-        ArrayList<Child> childrenArray = Children.getChildren();
+        ArrayList<Child> childrenArray = children.getChildren();
 
         for (int i = 0; i < childrenArray.size(); i++) {
             if (childrenArray.get(i) == childToPickLastTurn) {
