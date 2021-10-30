@@ -43,13 +43,8 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        displayChildren();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
         this.childScrollView.removeAllViews();
+        displayChildren();
     }
 
     @Override
