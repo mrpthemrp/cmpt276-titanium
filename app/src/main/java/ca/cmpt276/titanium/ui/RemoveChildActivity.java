@@ -48,12 +48,14 @@ public class RemoveChildActivity extends AppCompatActivity {
     private void setupButton() {
         remove.setOnClickListener(view -> {
             removeChildNow();
+            Intent intent = MenuActivity.makeIntent(RemoveChildActivity.this);
+            startActivity(intent);
             finish();
         });
     }
 
     private void removeChildNow() {
-        children.removeChild(childName.getId());
+        children.removeChild(childBeingRemoved.getUniqueId());
         children.saveData();
     }
 
