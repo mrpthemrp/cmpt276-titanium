@@ -21,7 +21,6 @@ import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 
 public class MenuActivity extends AppCompatActivity {
-    private int numOfChildren;
     private Children children;
     private Button flipCoinButton, timerButton;
     private FloatingActionButton mainMenuFAB;
@@ -39,7 +38,6 @@ public class MenuActivity extends AppCompatActivity {
         this.mainMenuFAB = findViewById(R.id.menuFAB);
 
         children.loadSavedData();
-        numOfChildren = children.getNumOfChildren();
 
         setupFAB();
         flipCoinButtonClick();
@@ -86,7 +84,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private void setupScrollAllChildren() {
         scroll = findViewById(R.id.menuRow);
-        for (int i = 0; i < numOfChildren; i++) {
+        for (int i = 0; i < children.getNumOfChildren(); i++) {
             final int INDEX = i;
             Button childButton = new Button(this);
             Child child = children.getChildren().get(INDEX);
