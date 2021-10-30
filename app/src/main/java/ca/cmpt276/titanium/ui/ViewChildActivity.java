@@ -14,13 +14,13 @@ import androidx.appcompat.widget.Toolbar;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
-import com.google.gson.Gson;
 import java.util.Objects;
 
 public class ViewChildActivity extends AppCompatActivity {
-    private static final Gson GSON = new Gson();
+    private static final int INVALID_UNIQUE_ID = -1;
 
     private final Children children = Children.getInstance(this);
+    private int childUniqueId;
     private Child childBeingViewed;
 
     @Override
@@ -29,9 +29,14 @@ public class ViewChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_child);
         setupActionBar();
 
-        String childBeingViewedJson = getIntent().getStringExtra("child_json");
-        this.childBeingViewed = GSON.fromJson(childBeingViewedJson, Child.class);
-        setChildInfo();
+        this.childUniqueId = getIntent().getIntExtra("child_unique_id", INVALID_UNIQUE_ID);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.childBeingViewed = children.getChild(childUniqueId);
+        displayChildInfo();
     }
 
     @Override
@@ -42,12 +47,15 @@ public class ViewChildActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.optionsEdit) {
-            Intent editChildIntent = EditChildActivity.makeIntent(this, childBeingViewed);
+        if (item.getItemId() == android.R.id.home){
+            finish();
+            return true;
+        } else if (item.getItemId() == R.id.optionsEdit) {
+            Intent editChildIntent = EditChildActivity.makeIntent(this, childUniqueId);
             startActivity(editChildIntent);
             return true;
         } else if (item.getItemId() == R.id.optionsRemove) {
-            removeChild();
+            launchDeleteChildPrompt();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -62,16 +70,16 @@ public class ViewChildActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
-    private void setChildInfo() {
+    private void displayChildInfo() {
         TextView childName = findViewById(R.id.childName);
         childName.setText(childBeingViewed.getName());
     }
 
-    private void removeChild() {
+    private void launchDeleteChildPrompt() {
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_baseline_delete_24_black)
                 .setTitle("Delete " + childBeingViewed.getName())
-                .setMessage("Are you sure? This cannot be reversed.")
+                .setMessage("Are you sure? This action cannot be reversed.")
                 .setPositiveButton("Yes", (dialog, which) -> {
                     children.removeChild(childBeingViewed.getUniqueId());
                     Toast.makeText(this, "Child deleted", Toast.LENGTH_SHORT).show();
@@ -81,11 +89,9 @@ public class ViewChildActivity extends AppCompatActivity {
                 .show();
     }
 
-    public static Intent makeIntent(Context context, Child child) {
-        String childJson = GSON.toJson(child);
-
+    public static Intent makeIntent(Context context, int childUniqueId) {
         Intent viewChildIntent = new Intent(context, ViewChildActivity.class);
-        viewChildIntent.putExtra("child_json", childJson);
+        viewChildIntent.putExtra("child_unique_id", childUniqueId);
 
         return viewChildIntent;
     }
