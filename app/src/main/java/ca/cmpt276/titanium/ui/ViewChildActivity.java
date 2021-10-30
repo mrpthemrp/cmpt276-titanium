@@ -78,14 +78,14 @@ public class ViewChildActivity extends AppCompatActivity {
     private void launchDeleteChildPrompt() {
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_baseline_delete_24_black)
-                .setTitle("Delete " + childBeingViewed.getName())
-                .setMessage("Are you sure? This action cannot be reversed.")
-                .setPositiveButton("Yes", (dialog, which) -> {
+                .setTitle(getString(R.string.delete_child_prompt_title) + childBeingViewed.getName())
+                .setMessage(R.string.delete_child_prompt_message)
+                .setPositiveButton(R.string.delete_child_prompt_positive, (dialog, which) -> {
                     children.removeChild(childBeingViewed.getUniqueId());
-                    Toast.makeText(this, "Child deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.delete_child_prompt_toast, Toast.LENGTH_SHORT).show();
                     finish();
                 })
-                .setNegativeButton("No", null)
+                .setNegativeButton(R.string.delete_child_prompt_negative, null)
                 .show();
     }
 

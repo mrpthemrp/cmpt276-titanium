@@ -67,7 +67,7 @@ public class EditChildActivity extends AppCompatActivity {
 
         saveButton.setOnClickListener(view -> {
             children.getChild(childUniqueId).setName(childName.getText().toString());
-            Toast.makeText(this, "Child updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.edit_child_toast, Toast.LENGTH_SHORT).show();
             finish();
         });
     }

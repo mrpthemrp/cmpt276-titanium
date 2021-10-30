@@ -59,7 +59,7 @@ public class AddChildActivity extends AppCompatActivity {
 
         saveButton.setOnClickListener(view -> {
             children.addChild(childName.getText().toString());
-            Toast.makeText(this, "Child saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.add_child_toast, Toast.LENGTH_SHORT).show();
             finish();
         });
     }
