@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import ca.cmpt276.titanium.R;
@@ -40,11 +41,16 @@ public class EditChildActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            launchDiscardChangesPrompt();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        launchDiscardChangesPrompt();
     }
 
     private void setupActionBar() {
@@ -70,6 +76,19 @@ public class EditChildActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.edit_child_toast, Toast.LENGTH_SHORT).show();
             finish();
         });
+    }
+
+    private void launchDiscardChangesPrompt() {
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_baseline_warning_black_24)
+                .setTitle(R.string.discard_changes_title)
+                .setMessage(R.string.discard_changes_message)
+                .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
+                    Toast.makeText(this, R.string.changes_discarded_toast, Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .setNegativeButton(R.string.prompt_negative, null)
+                .show();
     }
 
     public static Intent makeIntent(Context context, int childUniqueId) {

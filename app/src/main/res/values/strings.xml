@@ -22,10 +22,10 @@
 
     <!-- View Child Strings-->
     <string name="menuViewChild">View Child</string>
-    <string name="delete_child_prompt_title">\"Delete \"</string>
+    <string name="delete_child_prompt_title">Delete&#160;</string>
     <string name="delete_child_prompt_message">Are you sure? This action cannot be reversed.</string>
-    <string name="delete_child_prompt_positive">Yes</string>
-    <string name="delete_child_prompt_negative">No</string>
+    <string name="prompt_positive">Yes</string>
+    <string name="prompt_negative">No</string>
     <string name="delete_child_prompt_toast">Child deleted</string>
 
     <!-- Add/Edit Child Strings-->
@@ -38,5 +38,8 @@
     <string name="menuEdit">Edit Child</string>
     <string name="edit_child_toast">Child updated</string>
     <string name="timer_cancelled_toast">Timer cancelled</string>
+    <string name="changes_discarded_toast">Changes discarded</string>
+    <string name="discard_changes_message">Are you sure? This action cannot be reversed.</string>
+    <string name="discard_changes_title">Discard Changes</string>
 
 </resources>
