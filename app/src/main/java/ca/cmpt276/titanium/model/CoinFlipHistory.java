@@ -6,7 +6,9 @@ import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,44 +17,36 @@ import java.util.List;
 public class CoinFlipHistory {
     private static final String COIN_FLIP_HISTORY_KEY = "coin_flip_history";
     private static final String EMPTY_STRING = "";
-    private static List<CoinFlip> coinFlipHistory;
-
-    private GsonBuilder gsonBuilder;
-    private Gson gson;
+    private static ArrayList<CoinFlip> coinFlipHistory;
+    private static final Gson GSON = new Gson();
     private SharedPreferences sharedPreferences;
 
     public CoinFlipHistory(Context context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         coinFlipHistory = new ArrayList<>();
 
-        gsonBuilder = new GsonBuilder();
-        gson = gsonBuilder
-                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
-                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
-                .setPrettyPrinting()
-                .create();
-
         initializeCoinFlipHistory();
     }
 
     private void initializeCoinFlipHistory() {
-        String coinFlipsJson = sharedPreferences.getString(COIN_FLIP_HISTORY_KEY, EMPTY_STRING);
-        CoinFlip[] coinFlips = gson.fromJson(coinFlipsJson, CoinFlip[].class);
-        if (coinFlips != null) {
-            Collections.addAll(coinFlipHistory, coinFlips);
+        String coinFlipsJson = sharedPreferences.getString(COIN_FLIP_HISTORY_KEY, "");
+        Type coinFlipsType = new TypeToken<ArrayList<CoinFlip>>(){}.getType();
+
+        if (!coinFlipsJson.equals("")) {
+            CoinFlipHistory.coinFlipHistory = GSON.fromJson(coinFlipsJson, coinFlipsType);
         }
     }
 
     public void addCoinFlipToHistory(CoinFlip coinFlip) {
         coinFlipHistory.add(coinFlip);
 
-        String coinFlipsJson = gson.toJson(coinFlipHistory);
+        String coinFlipsJson = GSON.toJson(coinFlipHistory);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(COIN_FLIP_HISTORY_KEY, coinFlipsJson);
         editor.apply();
     }
 
-    public static List<CoinFlip> getCoinFlipHistory() {
-        return coinFlipHistory;
+    public static ArrayList<CoinFlip> getCoinFlipHistory() {
+        return CoinFlipHistory.coinFlipHistory;
     }
 }
