@@ -17,10 +17,8 @@ import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 
 public class AddChildActivity extends AppCompatActivity {
-    private Children instance = Children.getInstance(this);
+    private Children children = Children.getInstance(this);
     private EditText childName;
-    private String newName;
-    private Child selectedChild;
     private Button add;
 
     @Override
@@ -29,7 +27,6 @@ public class AddChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_child);
 
         childName = findViewById(R.id.childName);
-        childName.addTextChangedListener(childWatch);
 
         setupActionBar();
         setupScreenText();
@@ -47,52 +44,21 @@ public class AddChildActivity extends AppCompatActivity {
 
     private void setupButton() {
         add.setOnClickListener(view -> {
-            addChild(newName);
-            instance.saveData();
+            addChild(childName.getText().toString());
             finish();
         });
     }
 
-    private void findSelectedChild() {
-        for (int i = 0; i < instance.getNumOfChildren(); i++) {
-            if (Children.getChildren().get(i).isSelected()) {
-                this.selectedChild = instance.getChild(i);
-            }
-        }
-    }
-
     private void addChild(String name) {
-        instance.addChild(name, true);
-        findSelectedChild();
-        System.out.println("getName() " + selectedChild.getName());
-        //this.childName.setText(selectedChild.getName());
+        children.addChild(name);
     }
 
     private void setupScreenText() {
-
         this.childName = findViewById(R.id.childName);
-        if (selectedChild != null) {
-            this.childName.setText(selectedChild.getName());
-        }
 
         this.add = findViewById(R.id.viewFunctionBtn);
         this.add.setText(getResources().getString(R.string.viewSave));
     }
-
-    public TextWatcher childWatch = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            newName = childName.getText().toString();
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-        }
-    };
 
     public static Intent makeIntent(Context c) {
         return new Intent(c, AddChildActivity.class);

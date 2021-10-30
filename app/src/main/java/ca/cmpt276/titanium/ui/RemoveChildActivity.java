@@ -10,24 +10,27 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import com.google.gson.Gson;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 
 public class RemoveChildActivity extends AppCompatActivity {
-    private Children instance = Children.getInstance(this);
+    private Children children = Children.getInstance(this);
     private EditText childName;
-    private Child selectedChild;
+    private Child childBeingRemoved;
     private Button remove;
+    private static final Gson GSON = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_child);
 
+        String childJson = getIntent().getStringExtra("child_json");
+        this.childBeingRemoved = GSON.fromJson(childJson, Child.class);
+
         setupActionBar();
-        findSelectedChild();
         setupScreenText();
         setupButton();
     }
@@ -44,26 +47,20 @@ public class RemoveChildActivity extends AppCompatActivity {
     private void setupButton() {
         remove.setOnClickListener(view -> {
             removeChildNow();
+            Intent intent = MenuActivity.makeIntent(RemoveChildActivity.this);
+            startActivity(intent);
             finish();
         });
     }
 
     private void removeChildNow() {
-        instance.removeChild(childName.getId());
-        instance.saveData();
-    }
-
-    private void findSelectedChild() {
-        for (int i = 0; i < instance.getNumOfChildren(); i++) {
-            if (Children.getChildren().get(i).isSelected()) {
-                this.selectedChild = instance.getChild(i);
-            }
-        }
+        children.removeChild(childBeingRemoved.getUniqueId());
+        children.saveData();
     }
 
     private void setupScreenText() {
         this.childName = findViewById(R.id.childName);
-        this.childName.setText(selectedChild.getName());
+        this.childName.setText(childBeingRemoved.getName());
         this.childName.setEnabled(false);
         findViewById(R.id.viewRemoveMessage).setVisibility(View.VISIBLE);
 

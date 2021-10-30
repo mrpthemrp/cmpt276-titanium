@@ -29,11 +29,10 @@ public class Children {
             Children.instance = new Children(context);
         }
 
-        loadSavedData();
         return instance;
     }
 
-    private static void loadSavedData() {
+    public void loadSavedData() {
         String childrenJson = prefs.getString("children", null);
 
         Gson gson = new Gson();
@@ -68,8 +67,8 @@ public class Children {
         return uniqueId;
     }
 
-    public void addChild(String name, boolean isSelected) {
-        Child newChild = new Child(generateUniqueChildId(), name, isSelected);
+    public void addChild(String name) {
+        Child newChild = new Child(generateUniqueChildId(), name);
         Children.children.add(newChild);
         saveData();
     }
@@ -108,7 +107,7 @@ public class Children {
         saveData();
     }
 
-    public static ArrayList<Child> getChildren() {
+    public ArrayList<Child> getChildren() {
         return children;
     }
 }

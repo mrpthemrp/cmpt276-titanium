@@ -18,21 +18,27 @@ import android.widget.TextView;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
+import com.google.gson.Gson;
 
 public class ViewChildActivity extends AppCompatActivity {
-    private Children instance = Children.getInstance(this);
+    private Children children;
     private TextView childName;
-    private Child selectedChild;
+    private Child childBeingViewed;
     private Button view;
+    private String childJson;
+    private static final Gson GSON = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_child);
 
+        this.childJson = getIntent().getStringExtra("child_json");
+        this.childBeingViewed = GSON.fromJson(childJson, Child.class);
+        this.children = Children.getInstance(this);
+
         setupActionBar();
         setupButton();
-        findSelectedChild();
         setupScreenText();
     }
 
@@ -61,35 +67,23 @@ public class ViewChildActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.optionsEdit:
-                Intent intent1 = EditChildActivity.makeIntent(ViewChildActivity.this);
-                startActivity(intent1);
+                Intent editChildIntent = EditChildActivity.makeIntent(ViewChildActivity.this);
+                editChildIntent.putExtra("child_json", childJson);
+                startActivity(editChildIntent);
                 return true;
             case R.id.optionsRemove:
-                Intent intent2 = RemoveChildActivity.makeIntent(ViewChildActivity.this);
-                startActivity(intent2);
+                Intent removeChildIntent = RemoveChildActivity.makeIntent(ViewChildActivity.this);
+                removeChildIntent.putExtra("child_json", childJson);
+                startActivity(removeChildIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    @Override
-    protected void onStop() {
-        this.childName.setEnabled(true);
-        super.onStop();
-    }
-
-    private void findSelectedChild() {
-        for (int i = 0; i < instance.getNumOfChildren(); i++) {
-            if (Children.getChildren().get(i).isSelected()) {
-                this.selectedChild = instance.getChild(i);
-            }
-        }
-    }
-
     private void setupScreenText() {
         this.childName = findViewById(R.id.childName);
-        this.childName.setText(selectedChild.getName());
+        this.childName.setText(childBeingViewed.getName());
         this.childName.setEnabled(false);
 
         this.view = findViewById(R.id.viewFunctionBtn);
