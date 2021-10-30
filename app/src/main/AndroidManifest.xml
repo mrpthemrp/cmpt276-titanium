@@ -31,15 +31,7 @@
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:label="@string/menuEdit"
-            android:parentActivityName=".ui.MenuActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Titanium.Child" />
-        <activity
-            android:name=".ui.RemoveChildActivity"
-            android:configChanges="keyboard|keyboardHidden"
-            android:exported="true"
-            android:label="@string/menuRemove"
-            android:parentActivityName=".ui.MenuActivity"
+            android:parentActivityName=".ui.ViewChildActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Titanium.Child" />
         <activity

@@ -3,71 +3,79 @@ package ca.cmpt276.titanium.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import androidx.appcompat.app.ActionBar;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import com.google.gson.Gson;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
+import java.util.Objects;
 
 public class EditChildActivity extends AppCompatActivity {
-    private Children children = Children.getInstance(this);
-    private EditText childName;
+    private static final int INVALID_UNIQUE_ID = -1;
+
+    private final Children children = Children.getInstance(this);
+    private int childUniqueId;
     private Child childBeingEdited;
-    private Button edit;
-    private static final Gson GSON = new Gson();
+    private EditText childName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_child);
-
-        String childJson = getIntent().getStringExtra("child_json");
-        this.childBeingEdited = GSON.fromJson(childJson, Child.class);
-
         setupActionBar();
-        setupScreenText();
-        setupButton();
+
+        this.childUniqueId = getIntent().getIntExtra("child_unique_id", INVALID_UNIQUE_ID);
+        this.childBeingEdited = children.getChild(childUniqueId);
+        displayChildInfo();
+
+        setupSaveButton();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     private void setupActionBar() {
-        Toolbar customMenu = findViewById(R.id.customToolbar);
-        setSupportActionBar(customMenu);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle(R.string.menuEdit);
 
-        ActionBar ab = getSupportActionBar();
-        ab.setTitle(R.string.menuEdit);
-        ab.setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
-    private void setupButton() {
-        edit.setOnClickListener(view -> {
-            updateChildName();
-            children.saveData();
-            Intent intent = MenuActivity.makeIntent(EditChildActivity.this);
-            startActivity(intent);
+    private void displayChildInfo() {
+        this.childName = findViewById(R.id.childName);
+        this.childName.setText(childBeingEdited.getName());
+        this.childName.setEnabled(true);
+    }
+
+    private void setupSaveButton() {
+        Button saveButton = findViewById(R.id.viewFunctionBtn);
+        saveButton.setVisibility(View.VISIBLE);
+
+        saveButton.setOnClickListener(view -> {
+            children.getChild(childUniqueId).setName(childName.getText().toString());
+            Toast.makeText(this, "Child updated", Toast.LENGTH_SHORT).show();
             finish();
         });
     }
 
-    private void updateChildName(){
-        int id = childBeingEdited.getUniqueId();
-        children.getChild(id).setName(childName.getText().toString());
+    public static Intent makeIntent(Context context, int childUniqueId) {
+        Intent editChildIntent = new Intent(context, EditChildActivity.class);
+        editChildIntent.putExtra("child_unique_id", childUniqueId);
+
+        return editChildIntent;
     }
-
-    private void setupScreenText() {
-        this.childName = findViewById(R.id.childName);
-        this.childName.setText(childBeingEdited.getName());
-
-        this.edit = findViewById(R.id.viewFunctionBtn);
-        this.edit.setText(getResources().getString(R.string.viewSave));
-    }
-
-    public static Intent makeIntent(Context c) {
-        return new Intent(c, EditChildActivity.class);
-    }
-
 }

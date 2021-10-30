@@ -48,7 +48,6 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //this.mainMenuFAB.setFocusable(false);
         scroll.removeAllViews();
         setupScrollAllChildren();
     }
@@ -61,7 +60,6 @@ public class MenuActivity extends AppCompatActivity {
 
     private void setupFAB() {
         this.mainMenuFAB.setOnClickListener(view -> {
-            //this.mainMenuFAB.setFocusable(true);
             Intent intent = AddChildActivity.makeIntent(MenuActivity.this);
             startActivity(intent);
         });
@@ -94,19 +92,11 @@ public class MenuActivity extends AppCompatActivity {
             childButton.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             childButton.setOnClickListener(view -> {
-                String childJson = GSON.toJson(child);
-
-                Intent viewChildIntent = ViewChildActivity.makeIntent(this);
-                viewChildIntent.putExtra("child_json", childJson);
-
+                Intent viewChildIntent = ViewChildActivity.makeIntent(this, child.getUniqueId());
                 startActivity(viewChildIntent);
             });
 
             scroll.addView(childButton);
         }
-    }
-
-    public static Intent makeIntent(Context c) {
-        return new Intent(c, MenuActivity.class);
     }
 }

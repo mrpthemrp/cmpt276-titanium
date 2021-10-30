@@ -7,7 +7,7 @@
     tools:context=".ui.ViewChildActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/customToolbar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -23,7 +23,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customToolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:srcCompat="@drawable/ic_baseline_circle_green_24" />
 
     <Button
@@ -31,6 +31,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="45dp"
+        android:text="@string/viewSave"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,6 +46,7 @@
         android:layout_marginTop="70dp"
         android:layout_marginEnd="20dp"
         android:background="@android:color/transparent"
+        android:enabled="false"
         android:fontFamily="sans-serif-medium"
         android:hint="@string/viewDummyText"
         android:minHeight="48dp"
@@ -53,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/addProfilePic"
-        app:layout_constraintTop_toBottomOf="@+id/customToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <ScrollView
         android:id="@+id/viewHistory"
