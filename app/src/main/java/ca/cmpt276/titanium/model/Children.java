@@ -11,7 +11,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Children {
-    private static final Logger logger = Logger.getLogger(Children.class.getName());
+    private static final Gson GSON = new Gson();
+    private static final Logger LOGGER = Logger.getLogger(Children.class.getName());
+
     private static Children instance;
     private static SharedPreferences prefs;
     private static SharedPreferences.Editor prefsEditor;
@@ -33,23 +35,19 @@ public class Children {
     public void loadSavedData() {
         String childrenJson = prefs.getString("children_json", null);
 
-        Gson gson = new Gson();
         Type childrenType = new TypeToken<ArrayList<Child>>(){}.getType();
 
         if (childrenJson != null) {
-            Children.children = gson.fromJson(childrenJson, childrenType);
+            Children.children = GSON.fromJson(childrenJson, childrenType);
         } else {
-            logger.log(Level.INFO, "No Child objects were loaded into Children.children");
+            LOGGER.log(Level.INFO, "No Child objects were loaded into Children.children");
         }
-
     }
 
     public void saveData() {
-        Gson gson = new Gson();
-        String childrenJson = gson.toJson(children);
+        String childrenJson = GSON.toJson(children);
 
         prefsEditor.putString("children_json", childrenJson);
-
         prefsEditor.apply();
     }
 
@@ -59,7 +57,7 @@ public class Children {
         if (children != null && !children.isEmpty()) {
             uniqueId = children.get(children.size() - 1).getUniqueId() + 1;
         } else {
-            logger.log(Level.INFO, "Children.children unique ID generation restarted from 0");
+            LOGGER.log(Level.INFO, "Children.children unique ID generation restarted from 0");
         }
 
         return uniqueId;
@@ -68,7 +66,6 @@ public class Children {
     public void addChild(String name) {
         Child newChild = new Child(generateUniqueChildId(), name);
         Children.children.add(newChild);
-        saveData();
     }
 
     public Child getChild(int uniqueId) {
@@ -78,7 +75,7 @@ public class Children {
             }
         }
 
-        logger.log(Level.WARNING, "Attempted to get Child object with nonexistent unique ID");
+        LOGGER.log(Level.WARNING, "Attempted to get Child object with nonexistent unique ID");
         return null;
     }
 
@@ -94,11 +91,9 @@ public class Children {
         if (badChildIndex != null) {
             Children.children.remove(badChildIndex);
         } else {
-            logger.log(Level.WARNING, "Attempted to remove Child object with nonexistent " +
+            LOGGER.log(Level.WARNING, "Attempted to remove Child object with nonexistent " +
                     "unique ID from Children.children");
         }
-
-        saveData();
     }
 
     public ArrayList<Child> getChildren() {
