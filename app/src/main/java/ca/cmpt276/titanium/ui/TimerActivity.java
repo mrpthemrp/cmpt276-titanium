@@ -17,9 +17,6 @@ import ca.cmpt276.titanium.R;
 
 public class TimerActivity extends AppCompatActivity {
     private ImageView playPause;
-    private EditText hour;
-    private EditText minute;
-    private EditText second;
     private Button cancelBtn;
     //private long hours, minutes, seconds;
     private boolean isPause;//get from sharedPreferences?
@@ -49,9 +46,6 @@ public class TimerActivity extends AppCompatActivity {
     private void setupAttributes() {
         this.playPause = findViewById(R.id.timerPlayPauseBtn);
         this.cancelBtn = findViewById(R.id.timerCancelBtn);
-        this.hour = findViewById(R.id.timerInputHour);
-        this.minute = findViewById(R.id.timerInputMin);
-        this.second = findViewById(R.id.timerInputSec);
         this.isPause = false;
         this.inputIsSet = false;
     }
