@@ -4,30 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/calm_background"
     android:clickable="true"
     android:focusable="true"
     tools:context=".ui.TimerActivity">
 
     <ImageView
+        android:id="@+id/calmBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.9"
+        android:background="@drawable/calm_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+    <ImageView
         android:id="@+id/timerCircle"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginTop="135dp"
+        android:contentDescription="@string/timerCircleDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_circle_timer"
-        android:contentDescription="circle outline made up of lines to resemble a stopwatch" />
+        app:srcCompat="@drawable/ic_circle_timer" />
 
     <Button
         android:id="@+id/timerCancelBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:backgroundTint="?attr/colorPrimary"
+        android:backgroundTintMode="src_in"
         android:text="@android:string/cancel"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,12 +51,12 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
+        android:contentDescription="@string/playPauseDescript"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timerCircle"
         app:srcCompat="@drawable/ic_baseline_play_arrow_24"
-        tools:ignore="ImageContrastCheck"
-        android:contentDescription="the play or pause button, depending on timer state." />
+        tools:ignore="ImageContrastCheck" />
 
     <EditText
         android:id="@+id/timerInputHour"
@@ -57,12 +69,13 @@
         android:hint="@string/timerDefaultTimeInput"
         android:inputType="number"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="?attr/colorOnPrimary"
+        android:textColorHint="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/timerCircle"
         app:layout_constraintEnd_toEndOf="@+id/timerCircle"
         app:layout_constraintStart_toStartOf="@+id/timerCircle"
-        app:layout_constraintTop_toTopOf="@+id/timerCircle" />
+        app:layout_constraintTop_toTopOf="@+id/timerCircle"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/timerInputMin"
@@ -75,12 +88,13 @@
         android:hint="@string/timerDefaultTimeInput"
         android:inputType="number"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="?attr/colorOnPrimary"
+        android:textColorHint="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/timerCircle"
         app:layout_constraintEnd_toEndOf="@+id/timerCircle"
         app:layout_constraintStart_toStartOf="@+id/timerCircle"
-        app:layout_constraintTop_toTopOf="@+id/timerCircle" />
+        app:layout_constraintTop_toTopOf="@+id/timerCircle"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/timerInputSec"
@@ -93,12 +107,13 @@
         android:hint="@string/timerDefaultTimeInput"
         android:inputType="number"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="?attr/colorOnPrimary"
+        android:textColorHint="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/timerCircle"
         app:layout_constraintEnd_toEndOf="@+id/timerCircle"
         app:layout_constraintStart_toStartOf="@+id/timerCircle"
-        app:layout_constraintTop_toTopOf="@+id/timerCircle"/>
+        app:layout_constraintTop_toTopOf="@+id/timerCircle"
+        android:importantForAutofill="no" />
 
     <TextView
         android:id="@+id/timerColon1"
@@ -108,7 +123,7 @@
         android:layout_marginEnd="80dp"
         android:text="@string/timerTimeSeparator"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/timerCircle"
         app:layout_constraintEnd_toEndOf="@+id/timerCircle"
         app:layout_constraintStart_toStartOf="@+id/timerCircle"
@@ -122,7 +137,7 @@
         android:layout_marginTop="5dp"
         android:text="@string/timerTimeSeparator"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/timerCircle"
         app:layout_constraintEnd_toEndOf="@+id/timerCircle"
         app:layout_constraintStart_toStartOf="@+id/timerCircle"

@@ -6,6 +6,7 @@
     <string name="menuTimerBtn">Timeout Timer</string>
     <string name="menuFlipCoinBtn">Flip Coin</string>
     <string name="menuRemove">Remove Child</string>
+    <string name="menuChildrenText">Added Children: </string>
 
     <!-- Coin Flip Strings -->
     <string name="coinResult">RESULT</string>
@@ -41,5 +42,9 @@
 
     <string name="menuEdit">Edit Child</string>
     <string name="edit_child_toast">Child updated</string>
+    <string name="contentDescriptionFAB">Circle-shaped button with a plus sign in the middle.</string>
+    <string name="circleContentDescription">Empty circle with light green fill.</string>
+    <string name="timerCircleDescription">circle outline made up of lines to resemble a stopwatch</string>
+    <string name="playPauseDescript">the play or pause button, depending on timer state.</string>
 
 </resources>

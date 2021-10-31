@@ -15,44 +15,59 @@
         android:layout_marginEnd="178dp"
         android:layout_marginBottom="25dp"
         android:clickable="true"
+        android:contentDescription="@string/contentDescriptionFAB"
         android:src="@drawable/ic_baseline_add_24"
-        app:backgroundTint="@color/green_300"
+        app:backgroundTint="?attr/colorSecondary"
         app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck,RedundantDescriptionCheck,ImageContrastCheck" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/menuGoToTimer"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:layout_marginStart="40dp"
         android:layout_marginBottom="165dp"
+        android:backgroundTint="?attr/colorPrimary"
+        android:backgroundTintMode="src_in"
         android:fontFamily="sans-serif-medium"
         android:text="@string/menuTimerBtn"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="10sp"
-        app:cornerRadius="15dp"
-        app:icon="@drawable/ic_baseline_timer_24"
+        app:icon="@drawable/ic_outline_timer_24"
         app:iconGravity="textTop"
+        app:iconPadding="15dp"
         app:iconSize="60dp"
+        app:iconTint="?attr/colorOnPrimary"
+        app:iconTintMode="src_in"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/menuGoToFlipCoin"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="165dp"
+        android:backgroundTint="?attr/colorPrimary"
+        android:backgroundTintMode="src_in"
         android:text="@string/menuFlipCoinBtn"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="12sp"
-        app:cornerRadius="15dp"
-        app:icon="@drawable/ic_coin_icon"
+        app:icon="@drawable/coin_icon"
         app:iconGravity="textTop"
+        app:iconPadding="15dp"
         app:iconSize="60dp"
+        app:iconTint="?attr/colorOnPrimary"
+        app:iconTintMode="src_in"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/menuHeaderText"
@@ -64,19 +79,20 @@
         android:fontFamily="sans-serif-medium"
         android:text="@string/menuHeader"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="@color/teal_600"
+        android:textColor="?attr/colorPrimary"
         android:typeface="normal"
         app:layout_constraintBottom_toTopOf="@+id/menuGoToTimer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <HorizontalScrollView
         android:id="@+id/menuViewAllChildrenScroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
         android:contextClickable="true"
         android:fadeScrollbars="true"
@@ -100,5 +116,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/menuTextChildrenList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:visibility="invisible"
+        android:text="@string/menuChildrenText"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

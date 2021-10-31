@@ -27,16 +27,21 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="123dp"
         android:textSize="48sp"
+        android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flipButton" />
 
     <Button
         android:id="@+id/flipButton"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:backgroundTint="?attr/colorPrimary"
+        android:backgroundTintMode="src_in"
         android:text="@string/flip"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/coinHeads"

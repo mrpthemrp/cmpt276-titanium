@@ -55,8 +55,11 @@ public class TimerActivity extends AppCompatActivity {
 
     private void setupCancelBtn() {
         this.cancelBtn.setOnClickListener(view -> {
-            Toast.makeText(TimerActivity.this, R.string.timer_cancelled_toast, Toast.LENGTH_SHORT).show();
-            setPlayPause();
+            //only change if the timer is running
+            if(!this.isPause){
+                setPlayPause();
+                Toast.makeText(TimerActivity.this, R.string.timer_cancelled_toast, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
