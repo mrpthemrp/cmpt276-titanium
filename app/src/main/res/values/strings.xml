@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Practical Parent</string>
 
@@ -42,9 +43,11 @@
 
     <string name="menuEdit">Edit Child</string>
     <string name="edit_child_toast">Child updated</string>
+    <string name="playPauseDescript">the play or pause button, depending on timer state.</string>
+
+    <!--Content Descriptions for Visually Impaired-->
     <string name="contentDescriptionFAB">Circle-shaped button with a plus sign in the middle.</string>
     <string name="circleContentDescription">Empty circle with light green fill.</string>
     <string name="timerCircleDescription">circle outline made up of lines to resemble a stopwatch</string>
-    <string name="playPauseDescript">the play or pause button, depending on timer state.</string>
 
 </resources>

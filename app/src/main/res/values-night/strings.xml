@@ -1,4 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Practical Parent</string>
+
+    <!-- Main Menu Strings -->
+    <string name="menuHeader">Main Menu</string>
+    <string name="menuTimerBtn">Timeout Timer</string>
+    <string name="menuFlipCoinBtn">Flip Coin</string>
+    <string name="menuRemove">Remove Child</string>
+    <string name="menuChildrenText">Added Children: </string>
+
+    <!-- Coin Flip Strings -->
+    <string name="coinResult">RESULT</string>
+    <string name="coinTapToFlip">Tap to flip!</string>
+    <string name="flip">Flip</string>
+
+    <!-- Timer Strings -->
+    <string name="timerTitle">Timer</string>
+    <string name="timerStart">Start</string>
+    <string name="timerPause">Pause</string>
+    <string name="timerEnd">Cancel</string>
+    <string name="timerDefaultTimeInput">00</string>
+    <string name="timerTimeSeparator">:</string>
+    <string name="timer_cancelled_toast">Timer cancelled</string>
+
+    <!-- View Child Strings-->
+    <string name="menuViewChild">View Child</string>
+    <string name="delete_child_prompt_title">Delete&#160;</string>
+    <string name="delete_child_prompt_message">Are you sure? This action cannot be reversed.</string>
+    <string name="prompt_positive">Yes</string>
+    <string name="prompt_negative">No</string>
+    <string name="delete_child_prompt_toast">Child deleted</string>
+
+    <!-- Add/Edit Child Strings-->
+    <string name="viewSave">SAVE</string>
+    <string name="discard_changes_title">Discard Changes</string>
+    <string name="discard_changes_message">Are you sure? This action cannot be reversed.</string>
+    <string name="changes_discarded_toast">Changes discarded</string>
+
+    <string name="menuAdd">Add Child</string>
+    <string name="viewDummyText">Child Name</string>
+    <string name="add_child_toast">Child saved</string>
+
+    <string name="menuEdit">Edit Child</string>
+    <string name="edit_child_toast">Child updated</string>
+    <string name="playPauseDescript">the play or pause button, depending on timer state.</string>
+
+    <!--Content Descriptions for Visually Impaired-->
+    <string name="contentDescriptionFAB">Circle-shaped button with a plus sign in the middle.</string>
     <string name="circleContentDescription">Empty circle with light green fill.</string>
+    <string name="timerCircleDescription">circle outline made up of lines to resemble a stopwatch</string>
+
 </resources>
