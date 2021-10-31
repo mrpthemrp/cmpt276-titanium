@@ -14,7 +14,6 @@
             android:name=".ui.ViewChildActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:label="@string/menuViewChild"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Titanium.Child" />
@@ -22,7 +21,6 @@
             android:name=".ui.AddChildActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:label="@string/menuAdd"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Titanium.Child" />
@@ -30,7 +28,6 @@
             android:name=".ui.EditChildActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:label="@string/menuEdit"
             android:parentActivityName=".ui.ViewChildActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Titanium.Child" />
@@ -38,14 +35,12 @@
             android:name=".ui.CoinActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:label="@string/menuFlipCoinBtn"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.TimerActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:label="@string/timerTitle"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Titanium.Calm" />

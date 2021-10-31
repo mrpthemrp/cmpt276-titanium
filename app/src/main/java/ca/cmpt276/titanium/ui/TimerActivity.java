@@ -1,5 +1,6 @@
 package ca.cmpt276.titanium.ui;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -30,6 +31,7 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
+        setupTitle();
         setupAttributes();
         setupPlayPause();
         setupCancelBtn();
@@ -37,6 +39,11 @@ public class TimerActivity extends AppCompatActivity {
         if(!this.inputIsSet){
             setupInput(); //this method implements text watcher
         }
+    }
+
+    private void setupTitle() {
+        ActionBar toolbar = getSupportActionBar();
+        toolbar.setTitle(R.string.timerTitle);
     }
 
     private void setupAttributes() {

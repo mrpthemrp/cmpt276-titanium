@@ -9,6 +9,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
@@ -38,6 +40,7 @@ public class CoinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin);
+        setupTitle();
 
         coinFlipHistory = new CoinFlipHistory(getApplicationContext());
 
@@ -46,6 +49,11 @@ public class CoinActivity extends AppCompatActivity {
         coinResult = findViewById(R.id.coinFlipResult);
 
         flipButtonClick();
+    }
+
+    private void setupTitle() {
+        ActionBar toolbar = getSupportActionBar();
+        toolbar.setTitle(R.string.menuFlipCoinBtn);
     }
 
     public static Intent makeIntent(Context c){
