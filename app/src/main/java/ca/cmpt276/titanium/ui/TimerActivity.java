@@ -66,37 +66,44 @@ public class TimerActivity extends AppCompatActivity {
             durationOfTime = 60000;
             setUpTime();
             stopTimer();
+            isPause = false;
             setPlayPause();
         });
         twoMinButton.setOnClickListener(view -> {
             durationOfTime = 120000;
             setUpTime();
             stopTimer();
+            isPause = false;
             setPlayPause();
         });
         threeMinButton.setOnClickListener(view -> {
             durationOfTime = 180000;
             setUpTime();
             stopTimer();
+            isPause = false;
             setPlayPause();
         });
         fiveMinButton.setOnClickListener(view -> {
             durationOfTime = 300000;
             setUpTime();
             stopTimer();
+            isPause = false;
             setPlayPause();
         });
         tenMinButton.setOnClickListener(view -> {
             durationOfTime = 600000;
             setUpTime();
             stopTimer();
+            isPause = false;
             setPlayPause();
         });
 
         setTimeButton.setOnClickListener(view -> {
             durationOfTime = Integer.parseInt(userInputTime.getText().toString());
+            durationOfTime *= 60000;
             setUpTime();
             stopTimer();
+            isPause = false;
             setPlayPause();
         });
     }
