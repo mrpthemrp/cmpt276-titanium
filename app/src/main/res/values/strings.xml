@@ -43,5 +43,6 @@
     <string name="menuEdit">Edit Child</string>
     <string name="edit_child_toast">Child updated</string>
     <string name="contentDescriptionFAB">Circle-shaped button with a plus sign in the middle.</string>
+    <string name="circleContentDescription">Empty circle with light green fill.</string>
 
 </resources>
