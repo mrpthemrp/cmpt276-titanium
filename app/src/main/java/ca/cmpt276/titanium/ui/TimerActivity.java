@@ -9,25 +9,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
-
 import ca.cmpt276.titanium.R;
 
 public class TimerActivity extends AppCompatActivity {
     private ImageView playPause;
-    private Button cancelBtn, oneMinButton, twoMinButton, threeMinButton, fiveMinButton,tenMinbutton;
+    private Button cancelBtn, oneMinButton, twoMinButton, threeMinButton, fiveMinButton, tenMinButton;
     private Button setTimeButton;
     private EditText userInputTime;
-    private boolean isPause;//get from sharedPreferences?
-    private boolean inputIsSet;
+    private boolean isPause;
     private boolean isTimeRunning;
     long durationOfTime = 0;
     private TextView time;
@@ -43,14 +38,11 @@ public class TimerActivity extends AppCompatActivity {
         setupPlayPause();
         setupCancelBtn();
         setUpButton();
-        //make below a method onc shared preferences is sorted out
-        if(!this.inputIsSet){
-            // ?
-        }
     }
 
     private void setupTitle() {
         ActionBar toolbar = getSupportActionBar();
+        assert toolbar != null;
         toolbar.setTitle(R.string.timerTitle);
     }
 
@@ -61,40 +53,51 @@ public class TimerActivity extends AppCompatActivity {
         this.twoMinButton = findViewById(R.id.twoMin);
         this.threeMinButton = findViewById(R.id.threeMin);
         this.fiveMinButton = findViewById(R.id.fiveMin);
-        this.tenMinbutton = findViewById(R.id.tenMin);
+        this.tenMinButton = findViewById(R.id.tenMin);
         this.userInputTime = findViewById(R.id.editTextNumber);
         this.setTimeButton = findViewById(R.id.setTimeButton);
         this.time = findViewById(R.id.timer);
 
         this.isPause = false;
-        this.inputIsSet = false;
     }
 
     private void setUpButton(){
         oneMinButton.setOnClickListener(view -> {
             durationOfTime = 60000;
             setUpTime();
+            stopTimer();
+            setPlayPause();
         });
         twoMinButton.setOnClickListener(view -> {
             durationOfTime = 120000;
             setUpTime();
+            stopTimer();
+            setPlayPause();
         });
         threeMinButton.setOnClickListener(view -> {
             durationOfTime = 180000;
             setUpTime();
+            stopTimer();
+            setPlayPause();
         });
         fiveMinButton.setOnClickListener(view -> {
             durationOfTime = 300000;
             setUpTime();
+            stopTimer();
+            setPlayPause();
         });
-        tenMinbutton.setOnClickListener(view -> {
+        tenMinButton.setOnClickListener(view -> {
             durationOfTime = 600000;
             setUpTime();
+            stopTimer();
+            setPlayPause();
         });
 
         setTimeButton.setOnClickListener(view -> {
             durationOfTime = Integer.parseInt(userInputTime.getText().toString());
             setUpTime();
+            stopTimer();
+            setPlayPause();
         });
     }
 
@@ -109,7 +112,9 @@ public class TimerActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-
+                isPause = false;
+                isTimeRunning = false;
+                setPlayPause();
             }
         }.start();
 
@@ -138,6 +143,8 @@ public class TimerActivity extends AppCompatActivity {
 
     private void setUpTime(){
         if(durationOfTime == 0){
+            String noTime = "00:00";
+            time.setText(noTime);
             return;
         }
         int min = (int) durationOfTime / 60000;
@@ -156,9 +163,11 @@ public class TimerActivity extends AppCompatActivity {
 
     private void setupCancelBtn() {
         this.cancelBtn.setOnClickListener(view -> {
-            //only change if the timer is running
-            if(!this.isPause){
-                setPlayPause();
+            if(isTimeRunning){
+                stopTimer();
+                countDownTimer.onFinish();
+                durationOfTime = 0;
+                setUpTime();
                 Toast.makeText(TimerActivity.this, R.string.timer_cancelled_toast, Toast.LENGTH_SHORT).show();
             }
         });
