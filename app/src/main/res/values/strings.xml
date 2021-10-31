@@ -44,5 +44,7 @@
     <string name="edit_child_toast">Child updated</string>
     <string name="contentDescriptionFAB">Circle-shaped button with a plus sign in the middle.</string>
     <string name="circleContentDescription">Empty circle with light green fill.</string>
+    <string name="timerCircleDescription">circle outline made up of lines to resemble a stopwatch</string>
+    <string name="playPauseDescript">the play or pause button, depending on timer state.</string>
 
 </resources>

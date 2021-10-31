@@ -22,7 +22,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck,RedundantDescriptionCheck,ImageContrastCheck" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/menuGoToTimer"
@@ -78,13 +78,14 @@
         android:layout_marginBottom="64dp"
         android:fontFamily="sans-serif-medium"
         android:text="@string/menuHeader"
-        android:textColor="?attr/colorPrimary"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="?attr/colorPrimary"
         android:typeface="normal"
         app:layout_constraintBottom_toTopOf="@+id/menuGoToTimer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <HorizontalScrollView
         android:id="@+id/menuViewAllChildrenScroll"
