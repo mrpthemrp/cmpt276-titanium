@@ -24,9 +24,9 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/menuGoToTimer"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:layout_marginStart="40dp"
@@ -37,7 +37,7 @@
         android:text="@string/menuTimerBtn"
         android:textColor="?attr/colorOnPrimary"
         android:textSize="10sp"
-        app:icon="@drawable/ic_baseline_timer_24"
+        app:icon="@drawable/ic_outline_timer_24"
         app:iconGravity="textTop"
         app:iconPadding="15dp"
         app:iconSize="60dp"
@@ -47,9 +47,9 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="TextContrastCheck" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/menuGoToFlipCoin"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:layout_marginEnd="40dp"
@@ -59,10 +59,12 @@
         android:text="@string/menuFlipCoinBtn"
         android:textColor="?attr/colorOnPrimary"
         android:textSize="12sp"
-        app:icon="@drawable/ic_coin_icon"
+        app:icon="@drawable/coin_icon"
         app:iconGravity="textTop"
         app:iconPadding="15dp"
         app:iconSize="60dp"
+        app:iconTint="?attr/colorOnPrimary"
+        app:iconTintMode="src_in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="TextContrastCheck" />
