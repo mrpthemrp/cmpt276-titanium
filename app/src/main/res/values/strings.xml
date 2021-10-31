@@ -14,6 +14,9 @@
     <string name="coinTapToFlip">Tap to flip!</string>
     <string name="flip">Flip</string>
 
+    <!-- View Coin Flip History Strings -->
+    <string name="coinFlipHistoryTitle">Coin Flip History</string>
+
     <!-- Timer Strings -->
     <string name="timerTitle">Timer</string>
     <string name="timerStart">Start</string>

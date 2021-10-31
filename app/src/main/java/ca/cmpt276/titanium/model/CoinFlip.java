@@ -24,6 +24,10 @@ public class CoinFlip {
         return coins[random.nextInt(coins.length)];
     }
 
+    public Coin getSideThatChildPicks() {
+        return sideThatChildPicks;
+    }
+
     public void setCoinSideLandedOn() {
         coinSideLandedOn = flipCoin();
     }
