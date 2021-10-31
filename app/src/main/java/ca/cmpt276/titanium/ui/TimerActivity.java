@@ -8,20 +8,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.concurrent.TimeUnit;
 
 import ca.cmpt276.titanium.R;
 
 public class TimerActivity extends AppCompatActivity {
     private ImageView playPause;
-    private Button cancelBtn;
-    //private long hours, minutes, seconds;
+    private Button cancelBtn, oneMinButton, twoMinButton, threeMinButton, fiveMinButton,tenMinbutton;
+    private Button setTimeButton;
+    private View userInputTime;
     private boolean isPause;//get from sharedPreferences?
     private boolean inputIsSet;
-    private CountDownTimer timer;
+    long durationOfTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +50,36 @@ public class TimerActivity extends AppCompatActivity {
     private void setupAttributes() {
         this.playPause = findViewById(R.id.timerPlayPauseBtn);
         this.cancelBtn = findViewById(R.id.timerCancelBtn);
+        this.oneMinButton = findViewById(R.id.oneMin);
+        this.twoMinButton = findViewById(R.id.twoMin);
+        this.threeMinButton = findViewById(R.id.threeMin);
+        this.fiveMinButton = findViewById(R.id.fiveMin);
+        this.tenMinbutton = findViewById(R.id.tenMin);
+        this.userInputTime = findViewById(R.id.editTextNumber);
+        this.setTimeButton = findViewById(R.id.setTimeButton);
         this.isPause = false;
         this.inputIsSet = false;
     }
+
+    private void setUpButton(){
+        oneMinButton.setOnClickListener(view -> {
+            durationOfTime = TimeUnit.MINUTES.toMinutes(1);
+        });
+        twoMinButton.setOnClickListener(view -> {
+            durationOfTime = TimeUnit.MINUTES.toMinutes(2);
+        });
+        threeMinButton.setOnClickListener(view -> {
+            durationOfTime = TimeUnit.MINUTES.toMinutes(3);
+        });
+        fiveMinButton.setOnClickListener(view -> {
+            durationOfTime = TimeUnit.MINUTES.toMinutes(5);
+        });
+        tenMinbutton.setOnClickListener(view -> {
+            durationOfTime = TimeUnit.MINUTES.toMinutes(10);
+        });
+    }
+
+
 
     private void setupInput() {
         //to do
