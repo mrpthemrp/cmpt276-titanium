@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -32,7 +30,6 @@ public class ViewChildActivity extends AppCompatActivity {
         setupActionBar();
 
         this.childUniqueId = getIntent().getIntExtra("child_unique_id", INVALID_UNIQUE_ID);
-        setupSaveButton();
     }
 
     @Override
@@ -71,15 +68,6 @@ public class ViewChildActivity extends AppCompatActivity {
         setTitle(R.string.menuViewChild);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-    }
-
-    private void setupSaveButton() {
-        Button saveButton = findViewById(R.id.viewFunctionBtn);
-        saveButton.setVisibility(View.VISIBLE);
-
-        saveButton.setOnClickListener(view -> {
-            finish();
-        });
     }
 
     private void displayChildInfo() {
