@@ -2,11 +2,8 @@ package ca.cmpt276.titanium.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.media.Image;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +14,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.model.Child;
-import ca.cmpt276.titanium.model.Coin;
 import ca.cmpt276.titanium.model.CoinFlip;
 
 public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
@@ -38,7 +33,8 @@ public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
         ImageView resultImageView = (ImageView) convertView.findViewById(R.id.coinFlipIcon);
         TextView childTextView = (TextView) convertView.findViewById(R.id.coinFlipChild);
 
-        childTextView.setText(coinFlip.getChildWhoPicksSide().getName() + "chose " + coinFlip.getSideThatChildPicks());
+        // coinFlip.getChildWhoPicksSide().getName() instead of "name"
+        childTextView.setText("Name " + "chose " + coinFlip.getSideThatChildPicks());
 
         if (coinFlip.getCoinSideLandedOn() == coinFlip.getSideThatChildPicks()) {
             resultImageView.setImageResource(R.drawable.checkmark);

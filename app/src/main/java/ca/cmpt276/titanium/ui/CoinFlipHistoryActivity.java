@@ -2,8 +2,12 @@ package ca.cmpt276.titanium.ui;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -23,6 +27,14 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
         setupTitle();
 
         populateListView();
+
+        if (CoinFlipHistory.getCoinFlipHistory().size() == 0) {
+            ConstraintLayout emptyStateLayout = (ConstraintLayout) findViewById(R.id.emptyStateLayout);
+            emptyStateLayout.setVisibility(View.VISIBLE);
+
+            ListView listView = (ListView) findViewById(R.id.coinFlipHistoryList);
+            listView.setVisibility(View.GONE);
+        }
     }
 
     private void setupTitle() {
