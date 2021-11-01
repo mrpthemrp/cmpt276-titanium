@@ -14,7 +14,7 @@ public class CoinFlip {
                     LocalDateTime timeOfFlip, Coin coinSideLandedOn) {
         this.childWhoPicksSide = childWhoPicksSide;
         this.sideThatChildPicks = sideThatChildPicks;
-        this.timeOfFlip = timeOfFlip.format(DateTimeFormatter.ofPattern("d::MMM::uuuu HH::mm::ss"));
+        this.timeOfFlip = timeOfFlip.format(DateTimeFormatter.ofPattern("d-MMM-uuuu, HH:mm:ss"));
         this.coinSideLandedOn = coinSideLandedOn;
     }
 
@@ -22,6 +22,10 @@ public class CoinFlip {
         Coin[] coins = Coin.values();
         Random random = new Random();
         return coins[random.nextInt(coins.length)];
+    }
+
+    public Coin getSideThatChildPicks() {
+        return sideThatChildPicks;
     }
 
     public void setCoinSideLandedOn() {

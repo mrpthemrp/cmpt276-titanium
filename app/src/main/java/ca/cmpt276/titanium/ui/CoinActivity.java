@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class CoinActivity extends AppCompatActivity {
+    private Button historyButton;
     private Button flipButton;
     private ImageView coin;
     private TextView coinResult;
@@ -43,6 +44,12 @@ public class CoinActivity extends AppCompatActivity {
         setupTitle();
 
         coinFlipHistory = new CoinFlipHistory(getApplicationContext());
+
+        historyButton = findViewById(R.id.viewHistoryButton);
+        historyButton.setOnClickListener((View view) -> {
+            Intent intent = new Intent(this, CoinFlipHistoryActivity.class);
+            startActivity(intent);
+        });
 
         flipButton = findViewById(R.id.flipButton);
         coin = findViewById(R.id.coinHeads);
