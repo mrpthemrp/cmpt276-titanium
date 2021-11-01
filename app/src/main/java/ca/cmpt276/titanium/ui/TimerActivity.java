@@ -165,7 +165,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private void setUpTime(){
         if(durationOfTime == 0){
-            String noTime = "00:00";
+            String noTime = "00:00:00";
             time.setText(noTime);
             return;
         }
@@ -174,10 +174,17 @@ public class TimerActivity extends AppCompatActivity {
             durationOfTime = durationStartTime;
         }
         isReset = false;
+        int totalTimeInSeconds = (int) durationOfTime / 1000;
+        int hour = totalTimeInSeconds / 60;
+        int min = hour % 60;
+        int sec = totalTimeInSeconds % 60;
+        hour /= 60;
 
-        int min = (int) durationOfTime / 60000;
-        int sec = (int) durationOfTime % 60000 / 1000;
         String timeDuration = "";
+        if(hour < 10){
+            timeDuration += "0";
+        }
+        timeDuration += hour + ":";
         if(min < 10){
             timeDuration += "0";
         }
