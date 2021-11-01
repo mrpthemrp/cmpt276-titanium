@@ -73,42 +73,27 @@ public class TimerActivity extends AppCompatActivity {
         oneMinButton.setOnClickListener(view -> {
             durationOfTime = 60000;
             durationStartTime = 60000;
-            setUpTime();
-            stopTimer();
-            isPause = false;
-            setPlayPause();
+            changeTime();
         });
         twoMinButton.setOnClickListener(view -> {
             durationOfTime = 120000;
             durationStartTime = 120000;
-            setUpTime();
-            stopTimer();
-            isPause = false;
-            setPlayPause();
+            changeTime();
         });
         threeMinButton.setOnClickListener(view -> {
             durationOfTime = 180000;
             durationStartTime = 180000;
-            setUpTime();
-            stopTimer();
-            isPause = false;
-            setPlayPause();
+            changeTime();
         });
         fiveMinButton.setOnClickListener(view -> {
             durationOfTime = 300000;
             durationStartTime = 300000;
-            setUpTime();
-            stopTimer();
-            isPause = false;
-            setPlayPause();
+            changeTime();
         });
         tenMinButton.setOnClickListener(view -> {
             durationOfTime = 600000;
             durationStartTime = 600000;
-            setUpTime();
-            stopTimer();
-            isPause = false;
-            setPlayPause();
+            changeTime();
         });
 
         setTimeButton.setOnClickListener(view -> {
@@ -116,11 +101,15 @@ public class TimerActivity extends AppCompatActivity {
             durationOfTime *= 60000;
             durationStartTime = Integer.parseInt(userInputTime.getText().toString());
             durationStartTime *= 60000;
-            setUpTime();
-            stopTimer();
-            isPause = false;
-            setPlayPause();
+            changeTime();
         });
+    }
+
+    private void changeTime(){
+        setUpTime();
+        stopTimer();
+        isPause = false;
+        setPlayPause();
     }
 
     private void startCountDown(){
@@ -198,15 +187,13 @@ public class TimerActivity extends AppCompatActivity {
 
     private void setupCancelBtn() {
         this.cancelBtn.setOnClickListener(view -> {
-            if(isTimeRunning){
-                stopTimer();
-                isPause = false;
-                isTimeRunning = false;
-                setPlayPause();
-                durationOfTime = 0;
-                setUpTime();
-                Toast.makeText(TimerActivity.this, R.string.timer_cancelled_toast, Toast.LENGTH_SHORT).show();
-            }
+            stopTimer();
+            isPause = false;
+            isTimeRunning = false;
+            setPlayPause();
+            durationOfTime = 0;
+            setUpTime();
+            Toast.makeText(TimerActivity.this, R.string.timer_cancelled_toast, Toast.LENGTH_SHORT).show();
         });
     }
 
