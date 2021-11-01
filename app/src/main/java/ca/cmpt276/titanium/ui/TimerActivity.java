@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,14 +30,12 @@ public class TimerActivity extends AppCompatActivity {
     long durationStartTime = 0;
     private TextView time;
     private CountDownTimer countDownTimer;
-    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
-        handler = new Handler();
         setupTitle();
         setupAttributes();
         setupPlayPause();
@@ -65,7 +62,6 @@ public class TimerActivity extends AppCompatActivity {
         this.userInputTime = findViewById(R.id.editTextNumber);
         this.setTimeButton = findViewById(R.id.setTimeButton);
         this.time = findViewById(R.id.timer);
-
         this.isPause = false;
     }
 
@@ -163,6 +159,7 @@ public class TimerActivity extends AppCompatActivity {
             durationOfTime = durationStartTime;
         }
         isReset = false;
+
         int totalTimeInSeconds = (int) durationOfTime / 1000;
         int hour = totalTimeInSeconds / 60;
         int min = hour % 60;
@@ -182,6 +179,7 @@ public class TimerActivity extends AppCompatActivity {
             timeDuration += "0";
         }
         timeDuration += sec;
+
         time.setText(timeDuration);
     }
 
