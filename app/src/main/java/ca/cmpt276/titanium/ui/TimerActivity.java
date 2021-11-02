@@ -1,6 +1,7 @@
 package ca.cmpt276.titanium.ui;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -18,10 +19,7 @@ import android.widget.Toast;
 import ca.cmpt276.titanium.R;
 
 /**
- * BUGS:
- * 1 Timer play pause wont adjust to shared prefs
- * reset wont adjust to shared prefs
- * cancel may have a bug
+    TODO: Alert Dialog causes crash only when on a different activity (commented out)
  */
 
 public class TimerActivity extends AppCompatActivity {
@@ -131,6 +129,7 @@ public class TimerActivity extends AppCompatActivity {
             public void onFinish() {
                 isTimeRunning = false;
                 setPlayPause();
+                //endOfTimer();
             }
         }.start();
 
@@ -253,6 +252,19 @@ public class TimerActivity extends AppCompatActivity {
             isPaused = true;
         }
     }
+
+    /*
+    private void endOfTimer(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(TimerActivity.this);
+        builder.setTitle("Timeout Is Up!")
+                .setMessage("Please click OK to remove this alert.")
+                .setPositiveButton("OK", null)
+                .setCancelable(false);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+     */
 
     public static Intent makeIntent(Context c){
         return new Intent(c, TimerActivity.class);
