@@ -1,6 +1,5 @@
 package ca.cmpt276.titanium.ui;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -17,7 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.model.TimerInfo;
+
+/**
+ * BUGS:
+ * 1 Timer play pause wont adjust to shared prefs
+ * reset wont adjust to shared prefs
+ * cancel may have a bug
+ */
 
 public class TimerActivity extends AppCompatActivity {
     private ImageView playPause;
