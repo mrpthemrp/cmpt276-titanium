@@ -16,8 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.TimerInfo;
 
 public class TimerActivity extends AppCompatActivity {
+    private TimerInfo timerInfo = TimerInfo.getInstance(TimerActivity.this);
     private ImageView playPause;
     private Button cancelBtn, resetButton;
     private Button oneMinButton, twoMinButton, threeMinButton, fiveMinButton, tenMinButton;
@@ -30,6 +32,7 @@ public class TimerActivity extends AppCompatActivity {
     long durationStartTime = 0;
     private TextView time;
     private CountDownTimer countDownTimer;
+    private int hour, min , sec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,9 +164,9 @@ public class TimerActivity extends AppCompatActivity {
         isReset = false;
 
         int totalTimeInSeconds = (int) durationOfTime / 1000;
-        int hour = totalTimeInSeconds / 60;
-        int min = hour % 60;
-        int sec = totalTimeInSeconds % 60;
+        hour = totalTimeInSeconds / 60;
+        min = hour % 60;
+        sec = totalTimeInSeconds % 60;
         hour /= 60;
 
         String timeDuration = "";
