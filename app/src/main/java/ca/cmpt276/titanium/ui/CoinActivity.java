@@ -52,7 +52,7 @@ public class CoinActivity extends AppCompatActivity {
         });
 
         flipButton = findViewById(R.id.flipButton);
-        coin = findViewById(R.id.coinHeads);
+        coin = findViewById(R.id.coinBlank);
         coinResult = findViewById(R.id.coinFlipResult);
 
         flipButtonClick();
@@ -68,6 +68,7 @@ public class CoinActivity extends AppCompatActivity {
     }
 
     private void flipTheCoin(){
+        coin.setImageResource(R.drawable.ic_coin_blank);
         Random rand = new Random();
         int coinSide = rand.nextInt(2);
         Animation animation = AnimationUtils.loadAnimation(CoinActivity.this, R.anim.flipanim);
