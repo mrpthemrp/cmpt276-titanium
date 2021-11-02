@@ -23,7 +23,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class CoinActivity extends AppCompatActivity {
+    private static final Coin DEFAULT_COIN_CHOSEN = Coin.HEADS;
+
     private Button historyButton;
+
+    private String sideChosenFormat;
+    private TextView sideChosenDisplay;
+    private Button headsButton;
+    private Button tailsButton;
+    private Coin coinChosen = DEFAULT_COIN_CHOSEN;
+
     private Button flipButton;
     private ImageView coin;
     private TextView coinResult;
@@ -51,11 +60,29 @@ public class CoinActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        setSideChosenText();
+        headsButton = findViewById(R.id.headsButton);
+        headsButton.setOnClickListener((View view) -> {
+            coinChosen = Coin.HEADS;
+            setSideChosenText();
+        });
+        tailsButton = findViewById(R.id.tailsButton);
+        tailsButton.setOnClickListener((View view) -> {
+            coinChosen = Coin.TAILS;
+            setSideChosenText();
+        });
+
         flipButton = findViewById(R.id.flipButton);
         coin = findViewById(R.id.coinBlank);
         coinResult = findViewById(R.id.coinFlipResult);
 
         flipButtonClick();
+    }
+
+    private void setSideChosenText() {
+        sideChosenFormat = getString(R.string.coinSideChosen, coinChosen.toString());
+        sideChosenDisplay = findViewById(R.id.sideChosenText);
+        sideChosenDisplay.setText(sideChosenFormat);
     }
 
     private void setupTitle() {
@@ -74,11 +101,6 @@ public class CoinActivity extends AppCompatActivity {
         Animation animation = AnimationUtils.loadAnimation(CoinActivity.this, R.anim.flipanim);
         coin.startAnimation(animation);
         coinResult.setVisibility(View.INVISIBLE);
-
-        // TODO: Make screen for child to pick heads or tails
-//        if (!Children.getChildren().isEmpty()) {
-//             Coin sideThatChildPicks = ...;
-//        }
 
         Coin coinSideLandedOn;
         // heads == 0
@@ -103,7 +125,7 @@ public class CoinActivity extends AppCompatActivity {
             Child childOfNextTurn = getChildOfNextTurn();
             // TODO: Remove Coin.TAILS once sideThatChildPicks can be retrieved
             // childOfNextTurn will always return null until adding child is implemented
-            CoinFlip coinFlip = new CoinFlip(childOfNextTurn, Coin.TAILS, timeOfFlip, coinSideLandedOn);
+            CoinFlip coinFlip = new CoinFlip(childOfNextTurn, coinChosen, timeOfFlip, coinSideLandedOn);
 
             coinFlipHistory.addCoinFlipToHistory(coinFlip);
         }

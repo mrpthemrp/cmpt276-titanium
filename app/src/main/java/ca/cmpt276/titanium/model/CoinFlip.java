@@ -28,8 +28,8 @@ public class CoinFlip {
         return sideThatChildPicks;
     }
 
-    public void setCoinSideLandedOn() {
-        coinSideLandedOn = flipCoin();
+    public void setCoinSideLandedOn(Coin coinSideLandedOn) {
+        this.coinSideLandedOn = coinSideLandedOn;
     }
 
     public Child getChildWhoPicksSide() {
@@ -42,5 +42,9 @@ public class CoinFlip {
 
     public Coin getCoinSideLandedOn() {
         return coinSideLandedOn;
+    }
+
+    public void setCoinSideLandedOn() {
+        coinSideLandedOn = flipCoin();
     }
 }
