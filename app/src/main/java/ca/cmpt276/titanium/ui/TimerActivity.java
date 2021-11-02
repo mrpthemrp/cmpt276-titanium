@@ -1,7 +1,7 @@
 package ca.cmpt276.titanium.ui;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -17,7 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.model.TimerInfo;
+
+/**
+    TODO: Alert Dialog causes crash only when on a different activity (commented out)
+ */
 
 public class TimerActivity extends AppCompatActivity {
     private ImageView playPause;
@@ -25,8 +28,7 @@ public class TimerActivity extends AppCompatActivity {
     private Button oneMinButton, twoMinButton, threeMinButton, fiveMinButton, tenMinButton;
     private Button setTimeButton;
     private EditText userInputTime;
-    private boolean isPause;
-    private boolean isTimeRunning;
+    private boolean isTimeRunning, isPaused;
     long durationOfTime;
     long durationStartTime;
     private TextView time;
@@ -63,7 +65,6 @@ public class TimerActivity extends AppCompatActivity {
         this.userInputTime = findViewById(R.id.editTextNumber);
         this.setTimeButton = findViewById(R.id.setTimeButton);
         this.time = findViewById(R.id.timer);
-        this.isPause = false;
     }
 
     private void customTimeFunctionality(){
@@ -109,8 +110,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private void changeTime(){
         setUpTime();
-        stopTimer();
-        isPause = false;
+        isPaused = true;
         setPlayPause();
     }
 
@@ -127,9 +127,9 @@ public class TimerActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                isPause = false;
                 isTimeRunning = false;
                 setPlayPause();
+                //endOfTimer();
             }
         }.start();
 
@@ -175,12 +175,14 @@ public class TimerActivity extends AppCompatActivity {
 
             if(durationOfTime < 0){
                 durationOfTime = 0;
-                isTimeRunning = false;
+                isTimeRunning = true;
+                isPaused = true;
                 setUpTime();
-                setupPlayPause();
             }
             else{
-                startCountDown();
+                isTimeRunning = false;
+                isPaused = false;
+                setPlayPause();
             }
         }
     }
@@ -217,9 +219,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private void setupCancelBtn() {
         this.cancelBtn.setOnClickListener(view -> {
-            stopTimer();
-            isPause = false;
-            isTimeRunning = false;
+            isPaused = true;
             setPlayPause();
             durationOfTime = 0;
             setUpTime();
@@ -235,23 +235,36 @@ public class TimerActivity extends AppCompatActivity {
         this.resetButton.setOnClickListener(view -> {
             durationOfTime = durationStartTime;
             setUpTime();
-            isPause = false;
+            isPaused = true;
             setPlayPause();
         });
     }
 
     private void setPlayPause() {
-        if(this.isPause){
-            this.playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_pause_24, getTheme()));
-            startCountDown();
-            this.isPause =false;
-        }
-        else{
+        if(this.isTimeRunning || isPaused){
             this.playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_play_arrow_24, getTheme()));
             stopTimer();
-            this.isPause =true;
+            isPaused = false;
+        }
+        else{
+            this.playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_pause_24, getTheme()));
+            startCountDown();
+            isPaused = true;
         }
     }
+
+    /*
+    private void endOfTimer(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(TimerActivity.this);
+        builder.setTitle("Timeout Is Up!")
+                .setMessage("Please click OK to remove this alert.")
+                .setPositiveButton("OK", null)
+                .setCancelable(false);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+     */
 
     public static Intent makeIntent(Context c){
         return new Intent(c, TimerActivity.class);
