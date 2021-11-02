@@ -7,6 +7,7 @@ import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.Button;
@@ -19,7 +20,6 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.TimerInfo;
 
 public class TimerActivity extends AppCompatActivity {
-    private TimerInfo timerInfo = TimerInfo.getInstance(TimerActivity.this);
     private ImageView playPause;
     private Button cancelBtn, resetButton;
     private Button oneMinButton, twoMinButton, threeMinButton, fiveMinButton, tenMinButton;
@@ -28,11 +28,11 @@ public class TimerActivity extends AppCompatActivity {
     private boolean isPause;
     private boolean isTimeRunning;
     private boolean isReset;
-    long durationOfTime = 0;
-    long durationStartTime = 0;
+    long durationOfTime;
+    long durationStartTime;
     private TextView time;
     private CountDownTimer countDownTimer;
-    private int hour, min , sec;
+    private long endTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class TimerActivity extends AppCompatActivity {
 
         setupTitle();
         setupAttributes();
-        setupPlayPause();
+        //setupPlayPause();
         setupCancelBtn();
         clickResetButton();
         customTimeFunctionality();
@@ -112,6 +112,8 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startCountDown(){
+        endTime = System.currentTimeMillis() + durationOfTime;
+
         countDownTimer = new CountDownTimer(durationOfTime, 1000) {
 
             @Override
@@ -139,16 +141,48 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putLong("time", durationOfTime);
+    protected void onStop() {
+        super.onStop();
+
+        SharedPreferences prefs = getSharedPreferences("prefs",MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong("time", durationOfTime);
+        editor.putBoolean("timerRunning", isTimeRunning);
+        editor.putLong("endOfTimer", endTime);
+        editor.putBoolean("pause", isPause);
+        editor.putLong("startTime", durationStartTime);
+
+        editor.apply();
     }
 
     @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        durationOfTime = savedInstanceState.getLong("time");
-        time.setText(String.valueOf(durationOfTime));
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+
+        durationOfTime = prefs.getLong("time", durationStartTime);
+        isTimeRunning = prefs.getBoolean("timerRunning", false);
+        isPause = prefs.getBoolean("pause", false);
+        durationStartTime = prefs.getLong("startTime", durationStartTime);
+
+        setUpTime();
+        setupPlayPause();
+
+        if(isTimeRunning){
+            endTime = prefs.getLong("endOfTimer", 0);
+            durationOfTime = endTime - System.currentTimeMillis();
+
+            if(durationOfTime < 0){
+                durationOfTime = 0;
+                isTimeRunning = false;
+                setUpTime();
+                setupPlayPause();
+            }
+            else{
+                setupPlayPause();
+                startCountDown();
+            }
+        }
     }
 
     private void setUpTime(){
@@ -158,15 +192,10 @@ public class TimerActivity extends AppCompatActivity {
             return;
         }
 
-        if(isReset){
-            durationOfTime = durationStartTime;
-        }
-        isReset = false;
-
         int totalTimeInSeconds = (int) durationOfTime / 1000;
-        hour = totalTimeInSeconds / 60;
-        min = hour % 60;
-        sec = totalTimeInSeconds % 60;
+        int hour = totalTimeInSeconds / 60;
+        int min = hour % 60;
+        int sec = totalTimeInSeconds % 60;
         hour /= 60;
 
         String timeDuration = "";
@@ -204,7 +233,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private void clickResetButton(){
         this.resetButton.setOnClickListener(view -> {
-            isReset = true;
+            durationOfTime = durationStartTime;
             setUpTime();
             isPause = false;
             setPlayPause();
