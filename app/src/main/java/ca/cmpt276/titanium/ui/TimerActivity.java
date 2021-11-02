@@ -27,7 +27,6 @@ public class TimerActivity extends AppCompatActivity {
     private EditText userInputTime;
     private boolean isPause;
     private boolean isTimeRunning;
-    private boolean isReset;
     long durationOfTime;
     long durationStartTime;
     private TextView time;
@@ -41,7 +40,6 @@ public class TimerActivity extends AppCompatActivity {
 
         setupTitle();
         setupAttributes();
-        //setupPlayPause();
         setupCancelBtn();
         clickResetButton();
         customTimeFunctionality();
@@ -96,6 +94,11 @@ public class TimerActivity extends AppCompatActivity {
         });
 
         setTimeButton.setOnClickListener(view -> {
+            if(userInputTime.getText().toString().isEmpty()){
+                durationOfTime = 0;
+                durationStartTime = 0;
+                return;
+            }
             durationOfTime = Integer.parseInt(userInputTime.getText().toString());
             durationOfTime *= 60000;
             durationStartTime = Integer.parseInt(userInputTime.getText().toString());
@@ -149,7 +152,6 @@ public class TimerActivity extends AppCompatActivity {
         editor.putLong("time", durationOfTime);
         editor.putBoolean("timerRunning", isTimeRunning);
         editor.putLong("endOfTimer", endTime);
-        editor.putBoolean("pause", isPause);
         editor.putLong("startTime", durationStartTime);
 
         editor.apply();
@@ -160,10 +162,9 @@ public class TimerActivity extends AppCompatActivity {
         super.onStart();
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
+        durationStartTime = prefs.getLong("startTime", 0);
         durationOfTime = prefs.getLong("time", durationStartTime);
         isTimeRunning = prefs.getBoolean("timerRunning", false);
-        isPause = prefs.getBoolean("pause", false);
-        durationStartTime = prefs.getLong("startTime", durationStartTime);
 
         setUpTime();
         setupPlayPause();
@@ -179,7 +180,6 @@ public class TimerActivity extends AppCompatActivity {
                 setupPlayPause();
             }
             else{
-                setupPlayPause();
                 startCountDown();
             }
         }
