@@ -1,7 +1,6 @@
 package ca.cmpt276.titanium.ui;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -129,6 +128,7 @@ public class TimerActivity extends AppCompatActivity {
             public void onFinish() {
                 isTimeRunning = false;
                 setPlayPause();
+                // crash occurs when calling endOfTimer (on diff activity)
                 //endOfTimer();
             }
         }.start();
