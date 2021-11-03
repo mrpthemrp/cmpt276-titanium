@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import ca.cmpt276.titanium.R;
@@ -44,6 +45,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
 
     private void populateListView() {
         ArrayList<CoinFlip> coinFlipHistory = CoinFlipHistory.getCoinFlipHistory();
+        Collections.reverse(coinFlipHistory);
         CoinFlipHistoryAdapter adapter = new CoinFlipHistoryAdapter(this, coinFlipHistory);
         ListView list = (ListView) findViewById(R.id.coinFlipHistoryList);
         list.setAdapter(adapter);
