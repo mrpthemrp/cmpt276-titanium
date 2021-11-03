@@ -17,9 +17,6 @@ import android.widget.Toast;
 
 import ca.cmpt276.titanium.R;
 
-/**
-    TODO: Alert Dialog causes crash only when on a different activity (commented out)
- */
 
 public class TimerActivity extends AppCompatActivity {
     private ImageView playPause;
@@ -128,8 +125,7 @@ public class TimerActivity extends AppCompatActivity {
             public void onFinish() {
                 isTimeRunning = false;
                 setPlayPause();
-                // crash occurs when calling endOfTimer (on diff activity)
-                //endOfTimer();
+                // notification needs to be here
             }
         }.start();
 
@@ -252,19 +248,6 @@ public class TimerActivity extends AppCompatActivity {
             isPaused = true;
         }
     }
-
-    /*
-    private void endOfTimer(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(TimerActivity.this);
-        builder.setTitle("Timeout Is Up!")
-                .setMessage("Please click OK to remove this alert.")
-                .setPositiveButton("OK", null)
-                .setCancelable(false);
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-     */
 
     public static Intent makeIntent(Context c){
         return new Intent(c, TimerActivity.class);
