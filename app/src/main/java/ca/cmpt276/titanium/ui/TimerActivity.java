@@ -14,6 +14,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.Button;
@@ -262,26 +263,30 @@ public class TimerActivity extends AppCompatActivity {
      */
     @SuppressLint("UnspecifiedImmutableFlag")
     private void notificationOnEndTime(){
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager manger = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         NotificationChannel channel = new NotificationChannel("CHANNEL_ID",
                 "CHANNEL_NAME",
                 NotificationManager.IMPORTANCE_HIGH);
         channel.setDescription("NOTIFICATION_CHANNEL_DESCRIPTION");
-        mNotificationManager.createNotificationChannel(channel);
+        manger.createNotificationChannel(channel);
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "CHANNEL_ID")
+        Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // sound could be with broadcast receiver
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "CHANNEL_ID")
                 .setSmallIcon(R.drawable.ic_time)
                 .setContentTitle("Time Is Up")
                 .setContentText("Click OK to stop the sound and vibration")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setColor(Color.GREEN)
                 .setAutoCancel(true);
 
-        Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(pi);
-        mNotificationManager.notify(0, mBuilder.build());
+        builder.setContentIntent(pendingIntent);
+        manger.notify(0, builder.build());
     }
 
     public static Intent makeIntent(Context c){
