@@ -1,15 +1,17 @@
 package ca.cmpt276.titanium.model;
 
+import java.util.UUID;
+
 public class Child {
-    private final int uniqueId;
+    private final UUID uniqueId;
     private String name;
 
-    public Child(int uniqueId, String name) {
+    public Child(UUID uniqueId, String name) {
         this.uniqueId = uniqueId;
         this.name = name;
     }
 
-    public int getUniqueId() {
+    public UUID getUniqueId() {
         return uniqueId;
     }
 

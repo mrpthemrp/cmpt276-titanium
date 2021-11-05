@@ -4,9 +4,20 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,6 +33,7 @@ public class Children {
     private Children(Context context) {
         Children.prefs = PreferenceManager.getDefaultSharedPreferences(context);
         Children.prefsEditor = prefs.edit();
+        loadSavedData();
     }
 
     public static Children getInstance(Context context) {
@@ -51,26 +63,19 @@ public class Children {
         prefsEditor.apply();
     }
 
-    private int generateUniqueChildId() {
-        int uniqueId = 0;
-
-        if (children != null && !children.isEmpty()) {
-            uniqueId = children.get(children.size() - 1).getUniqueId() + 1;
-        } else {
-            LOGGER.log(Level.INFO, "Children.children unique ID generation restarted from 0");
-        }
-
-        return uniqueId;
+    private UUID generateUniqueChildId() {
+        return UUID.randomUUID();
     }
 
     public void addChild(String name) {
         Child newChild = new Child(generateUniqueChildId(), name);
         Children.children.add(newChild);
+        saveData();
     }
 
-    public Child getChild(int uniqueId) {
+    public Child getChild(UUID uniqueId) {
         for (int i = 0; i < children.size(); i++) {
-            if (uniqueId == children.get(i).getUniqueId()) {
+            if (uniqueId.toString().equals(children.get(i).getUniqueId().toString())) {
                 return children.get(i);
             }
         }
@@ -79,11 +84,11 @@ public class Children {
         return null;
     }
 
-    public void removeChild(int uniqueId) {
+    public void removeChild(UUID uniqueId) {
         Child badChildIndex = null;
 
         for (int i = 0; i < children.size(); i++) {
-            if (uniqueId == children.get(i).getUniqueId()) {
+            if (uniqueId.toString().equals(children.get(i).getUniqueId().toString())) {
                 badChildIndex = Children.children.get(i);
             }
         }

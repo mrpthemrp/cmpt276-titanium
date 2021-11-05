@@ -24,9 +24,12 @@ import java.util.Random;
 
 public class CoinActivity extends AppCompatActivity {
     private static final Coin DEFAULT_COIN_CHOSEN = Coin.HEADS;
+    private final Children children = Children.getInstance(this);
 
     private Button historyButton;
 
+    private String childNameFormat;
+    private TextView childNameDisplay;
     private String sideChosenFormat;
     private TextView sideChosenDisplay;
     private Button headsButton;
@@ -38,7 +41,6 @@ public class CoinActivity extends AppCompatActivity {
     private TextView coinResult;
     private static final String HEADS = "HEADS";
     private static final String TAILS = "TAILS";
-    private final Children children = Children.getInstance(this);
 
     private CoinFlipHistory coinFlipHistory;
 
@@ -52,6 +54,8 @@ public class CoinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_coin);
         setupTitle();
 
+        children.loadSavedData();
+
         coinFlipHistory = new CoinFlipHistory(getApplicationContext());
 
         historyButton = findViewById(R.id.viewHistoryButton);
@@ -59,6 +63,13 @@ public class CoinActivity extends AppCompatActivity {
             Intent intent = new Intent(this, CoinFlipHistoryActivity.class);
             startActivity(intent);
         });
+
+        // doesn't matter which child chooses for first pick, so just start from beginning of children array
+        if (CoinFlipHistory.getCoinFlipHistory().isEmpty()) {
+            setChildNameTextFirstFlip();
+        } else {
+            setChildNameText();
+        }
 
         setSideChosenText();
         headsButton = findViewById(R.id.headsButton);
@@ -77,6 +88,18 @@ public class CoinActivity extends AppCompatActivity {
         coinResult = findViewById(R.id.coinFlipResult);
 
         flipButtonClick();
+    }
+
+    private void setChildNameTextFirstFlip() {
+        childNameFormat = getString(R.string.childTurn, children.getChildren().get(0).getName());
+        childNameDisplay = findViewById((R.id.childsTurnText));
+        childNameDisplay.setText(childNameFormat);
+    }
+
+    private void setChildNameText() {
+        childNameFormat = getString(R.string.childTurn, getChildOfNextTurn().getName());
+        childNameDisplay = findViewById((R.id.childsTurnText));
+        childNameDisplay.setText(childNameFormat);
     }
 
     private void setSideChosenText() {
@@ -104,7 +127,7 @@ public class CoinActivity extends AppCompatActivity {
 
         Coin coinSideLandedOn;
         // heads == 0
-        if (coinSide == 0){
+        if (coinSide == 0) {
             coinResult.setText(HEADS);
             coin.postDelayed(displayHeads, 1600);
             coinSideLandedOn = Coin.HEADS;
@@ -120,14 +143,18 @@ public class CoinActivity extends AppCompatActivity {
 
         // If there are no children configured, we don't need to save any info (?)
         if (!children.getChildren().isEmpty()) {
+            CoinFlip coinFlip;
             LocalDateTime timeOfFlip = LocalDateTime.now();
 
             Child childOfNextTurn = getChildOfNextTurn();
-            // TODO: Remove Coin.TAILS once sideThatChildPicks can be retrieved
-            // childOfNextTurn will always return null until adding child is implemented
-            CoinFlip coinFlip = new CoinFlip(childOfNextTurn, coinChosen, timeOfFlip, coinSideLandedOn);
+            if (CoinFlipHistory.getCoinFlipHistory().isEmpty()) {
+                coinFlip = new CoinFlip(children.getChildren().get(0), coinChosen, timeOfFlip, coinSideLandedOn);
+            } else {
+                coinFlip = new CoinFlip(childOfNextTurn, coinChosen, timeOfFlip, coinSideLandedOn);
+            }
 
             coinFlipHistory.addCoinFlipToHistory(coinFlip);
+            setSideChosenText();
         }
     }
 
@@ -136,13 +163,16 @@ public class CoinActivity extends AppCompatActivity {
     }
 
     private Child getChildOfNextTurn() {
-        Child childToPickLastTurn = getChildOfLastTurn();
-        Child childOfNextTurn = null;
         ArrayList<Child> childrenArray = children.getChildren();
 
+        Child childToPickLastTurn = getChildOfLastTurn();
+        if (childToPickLastTurn == null && !childrenArray.isEmpty()) {
+            return childrenArray.get(0); // if no coin flips exist
+        }
+
+        Child childOfNextTurn = null;
         for (int i = 0; i < childrenArray.size(); i++) {
-            if (childrenArray.get(i) == childToPickLastTurn) {
-                // wrap around to next item in the array
+            if (childrenArray.get(i).getUniqueId().toString().equals(childToPickLastTurn.getUniqueId().toString())) { // TODO: use uuids to compare children
                 childOfNextTurn = childrenArray.get((i + 1) % childrenArray.size());
             }
         }
@@ -150,9 +180,9 @@ public class CoinActivity extends AppCompatActivity {
     }
 
     private Child getChildOfLastTurn() {
-        int sizeOfCoinFlips = CoinFlipHistory.getCoinFlipHistory().size();
-        if (sizeOfCoinFlips != 0) {
-            Child childToPickLastTurn = CoinFlipHistory.getCoinFlipHistory().get(sizeOfCoinFlips - 1).getChildWhoPicksSide();
+        int sizeOfHistory = CoinFlipHistory.getCoinFlipHistory().size();
+        if (sizeOfHistory != 0) {
+            Child childToPickLastTurn = CoinFlipHistory.getCoinFlipHistory().get(sizeOfHistory - 1).getChildWhoPicksSide();
             return childToPickLastTurn;
         }
 
