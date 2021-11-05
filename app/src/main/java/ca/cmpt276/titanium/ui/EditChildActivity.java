@@ -16,12 +16,13 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 import java.util.Objects;
+import java.util.UUID;
 
 public class EditChildActivity extends AppCompatActivity {
-    private static final int INVALID_UNIQUE_ID = -1;
+    private static final String INVALID_UNIQUE_ID = "-1";
 
     private final Children children = Children.getInstance(this);
-    private int childUniqueId;
+    private UUID childUniqueId;
     private Child childBeingEdited;
     private EditText childName;
 
@@ -31,7 +32,7 @@ public class EditChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child);
         setupActionBar();
 
-        this.childUniqueId = getIntent().getIntExtra("child_unique_id", INVALID_UNIQUE_ID);
+        this.childUniqueId = (UUID) getIntent().getSerializableExtra("child_unique_id");
         this.childBeingEdited = children.getChild(childUniqueId);
         displayChildInfo();
 
@@ -73,6 +74,7 @@ public class EditChildActivity extends AppCompatActivity {
 
         saveButton.setOnClickListener(view -> {
             children.getChild(childUniqueId).setName(childName.getText().toString());
+            children.saveData();
             Toast.makeText(this, R.string.edit_child_toast, Toast.LENGTH_SHORT).show();
             finish();
         });
@@ -91,7 +93,7 @@ public class EditChildActivity extends AppCompatActivity {
                 .show();
     }
 
-    public static Intent makeIntent(Context context, int childUniqueId) {
+    public static Intent makeIntent(Context context, UUID childUniqueId) {
         Intent editChildIntent = new Intent(context, EditChildActivity.class);
         editChildIntent.putExtra("child_unique_id", childUniqueId);
 

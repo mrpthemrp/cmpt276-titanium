@@ -33,8 +33,7 @@ public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
         ImageView resultImageView = (ImageView) convertView.findViewById(R.id.coinFlipIcon);
         TextView childTextView = (TextView) convertView.findViewById(R.id.coinFlipChild);
 
-        // coinFlip.getChildWhoPicksSide().getName() instead of "name"
-        childTextView.setText("Name " + "chose " + coinFlip.getSideThatChildPicks());
+        childTextView.setText(coinFlip.getChildWhoPicksSide().getName() + " chose " + coinFlip.getSideThatChildPicks());
 
         if (coinFlip.getCoinSideLandedOn() == coinFlip.getSideThatChildPicks()) {
             resultImageView.setImageResource(R.drawable.checkmark);

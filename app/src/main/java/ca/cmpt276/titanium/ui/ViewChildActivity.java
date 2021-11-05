@@ -1,4 +1,4 @@
-package ca.cmpt276.titanium.ui;
+package ca.cmpt276.titanium .ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,12 +15,13 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 import java.util.Objects;
+import java.util.UUID;
 
 public class ViewChildActivity extends AppCompatActivity {
     private static final int INVALID_UNIQUE_ID = -1;
 
     private final Children children = Children.getInstance(this);
-    private int childUniqueId;
+    private UUID childUniqueId;
     private Child childBeingViewed;
 
     @Override
@@ -29,7 +30,8 @@ public class ViewChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child);
         setupActionBar();
 
-        this.childUniqueId = getIntent().getIntExtra("child_unique_id", INVALID_UNIQUE_ID);
+        this.childUniqueId = (UUID) getIntent().getSerializableExtra("child_unique_id");
+        this.childBeingViewed = children.getChild(childUniqueId);
     }
 
     @Override
@@ -89,7 +91,7 @@ public class ViewChildActivity extends AppCompatActivity {
                 .show();
     }
 
-    public static Intent makeIntent(Context context, int childUniqueId) {
+    public static Intent makeIntent(Context context, UUID childUniqueId) {
         Intent viewChildIntent = new Intent(context, ViewChildActivity.class);
         viewChildIntent.putExtra("child_unique_id", childUniqueId);
 

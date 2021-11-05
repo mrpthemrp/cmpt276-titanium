@@ -78,6 +78,7 @@ public class MenuActivity extends AppCompatActivity {
 
             childButton.setOnClickListener(view -> {
                 Intent viewChildIntent = ViewChildActivity.makeIntent(this, child.getUniqueId());
+
                 startActivity(viewChildIntent);
             });
 

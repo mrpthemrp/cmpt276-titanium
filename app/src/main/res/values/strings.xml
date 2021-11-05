@@ -22,6 +22,7 @@
 
     <!-- View Coin Flip History Strings -->
     <string name="coinFlipHistoryTitle">Coin Flip History</string>
+    <string name="noCoinFlipsConfigured">No coin flips to show.</string>
 
     <!-- Timer Strings -->
     <string name="timerTitle">Timer</string>
