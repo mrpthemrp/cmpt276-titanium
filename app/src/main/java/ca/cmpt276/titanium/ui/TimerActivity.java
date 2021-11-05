@@ -2,8 +2,15 @@ package ca.cmpt276.titanium.ui;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -122,7 +129,6 @@ public class TimerActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                isTimeRunning = false;
                 setPlayPause();
                 // notification needs to be here
                 notificationOnEndTime();
@@ -134,7 +140,9 @@ public class TimerActivity extends AppCompatActivity {
 
     private void stopTimer(){
         if(isTimeRunning){
-            countDownTimer.cancel();
+            if(countDownTimer != null){
+                countDownTimer.cancel();
+            }
             isTimeRunning = false;
         }
     }
@@ -249,7 +257,31 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    Building a notification found from https://stackoverflow.com/questions/42138617/android-notification-every-15-minutes-crashes-if-app-is-closed
+     */
+    @SuppressLint("UnspecifiedImmutableFlag")
     private void notificationOnEndTime(){
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        NotificationChannel channel = new NotificationChannel("CHANNEL_ID",
+                "CHANNEL_NAME",
+                NotificationManager.IMPORTANCE_HIGH);
+        channel.setDescription("NOTIFICATION_CHANNEL_DESCRIPTION");
+        mNotificationManager.createNotificationChannel(channel);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "CHANNEL_ID")
+                .setSmallIcon(R.drawable.ic_time)
+                .setContentTitle("Time Is Up")
+                .setContentText("Click OK to stop the sound and vibration")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setAutoCancel(true);
+
+        Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
+        PendingIntent pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(pi);
+        mNotificationManager.notify(0, mBuilder.build());
     }
 
     public static Intent makeIntent(Context c){
