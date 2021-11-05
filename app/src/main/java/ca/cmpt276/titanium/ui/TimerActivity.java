@@ -2,17 +2,11 @@ package ca.cmpt276.titanium.ui;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.res.ResourcesCompat;
 
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.Button;
@@ -21,10 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Calendar;
-
 import ca.cmpt276.titanium.R;
-
 
 public class TimerActivity extends AppCompatActivity {
     private ImageView playPause;
@@ -259,7 +250,6 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void notificationOnEndTime(){
-
     }
 
     public static Intent makeIntent(Context c){
