@@ -32,8 +32,7 @@ public class EditChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child);
         setupActionBar();
 
-        String childUUIDString = getIntent().getStringExtra("child_unique_id");
-        this.childUniqueId = UUID.fromString(childUUIDString);
+        this.childUniqueId = (UUID) getIntent().getSerializableExtra("child_unique_id");
         this.childBeingEdited = children.getChild(childUniqueId);
         displayChildInfo();
 
@@ -75,6 +74,7 @@ public class EditChildActivity extends AppCompatActivity {
 
         saveButton.setOnClickListener(view -> {
             children.getChild(childUniqueId).setName(childName.getText().toString());
+            children.saveData();
             Toast.makeText(this, R.string.edit_child_toast, Toast.LENGTH_SHORT).show();
             finish();
         });

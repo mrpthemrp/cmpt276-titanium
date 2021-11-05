@@ -99,6 +99,8 @@ public class Children {
             LOGGER.log(Level.WARNING, "Attempted to remove Child object with nonexistent " +
                     "unique ID from Children.children");
         }
+
+        saveData();
     }
 
     public ArrayList<Child> getChildren() {
