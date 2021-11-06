@@ -16,6 +16,8 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -136,6 +138,7 @@ public class TimerActivity extends AppCompatActivity {
                 setPlayPause();
                 timerEndSound.setLooping(true);
                 timerEndSound.start();
+                startStopVibrations(TimerActivity.this, "start");
                 notificationOnEndTime();
             }
         }.start();
@@ -266,6 +269,17 @@ public class TimerActivity extends AppCompatActivity {
         timerEndSound.stop();
     }
 
+    public static void startStopVibrations(Context c, String isStartStop){
+        Vibrator vibrations = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);
+
+        if(isStartStop.equals("start")){
+            vibrations.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
+        }
+        else{
+            vibrations.cancel();
+        }
+    }
+
     /*
     Building a notification found from https://stackoverflow.com/questions/47409256/what-is-notification-channel-idnotifications-not-work-in-api-27
     Using a pending intent found from https://www.youtube.com/watch?v=CZ575BuLBo4
@@ -278,6 +292,7 @@ public class TimerActivity extends AppCompatActivity {
                 "CHANNEL_NAME",
                 NotificationManager.IMPORTANCE_HIGH);
         channel.setDescription("NOTIFICATION_CHANNEL_DESCRIPTION");
+        channel.enableVibration(true);
         manager.createNotificationChannel(channel);
 
         Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
@@ -294,6 +309,7 @@ public class TimerActivity extends AppCompatActivity {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setColor(Color.GREEN)
+                .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
                 .addAction(R.drawable.ic_sound, "OK", soundIntent)
                 .setAutoCancel(true);
 

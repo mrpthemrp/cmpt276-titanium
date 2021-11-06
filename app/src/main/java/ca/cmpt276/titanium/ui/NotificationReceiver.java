@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.Timer;
+
 public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
@@ -11,6 +13,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         String sound = intent.getStringExtra("sound");
         if(sound.equals("off")){
             TimerActivity.stopTime();
+            TimerActivity.startStopVibrations(context, "off");
         }
     }
 }

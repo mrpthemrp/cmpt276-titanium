@@ -55,7 +55,8 @@
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Titanium.Calm" />
+            android:theme="@style/Theme.Titanium.Calm"
+            />
         <activity
             android:name=".ui.MenuActivity"
             android:configChanges="keyboard|keyboardHidden"
@@ -69,5 +70,7 @@
         </activity>
         <receiver android:name=".ui.NotificationReceiver" />
     </application>
+
+    <uses-permission android:name="android.permission.VIBRATE" />
 
 </manifest>
