@@ -11,12 +11,18 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,10 +44,14 @@ public class TimerActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private long endTime;
 
+    public static MediaPlayer timerEndSound;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
+
+        timerEndSound = MediaPlayer.create(TimerActivity.this, R.raw.timeralarm);
 
         setupTitle();
         setupAttributes();
@@ -131,7 +141,8 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 setPlayPause();
-                // notification needs to be here
+                timerEndSound.setLooping(true);
+                timerEndSound.start();
                 notificationOnEndTime();
             }
         }.start();
@@ -258,23 +269,32 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
+    public static void stopTime(){
+        timerEndSound.stop();
+    }
+
     /*
-    Building a notification found from https://stackoverflow.com/questions/42138617/android-notification-every-15-minutes-crashes-if-app-is-closed
+    Building a notification found from https://stackoverflow.com/questions/47409256/what-is-notification-channel-idnotifications-not-work-in-api-27
+    Using a pending intent found from https://www.youtube.com/watch?v=CZ575BuLBo4
      */
     @SuppressLint("UnspecifiedImmutableFlag")
     private void notificationOnEndTime(){
-        NotificationManager manger = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        NotificationChannel channel = new NotificationChannel("CHANNEL_ID",
-                "CHANNEL_NAME",
-                NotificationManager.IMPORTANCE_HIGH);
-        channel.setDescription("NOTIFICATION_CHANNEL_DESCRIPTION");
-        manger.createNotificationChannel(channel);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("CHANNEL_ID",
+                    "CHANNEL_NAME",
+                    NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription("NOTIFICATION_CHANNEL_DESCRIPTION");
+            manager.createNotificationChannel(channel);
+        }
 
         Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-        // sound could be with broadcast receiver
+        Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
+        broadcastIntent.putExtra("sound","off");
+        PendingIntent soundIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "CHANNEL_ID")
                 .setSmallIcon(R.drawable.ic_time)
@@ -283,10 +303,11 @@ public class TimerActivity extends AppCompatActivity {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setColor(Color.GREEN)
+                .addAction(R.drawable.ic_sound, "OK", soundIntent)
                 .setAutoCancel(true);
 
         builder.setContentIntent(pendingIntent);
-        manger.notify(0, builder.build());
+        manager.notify(0, builder.build());
     }
 
     public static Intent makeIntent(Context c){
