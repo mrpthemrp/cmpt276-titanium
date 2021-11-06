@@ -3,26 +3,19 @@ package ca.cmpt276.titanium.ui;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.annotation.SuppressLint;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -281,13 +274,11 @@ public class TimerActivity extends AppCompatActivity {
     private void notificationOnEndTime(){
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("CHANNEL_ID",
-                    "CHANNEL_NAME",
-                    NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription("NOTIFICATION_CHANNEL_DESCRIPTION");
-            manager.createNotificationChannel(channel);
-        }
+        NotificationChannel channel = new NotificationChannel("CHANNEL_ID",
+                "CHANNEL_NAME",
+                NotificationManager.IMPORTANCE_HIGH);
+        channel.setDescription("NOTIFICATION_CHANNEL_DESCRIPTION");
+        manager.createNotificationChannel(channel);
 
         Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
