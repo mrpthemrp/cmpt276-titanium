@@ -2,6 +2,7 @@ package ca.cmpt276.titanium.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -47,6 +48,11 @@ public class CoinActivity extends AppCompatActivity {
 
     private CoinFlipHistory coinFlipHistory;
 
+    /*
+    Sound from https://www.youtube.com/watch?v=1QxX9ruPUXM
+     */
+    private MediaPlayer coinSound;
+
     private final Runnable result = () -> coinResult.setVisibility(View.VISIBLE);
     private final Runnable displayHeads = () -> coin.setImageResource(R.drawable.ic_coin_heads);
     private final Runnable displayTails = () -> coin.setImageResource(R.drawable.ic_coin_tails);
@@ -56,6 +62,8 @@ public class CoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin);
         setupTitle();
+
+        coinSound = MediaPlayer.create(CoinActivity.this, R.raw.coinflip);
 
         children.loadSavedData();
 
@@ -146,6 +154,7 @@ public class CoinActivity extends AppCompatActivity {
         Animation animation = AnimationUtils.loadAnimation(CoinActivity.this, R.anim.flipanim);
         coin.startAnimation(animation);
         coinResult.setVisibility(View.INVISIBLE);
+        coinSound.start();
 
         Coin coinSideLandedOn;
         // heads == 0
