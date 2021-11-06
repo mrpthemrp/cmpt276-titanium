@@ -140,6 +140,7 @@ public class CoinActivity extends AppCompatActivity {
 
     private void setupTitle() {
         ActionBar toolbar = getSupportActionBar();
+        assert toolbar != null;
         toolbar.setTitle(R.string.menuFlipCoinBtn);
     }
 
@@ -176,12 +177,7 @@ public class CoinActivity extends AppCompatActivity {
         if (!children.getChildren().isEmpty()) {
             saveCoinFlip(coinSideLandedOn);
 
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    setChildNameText();
-                }
-            }, 1600);
+            new Handler(Looper.getMainLooper()).postDelayed(this::setChildNameText, 1600);
         }
     }
 
