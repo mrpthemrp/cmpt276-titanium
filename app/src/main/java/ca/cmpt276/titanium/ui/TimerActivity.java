@@ -271,6 +271,10 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void setPlayPause() {
+        if(durationOfTime == 0){
+            return;
+        }
+
         if(this.isTimeRunning || isPaused){
             this.playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_play_arrow_24, getTheme()));
             stopTimer();
