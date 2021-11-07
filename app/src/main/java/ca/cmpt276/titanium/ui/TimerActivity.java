@@ -256,7 +256,7 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-    public static void stopTime() {
+    public static void stopSound() {
         timerEndSound.stop();
     }
 
