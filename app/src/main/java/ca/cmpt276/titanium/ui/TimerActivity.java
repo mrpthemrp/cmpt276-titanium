@@ -46,6 +46,17 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null){
+                timerEndSound = MediaPlayer.create(TimerActivity.this, R.raw.timeralarm);
+            }
+            else if(extras.getBoolean("isClicked")){
+                timerEndSound.stop();
+                startStopVibrations(TimerActivity.this, "off");
+            }
+        }
+
         timerEndSound = MediaPlayer.create(TimerActivity.this, R.raw.timeralarm);
 
         setupTitle();
@@ -172,6 +183,7 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
         durationStartTime = prefs.getLong("startTime", 0);
@@ -296,7 +308,8 @@ public class TimerActivity extends AppCompatActivity {
         manager.createNotificationChannel(channel);
 
         Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        intent.putExtra("isClicked", true);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
         broadcastIntent.putExtra("sound","off");
