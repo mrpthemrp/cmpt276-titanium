@@ -1,8 +1,5 @@
 package ca.cmpt276.titanium.ui;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +8,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.CoinFlip;
+
+import java.util.List;
 
 public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
     public CoinFlipHistoryAdapter(Context context, List<CoinFlip> coinFlipHistory) {

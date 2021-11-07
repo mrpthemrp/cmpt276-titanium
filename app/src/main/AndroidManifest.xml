@@ -12,12 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Titanium">
         <activity
-            android:name=".ui.CoinFlipHistoryAdapter"
-            android:configChanges="keyboard|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ui.CoinActivity"
-            android:exported="true" />
-        <activity
             android:name=".ui.CoinFlipHistoryActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:screenOrientation="portrait"
@@ -56,8 +50,7 @@
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Titanium.Calm"
-            />
+            android:theme="@style/Theme.Titanium.Calm" />
         <activity
             android:name=".ui.MenuActivity"
             android:configChanges="keyboard|keyboardHidden"

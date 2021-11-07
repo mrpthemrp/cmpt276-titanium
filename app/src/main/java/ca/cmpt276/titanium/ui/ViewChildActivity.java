@@ -1,4 +1,4 @@
-package ca.cmpt276.titanium .ui;
+package ca.cmpt276.titanium.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,13 +7,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
+
 import java.util.Objects;
 import java.util.UUID;
 
@@ -49,7 +52,7 @@ public class ViewChildActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
         } else if (item.getItemId() == R.id.optionsEdit) {

@@ -3,21 +3,13 @@ package ca.cmpt276.titanium.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,7 +39,8 @@ public class Children {
     public void loadSavedData() {
         String childrenJson = prefs.getString("children_json", null);
 
-        Type childrenType = new TypeToken<ArrayList<Child>>(){}.getType();
+        Type childrenType = new TypeToken<ArrayList<Child>>() {
+        }.getType();
 
         if (childrenJson != null) {
             Children.children = GSON.fromJson(childrenJson, childrenType);

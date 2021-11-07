@@ -15,12 +15,14 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.Coin;
 import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Random;
@@ -30,11 +32,8 @@ public class CoinActivity extends AppCompatActivity {
     public static final int FIRST_CHILD_INDEX = 0;
     private final Children children = Children.getInstance(this);
 
-    private Button historyButton;
-
     private String childNameFormat;
     private TextView childNameDisplay;
-    private String sideChosenFormat;
     private TextView sideChosenDisplay;
     private Button headsButton;
     private Button tailsButton;
@@ -69,7 +68,7 @@ public class CoinActivity extends AppCompatActivity {
 
         coinFlipHistory = new CoinFlipHistory(getApplicationContext());
 
-        historyButton = findViewById(R.id.viewHistoryButton);
+        Button historyButton = findViewById(R.id.viewHistoryButton);
         historyButton.setOnClickListener((View view) -> {
             Intent intent = new Intent(this, CoinFlipHistoryActivity.class);
             startActivity(intent);
@@ -133,7 +132,7 @@ public class CoinActivity extends AppCompatActivity {
     }
 
     private void setSideChosenText() {
-        sideChosenFormat = getString(R.string.coinSideChosen, coinChosen.toString());
+        String sideChosenFormat = getString(R.string.coinSideChosen, coinChosen.toString());
         sideChosenDisplay = findViewById(R.id.sideChosenText);
         sideChosenDisplay.setText(sideChosenFormat);
     }
@@ -144,11 +143,11 @@ public class CoinActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.menuFlipCoinBtn);
     }
 
-    public static Intent makeIntent(Context c){
+    public static Intent makeIntent(Context c) {
         return new Intent(c, CoinActivity.class);
     }
 
-    private void flipTheCoin(){
+    private void flipTheCoin() {
         coin.setImageResource(R.drawable.ic_coin_blank);
         Random rand = new Random();
         int coinSide = rand.nextInt(2);
@@ -207,7 +206,7 @@ public class CoinActivity extends AppCompatActivity {
             return childrenArray.get(FIRST_CHILD_INDEX);
         }
 
-        Child childOfNextTurn = null;
+        Child childOfNextTurn;
         for (int i = 0; i < childrenArray.size(); i++) {
             if (childrenArray.get(i).getUniqueId().toString().equals(childToPickLastTurn.getUniqueId().toString())) {
                 childOfNextTurn = childrenArray.get((i + 1) % childrenArray.size());

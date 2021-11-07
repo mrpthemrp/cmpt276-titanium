@@ -1,26 +1,21 @@
 package ca.cmpt276.titanium.ui;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ListView;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
 
-public class CoinFlipHistoryActivity extends AppCompatActivity {
-    private CoinFlipHistory coinFlipHistory;
+import java.util.ArrayList;
+import java.util.Collections;
 
+public class CoinFlipHistoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
