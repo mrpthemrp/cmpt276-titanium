@@ -73,8 +73,6 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void setupActionBar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         setTitle(R.string.timerTitle);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -256,7 +254,7 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-    public static void stopTime() {
+    public static void stopSound() {
         timerEndSound.stop();
     }
 

@@ -10,7 +10,7 @@ public class NotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String sound = intent.getStringExtra("sound");
         if (sound.equals("off")) {
-            TimerActivity.stopTime();
+            TimerActivity.stopSound();
             TimerActivity.startStopVibrations(context, "off");
         }
     }
