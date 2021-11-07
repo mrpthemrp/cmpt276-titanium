@@ -65,5 +65,4 @@
         <receiver android:name=".ui.NotificationReceiver" />
     </application>
 
-
 </manifest>

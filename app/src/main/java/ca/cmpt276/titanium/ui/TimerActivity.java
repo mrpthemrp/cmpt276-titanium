@@ -21,23 +21,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import ca.cmpt276.titanium.R;
 
+import java.util.Locale;
+import java.util.Objects;
+
 public class TimerActivity extends AppCompatActivity {
+    private static final int MILLIS_IN_SECOND = 1000;
+    private static final int MILLIS_IN_MINUTE = 60000;
+    private static final int MILLIS_IN_HOUR = 3600000;
+
     private ImageView playPause;
-    private Button cancelBtn, resetButton;
     private Button oneMinButton, twoMinButton, threeMinButton, fiveMinButton, tenMinButton;
     private Button setTimeButton;
     private EditText userInputTime;
     private boolean isTimeRunning, isPaused;
     long durationOfTime;
     long durationStartTime;
-    private TextView time;
     private CountDownTimer countDownTimer;
     private long endTime;
 
@@ -50,10 +55,9 @@ public class TimerActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            if(extras == null){
+            if (extras == null) {
                 timerEndSound = MediaPlayer.create(TimerActivity.this, R.raw.timeralarm);
-            }
-            else if(extras.getBoolean("isClicked")){
+            } else if (extras.getBoolean("isClicked")) {
                 timerEndSound.stop();
                 startStopVibrations(TimerActivity.this, "off");
             }
@@ -61,23 +65,23 @@ public class TimerActivity extends AppCompatActivity {
 
         timerEndSound = MediaPlayer.create(TimerActivity.this, R.raw.timeralarm);
 
-        setupTitle();
+        setupActionBar();
         setupAttributes();
         setupCancelBtn();
         clickResetButton();
         customTimeFunctionality();
     }
 
-    private void setupTitle() {
-        ActionBar toolbar = getSupportActionBar();
-        assert toolbar != null;
-        toolbar.setTitle(R.string.timerTitle);
+    private void setupActionBar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle(R.string.timerTitle);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupAttributes() {
         this.playPause = findViewById(R.id.timerPlayPauseBtn);
-        this.cancelBtn = findViewById(R.id.timerCancelBtn);
-        this.resetButton = findViewById(R.id.resetButton);
         this.oneMinButton = findViewById(R.id.oneMin);
         this.twoMinButton = findViewById(R.id.twoMin);
         this.threeMinButton = findViewById(R.id.threeMin);
@@ -85,38 +89,18 @@ public class TimerActivity extends AppCompatActivity {
         this.tenMinButton = findViewById(R.id.tenMin);
         this.userInputTime = findViewById(R.id.editTextNumber);
         this.setTimeButton = findViewById(R.id.setTimeButton);
-        this.time = findViewById(R.id.timer);
     }
 
-    private void customTimeFunctionality(){
-        oneMinButton.setOnClickListener(view -> {
-            durationOfTime = 60000;
-            durationStartTime = 60000;
-            changeTime();
-        });
-        twoMinButton.setOnClickListener(view -> {
-            durationOfTime = 120000;
-            durationStartTime = 120000;
-            changeTime();
-        });
-        threeMinButton.setOnClickListener(view -> {
-            durationOfTime = 180000;
-            durationStartTime = 180000;
-            changeTime();
-        });
-        fiveMinButton.setOnClickListener(view -> {
-            durationOfTime = 300000;
-            durationStartTime = 300000;
-            changeTime();
-        });
-        tenMinButton.setOnClickListener(view -> {
-            durationOfTime = 600000;
-            durationStartTime = 600000;
-            changeTime();
-        });
+    private void customTimeFunctionality() {
+        oneMinButton.setOnClickListener(view -> changeTime(MILLIS_IN_MINUTE, MILLIS_IN_MINUTE));
+        twoMinButton.setOnClickListener(view -> changeTime(2 * MILLIS_IN_MINUTE, 2 * MILLIS_IN_MINUTE));
+        threeMinButton.setOnClickListener(view -> changeTime(3 * MILLIS_IN_MINUTE, 3 * MILLIS_IN_MINUTE));
+        fiveMinButton.setOnClickListener(view -> changeTime(5 * MILLIS_IN_MINUTE, 5 * MILLIS_IN_MINUTE));
+        tenMinButton.setOnClickListener(view -> changeTime(10 * MILLIS_IN_MINUTE, 10 * MILLIS_IN_MINUTE));
 
+        Button setTimeButton = findViewById(R.id.setTimeButton);
         setTimeButton.setOnClickListener(view -> {
-            if(userInputTime.getText().toString().isEmpty()){
+            if (userInputTime.getText().toString().isEmpty()) {
                 durationOfTime = 0;
                 durationStartTime = 0;
                 return;
@@ -125,17 +109,19 @@ public class TimerActivity extends AppCompatActivity {
             durationOfTime *= 60000;
             durationStartTime = Integer.parseInt(userInputTime.getText().toString());
             durationStartTime *= 60000;
-            changeTime();
+            changeTime(durationOfTime, durationStartTime);
         });
     }
 
-    private void changeTime(){
-        setUpTime();
+    private void changeTime(long dur, long durStart) {
+        durationOfTime = dur;
+        durationStartTime = durStart;
+        displayTime();
         isPaused = true;
         setPlayPause();
     }
 
-    private void startCountDown(){
+    private void startCountDown() {
         endTime = System.currentTimeMillis() + durationOfTime;
 
         countDownTimer = new CountDownTimer(durationOfTime, 1000) {
@@ -143,7 +129,7 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onTick(long l) {
                 durationOfTime = l;
-                setUpTime();
+                displayTime();
                 makeScreenLookClean(true);
             }
 
@@ -161,9 +147,9 @@ public class TimerActivity extends AppCompatActivity {
         isTimeRunning = true;
     }
 
-    private void stopTimer(){
-        if(isTimeRunning){
-            if(countDownTimer != null){
+    private void stopTimer() {
+        if (isTimeRunning) {
+            if (countDownTimer != null) {
                 countDownTimer.cancel();
             }
             isTimeRunning = false;
@@ -174,7 +160,7 @@ public class TimerActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        SharedPreferences prefs = getSharedPreferences("prefs",MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putLong("time", durationOfTime);
         editor.putBoolean("timerRunning", isTimeRunning);
@@ -194,20 +180,19 @@ public class TimerActivity extends AppCompatActivity {
         durationOfTime = prefs.getLong("time", durationStartTime);
         isTimeRunning = prefs.getBoolean("timerRunning", false);
 
-        setUpTime();
+        displayTime();
         setupPlayPause();
 
-        if(isTimeRunning){
+        if (isTimeRunning) {
             endTime = prefs.getLong("endOfTimer", 0);
             durationOfTime = endTime - System.currentTimeMillis();
 
-            if(durationOfTime < 0){
+            if (durationOfTime < 0) {
                 durationOfTime = 0;
                 isTimeRunning = true;
                 isPaused = true;
-                setUpTime();
-            }
-            else{
+                displayTime();
+            } else {
                 isTimeRunning = false;
                 isPaused = false;
                 setPlayPause();
@@ -215,42 +200,24 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-    private void setUpTime(){
-        if(durationOfTime == 0){
-            String noTime = "00:00:00";
-            time.setText(noTime);
-            return;
-        }
+    private void displayTime() {
+        int milliseconds = (int) durationOfTime;
+        int hours = milliseconds / MILLIS_IN_HOUR;
+        int minutes = (milliseconds % MILLIS_IN_HOUR) / MILLIS_IN_MINUTE;
+        int seconds = (milliseconds % MILLIS_IN_MINUTE) / MILLIS_IN_SECOND;
+        String formattedTime = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
 
-        int totalTimeInSeconds = (int) durationOfTime / 1000;
-        int hour = totalTimeInSeconds / 60;
-        int min = hour % 60;
-        int sec = totalTimeInSeconds % 60;
-        hour /= 60;
-
-        String timeDuration = "";
-        if(hour < 10){
-            timeDuration += "0";
-        }
-        timeDuration += hour + ":";
-        if(min < 10){
-            timeDuration += "0";
-        }
-        timeDuration += min + ":";
-        if(sec < 10){
-            timeDuration += "0";
-        }
-        timeDuration += sec;
-
-        time.setText(timeDuration);
+        TextView time = findViewById(R.id.timer);
+        time.setText(formattedTime);
     }
 
     private void setupCancelBtn() {
-        this.cancelBtn.setOnClickListener(view -> {
+        Button cancelBtn = findViewById(R.id.timerCancelBtn);
+        cancelBtn.setOnClickListener(view -> {
             isPaused = true;
             setPlayPause();
             durationOfTime = 0;
-            setUpTime();
+            displayTime();
             timerEndSound.setLooping(false);
             startStopVibrations(this, "off");
             Toast.makeText(TimerActivity.this, R.string.timer_cancelled_toast, Toast.LENGTH_SHORT).show();
@@ -261,50 +228,50 @@ public class TimerActivity extends AppCompatActivity {
         this.playPause.setOnClickListener(view -> setPlayPause());
     }
 
-    private void clickResetButton(){
-        this.resetButton.setOnClickListener(view -> {
+    private void clickResetButton() {
+        Button resetButton = findViewById(R.id.resetButton);
+        resetButton.setOnClickListener(view -> {
             durationOfTime = durationStartTime;
-            setUpTime();
+            displayTime();
             isPaused = true;
             setPlayPause();
         });
     }
 
     private void setPlayPause() {
-        if(durationOfTime == 0){
+        if (durationOfTime == 0) {
             return;
         }
 
-        if(this.isTimeRunning || isPaused){
+        if (this.isTimeRunning || isPaused) {
             this.playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_play_arrow_24, getTheme()));
             stopTimer();
             isPaused = false;
-            makeScreenLookClean(isPaused);
-        }
-        else{
+            makeScreenLookClean(false);
+        } else {
             this.playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_pause_24, getTheme()));
             startCountDown();
             isPaused = true;
-            makeScreenLookClean(isPaused);
+            makeScreenLookClean(true);
         }
     }
 
-    public static void stopTime(){
+    public static void stopTime() {
         timerEndSound.stop();
     }
+
     /*Got vibration to work form this resource:
      * https://stackoverflow.com/questions/60466695/android-vibration-app-doesnt-work-anymore-after-android-10-api-29-update*/
-    public static void startStopVibrations(Context c, String isStartStop){
+    public static void startStopVibrations(Context c, String isStartStop) {
         Vibrator vibrations = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);
 
-        if(isStartStop.equals("start")){
-            long[] pattern = { 0,500, 1000, 500,1000,500,1000,500, 1000, 500,1000,500, 1000, 500};
-            vibrations.vibrate(VibrationEffect.createWaveform(pattern,VibrationEffect.DEFAULT_AMPLITUDE),new AudioAttributes.Builder()
+        if (isStartStop.equals("start")) {
+            long[] pattern = {0, 500, 1000, 500, 1000, 500, 1000, 500, 1000, 500, 1000, 500, 1000, 500};
+            vibrations.vibrate(VibrationEffect.createWaveform(pattern, VibrationEffect.DEFAULT_AMPLITUDE), new AudioAttributes.Builder()
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .setUsage(AudioAttributes.USAGE_ALARM)
                     .build());
-        }
-        else{
+        } else {
             vibrations.cancel();
         }
     }
@@ -314,8 +281,9 @@ public class TimerActivity extends AppCompatActivity {
     Using a pending intent found from https://www.youtube.com/watch?v=CZ575BuLBo4
      */
     @SuppressLint("UnspecifiedImmutableFlag")
-    private void notificationOnEndTime(){
+    private void notificationOnEndTime() {
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
         NotificationChannel channel = new NotificationChannel("CHANNEL_ID",
                 "CHANNEL_NAME",
                 NotificationManager.IMPORTANCE_HIGH);
@@ -328,7 +296,7 @@ public class TimerActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
-        broadcastIntent.putExtra("sound","off");
+        broadcastIntent.putExtra("sound", "off");
         PendingIntent soundIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "CHANNEL_ID")
@@ -346,8 +314,8 @@ public class TimerActivity extends AppCompatActivity {
         manager.notify(0, builder.build());
     }
 
-    private void makeScreenLookClean(boolean isTimeRunning){
-        if(isTimeRunning){
+    private void makeScreenLookClean(boolean isTimeRunning) {
+        if (isTimeRunning) {
             oneMinButton.setVisibility(View.INVISIBLE);
             twoMinButton.setVisibility(View.INVISIBLE);
             threeMinButton.setVisibility(View.INVISIBLE);
@@ -356,8 +324,7 @@ public class TimerActivity extends AppCompatActivity {
             setTimeButton.setVisibility(View.INVISIBLE);
             userInputTime.setVisibility(View.INVISIBLE);
             findViewById(R.id.minuteText).setVisibility(View.INVISIBLE);
-        }
-        else{
+        } else {
             oneMinButton.setVisibility(View.VISIBLE);
             twoMinButton.setVisibility(View.VISIBLE);
             threeMinButton.setVisibility(View.VISIBLE);
@@ -369,7 +336,7 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-    public static Intent makeIntent(Context c){
-        return new Intent(c, TimerActivity.class);
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, TimerActivity.class);
     }
 }
