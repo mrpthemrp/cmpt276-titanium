@@ -33,21 +33,6 @@
         app:srcCompat="@drawable/ic_circle_timer" />
 
     <Button
-        android:id="@+id/timerCancelBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="?attr/colorPrimary"
-        android:backgroundTintMode="src_in"
-        android:text="@android:string/cancel"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerPlayPauseBtn"
-        tools:ignore="TextContrastCheck" />
-
-    <Button
         android:id="@+id/resetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
