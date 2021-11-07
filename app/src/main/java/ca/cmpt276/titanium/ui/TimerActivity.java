@@ -1,10 +1,5 @@
 package ca.cmpt276.titanium.ui;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.res.ResourcesCompat;
-
 import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -13,16 +8,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import ca.cmpt276.titanium.R;
 
@@ -142,6 +144,7 @@ public class TimerActivity extends AppCompatActivity {
             public void onTick(long l) {
                 durationOfTime = l;
                 setUpTime();
+                makeScreenLookClean(true);
             }
 
             @Override
@@ -151,6 +154,7 @@ public class TimerActivity extends AppCompatActivity {
                 timerEndSound.start();
                 startStopVibrations(TimerActivity.this, "start");
                 notificationOnEndTime();
+                makeScreenLookClean(false);
             }
         }.start();
 
@@ -247,6 +251,8 @@ public class TimerActivity extends AppCompatActivity {
             setPlayPause();
             durationOfTime = 0;
             setUpTime();
+            timerEndSound.setLooping(false);
+            startStopVibrations(this, "off");
             Toast.makeText(TimerActivity.this, R.string.timer_cancelled_toast, Toast.LENGTH_SHORT).show();
         });
     }
@@ -269,23 +275,30 @@ public class TimerActivity extends AppCompatActivity {
             this.playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_play_arrow_24, getTheme()));
             stopTimer();
             isPaused = false;
+            makeScreenLookClean(isPaused);
         }
         else{
             this.playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_pause_24, getTheme()));
             startCountDown();
             isPaused = true;
+            makeScreenLookClean(isPaused);
         }
     }
 
     public static void stopTime(){
         timerEndSound.stop();
     }
-
+/*Got vibration to work form this resource:
+* https://stackoverflow.com/questions/60466695/android-vibration-app-doesnt-work-anymore-after-android-10-api-29-update*/
     public static void startStopVibrations(Context c, String isStartStop){
         Vibrator vibrations = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);
 
         if(isStartStop.equals("start")){
-            vibrations.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
+            long[] pattern = { 0,500, 1000, 500,1000,500,1000,500, 1000, 500,1000,500, 1000, 500};
+                vibrations.vibrate(VibrationEffect.createWaveform(pattern,VibrationEffect.DEFAULT_AMPLITUDE),new AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .setUsage(AudioAttributes.USAGE_ALARM)
+                        .build());
         }
         else{
             vibrations.cancel();
@@ -299,7 +312,6 @@ public class TimerActivity extends AppCompatActivity {
     @SuppressLint("UnspecifiedImmutableFlag")
     private void notificationOnEndTime(){
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
         NotificationChannel channel = new NotificationChannel("CHANNEL_ID",
                 "CHANNEL_NAME",
                 NotificationManager.IMPORTANCE_HIGH);
@@ -322,12 +334,35 @@ public class TimerActivity extends AppCompatActivity {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setColor(Color.GREEN)
-                .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
+                .setVibrate(new long[]{0L})
                 .addAction(R.drawable.ic_sound, "OK", soundIntent)
                 .setAutoCancel(true);
 
         builder.setContentIntent(pendingIntent);
         manager.notify(0, builder.build());
+    }
+
+    private void makeScreenLookClean(boolean isTimeRunning){
+        if(isTimeRunning){
+            oneMinButton.setVisibility(View.INVISIBLE);
+            twoMinButton.setVisibility(View.INVISIBLE);
+            threeMinButton.setVisibility(View.INVISIBLE);
+            fiveMinButton.setVisibility(View.INVISIBLE);
+            tenMinButton.setVisibility(View.INVISIBLE);
+            setTimeButton.setVisibility(View.INVISIBLE);
+            userInputTime.setVisibility(View.INVISIBLE);
+            findViewById(R.id.minuteText).setVisibility(View.INVISIBLE);
+        }
+        else{
+            oneMinButton.setVisibility(View.VISIBLE);
+            twoMinButton.setVisibility(View.VISIBLE);
+            threeMinButton.setVisibility(View.VISIBLE);
+            fiveMinButton.setVisibility(View.VISIBLE);
+            tenMinButton.setVisibility(View.VISIBLE);
+            setTimeButton.setVisibility(View.VISIBLE);
+            userInputTime.setVisibility(View.VISIBLE);
+            findViewById(R.id.minuteText).setVisibility(View.VISIBLE);
+        }
     }
 
     public static Intent makeIntent(Context c){
