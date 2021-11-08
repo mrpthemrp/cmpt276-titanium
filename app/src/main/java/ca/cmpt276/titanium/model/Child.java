@@ -2,6 +2,9 @@ package ca.cmpt276.titanium.model;
 
 import java.util.UUID;
 
+/**
+ * This class represents a single child.
+ */
 public class Child {
     private final UUID uniqueId;
     private String name;

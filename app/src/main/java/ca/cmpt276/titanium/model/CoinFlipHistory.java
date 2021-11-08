@@ -10,6 +10,10 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+/**
+ * This class represents the coin flip history.
+ * Handles loading and saving from JSON.
+ */
 public class CoinFlipHistory {
     private static final Gson GSON = new Gson();
     private static final String EMPTY_STRING = "";

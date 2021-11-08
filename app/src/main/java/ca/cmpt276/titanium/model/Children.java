@@ -13,6 +13,10 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * This class represents a group of children.
+ * Handles loading and saving from JSON. Generates a unique ID for a child.
+ */
 public class Children {
     private static final Gson GSON = new Gson();
     private static final Logger LOGGER = Logger.getLogger(Children.class.getName());

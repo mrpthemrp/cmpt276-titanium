@@ -15,6 +15,10 @@ import ca.cmpt276.titanium.model.Children;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+/**
+ * This activity represents the main menu.
+ * Shows children and buttons to the timer and coin flip.
+ */
 public class MenuActivity extends AppCompatActivity {
     private static final int CHILD_BUTTON_HEIGHT = 300;
     private static final int CHILD_BUTTON_WIDTH = 300;

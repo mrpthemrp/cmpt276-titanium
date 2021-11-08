@@ -16,6 +16,9 @@ import ca.cmpt276.titanium.model.CoinFlip;
 
 import java.util.List;
 
+/**
+ * This is an adapter for the coin flip history.
+ */
 public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
     public CoinFlipHistoryAdapter(Context context, List<CoinFlip> coinFlipHistory) {
         super(context, 0, coinFlipHistory);

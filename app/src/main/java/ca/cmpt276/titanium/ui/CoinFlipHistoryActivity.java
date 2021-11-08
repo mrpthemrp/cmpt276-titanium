@@ -15,6 +15,10 @@ import ca.cmpt276.titanium.model.CoinFlipHistory;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * This represents the coin flip history activity.
+ * Shows a list of the history from latest to oldest.
+ */
 public class CoinFlipHistoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

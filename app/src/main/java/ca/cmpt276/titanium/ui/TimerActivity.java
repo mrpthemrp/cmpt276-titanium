@@ -31,6 +31,10 @@ import ca.cmpt276.titanium.R;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ * This activity represents the timer activity.
+ * Shows times that can be set, and buttons that start and cancel the countdown.
+ */
 public class TimerActivity extends AppCompatActivity {
     private static final int MILLIS_IN_SECOND = 1000;
     private static final int MILLIS_IN_MINUTE = 60000;

@@ -20,6 +20,9 @@ import ca.cmpt276.titanium.model.Children;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * This activity represents the viewing of a single child.
+ */
 public class ViewChildActivity extends AppCompatActivity {
     private static final int INVALID_UNIQUE_ID = -1;
 

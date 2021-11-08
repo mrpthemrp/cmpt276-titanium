@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+/**
+ * This represents the notification for the end of the timer.
+ */
 public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
