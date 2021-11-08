@@ -7,7 +7,7 @@
     android:clickable="true"
     android:focusable="true"
     tools:context=".ui.TimerActivity">
-
+    <!-- calmBackground image from: https://unsplash.com/photos/4N6qT784t3A -->
     <ImageView
         android:id="@+id/calmBackground"
         android:layout_width="wrap_content"
