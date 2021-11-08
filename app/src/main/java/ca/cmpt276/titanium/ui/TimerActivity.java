@@ -57,6 +57,9 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
+        /*
+        Receiving notification click found from https://stackoverflow.com/questions/13822509/android-call-method-on-notification-click/14539858
+         */
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -277,6 +280,7 @@ public class TimerActivity extends AppCompatActivity {
                 NotificationManager.IMPORTANCE_HIGH);
         channel.setDescription("NOTIFICATION_CHANNEL_DESCRIPTION");
         channel.enableVibration(true);
+        channel.setSound(null, null);
         manager.createNotificationChannel(channel);
 
         Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
