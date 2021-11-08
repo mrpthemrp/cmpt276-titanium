@@ -1,0 +1,8 @@
+Scrum Roles
+
+Iteration #1
+------------
+Scrum Master: Mohammad Haris Ahmad
+Product Owner: Christopher Torunski
+Repo Manager: Michelle Vong
+Team Member: Deborah Wang
