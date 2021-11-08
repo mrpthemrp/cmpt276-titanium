@@ -71,7 +71,6 @@ public class TimerActivity extends AppCompatActivity {
 
         setupActionBar();
         setupAttributes();
-        setupCancelBtn();
         clickResetButton();
         customTimeFunctionality();
     }
@@ -211,19 +210,6 @@ public class TimerActivity extends AppCompatActivity {
 
         TextView time = findViewById(R.id.timer);
         time.setText(formattedTime);
-    }
-
-    private void setupCancelBtn() {
-        Button cancelBtn = findViewById(R.id.timerCancelBtn);
-        cancelBtn.setOnClickListener(view -> {
-            isPaused = true;
-            setPlayPause();
-            durationOfTime = 0;
-            displayTime();
-            timerEndSound.setLooping(false);
-            startStopVibrations(this, "off");
-            Toast.makeText(TimerActivity.this, R.string.timer_cancelled_toast, Toast.LENGTH_SHORT).show();
-        });
     }
 
     private void setupPlayPause() {
