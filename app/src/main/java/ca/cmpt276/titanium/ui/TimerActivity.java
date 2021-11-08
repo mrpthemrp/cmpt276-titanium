@@ -27,7 +27,6 @@ import ca.cmpt276.titanium.model.TimerInfo;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Set;
 
 public class TimerActivity extends AppCompatActivity {
     private static final int MILLIS_IN_SECOND = 1000;
@@ -35,6 +34,7 @@ public class TimerActivity extends AppCompatActivity {
     private static final int MILLIS_IN_HOUR = 3600000;
 
     private TimerInfo timerInfo;
+    private CountDownTimer countDownTimer;
     public static MediaPlayer timerEndSound;
 
     private Button oneMinButton;
@@ -45,8 +45,6 @@ public class TimerActivity extends AppCompatActivity {
     private EditText userInputTime;
     private Button setTimeButton;
     private ImageView playPause;
-
-    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +61,12 @@ public class TimerActivity extends AppCompatActivity {
             if (extras == null) {
                 timerEndSound = MediaPlayer.create(TimerActivity.this, R.raw.timeralarm);
             } else if (extras.getBoolean("isClicked")) {
-                timerEndSound.setLooping(false);
-                timerEndSound.stop();
-                toggleVibrations(TimerActivity.this, "off");
+                if (timerEndSound != null) {
+                    timerEndSound.setLooping(false);
+                    timerEndSound.stop();
+                }
+
+                toggleVibrations(false);
 
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.cancel(52);
@@ -175,9 +176,12 @@ public class TimerActivity extends AppCompatActivity {
             public void onFinish() {
                 resetTimer();
 
-                timerEndSound.setLooping(true);
-                timerEndSound.start();
-                toggleVibrations(TimerActivity.this, "start");
+                if (timerEndSound != null) {
+                    timerEndSound.setLooping(true);
+                    timerEndSound.start();
+                }
+
+                toggleVibrations(true);
                 notificationOnEndTime();
             }
         }.start();
@@ -213,19 +217,18 @@ public class TimerActivity extends AppCompatActivity {
         findViewById(R.id.minuteText).setVisibility(visibility);
     }
 
-    /*Got vibration to work form this resource:
-     * https://stackoverflow.com/questions/60466695/android-vibration-app-doesnt-work-anymore-after-android-10-api-29-update*/
-    public static void toggleVibrations(Context context, String isStartStop) {
-        Vibrator vibrations = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+    public void toggleVibrations(boolean startVibrations) {
+        Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(VIBRATOR_SERVICE);
 
-        if (isStartStop.equals("start")) {
-            long[] pattern = {0, 500, 1000, 500, 1000, 500, 1000, 500, 1000, 500, 1000, 500, 1000, 500};
-            vibrations.vibrate(VibrationEffect.createWaveform(pattern, VibrationEffect.DEFAULT_AMPLITUDE), new AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .build());
+        if (startVibrations) {
+            long[] pattern = {0, 500, 1000};
+
+            vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0),
+                    new AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_ALARM)
+                            .build());
         } else {
-            vibrations.cancel();
+            vibrator.cancel();
         }
     }
 
@@ -255,9 +258,9 @@ public class TimerActivity extends AppCompatActivity {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setColor(Color.GREEN)
-                .setVibrate(new long[]{0L})
                 .addAction(R.drawable.ic_sound, "OK", pendingIntent)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setOngoing(true);
 
         builder.setContentIntent(pendingIntent);
         manager.notify(52, builder.build());
