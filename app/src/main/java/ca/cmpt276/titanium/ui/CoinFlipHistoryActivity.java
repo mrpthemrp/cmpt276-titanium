@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -24,7 +23,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip_history);
-        setupTitle();
+        setTitle(R.string.coinFlipHistoryTitle);
 
         populateListView();
 
@@ -35,11 +34,6 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
             ListView listView = (ListView) findViewById(R.id.coinFlipHistoryList);
             listView.setVisibility(View.GONE);
         }
-    }
-
-    private void setupTitle() {
-        ActionBar toolbar = getSupportActionBar();
-        toolbar.setTitle(R.string.coinFlipHistoryTitle);
     }
 
     private void populateListView() {

@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,12 +24,9 @@ import java.util.UUID;
  * This activity represents the viewing of a single child.
  */
 public class ViewChildActivity extends AppCompatActivity {
-    private static final int INVALID_UNIQUE_ID = -1;
-
     private final Children children = Children.getInstance(this);
     private UUID childUniqueId;
     private Child childBeingViewed;
-    private Button saveButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +36,6 @@ public class ViewChildActivity extends AppCompatActivity {
 
         this.childUniqueId = (UUID) getIntent().getSerializableExtra("child_unique_id");
         this.childBeingViewed = children.getChild(childUniqueId);
-
-        this.saveButton = findViewById(R.id.viewFunctionBtn);
-        this.saveButton.setVisibility(View.INVISIBLE);
     }
 
     @Override

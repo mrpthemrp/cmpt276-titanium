@@ -224,8 +224,7 @@ public class CoinActivity extends AppCompatActivity {
     private Child getChildOfLastTurn() {
         int sizeOfHistory = CoinFlipHistory.getCoinFlipHistory().size();
         if (!CoinFlipHistory.getCoinFlipHistory().isEmpty()) {
-            Child childToPickLastTurn = CoinFlipHistory.getCoinFlipHistory().get(sizeOfHistory - 1).getChildWhoPicksSide();
-            return childToPickLastTurn;
+            return CoinFlipHistory.getCoinFlipHistory().get(sizeOfHistory - 1).getChildWhoPicksSide();
         }
 
         return null;
