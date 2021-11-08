@@ -27,6 +27,7 @@ import ca.cmpt276.titanium.model.TimerInfo;
 
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
 public class TimerActivity extends AppCompatActivity {
     private static final int MILLIS_IN_SECOND = 1000;
@@ -47,8 +48,6 @@ public class TimerActivity extends AppCompatActivity {
 
     private CountDownTimer countDownTimer;
 
-    //private long startTime;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +65,7 @@ public class TimerActivity extends AppCompatActivity {
             } else if (extras.getBoolean("isClicked")) {
                 timerEndSound.setLooping(false);
                 timerEndSound.stop();
-                startStopVibrations(TimerActivity.this, "off");
+                toggleVibrations(TimerActivity.this, "off");
 
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.cancel(52);
@@ -84,10 +83,18 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (timerInfo.isRunning()) {
+            pauseTimer();
+        }
+    }
+
     private void startTimer() {
         startCountDown(timerInfo.getRemainingMilliseconds());
         timerInfo.setRunning();
-        //startTime = System.currentTimeMillis();
 
         playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_pause_24, getTheme()));
         makeInputButtonsVisible(false);
@@ -114,7 +121,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void changeTimerDuration(long minutes) {
-        timerInfo.setDurationMilliseconds(minutes * MILLIS_IN_MINUTE);
+        timerInfo.setDurationMilliseconds(5000);//minutes * MILLIS_IN_MINUTE);
         resetTimer();
     }
 
@@ -165,13 +172,12 @@ public class TimerActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFinish() { // CHANGE
+            public void onFinish() {
                 resetTimer();
-                displayTime();
 
                 timerEndSound.setLooping(true);
                 timerEndSound.start();
-                startStopVibrations(TimerActivity.this, "start");
+                toggleVibrations(TimerActivity.this, "start");
                 notificationOnEndTime();
             }
         }.start();
@@ -209,7 +215,7 @@ public class TimerActivity extends AppCompatActivity {
 
     /*Got vibration to work form this resource:
      * https://stackoverflow.com/questions/60466695/android-vibration-app-doesnt-work-anymore-after-android-10-api-29-update*/
-    public static void startStopVibrations(Context context, String isStartStop) {
+    public static void toggleVibrations(Context context, String isStartStop) {
         Vibrator vibrations = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 
         if (isStartStop.equals("start")) {
