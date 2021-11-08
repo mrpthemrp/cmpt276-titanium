@@ -27,6 +27,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * This activity represents the coin flip activity.
+ * Allows the user to choose heads or tails, and shows the results of the flip.
+ */
 public class CoinActivity extends AppCompatActivity {
     private static final Coin DEFAULT_COIN_CHOSEN = Coin.HEADS;
     public static final int FIRST_CHILD_INDEX = 0;

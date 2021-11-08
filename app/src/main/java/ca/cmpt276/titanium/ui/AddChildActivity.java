@@ -19,6 +19,9 @@ import ca.cmpt276.titanium.model.Children;
 
 import java.util.Objects;
 
+/**
+ * This activity represents the adding of a single child.
+ */
 public class AddChildActivity extends AppCompatActivity {
     private final Children children = Children.getInstance(this);
     private EditText childName;

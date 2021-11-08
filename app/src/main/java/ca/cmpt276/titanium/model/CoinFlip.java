@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
+/**
+ * This class represents a single coin flip.
+ */
 public class CoinFlip {
     private final Child childWhoPicksSide;
     private final Coin sideThatChildPicks;

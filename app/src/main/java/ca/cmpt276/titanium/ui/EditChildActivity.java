@@ -21,6 +21,9 @@ import ca.cmpt276.titanium.model.Children;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * This activity represents the editing of a single child.
+ */
 public class EditChildActivity extends AppCompatActivity {
     private static final String INVALID_UNIQUE_ID = "-1";
 
