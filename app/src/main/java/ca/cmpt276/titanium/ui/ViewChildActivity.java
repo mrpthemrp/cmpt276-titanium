@@ -39,11 +39,11 @@ public class ViewChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child);
         setupActionBar();
 
-        this.saveButton = findViewById(R.id.viewFunctionBtn);
-        this.saveButton.setVisibility(View.INVISIBLE);
-
         this.childUniqueId = (UUID) getIntent().getSerializableExtra("child_unique_id");
         this.childBeingViewed = children.getChild(childUniqueId);
+
+        this.saveButton = findViewById(R.id.viewFunctionBtn);
+        this.saveButton.setVisibility(View.INVISIBLE);
     }
 
     @Override
