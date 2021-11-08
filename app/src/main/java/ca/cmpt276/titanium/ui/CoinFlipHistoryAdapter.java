@@ -39,8 +39,10 @@ public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
         childTextView.setText(coinFlip.getChildWhoPicksSide().getName() + " chose " + coinFlip.getSideThatChildPicks());
 
         if (coinFlip.getCoinSideLandedOn() == coinFlip.getSideThatChildPicks()) {
+            // image retrieved from https://www.vhv.rs/dpng/f/406-4067045_checkmark-png.png
             resultImageView.setImageResource(R.drawable.checkmark);
         } else {
+            // image retrieved from https://www.nicepng.com/png/full/910-9107823_circle-cross-png.png
             resultImageView.setImageResource(R.drawable.xmark);
         }
 
