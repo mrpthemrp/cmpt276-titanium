@@ -29,9 +29,12 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class TimerActivity extends AppCompatActivity {
+    private static final int NOTIFICATION_ID = 52;
+    private static final int COUNTDOWN_INTERVAL = 50;
     private static final int MILLIS_IN_SECOND = 1000;
     private static final int MILLIS_IN_MINUTE = 60000;
     private static final int MILLIS_IN_HOUR = 3600000;
+    private static final long[] VIBRATION_PATTERN = {0, 500, 1000};
 
     private TimerInfo timerInfo;
     private CountDownTimer countDownTimer;
@@ -69,7 +72,7 @@ public class TimerActivity extends AppCompatActivity {
                 toggleVibrations(false);
 
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.cancel(52);
+                notificationManager.cancel(NOTIFICATION_ID);
             }
         }
 
@@ -122,7 +125,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void changeTimerDuration(long minutes) {
-        timerInfo.setDurationMilliseconds(5000);//minutes * MILLIS_IN_MINUTE);
+        timerInfo.setDurationMilliseconds(5000);//minutes * MILLIS_IN_MINUTE);  // TODO
         resetTimer();
     }
 
@@ -165,7 +168,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startCountDown(long durationMilliseconds) {
-        countDownTimer = new CountDownTimer(durationMilliseconds, 50) {
+        countDownTimer = new CountDownTimer(durationMilliseconds, COUNTDOWN_INTERVAL) {
             @Override
             public void onTick(long l) {
                 timerInfo.setRemainingMilliseconds(l);
@@ -221,9 +224,7 @@ public class TimerActivity extends AppCompatActivity {
         Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(VIBRATOR_SERVICE);
 
         if (startVibrations) {
-            long[] pattern = {0, 500, 1000};
-
-            vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0),
+            vibrator.vibrate(VibrationEffect.createWaveform(VIBRATION_PATTERN, 0),
                     new AudioAttributes.Builder()
                             .setUsage(AudioAttributes.USAGE_ALARM)
                             .build());
@@ -263,7 +264,7 @@ public class TimerActivity extends AppCompatActivity {
                 .setOngoing(true);
 
         builder.setContentIntent(pendingIntent);
-        manager.notify(52, builder.build());
+        manager.notify(NOTIFICATION_ID, builder.build());
     }
 
     public static Intent makeIntent(Context context) {
