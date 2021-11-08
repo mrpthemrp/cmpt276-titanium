@@ -36,15 +36,15 @@
         android:id="@+id/resetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginTop="15dp"
         android:backgroundTint="?attr/colorPrimary"
         android:backgroundTintMode="src_in"
         android:text="@string/timerReset"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/timerPlayPauseBtn"
-        app:layout_constraintStart_toEndOf="@+id/timerPlayPauseBtn"
-        app:layout_constraintTop_toTopOf="@+id/timerPlayPauseBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timerPlayPauseBtn"
         tools:ignore="TextContrastCheck" />
 
     <Button
