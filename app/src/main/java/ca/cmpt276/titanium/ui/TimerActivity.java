@@ -157,7 +157,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startCountDown(long durationMilliseconds) {
-        countDownTimer = new CountDownTimer(durationMilliseconds, MILLIS_IN_SECOND) {
+        countDownTimer = new CountDownTimer(durationMilliseconds, 50) {
             @Override
             public void onTick(long l) {
                 timerInfo.setRemainingMilliseconds(l);
