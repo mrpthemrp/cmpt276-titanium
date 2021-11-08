@@ -275,10 +275,10 @@ public class TimerActivity extends AppCompatActivity {
     private void notificationOnEndTime() {
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        NotificationChannel channel = new NotificationChannel("CHANNEL_ID",
-                "CHANNEL_NAME",
+        NotificationChannel channel = new NotificationChannel("TIMER",
+                "TIMER_NAME",
                 NotificationManager.IMPORTANCE_HIGH);
-        channel.setDescription("NOTIFICATION_CHANNEL_DESCRIPTION");
+        channel.setDescription("TIMER_NOTIFICATION");
         channel.enableVibration(true);
         channel.setSound(null, null);
         manager.createNotificationChannel(channel);
@@ -291,7 +291,7 @@ public class TimerActivity extends AppCompatActivity {
         broadcastIntent.putExtra("sound", "off");
         PendingIntent soundIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "CHANNEL_ID")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "TIMER")
                 .setSmallIcon(R.drawable.ic_time)
                 .setContentTitle("Time Is Up")
                 .setContentText("Click OK to stop the sound and vibration")
