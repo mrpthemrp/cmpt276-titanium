@@ -249,7 +249,7 @@ public class TimerActivity extends AppCompatActivity {
     private void timerFinishNotification() {
         NotificationChannel channel = new NotificationChannel(
                 "practical_parent_timer",
-                "Timers",
+                getString(R.string.timer_channel_name),
                 NotificationManager.IMPORTANCE_HIGH);
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -265,11 +265,11 @@ public class TimerActivity extends AppCompatActivity {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "practical_parent_timer")
                 .setSmallIcon(R.drawable.ic_time)
-                .setContentTitle("Timer")
+                .setContentTitle(getString(R.string.timer_notification_title))
                 .setContentIntent(pendingIntent)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setColor(Color.GREEN)
-                .addAction(R.drawable.ic_sound, "Dismiss", dismissPendingIntent)
+                .addAction(R.drawable.ic_sound, getString(R.string.timer_notification_dismiss_button), dismissPendingIntent)
                 .setAutoCancel(true)
                 .setOngoing(true);
 

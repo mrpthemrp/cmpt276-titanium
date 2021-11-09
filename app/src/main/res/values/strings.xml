@@ -72,5 +72,8 @@
     <string name="flipCoinHistChildName">No Coin Flips Yet</string>
     <string name="flipCoinHistDate">Date Goes Here</string>
     <string name="flipCoinHistDummy">RESULT</string>
+    <string name="timer_notification_dismiss_button">Dismiss</string>
+    <string name="timer_channel_name">Timers</string>
+    <string name="timer_notification_title">Timer</string>
 
 </resources>
