@@ -99,7 +99,7 @@ public class TimerActivity extends AppCompatActivity {
 
         if (timerInfo.isRunning()) {
             pauseTimer();
-            Toast.makeText(this, "Timer paused", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.timer_paused_toast), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -162,6 +162,8 @@ public class TimerActivity extends AppCompatActivity {
         playPause.setOnClickListener(view -> {
             if (timerInfo.isRunning()) {
                 pauseTimer();
+            } else if (timerInfo.getDurationMilliseconds() <= 0) {
+                Toast.makeText(this, getString(R.string.timer_zero_toast), Toast.LENGTH_SHORT).show();
             } else {
                 startTimer();
             }

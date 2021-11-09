@@ -29,6 +29,10 @@ public class TimerInfo {
         return instance;
     }
 
+    public long getDurationMilliseconds() {
+        return prefs.getLong("duration_milliseconds", INVALID_MILLISECONDS);
+    }
+
     public void setDurationMilliseconds(long durationMilliseconds) {
         prefsEditor.putLong("duration_milliseconds", durationMilliseconds);
         prefsEditor.apply();
