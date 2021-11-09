@@ -48,6 +48,7 @@ public class CoinActivity extends AppCompatActivity {
     private TextView coinResult;
     private static final String HEADS = "HEADS";
     private static final String TAILS = "TAILS";
+    private static final int COIN_FLIP_DELAY = 1600;
 
     private CoinFlipHistory coinFlipHistory;
 
@@ -67,8 +68,6 @@ public class CoinActivity extends AppCompatActivity {
         setupTitle();
 
         coinSound = MediaPlayer.create(CoinActivity.this, R.raw.coinflip);
-
-        children.loadSavedData();
 
         coinFlipHistory = new CoinFlipHistory(getApplicationContext());
 
@@ -164,23 +163,23 @@ public class CoinActivity extends AppCompatActivity {
         // heads == 0
         if (coinSide == 0) {
             coinResult.setText(HEADS);
-            coin.postDelayed(displayHeads, 1600);
+            coin.postDelayed(displayHeads, COIN_FLIP_DELAY);
             coinSideLandedOn = Coin.HEADS;
         }
 
         // tails == 1
         else {
             coinResult.setText(TAILS);
-            coin.postDelayed(displayTails, 1600);
+            coin.postDelayed(displayTails, COIN_FLIP_DELAY);
             coinSideLandedOn = Coin.TAILS;
         }
-        coinResult.postDelayed(result, 1600);
+        coinResult.postDelayed(result, COIN_FLIP_DELAY);
 
         // If there are no children configured, we don't need to save any info
         if (!children.getChildren().isEmpty()) {
             saveCoinFlip(coinSideLandedOn);
 
-            new Handler(Looper.getMainLooper()).postDelayed(this::setChildNameText, 1600);
+            new Handler(Looper.getMainLooper()).postDelayed(this::setChildNameText, COIN_FLIP_DELAY);
         }
     }
 
