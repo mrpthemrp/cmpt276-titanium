@@ -42,7 +42,6 @@ public class CoinActivity extends AppCompatActivity {
     private Button tailsButton;
     private Coin coinChosen = DEFAULT_COIN_CHOSEN;
 
-    private Button flipButton;
     private ImageView coin;
     private TextView coinResult;
     private static final String HEADS = "HEADS";
@@ -93,10 +92,10 @@ public class CoinActivity extends AppCompatActivity {
         }
         setUpCoinChoiceButtons();
 
-        flipButton = findViewById(R.id.flipButton);
+        Button flipButton = findViewById(R.id.flipButton);
         coin = findViewById(R.id.coinBlank);
         coinResult = findViewById(R.id.coinFlipResult);
-        flipButtonClick();
+        flipButton.setOnClickListener(view -> flipTheCoin());
     }
 
     private void setCoinChoiceButtonsGone() {
@@ -186,10 +185,6 @@ public class CoinActivity extends AppCompatActivity {
         }
 
         coinFlipHistory.addCoinFlipToHistory(coinFlip);
-    }
-
-    private void flipButtonClick() {
-        flipButton.setOnClickListener(view -> flipTheCoin());
     }
 
     private Child getChildForNextTurn() {
