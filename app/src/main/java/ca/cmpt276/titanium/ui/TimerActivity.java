@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -98,6 +99,7 @@ public class TimerActivity extends AppCompatActivity {
 
         if (timerInfo.isRunning()) {
             pauseTimer();
+            Toast.makeText(this, "Timer paused", Toast.LENGTH_SHORT).show();
         }
     }
 
