@@ -127,7 +127,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void changeTimerDuration(long minutes) {
-        timerInfo.setDurationMilliseconds(5000);//minutes * MILLIS_IN_MINUTE);  // TODO
+        timerInfo.setDurationMilliseconds(minutes * MILLIS_IN_MINUTE);
         resetTimer();
     }
 
