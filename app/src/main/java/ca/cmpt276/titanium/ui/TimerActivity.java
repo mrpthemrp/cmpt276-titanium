@@ -10,9 +10,6 @@ import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.View;
@@ -21,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.res.ResourcesCompat;
@@ -29,9 +25,6 @@ import androidx.core.content.res.ResourcesCompat;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.TimerInfo;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -40,7 +33,7 @@ public class TimerActivity extends AppCompatActivity {
     private static final int MILLIS_IN_MINUTE = 60000;
     private static final int MILLIS_IN_HOUR = 3600000;
     private static final int TIMER_COUNTDOWN_INTERVAL = 50;
-    private static final int TIMER_NOTIFICATION_ID = 52;
+    private static final int TIMER_NOTIFICATION_ID = 0;
     private static final long[] TIMER_VIBRATION_PATTERN = {0, 500, 1000};
 
     private TimerInfo timerInfo;
@@ -59,35 +52,18 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        timerInfo = TimerInfo.getInstance(this);
-
-        String test = getIntent().getStringExtra("test");
-
-        if (test != null && test.equals("test")) {
-            if (countDownTimer != null) {
-                countDownTimer.cancel();
-            }
-
-            timerInfo.setStopped();
-
-            //timerEndSound = MediaPlayer.create(getApplicationContext(), R.raw.timeralarm);
-            timerEndSound.setLooping(true);
-            timerEndSound.start();
-
-            toggleVibrations(getApplicationContext(), true);
-            endTimerNotification(false);
-            finish();
-        }
+        setContentView(R.layout.activity_timer);
+        setTitle(R.string.timerTitle);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         /*
         Receiving notification click found from https://stackoverflow.com/questions/13822509/android-call-method-on-notification-click/14539858
          */
-        if (savedInstanceState == null) { // TODO
+        if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
-                timerEndSound = MediaPlayer.create(getApplicationContext(), R.raw.timeralarm);
-            } else if (extras.getBoolean("isClicked") && !extras.getBoolean("onTimerScreen")) {
+                timerEndSound = MediaPlayer.create(TimerActivity.this, R.raw.timeralarm);
+            } else if (extras.getBoolean("isClicked")) {
                 if (timerEndSound != null) {
                     timerEndSound.setLooping(false);
                     timerEndSound.stop();
@@ -95,17 +71,13 @@ public class TimerActivity extends AppCompatActivity {
 
                 toggleVibrations(getApplicationContext(), false);
 
-                NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.cancel(TIMER_NOTIFICATION_ID);
-                if (extras.getBoolean("onTimerScreen")) {
-                    finish();
-                }
+                finish();
             }
         }
 
-        setContentView(R.layout.activity_timer);
-        setTitle(R.string.timerTitle);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        timerInfo = TimerInfo.getInstance(this);
 
         setupButtons();
 
@@ -117,16 +89,16 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
 
         if (timerInfo.isRunning()) {
-            startBackgroundTimer();
+            pauseTimer();
         }
     }
 
     private void startTimer() {
-        startCountDown(timerInfo.getRemainingMilliseconds(), false);
+        startCountDown(timerInfo.getRemainingMilliseconds());
         timerInfo.setRunning();
 
         playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_pause_24, getTheme()));
@@ -149,13 +121,13 @@ public class TimerActivity extends AppCompatActivity {
         timerInfo.setStopped();
         displayTime();
 
-        //timerEndSound = MediaPlayer.create(getApplicationContext(), R.raw.timeralarm);
+        timerEndSound = MediaPlayer.create(TimerActivity.this, R.raw.timeralarm);
         playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_play_arrow_24, getTheme()));
         makeInputButtonsVisible(true);
     }
 
     private void changeTimerDuration(long minutes) {
-        timerInfo.setDurationMilliseconds(5000);//minutes * MILLIS_IN_MINUTE); // TODO
+        timerInfo.setDurationMilliseconds(5000);//minutes * MILLIS_IN_MINUTE);  // TODO
         resetTimer();
     }
 
@@ -197,36 +169,25 @@ public class TimerActivity extends AppCompatActivity {
         });
     }
 
-    public static void dismissNotification(Context context) {
-        timerEndSound.stop();
-
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(TIMER_NOTIFICATION_ID);
-    }
-
-    private void startCountDown(long durationMilliseconds, boolean inBackground) {
+    private void startCountDown(long durationMilliseconds) {
         countDownTimer = new CountDownTimer(durationMilliseconds, TIMER_COUNTDOWN_INTERVAL) {
             @Override
             public void onTick(long l) {
                 timerInfo.setRemainingMilliseconds(l);
-
-                if (!inBackground) {
-                   displayTime();
-                }
+                displayTime();
             }
 
             @Override
-            public void onFinish() { // TODO
+            public void onFinish() {
                 resetTimer();
 
-                timerEndSound = MediaPlayer.create(getApplicationContext(), R.raw.timeralarm);
                 if (timerEndSound != null) {
                     timerEndSound.setLooping(true);
                     timerEndSound.start();
                 }
 
                 toggleVibrations(getApplicationContext(), true);
-                endTimerNotification(!inBackground);
+                timerFinishNotification();
             }
         }.start();
     }
@@ -261,70 +222,11 @@ public class TimerActivity extends AppCompatActivity {
         findViewById(R.id.minuteText).setVisibility(visibility);
     }
 
-    private void startBackgroundTimer() {
-        long endTimerMilliseconds = System.currentTimeMillis() + timerInfo.getRemainingMilliseconds();
-        ongoingTimerNotification("Pause", endTimerMilliseconds);
+    public static void dismissNotification(Context context) {
+        timerEndSound.stop();
 
-        Handler handler = new Handler(Looper.getMainLooper()) {
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                super.handleMessage(msg);
-
-                if (msg.obj == "start") {
-                    startCountDown(timerInfo.getRemainingMilliseconds(), true);
-                    timerInfo.setRunning();
-                    System.out.println("start");
-                } else if (msg.obj == "pause") {
-                    long endTimerMilliseconds = System.currentTimeMillis() + timerInfo.getRemainingMilliseconds();
-                    ongoingTimerNotification("Resume", endTimerMilliseconds);
-                    countDownTimer.cancel();
-                    timerInfo.setPaused();
-                    System.out.println("pause");
-                } else if (msg.obj == "resume") {
-                    long endTimerMilliseconds = System.currentTimeMillis() + timerInfo.getRemainingMilliseconds();
-                    ongoingTimerNotification("Pause", endTimerMilliseconds);
-                    startCountDown(timerInfo.getRemainingMilliseconds(), true);
-                    timerInfo.setResumed();
-                    System.out.println("resume");
-                }
-            }
-        };
-
-        Thread thread = new Thread(() -> {
-            Message message = handler.obtainMessage(0, "start");
-            message.sendToTarget();
-
-            //boolean running = true;
-
-            while (true) {
-                if (timerInfo.isStopped()) {
-                    return;
-                } else if (timerInfo.isPaused()) {
-                    message = handler.obtainMessage(0, "pause");
-                    message.sendToTarget();
-                } else if (timerInfo.isResumed()) {
-                    message = handler.obtainMessage(0, "resume");
-                    message.sendToTarget();
-                }
-            }
-        });
-
-        thread.start();
-    }
-
-    public static void cancelTimerNotification(Context context) {
-        TimerInfo timerInfo = TimerInfo.getInstance(context.getApplicationContext());
-        timerInfo.setStopped();
-    }
-
-    public static void pauseTimerNotification(Context context) {
-        TimerInfo timerInfo = TimerInfo.getInstance(context.getApplicationContext());
-        timerInfo.setPaused();
-    }
-
-    public static void resumeTimerNotification(Context context) {
-        TimerInfo timerInfo = TimerInfo.getInstance(context.getApplicationContext());
-        timerInfo.setRunning();
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancel(TIMER_NOTIFICATION_ID);
     }
 
     public static void toggleVibrations(Context context, boolean startVibrations) {
@@ -340,81 +242,34 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-    private void ongoingTimerNotification(String leftButton, long endTimerMilliseconds) { // leftButton: "resume" or "pause"
-        NotificationChannel notificationChannel = new NotificationChannel(
+    private void timerFinishNotification() {
+        NotificationChannel channel = new NotificationChannel(
                 "practical_parent_timer",
                 "Timers",
                 NotificationManager.IMPORTANCE_HIGH);
 
-        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.createNotificationChannel(notificationChannel);
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        manager.createNotificationChannel(channel);
 
-        Intent clickIntent = new Intent(getApplicationContext(), TimerActivity.class);
-        clickIntent.putExtra("isClicked", true);
-        clickIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent clickPendingIntent = PendingIntent.getActivity(this, 0, clickIntent, PendingIntent.FLAG_IMMUTABLE);
-
-        Intent leftButtonIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
-        leftButtonIntent.putExtra(leftButton, true);
-        PendingIntent leftButtonPendingIntent = PendingIntent.getBroadcast(this, 0, leftButtonIntent, PendingIntent.FLAG_IMMUTABLE);
-
-        Intent cancelIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
-        cancelIntent.putExtra("cancel", true);
-        PendingIntent cancelPendingIntent = PendingIntent.getBroadcast(this, 0, cancelIntent, PendingIntent.FLAG_IMMUTABLE);
-
-        DateFormat formatter = SimpleDateFormat.getTimeInstance(SimpleDateFormat.SHORT);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "practical_parent_timer")
-                .setSmallIcon(R.drawable.ic_time)
-                .setContentTitle("Timer")
-                .setContentText("End time: " + formatter.format(new Date(endTimerMilliseconds)))
-                .setContentIntent(clickPendingIntent)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setAutoCancel(true)
-                .setTimeoutAfter(MILLIS_IN_MINUTE)
-                .setCategory(NotificationCompat.CATEGORY_ALARM)
-                .setColor(Color.GREEN)
-                .addAction(R.drawable.ic_sound, leftButton, leftButtonPendingIntent)
-                .addAction(R.drawable.ic_sound, "Cancel", cancelPendingIntent)
-                .setOngoing(true);
-
-        notificationManager.notify(TIMER_NOTIFICATION_ID, builder.build());
-    }
-
-    private void endTimerNotification(boolean onTimerScreen) { // TODO make okay stop everything and cancel notification
-        NotificationChannel notificationChannel = new NotificationChannel(
-                "practical_parent_timer",
-                "Timers",
-                NotificationManager.IMPORTANCE_HIGH);
-
-        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(TIMER_NOTIFICATION_ID);
-        notificationManager.createNotificationChannel(notificationChannel);
-
-        Intent clickIntent = new Intent(getApplicationContext(), TimerActivity.class);
-        clickIntent.putExtra("isClicked", true);
-        clickIntent.putExtra("onTimerScreen", onTimerScreen);
-        clickIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent clickPendingIntent = PendingIntent.getActivity(this, 0, clickIntent, PendingIntent.FLAG_IMMUTABLE);
+        Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
+        intent.putExtra("isClicked", true);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         Intent dismissIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
         dismissIntent.putExtra("dismissed", true);
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(this, 0, dismissIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "practical_parent_timer")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "TIMER")
                 .setSmallIcon(R.drawable.ic_time)
                 .setContentTitle("Timer")
-                //.setContentText("Click OK to stop the sound and vibration")
-                .setContentIntent(clickPendingIntent)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setTimeoutAfter(MILLIS_IN_MINUTE)
+                .setContentIntent(pendingIntent)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setColor(Color.GREEN)
                 .addAction(R.drawable.ic_sound, "Dismiss", dismissPendingIntent)
-                .setOngoing(true)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setOngoing(true);
 
-        notificationManager.notify(TIMER_NOTIFICATION_ID, builder.build());
+        manager.notify(TIMER_NOTIFICATION_ID, builder.build());
     }
 
     public static Intent makeIntent(Context context) {
