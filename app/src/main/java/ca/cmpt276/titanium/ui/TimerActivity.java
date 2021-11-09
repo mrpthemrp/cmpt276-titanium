@@ -259,7 +259,7 @@ public class TimerActivity extends AppCompatActivity {
         dismissIntent.putExtra("dismissed", true);
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(this, 0, dismissIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "TIMER")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "practical_parent_timer")
                 .setSmallIcon(R.drawable.ic_time)
                 .setContentTitle("Timer")
                 .setContentIntent(pendingIntent)
