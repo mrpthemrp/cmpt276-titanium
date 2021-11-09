@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+/**
+ * This class stores the timer information.
+ */
 public class TimerInfo {
     private static final int INVALID_MILLISECONDS = -1;
     private static final boolean DEFAULT_RUNNING = false;
