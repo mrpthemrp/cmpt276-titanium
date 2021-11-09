@@ -45,7 +45,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private TimerInfo timerInfo;
     private CountDownTimer countDownTimer;
-    public static MediaPlayer timerEndSound; // TODO
+    public static MediaPlayer timerEndSound;
 
     private Button oneMinButton;
     private Button twoMinButton;
