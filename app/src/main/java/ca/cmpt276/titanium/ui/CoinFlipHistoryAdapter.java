@@ -36,7 +36,8 @@ public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
         ImageView resultImageView = (ImageView) convertView.findViewById(R.id.coinFlipIcon);
         TextView childTextView = (TextView) convertView.findViewById(R.id.coinFlipChild);
 
-        childTextView.setText(coinFlip.getChildWhoPicksSide().getName() + " chose " + coinFlip.getSideThatChildPicks());
+        String childChoice = coinFlip.getChildWhoPicksSide().getName() + " chose " + coinFlip.getSideThatChildPicks();
+        childTextView.setText(childChoice);
 
         if (coinFlip.getCoinSideLandedOn() == coinFlip.getSideThatChildPicks()) {
             // image retrieved from https://www.vhv.rs/dpng/f/406-4067045_checkmark-png.png
@@ -50,7 +51,8 @@ public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
         coinFlipDate.setText(coinFlip.getTimeOfFlip());
 
         TextView resultTextView = (TextView) convertView.findViewById(R.id.coinFlipResult2);
-        resultTextView.setText("Landed on " + coinFlip.getCoinSideLandedOn().toString());
+        String coinFlipResult = "Landed on " + coinFlip.getCoinSideLandedOn().toString();
+        resultTextView.setText(coinFlipResult);
 
         return convertView;
     }
