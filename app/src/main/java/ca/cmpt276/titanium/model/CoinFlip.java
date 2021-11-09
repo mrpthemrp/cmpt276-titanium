@@ -21,7 +21,7 @@ public class CoinFlip {
         this.coinSideLandedOn = coinSideLandedOn;
     }
 
-    public Coin flipCoin() {
+    public static Coin flipCoin() {
         Coin[] coins = Coin.values();
         Random random = new Random();
         return coins[random.nextInt(coins.length)];

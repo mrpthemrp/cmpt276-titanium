@@ -152,32 +152,24 @@ public class CoinActivity extends AppCompatActivity {
 
     private void flipTheCoin() {
         coin.setImageResource(R.drawable.ic_coin_blank);
-        Random rand = new Random();
-        int coinSide = rand.nextInt(2);
+        Coin coinSide = CoinFlip.flipCoin();
         Animation animation = AnimationUtils.loadAnimation(CoinActivity.this, R.anim.flipanim);
         coin.startAnimation(animation);
         coinResult.setVisibility(View.INVISIBLE);
         coinSound.start();
 
-        Coin coinSideLandedOn;
-        // heads == 0
-        if (coinSide == 0) {
+        if (coinSide == Coin.HEADS) {
             coinResult.setText(HEADS);
             coin.postDelayed(displayHeads, COIN_FLIP_DELAY);
-            coinSideLandedOn = Coin.HEADS;
-        }
-
-        // tails == 1
-        else {
+        } else { // tails
             coinResult.setText(TAILS);
             coin.postDelayed(displayTails, COIN_FLIP_DELAY);
-            coinSideLandedOn = Coin.TAILS;
         }
         coinResult.postDelayed(result, COIN_FLIP_DELAY);
 
         // If there are no children configured, we don't need to save any info
         if (!children.getChildren().isEmpty()) {
-            saveCoinFlip(coinSideLandedOn);
+            saveCoinFlip(coinSide);
 
             new Handler(Looper.getMainLooper()).postDelayed(this::setChildNameText, COIN_FLIP_DELAY);
         }
