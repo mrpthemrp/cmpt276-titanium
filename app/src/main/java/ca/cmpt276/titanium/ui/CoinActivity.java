@@ -25,7 +25,6 @@ import ca.cmpt276.titanium.model.CoinFlipHistory;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * This activity represents the coin flip activity.
