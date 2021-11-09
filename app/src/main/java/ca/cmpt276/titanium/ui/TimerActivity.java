@@ -76,7 +76,7 @@ public class TimerActivity extends AppCompatActivity {
             timerEndSound.start();
 
             toggleVibrations(getApplicationContext(), true);
-            endTimerNotification();
+            endTimerNotification(false);
             finish();
         }
 
@@ -87,7 +87,7 @@ public class TimerActivity extends AppCompatActivity {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
                 timerEndSound = MediaPlayer.create(getApplicationContext(), R.raw.timeralarm);
-            } else if (extras.getBoolean("isClicked")) {
+            } else if (extras.getBoolean("isClicked") && !extras.getBoolean("onTimerScreen")) {
                 if (timerEndSound != null) {
                     timerEndSound.setLooping(false);
                     timerEndSound.stop();
@@ -97,27 +97,22 @@ public class TimerActivity extends AppCompatActivity {
 
                 NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
                 notificationManager.cancel(TIMER_NOTIFICATION_ID);
-
-                finish();
+                if (extras.getBoolean("onTimerScreen")) {
+                    finish();
+                }
             }
         }
 
-        boolean dismissed = getIntent().getBooleanExtra("dismissed", false);
+        setContentView(R.layout.activity_timer);
+        setTitle(R.string.timerTitle);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        if (!dismissed) {
-            setContentView(R.layout.activity_timer);
-            setTitle(R.string.timerTitle);
-            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        setupButtons();
 
-            setupButtons();
-
-            if (timerInfo.isRunning()) {
-                startTimer();
-            } else {
-                displayTime();
-            }
+        if (timerInfo.isRunning()) {
+            startTimer();
         } else {
-            finish();
+            displayTime();
         }
     }
 
@@ -231,7 +226,7 @@ public class TimerActivity extends AppCompatActivity {
                 }
 
                 toggleVibrations(getApplicationContext(), true);
-                endTimerNotification();
+                endTimerNotification(!inBackground);
             }
         }.start();
     }
@@ -386,7 +381,7 @@ public class TimerActivity extends AppCompatActivity {
         notificationManager.notify(TIMER_NOTIFICATION_ID, builder.build());
     }
 
-    private void endTimerNotification() { // TODO make okay stop everything and cancel notification
+    private void endTimerNotification(boolean onTimerScreen) { // TODO make okay stop everything and cancel notification
         NotificationChannel notificationChannel = new NotificationChannel(
                 "practical_parent_timer",
                 "Timers",
@@ -398,6 +393,7 @@ public class TimerActivity extends AppCompatActivity {
 
         Intent clickIntent = new Intent(getApplicationContext(), TimerActivity.class);
         clickIntent.putExtra("isClicked", true);
+        clickIntent.putExtra("onTimerScreen", onTimerScreen);
         clickIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent clickPendingIntent = PendingIntent.getActivity(this, 0, clickIntent, PendingIntent.FLAG_IMMUTABLE);
 
