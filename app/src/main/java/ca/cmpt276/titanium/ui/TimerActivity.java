@@ -22,11 +22,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.res.ResourcesCompat;
 
-import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.model.TimerInfo;
-
 import java.util.Locale;
 import java.util.Objects;
+
+import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.TimerInfo;
 
 public class TimerActivity extends AppCompatActivity {
     private static final int NOTIFICATION_ID = 52;
@@ -120,6 +120,7 @@ public class TimerActivity extends AppCompatActivity {
         timerInfo.setStopped();
         displayTime();
 
+        timerEndSound = MediaPlayer.create(TimerActivity.this, R.raw.timeralarm);
         playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_play_arrow_24, getTheme()));
         makeInputButtonsVisible(true);
     }
@@ -245,7 +246,6 @@ public class TimerActivity extends AppCompatActivity {
                 NotificationManager.IMPORTANCE_HIGH);
         channel.setDescription("TIMER_NOTIFICATION");
         channel.enableVibration(true);
-        channel.setSound(null, null);
         manager.createNotificationChannel(channel);
 
         Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
