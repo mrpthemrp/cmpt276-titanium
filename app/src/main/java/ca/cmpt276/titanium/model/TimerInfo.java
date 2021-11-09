@@ -7,6 +7,8 @@ import android.preference.PreferenceManager;
 public class TimerInfo {
     private static final int INVALID_MILLISECONDS = -1;
     private static final boolean DEFAULT_RUNNING = false;
+    private static final boolean DEFAULT_PAUSED = false;
+    private static final boolean DEFAULT_RESUMED = false;
     private static final boolean DEFAULT_STOPPED = true;
 
     private static TimerInfo instance;
@@ -52,13 +54,31 @@ public class TimerInfo {
         prefsEditor.putBoolean("is_running", true);
         prefsEditor.putBoolean("is_paused", false);
         prefsEditor.putBoolean("is_stopped", false);
+        prefsEditor.putBoolean("is_resumed", false);
         prefsEditor.apply();
+    }
+
+    public boolean isPaused() {
+        return prefs.getBoolean("is_paused", DEFAULT_PAUSED);
     }
 
     public void setPaused() {
         prefsEditor.putBoolean("is_running", false);
         prefsEditor.putBoolean("is_paused", true);
         prefsEditor.putBoolean("is_stopped", false);
+        prefsEditor.putBoolean("is_resumed", false);
+        prefsEditor.apply();
+    }
+
+    public boolean isResumed() {
+        return prefs.getBoolean("is_resumed", DEFAULT_RESUMED);
+    }
+
+    public void setResumed() {
+        prefsEditor.putBoolean("is_running", false);
+        prefsEditor.putBoolean("is_paused", false);
+        prefsEditor.putBoolean("is_stopped", false);
+        prefsEditor.putBoolean("is_resumed", true);
         prefsEditor.apply();
     }
 
