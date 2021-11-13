@@ -7,27 +7,31 @@ import android.preference.PreferenceManager;
 /**
  * This class stores the timer information.
  */
-public class TimerInfo {
+public class TimerData {
     private static final int INVALID_MILLISECONDS = -1;
     private static final boolean DEFAULT_RUNNING = false;
-    private static final boolean DEFAULT_STOPPED = true;
+    private static final boolean DEFAULT_PAUSED = false;
 
-    private static TimerInfo instance;
+    private static TimerData instance;
     private static SharedPreferences prefs;
     private static SharedPreferences.Editor prefsEditor;
 
-    private TimerInfo(Context context) {
-        TimerInfo.prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        TimerInfo.prefsEditor = prefs.edit();
+    private TimerData(Context context) {
+        TimerData.prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        TimerData.prefsEditor = prefs.edit();
     }
 
-    public static TimerInfo getInstance(Context context) {
+    public static TimerData getInstance(Context context) {
         if (instance == null) {
-            TimerInfo.instance = new TimerInfo(context);
+            TimerData.instance = new TimerData(context);
         }
 
         return instance;
     }
+
+    // TODO: Rework methods to get/set data directly from/to class attributes, and only load/save
+    //  from/to shared preferences upon calling dedicated load/save methods (like Children)
+    //  reason: speed/performance (even if unnoticeable in our app)
 
     public long getDurationMilliseconds() {
         return prefs.getLong("duration_milliseconds", INVALID_MILLISECONDS);
@@ -58,15 +62,15 @@ public class TimerInfo {
         prefsEditor.apply();
     }
 
+    public boolean isPaused() {
+        return prefs.getBoolean("is_paused", DEFAULT_PAUSED);
+    }
+
     public void setPaused() {
         prefsEditor.putBoolean("is_running", false);
         prefsEditor.putBoolean("is_paused", true);
         prefsEditor.putBoolean("is_stopped", false);
         prefsEditor.apply();
-    }
-
-    public boolean isStopped() {
-        return prefs.getBoolean("is_stopped", DEFAULT_STOPPED);
     }
 
     public void setStopped() {

@@ -7,6 +7,7 @@
     android:clickable="true"
     android:focusable="true"
     tools:context=".ui.TimerActivity">
+
     <!-- calmBackground image from: https://unsplash.com/photos/4N6qT784t3A -->
     <ImageView
         android:id="@+id/calmBackground"
@@ -20,191 +21,235 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
-    <ImageView
-        android:id="@+id/timerCircle"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="135dp"
-        android:contentDescription="@string/timerCircleDescription"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_circle_timer" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="375dp"
-        android:layout_height="375dp"
-        android:layout_marginTop="97dp"
-        android:focusableInTouchMode="false"
-        android:indeterminateTint="#FFFFFF"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/calmBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/calmBackground" />
-
-    <Button
-        android:id="@+id/resetButton"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/inputsConstraintLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:backgroundTint="?attr/colorPrimary"
-        android:backgroundTintMode="src_in"
-        android:text="@string/timerReset"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerPlayPauseBtn"
-        tools:ignore="TextContrastCheck" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/setTimeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="?attr/colorPrimary"
-        android:backgroundTintMode="src_in"
-        android:text="@string/timerSet"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/timerCircle"
-        app:layout_constraintStart_toEndOf="@+id/editTextNumber"
-        tools:ignore="TextContrastCheck" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/presetInputConstraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/oneMin"
-        android:layout_width="38dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:backgroundTint="?attr/colorPrimary"
-        android:backgroundTintMode="src_in"
-        android:text="@string/timerOne"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/twoMin"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck" />
+            <TextView
+                android:id="@+id/presetTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/timerMinutes"
+                android:textColor="#634408"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/oneMin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/twoMin"
-        android:layout_width="38dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:backgroundTint="?attr/colorPrimary"
-        android:backgroundTintMode="src_in"
-        android:text="@string/timerTwo"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/threeMin"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck" />
+            <Button
+                android:id="@+id/oneMin"
+                android:layout_width="38dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:backgroundTint="?attr/colorPrimary"
+                android:backgroundTintMode="src_in"
+                android:text="@string/timerOne"
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/twoMin"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
 
-    <Button
-        android:id="@+id/threeMin"
-        android:layout_width="38dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:backgroundTint="?attr/colorPrimary"
-        android:backgroundTintMode="src_in"
-        android:text="@string/timerThree"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/fiveMin"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck" />
+            <Button
+                android:id="@+id/twoMin"
+                android:layout_width="38dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:backgroundTint="?attr/colorPrimary"
+                android:backgroundTintMode="src_in"
+                android:text="@string/timerTwo"
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/threeMin"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
 
-    <Button
-        android:id="@+id/fiveMin"
-        android:layout_width="38dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:backgroundTint="?attr/colorPrimary"
-        android:backgroundTintMode="src_in"
-        android:text="@string/timerFive"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/threeMin"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck" />
+            <Button
+                android:id="@+id/threeMin"
+                android:layout_width="38dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:backgroundTint="?attr/colorPrimary"
+                android:backgroundTintMode="src_in"
+                android:text="@string/timerThree"
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fiveMin"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
 
-    <Button
-        android:id="@+id/tenMin"
-        android:layout_width="50dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:backgroundTint="?attr/colorPrimary"
-        android:backgroundTintMode="src_in"
-        android:text="@string/timerTen"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fiveMin"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck" />
+            <Button
+                android:id="@+id/fiveMin"
+                android:layout_width="38dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:backgroundTint="?attr/colorPrimary"
+                android:backgroundTintMode="src_in"
+                android:text="@string/timerFive"
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tenMin"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
 
-    <ImageView
-        android:id="@+id/timerPlayPauseBtn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="12dp"
-        android:contentDescription="@string/playPauseDescript"
+            <Button
+                android:id="@+id/tenMin"
+                android:layout_width="50dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:backgroundTint="?attr/colorPrimary"
+                android:backgroundTintMode="src_in"
+                android:text="@string/timerTen"
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/customInputConstraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/presetInputConstraintLayout">
+
+            <EditText
+                android:id="@+id/customMinutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:ems="10"
+                android:hint="@string/timerEnterMinutes"
+                android:inputType="number"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:autofillHints="@string/timerEnterMinutes" />
+
+            <Button
+                android:id="@+id/setCustomTimeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="15dp"
+                android:backgroundTint="?attr/colorPrimary"
+                android:backgroundTintMode="src_in"
+                android:text="@string/timerSet"
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/timerConstraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerCircle"
-        app:srcCompat="@drawable/ic_baseline_play_arrow_24"
-        tools:ignore="ImageContrastCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/inputsConstraintLayout">
 
-    <TextView
-        android:id="@+id/timer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/timerZeros"
-        android:textColor="#FFFFFF"
-        android:textColorHighlight="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        android:textColorLink="#FFFFFF"
-        android:textSize="60sp"
-        app:layout_constraintBottom_toBottomOf="@+id/timerCircle"
-        app:layout_constraintEnd_toEndOf="@+id/timerCircle"
-        app:layout_constraintStart_toStartOf="@+id/timerCircle"
-        app:layout_constraintTop_toTopOf="@+id/timerCircle" />
+        <ImageView
+            android:id="@+id/timerCircle"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="15dp"
+            android:contentDescription="@string/timerCircleDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_circle_timer" />
 
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/timerZeros"
+            android:textColor="#FFFFFF"
+            android:textColorHighlight="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textColorLink="#FFFFFF"
+            android:textSize="60sp"
+            app:layout_constraintBottom_toBottomOf="@+id/timerCircle"
+            app:layout_constraintEnd_toEndOf="@+id/timerCircle"
+            app:layout_constraintStart_toStartOf="@+id/timerCircle"
+            app:layout_constraintTop_toTopOf="@+id/timerCircle" />
 
-    <TextView
-        android:id="@+id/minuteText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="10dp"
-        android:text="@string/timerMinutes"
-        android:textColor="#634408"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/oneMin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/timerPlayPauseBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            android:contentDescription="@string/playPauseDescription"
+            app:layout_constraintBottom_toTopOf="@+id/resetButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timerCircle"
+            app:srcCompat="@drawable/ic_baseline_play_arrow_24"
+            tools:ignore="ImageContrastCheck" />
 
-    <EditText
-        android:id="@+id/editTextNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="10dp"
-        android:ems="10"
-        android:hint="@string/timerEnterMins"
-        android:inputType="number"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/timerCircle"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:backgroundTintMode="src_in"
+            android:text="@string/timerReset"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timerPlayPauseBtn"
+            tools:ignore="TextContrastCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

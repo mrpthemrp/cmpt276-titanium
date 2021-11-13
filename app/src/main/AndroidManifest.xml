@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Titanium">
         <receiver android:name=".ui.NotificationReceiver" />
+        <service android:name=".ui.TimerService" />
         <activity
             android:name=".ui.CoinFlipHistoryActivity"
             android:configChanges="keyboard|keyboardHidden"
