@@ -29,6 +29,10 @@ public class CoinFlipHistory {
         initializeCoinFlipHistory();
     }
 
+    public static ArrayList<CoinFlip> getCoinFlipHistory() {
+        return CoinFlipHistory.coinFlipHistory;
+    }
+
     private void initializeCoinFlipHistory() {
         String coinFlipsJson = sharedPreferences.getString(COIN_FLIP_HISTORY_KEY, EMPTY_STRING);
         Type coinFlipsType = new TypeToken<ArrayList<CoinFlip>>() {
@@ -46,9 +50,5 @@ public class CoinFlipHistory {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(COIN_FLIP_HISTORY_KEY, coinFlipsJson);
         editor.apply();
-    }
-
-    public static ArrayList<CoinFlip> getCoinFlipHistory() {
-        return CoinFlipHistory.coinFlipHistory;
     }
 }

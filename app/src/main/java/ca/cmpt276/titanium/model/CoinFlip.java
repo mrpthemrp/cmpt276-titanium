@@ -31,10 +31,6 @@ public class CoinFlip {
         return sideThatChildPicks;
     }
 
-    public void setCoinSideLandedOn(Coin coinSideLandedOn) {
-        this.coinSideLandedOn = coinSideLandedOn;
-    }
-
     public Child getChildWhoPicksSide() {
         return childWhoPicksSide;
     }
@@ -45,6 +41,10 @@ public class CoinFlip {
 
     public Coin getCoinSideLandedOn() {
         return coinSideLandedOn;
+    }
+
+    public void setCoinSideLandedOn(Coin coinSideLandedOn) {
+        this.coinSideLandedOn = coinSideLandedOn;
     }
 
     public void setCoinSideLandedOn() {

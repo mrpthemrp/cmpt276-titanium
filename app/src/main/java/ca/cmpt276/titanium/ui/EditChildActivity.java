@@ -30,6 +30,13 @@ public class EditChildActivity extends AppCompatActivity {
     private Child childBeingEdited;
     private EditText childName;
 
+    public static Intent makeIntent(Context context, UUID childUniqueId) {
+        Intent editChildIntent = new Intent(context, EditChildActivity.class);
+        editChildIntent.putExtra("child_unique_id", childUniqueId);
+
+        return editChildIntent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,12 +102,5 @@ public class EditChildActivity extends AppCompatActivity {
                 })
                 .setNegativeButton(R.string.prompt_negative, null)
                 .show();
-    }
-
-    public static Intent makeIntent(Context context, UUID childUniqueId) {
-        Intent editChildIntent = new Intent(context, EditChildActivity.class);
-        editChildIntent.putExtra("child_unique_id", childUniqueId);
-
-        return editChildIntent;
     }
 }

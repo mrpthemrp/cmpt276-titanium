@@ -28,13 +28,12 @@ public class TimerNotifications {
     private final Context context;
     private final Vibrator timerFinishVibrator;
     private final NotificationManager notificationManager;
-    private MediaPlayer timerFinishSound;
-
     private final PendingIntent notificationClickPendingIntent;
     private final PendingIntent dismissPendingIntent;
     private final Intent toggleTimerIntent;
-    private PendingIntent toggleTimerPendingIntent;
     private final PendingIntent cancelPendingIntent;
+    private MediaPlayer timerFinishSound;
+    private PendingIntent toggleTimerPendingIntent;
 
     private TimerNotifications(Context context) {
         NotificationChannel channel = new NotificationChannel(

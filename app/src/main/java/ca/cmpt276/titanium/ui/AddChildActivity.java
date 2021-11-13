@@ -26,6 +26,10 @@ public class AddChildActivity extends AppCompatActivity {
     private final Children children = Children.getInstance(this);
     private EditText childName;
 
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, AddChildActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,9 +91,5 @@ public class AddChildActivity extends AppCompatActivity {
                 })
                 .setNegativeButton(R.string.prompt_negative, null)
                 .show();
-    }
-
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, AddChildActivity.class);
     }
 }

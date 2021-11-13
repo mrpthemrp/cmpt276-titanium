@@ -31,33 +31,32 @@ import java.util.ArrayList;
  * Allows the user to choose heads or tails, and shows the results of the flip.
  */
 public class CoinActivity extends AppCompatActivity {
-    private static final Coin DEFAULT_COIN_CHOSEN = Coin.HEADS;
     public static final int FIRST_CHILD_INDEX = 0;
+    private static final Coin DEFAULT_COIN_CHOSEN = Coin.HEADS;
+    private static final String HEADS = "HEADS";
+    private static final String TAILS = "TAILS";
+    private static final int COIN_FLIP_DELAY = 1600;
     private final Children children = Children.getInstance(this);
-
     private String childNameFormat;
     private TextView childNameDisplay;
     private TextView sideChosenDisplay;
     private Button headsButton;
     private Button tailsButton;
     private Coin coinChosen = DEFAULT_COIN_CHOSEN;
-
     private ImageView coin;
+    private final Runnable displayHeads = () -> coin.setImageResource(R.drawable.ic_coin_heads);
+    private final Runnable displayTails = () -> coin.setImageResource(R.drawable.ic_coin_tails);
     private TextView coinResult;
-    private static final String HEADS = "HEADS";
-    private static final String TAILS = "TAILS";
-    private static final int COIN_FLIP_DELAY = 1600;
-
+    private final Runnable result = () -> coinResult.setVisibility(View.VISIBLE);
     private CoinFlipHistory coinFlipHistory;
-
     /*
     Sound from https://www.youtube.com/watch?v=1QxX9ruPUXM
      */
     private MediaPlayer coinSound;
 
-    private final Runnable result = () -> coinResult.setVisibility(View.VISIBLE);
-    private final Runnable displayHeads = () -> coin.setImageResource(R.drawable.ic_coin_heads);
-    private final Runnable displayTails = () -> coin.setImageResource(R.drawable.ic_coin_tails);
+    public static Intent makeIntent(Context c) {
+        return new Intent(c, CoinActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,10 +141,6 @@ public class CoinActivity extends AppCompatActivity {
         ActionBar toolbar = getSupportActionBar();
         assert toolbar != null;
         toolbar.setTitle(R.string.menuFlipCoinBtn);
-    }
-
-    public static Intent makeIntent(Context c) {
-        return new Intent(c, CoinActivity.class);
     }
 
     private void flipTheCoin() {

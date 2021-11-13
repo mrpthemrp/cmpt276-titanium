@@ -39,6 +39,10 @@ public class TimerActivity extends AppCompatActivity {
     private TimerData timerData;
     private TimerReceiver timerReceiver;
 
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, TimerActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -207,9 +211,5 @@ public class TimerActivity extends AppCompatActivity {
         if (!timerData.isRunning()) {
             updateGUI();
         }
-    }
-
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, TimerActivity.class);
     }
 }

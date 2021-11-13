@@ -28,6 +28,13 @@ public class ViewChildActivity extends AppCompatActivity {
     private UUID childUniqueId;
     private Child childBeingViewed;
 
+    public static Intent makeIntent(Context context, UUID childUniqueId) {
+        Intent viewChildIntent = new Intent(context, ViewChildActivity.class);
+        viewChildIntent.putExtra("child_unique_id", childUniqueId);
+
+        return viewChildIntent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,12 +100,5 @@ public class ViewChildActivity extends AppCompatActivity {
                 })
                 .setNegativeButton(R.string.prompt_negative, null)
                 .show();
-    }
-
-    public static Intent makeIntent(Context context, UUID childUniqueId) {
-        Intent viewChildIntent = new Intent(context, ViewChildActivity.class);
-        viewChildIntent.putExtra("child_unique_id", childUniqueId);
-
-        return viewChildIntent;
     }
 }
