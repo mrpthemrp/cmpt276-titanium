@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import ca.cmpt276.titanium.model.TimerData;
-import ca.cmpt276.titanium.model.TimerNotifications;
 
 /**
  * This activity is called when user interacts with timer notifications.

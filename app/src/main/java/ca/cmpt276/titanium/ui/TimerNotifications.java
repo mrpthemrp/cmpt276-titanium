@@ -1,4 +1,4 @@
-package ca.cmpt276.titanium.model;
+package ca.cmpt276.titanium.ui;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -16,8 +16,7 @@ import androidx.core.app.NotificationCompat;
 import java.util.Locale;
 
 import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.ui.NotificationReceiver;
-import ca.cmpt276.titanium.ui.TimerActivity;
+import ca.cmpt276.titanium.model.TimerData;
 
 public class TimerNotifications {
     private static final long[] TIMER_VIBRATION_PATTERN = {0, 500, 1000};

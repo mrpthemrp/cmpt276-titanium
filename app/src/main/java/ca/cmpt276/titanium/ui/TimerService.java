@@ -8,7 +8,6 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 
 import ca.cmpt276.titanium.model.TimerData;
-import ca.cmpt276.titanium.model.TimerNotifications;
 
 public class TimerService extends Service {
     public static final String TIMER_UPDATE_INTENT = "timerUpdateIntent";
