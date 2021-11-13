@@ -24,6 +24,9 @@ import ca.cmpt276.titanium.model.TimerNotifications;
 import java.util.Locale;
 import java.util.Objects;
 
+// TODO: Implement DataManager?
+// TODO: Implement progress bar
+
 /**
  * This activity represents the timer activity.
  * Shows times that can be set, and buttons that start and cancel the countdown.
@@ -196,7 +199,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void changeTimerDuration(long minutes) {
-        timerData.setDurationMilliseconds(5000);//minutes * MILLIS_IN_MINUTE); // TODO: Retest with non-hardcoded values
+        timerData.setDurationMilliseconds(10000);//minutes * MILLIS_IN_MINUTE); // TODO: Retest with non-hardcoded values
         resetTimer();
     }
 

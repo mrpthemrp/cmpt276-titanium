@@ -13,11 +13,13 @@ import ca.cmpt276.titanium.model.TimerNotifications;
 public class TimerService extends Service {
     public static final String TIMER_UPDATE_INTENT = "timerUpdateIntent";
     private static final int TIMER_COUNTDOWN_INTERVAL = 50;
+    private static final int UPDATE_DELAY_THRESHOLD = 10;
 
     private TimerNotifications timerNotifications;
     private TimerData timerData;
     private Intent timerUpdateIntent;
     private CountDownTimer countDownTimer;
+    private int updateNotificationDelayCount = 0;
 
     @Override
     public void onCreate() {
@@ -40,12 +42,19 @@ public class TimerService extends Service {
 
                 timerData.setRemainingMilliseconds(remainingMilliseconds);
                 sendBroadcast(timerUpdateIntent);
+                updateNotificationDelayCount++;
+
+                if (updateNotificationDelayCount >= UPDATE_DELAY_THRESHOLD) {
+                    timerNotifications.updateNotificationTime();
+                    updateNotificationDelayCount = 0;
+                }
             }
 
             @Override
             public void onFinish() {
                 timerData.setStopped();
                 sendBroadcast(timerUpdateIntent);
+                timerNotifications.updateNotificationTime();
                 timerNotifications.launchNotification(false);
                 stopSelf();
             }
