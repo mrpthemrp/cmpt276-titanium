@@ -29,10 +29,6 @@ public class TimerData {
         return instance;
     }
 
-    // TODO: Rework methods to get/set data directly from/to class attributes, and only load/save
-    //  from/to shared preferences upon calling dedicated load/save methods (like Children)
-    //  reason: speed/performance (even if unnoticeable in our app)
-
     public long getDurationMilliseconds() {
         return prefs.getLong("duration_milliseconds", INVALID_MILLISECONDS);
     }
@@ -58,7 +54,6 @@ public class TimerData {
     public void setRunning() {
         prefsEditor.putBoolean("is_running", true);
         prefsEditor.putBoolean("is_paused", false);
-        prefsEditor.putBoolean("is_stopped", false);
         prefsEditor.apply();
     }
 
@@ -69,15 +64,13 @@ public class TimerData {
     public void setPaused() {
         prefsEditor.putBoolean("is_running", false);
         prefsEditor.putBoolean("is_paused", true);
-        prefsEditor.putBoolean("is_stopped", false);
         prefsEditor.apply();
     }
 
     public void setStopped() {
-        prefsEditor.putLong("remaining_milliseconds", prefs.getLong("duration_milliseconds", INVALID_MILLISECONDS));
+        prefsEditor.putLong("remaining_milliseconds", getDurationMilliseconds());
         prefsEditor.putBoolean("is_running", false);
         prefsEditor.putBoolean("is_paused", false);
-        prefsEditor.putBoolean("is_stopped", true);
         prefsEditor.apply();
     }
 }
