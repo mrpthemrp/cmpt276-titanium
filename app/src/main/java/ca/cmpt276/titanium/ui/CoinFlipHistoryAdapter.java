@@ -11,10 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.List;
+
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.CoinFlip;
-
-import java.util.List;
 
 /**
  * This is an adapter for the coin flip history.

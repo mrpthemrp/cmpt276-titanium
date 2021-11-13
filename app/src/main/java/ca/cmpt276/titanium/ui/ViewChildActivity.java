@@ -13,12 +13,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.Objects;
+import java.util.UUID;
+
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
-
-import java.util.Objects;
-import java.util.UUID;
 
 /**
  * This activity represents the viewing of a single child.

@@ -9,11 +9,11 @@ import android.widget.TableRow;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * This activity represents the main menu.

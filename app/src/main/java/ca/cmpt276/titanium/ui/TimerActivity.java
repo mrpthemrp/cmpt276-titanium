@@ -17,12 +17,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 
+import java.util.Locale;
+import java.util.Objects;
+
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.TimerData;
 import ca.cmpt276.titanium.model.TimerNotifications;
-
-import java.util.Locale;
-import java.util.Objects;
 
 // TODO: Implement DataManager?
 // TODO: Implement progress bar

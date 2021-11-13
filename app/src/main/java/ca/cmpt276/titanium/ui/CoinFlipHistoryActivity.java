@@ -7,12 +7,12 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * This represents the coin flip history activity.

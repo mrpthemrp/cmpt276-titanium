@@ -37,11 +37,9 @@ public class TimerNotifications {
     private final PendingIntent dismissPendingIntent;
     private final Intent toggleTimerIntent;
     private final PendingIntent cancelPendingIntent;
+    private final TimerData timerData;
     private MediaPlayer timerFinishSound;
     private PendingIntent toggleTimerPendingIntent;
-
-    private final TimerData timerData;
-
     private boolean tempHackyBool = false;
 
     private TimerNotifications(Context context) {

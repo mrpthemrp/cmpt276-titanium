@@ -14,10 +14,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.Objects;
+
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
-
-import java.util.Objects;
 
 /**
  * This activity represents the adding of a single child.
