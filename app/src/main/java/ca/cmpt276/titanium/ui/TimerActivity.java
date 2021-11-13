@@ -54,8 +54,6 @@ public class TimerActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.timerNotifications = TimerNotifications.getInstance(this);
-        timerNotifications.dismissNotification(true);
-
         boolean isClicked = getIntent().getBooleanExtra("isNotificationClicked", IS_CLICKED_DEFAULT);
 
         if (isClicked) {
@@ -78,6 +76,8 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        timerNotifications.dismissNotification(true);
 
         if (!timerData.isRunning()) {
             updateGUI();

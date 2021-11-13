@@ -69,7 +69,7 @@ public class TimerNotifications {
         this.toggleTimerIntent = new Intent(context.getApplicationContext(), NotificationReceiver.class);
         toggleTimerIntent.putExtra("isNotificationResumed", true);
         toggleTimerIntent.putExtra("isNotificationPaused", false);
-        this.toggleTimerPendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 1, toggleTimerIntent, PendingIntent.FLAG_MUTABLE);
+        this.toggleTimerPendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 1, toggleTimerIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent cancelIntent = new Intent(context.getApplicationContext(), NotificationReceiver.class);
         cancelIntent.putExtra("isNotificationCancelled", true);
@@ -148,6 +148,8 @@ public class TimerNotifications {
 
             timerFinishVibrator.cancel();
         }
+
+        tempHackyBool = false;
     }
 
     public void updateNotificationTime() {
@@ -201,7 +203,7 @@ public class TimerNotifications {
         toggleTimerIntent.putExtra("isNotificationResumed", hasPauseButton);
         toggleTimerIntent.putExtra("isNotificationPaused", !hasPauseButton);
 
-        this.toggleTimerPendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 1, toggleTimerIntent, PendingIntent.FLAG_MUTABLE);
+        this.toggleTimerPendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 1, toggleTimerIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (hasPauseButton) {
             interactiveBuilder.addAction(R.drawable.ic_sound, "Pause", toggleTimerPendingIntent);
