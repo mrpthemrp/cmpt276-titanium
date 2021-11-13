@@ -1,5 +1,6 @@
 package ca.cmpt276.titanium.ui;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -22,7 +23,6 @@ import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.TimerData;
-import ca.cmpt276.titanium.model.TimerNotifications;
 
 // TODO: Implement DataManager?
 // TODO: Implement progress bar
@@ -40,7 +40,7 @@ public class TimerActivity extends AppCompatActivity {
     private TimerNotifications timerNotifications;
     private Toast toast; // prevents toast stacking
     private TimerData timerData;
-    private TimerReceiver timerReceiver;
+    private BroadcastReceiver timerReceiver;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, TimerActivity.class);
@@ -62,10 +62,9 @@ public class TimerActivity extends AppCompatActivity {
 
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
         this.timerData = TimerData.getInstance(this);
-        this.timerReceiver = new TimerReceiver() {
+        this.timerReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                super.onReceive(context, intent);
                 updateGUI();
             }
         };
