@@ -13,10 +13,10 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="@style/Theme.Titanium.AppBarOverlay"
-        app:titleTextColor="?attr/colorOnSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="?attr/colorOnSecondary" />
 
     <ImageView
         android:id="@+id/addProfilePic"
@@ -24,10 +24,10 @@
         android:layout_height="130dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
+        android:contentDescription="@string/circleContentDescription"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:srcCompat="@drawable/ic_baseline_circle_green_24"
-        android:contentDescription="@string/circleContentDescription" />
+        app:srcCompat="@drawable/ic_baseline_circle_green_24" />
 
     <Button
         android:id="@+id/viewFunctionBtn"
@@ -54,6 +54,7 @@
         android:enabled="false"
         android:fontFamily="sans-serif-medium"
         android:hint="@string/viewDummyText"
+        android:inputType="textCapWords"
         android:minHeight="48dp"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -62,7 +63,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/addProfilePic"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        android:inputType="textCapWords" />
+        android:autofillHints="" />
 
     <ScrollView
         android:id="@+id/viewHistory"
@@ -74,10 +75,6 @@
         app:layout_constraintTop_toBottomOf="@+id/addProfilePic"
         tools:ignore="SpeakableTextPresentCheck">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

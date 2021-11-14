@@ -36,7 +36,7 @@
         android:fontFamily="sans-serif-medium"
         android:text="@string/menuTimerBtn"
         android:textColor="?attr/colorOnPrimary"
-        android:textSize="10sp"
+        android:textSize="11sp"
         app:icon="@drawable/ic_outline_timer_24"
         app:iconGravity="textTop"
         app:iconPadding="15dp"
@@ -123,9 +123,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:visibility="invisible"
         android:text="@string/menuChildrenText"
         android:textColor="?attr/colorPrimary"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
