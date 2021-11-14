@@ -7,10 +7,13 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +27,7 @@ import java.util.Objects;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.TimerData;
 
-// TODO: Implement DataManager?
-// TODO: Implement progress bar
+// TODO: Implement DataManager class?
 
 /**
  * This activity represents the timer activity.
@@ -69,6 +71,7 @@ public class TimerActivity extends AppCompatActivity {
             }
         };
 
+        setupCircularProgressBar();
         setupButtons();
     }
 
@@ -95,6 +98,12 @@ public class TimerActivity extends AppCompatActivity {
         timerData.setGUIEnabled(false);
         unregisterReceiver(timerReceiver);
         super.onStop();
+    }
+
+    private void setupCircularProgressBar() { // rotates progress bar so that it starts at top
+        ProgressBar circularProgressBar = findViewById(R.id.circularProgressBar);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_circular_progress);
+        circularProgressBar.startAnimation(animation);
     }
 
     private void setupButtons() {
@@ -158,6 +167,10 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void updateGUI() {
+        ProgressBar circularProgressBar = findViewById(R.id.circularProgressBar);
+        int progress = (int) ((timerData.getDurationMilliseconds() - timerData.getRemainingMilliseconds()) * 100 / timerData.getDurationMilliseconds());
+        circularProgressBar.setProgress(progress);
+
         ConstraintLayout inputComponents = findViewById(R.id.inputsConstraintLayout);
         ImageView playPause = findViewById(R.id.timerPlayPauseBtn);
 
@@ -197,7 +210,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void changeTimerDuration(long minutes) {
-        timerData.setDurationMilliseconds(10000);//minutes * MILLIS_IN_MINUTE); // TODO: Retest with non-hardcoded values
+        timerData.setDurationMilliseconds(minutes * MILLIS_IN_MINUTE);
         resetTimer();
     }
 

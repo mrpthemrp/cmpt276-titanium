@@ -146,7 +146,7 @@ public class CoinActivity extends AppCompatActivity {
     private void flipTheCoin() {
         coin.setImageResource(R.drawable.ic_coin_blank);
         Coin coinSide = CoinFlip.flipCoin();
-        Animation animation = AnimationUtils.loadAnimation(CoinActivity.this, R.anim.flipanim);
+        Animation animation = AnimationUtils.loadAnimation(CoinActivity.this, R.anim.anim_circular_progress);
         coin.startAnimation(animation);
         coinResult.setVisibility(View.INVISIBLE);
         coinSound.start();
