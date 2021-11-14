@@ -4,33 +4,39 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.TimerData;
 
 /**
- * This activity is called when user interacts with timer notifications.
+ * NotificationReceiver is called when the user interacts with timer notification actions.
  */
 public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        boolean isNotificationDismissed = intent.getBooleanExtra("isNotificationDismissed", false);
-        boolean isNotificationPaused = intent.getBooleanExtra("isNotificationPaused", false);
-        boolean isNotificationResumed = intent.getBooleanExtra("isNotificationResumed", false);
-        boolean isNotificationCancelled = intent.getBooleanExtra("isNotificationCancelled", false);
-
         TimerNotifications timerNotifications = TimerNotifications.getInstance(context);
         TimerData timerData = TimerData.getInstance(context);
 
-        if (isNotificationDismissed) {
-            timerNotifications.dismissNotification(false);
-        } else if (isNotificationPaused) {
-            context.getApplicationContext().startService(new Intent(context.getApplicationContext(), TimerService.class));
-            timerNotifications.changeInteractiveNotification(true);
-        } else if (isNotificationResumed) {
-            timerData.setPaused();
-            timerNotifications.changeInteractiveNotification(false);
-        } else if (isNotificationCancelled) {
-            timerData.setStopped();
-            timerNotifications.dismissNotification(true);
+        String action = intent.getStringExtra("notificationAction");
+        action = action == null ? "" : action;
+
+        switch (action) {
+            case "Dismiss":
+                timerNotifications.dismissNotification(false);
+                break;
+            case "Pause":
+                timerData.setPaused();
+                timerNotifications.launchNotification(context.getString(R.string.timer_notification_resume_button));
+                break;
+            case "Resume":
+                context.getApplicationContext().startService(new Intent(context.getApplicationContext(), TimerService.class));
+                timerNotifications.launchNotification(context.getString(R.string.timer_notification_pause_button));
+                break;
+            case "Cancel":
+                timerData.setStopped();
+                timerNotifications.dismissNotification(true);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid notificationAction");
         }
     }
 }

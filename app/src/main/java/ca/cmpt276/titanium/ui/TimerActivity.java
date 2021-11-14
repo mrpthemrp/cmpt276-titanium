@@ -75,25 +75,24 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         timerNotifications.dismissNotification(true);
+        timerData.setGUIEnabled(true);
+        registerReceiver(timerReceiver, new IntentFilter(TimerService.TIMER_UPDATE_INTENT));
 
         if (!timerData.isRunning()) {
             updateGUI();
         }
-
-        registerReceiver(timerReceiver, new IntentFilter(TimerService.TIMER_UPDATE_INTENT));
     }
 
     @Override
     protected void onStop() {
         if (timerData.isRunning()) {
-            timerNotifications.launchNotification(true);
+            timerNotifications.launchNotification(getString(R.string.timer_notification_pause_button));
         } else if (timerData.isPaused()) {
-            timerNotifications.launchNotification(true);
-            timerNotifications.changeInteractiveNotification(false);
+            timerNotifications.launchNotification(getString(R.string.timer_notification_resume_button));
         }
 
+        timerData.setGUIEnabled(false);
         unregisterReceiver(timerReceiver);
         super.onStop();
     }
@@ -129,7 +128,7 @@ public class TimerActivity extends AppCompatActivity {
         // play/pause
         ImageView playPause = findViewById(R.id.timerPlayPauseBtn);
         playPause.setOnClickListener(view -> {
-            if (timerData.getDurationMilliseconds() <= 0) {
+            if (timerData.getDurationMilliseconds() == 0) {
                 updateToast(getString(R.string.timer_zero_toast));
             } else if (timerData.isRunning()) {
                 timerData.setPaused();

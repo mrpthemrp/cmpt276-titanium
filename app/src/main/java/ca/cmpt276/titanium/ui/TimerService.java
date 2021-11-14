@@ -12,13 +12,11 @@ import ca.cmpt276.titanium.model.TimerData;
 public class TimerService extends Service {
     public static final String TIMER_UPDATE_INTENT = "timerUpdateIntent";
     private static final int TIMER_COUNTDOWN_INTERVAL = 50;
-    private static final int UPDATE_DELAY_THRESHOLD = 10;
 
     private TimerNotifications timerNotifications;
     private TimerData timerData;
     private Intent timerUpdateIntent;
     private CountDownTimer countDownTimer;
-    private int updateNotificationDelayCount = 0;
 
     @Override
     public void onCreate() {
@@ -40,21 +38,23 @@ public class TimerService extends Service {
                 }
 
                 timerData.setRemainingMilliseconds(remainingMilliseconds);
-                sendBroadcast(timerUpdateIntent);
-                updateNotificationDelayCount++;
 
-                if (updateNotificationDelayCount >= UPDATE_DELAY_THRESHOLD) {
+                if (timerData.isGUIEnabled()) {
+                    sendBroadcast(timerUpdateIntent);
+                } else {
                     timerNotifications.updateNotificationTime();
-                    updateNotificationDelayCount = 0;
                 }
             }
 
             @Override
             public void onFinish() {
                 timerData.setStopped();
-                sendBroadcast(timerUpdateIntent);
-                timerNotifications.updateNotificationTime();
-                timerNotifications.launchNotification(false);
+
+                if (timerData.isGUIEnabled()) {
+                    sendBroadcast(timerUpdateIntent);
+                }
+
+                timerNotifications.launchNotification("Finish");
                 stopSelf();
             }
         }.start();
@@ -62,11 +62,13 @@ public class TimerService extends Service {
 
     @Override
     public void onDestroy() {
+        countDownTimer.cancel();
+
+        // for if onTick updated remainingMilliseconds after setStopped() initially called
         if (!timerData.isPaused()) {
             timerData.setStopped();
         }
 
-        countDownTimer.cancel();
         super.onDestroy();
     }
 

@@ -12,67 +12,90 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.TimerData;
 
 public class TimerNotifications {
-    private static final long[] TIMER_VIBRATION_PATTERN = {0, 500, 1000};
-    private static final int MILLIS_IN_SECOND = 1000;
-    private static final int MILLIS_IN_MINUTE = 60000;
     private static final int MILLIS_IN_HOUR = 3600000;
-
-    // TODO: What are good ID values? Will 0 and 1 cause conflicts?
-    private static final int TIMER_INTERACTIVE_NOTIFICATION_ID = 0;
-    private static final int TIMER_FINISH_NOTIFICATION_ID = 1;
+    private static final int MILLIS_IN_MINUTE = 60000;
+    private static final int MILLIS_IN_SECOND = 1000;
+    private static final String TIMER_NOTIFICATION_TAG = "practicalParent";
+    private static final int TIMER_FINISH_NOTIFICATION_ID = 0;
+    private static final int TIMER_INTERACTIVE_NOTIFICATION_ID = 1;
+    private static final long[] TIMER_VIBRATION_PATTERN = {0, 500, 1000};
 
     private static TimerNotifications instance;
     private final Context context;
-    private final Vibrator timerFinishVibrator;
-    private final NotificationManager notificationManager;
-    private final PendingIntent notificationClickPendingIntent;
-    private final PendingIntent dismissPendingIntent;
-    private final Intent toggleTimerIntent;
-    private final PendingIntent cancelPendingIntent;
     private final TimerData timerData;
+    private final NotificationManagerCompat notificationManager;
+    private final Vibrator timerFinishVibrator;
+
+    private final PendingIntent pauseTimerPendingIntent;
+    private final PendingIntent resumeTimerPendingIntent;
+    private final PendingIntent cancelPendingIntent;
+    private final NotificationCompat.Builder finishNotificationBuilder;
+    private final NotificationCompat.Builder interactiveNotificationBuilder;
+
     private MediaPlayer timerFinishSound;
-    private PendingIntent toggleTimerPendingIntent;
-    private boolean tempHackyBool = false;
+    private String lastFormattedTime;
 
     private TimerNotifications(Context context) {
         NotificationChannel channel = new NotificationChannel(
-                "practical_parent_timer",
+                "practicalParentTimer",
                 context.getString(R.string.timer_channel_name),
                 NotificationManager.IMPORTANCE_HIGH);
 
         this.context = context.getApplicationContext();
-        this.timerFinishVibrator = (Vibrator) context.getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-        this.notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        this.timerFinishSound = MediaPlayer.create(context.getApplicationContext(), R.raw.timeralarm);
+        this.timerData = TimerData.getInstance(context);
+        this.notificationManager = NotificationManagerCompat.from(context);
+        this.timerFinishVibrator = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
 
         notificationManager.createNotificationChannel(channel);
 
-        Intent notificationClickIntent = new Intent(context.getApplicationContext(), TimerActivity.class);
+        AtomicInteger atomicInteger = new AtomicInteger();
+
+        Intent notificationClickIntent = new Intent(this.context, TimerActivity.class);
         notificationClickIntent.putExtra("isNotificationClicked", true);
         notificationClickIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.notificationClickPendingIntent = PendingIntent.getActivity(context.getApplicationContext(), 0, notificationClickIntent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent notificationClickPendingIntent = PendingIntent.getActivity(this.context, atomicInteger.getAndIncrement(), notificationClickIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        Intent dismissIntent = new Intent(context.getApplicationContext(), NotificationReceiver.class);
-        dismissIntent.putExtra("isNotificationDismissed", true);
-        this.dismissPendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 0, dismissIntent, PendingIntent.FLAG_IMMUTABLE);
+        Intent dismissIntent = new Intent(this.context, NotificationReceiver.class);
+        dismissIntent.putExtra("notificationAction", "Dismiss");
+        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(this.context, atomicInteger.getAndIncrement(), dismissIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        this.toggleTimerIntent = new Intent(context.getApplicationContext(), NotificationReceiver.class);
-        toggleTimerIntent.putExtra("isNotificationResumed", true);
-        toggleTimerIntent.putExtra("isNotificationPaused", false);
-        this.toggleTimerPendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 1, toggleTimerIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent pauseTimerIntent = new Intent(this.context, NotificationReceiver.class);
+        pauseTimerIntent.putExtra("notificationAction", "Pause");
+        this.pauseTimerPendingIntent = PendingIntent.getBroadcast(this.context, atomicInteger.getAndIncrement(), pauseTimerIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        Intent cancelIntent = new Intent(context.getApplicationContext(), NotificationReceiver.class);
-        cancelIntent.putExtra("isNotificationCancelled", true);
-        this.cancelPendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 2, cancelIntent, PendingIntent.FLAG_IMMUTABLE);
+        Intent resumeTimerIntent = new Intent(this.context, NotificationReceiver.class);
+        resumeTimerIntent.putExtra("notificationAction", "Resume");
+        this.resumeTimerPendingIntent = PendingIntent.getBroadcast(this.context, atomicInteger.getAndIncrement(), resumeTimerIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        this.timerData = TimerData.getInstance(context);
+        Intent cancelIntent = new Intent(this.context, NotificationReceiver.class);
+        cancelIntent.putExtra("notificationAction", "Cancel");
+        this.cancelPendingIntent = PendingIntent.getBroadcast(this.context, atomicInteger.getAndIncrement(), cancelIntent, PendingIntent.FLAG_IMMUTABLE);
+
+        NotificationCompat.Builder basicNotificationBuilder = new NotificationCompat.Builder(this.context, "practicalParentTimer")
+                .setSmallIcon(R.drawable.ic_time)
+                .setColor(Color.GREEN)
+                .setCategory(NotificationCompat.CATEGORY_ALARM)
+                .setContentIntent(notificationClickPendingIntent)
+                .setAutoCancel(true)
+                .setOngoing(true)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+        this.finishNotificationBuilder = new NotificationCompat.Builder(context, basicNotificationBuilder.build())
+                .setContentTitle(context.getString(R.string.timer_finish_notification_title))
+                .addAction(R.drawable.ic_sound, context.getString(R.string.timer_notification_dismiss_button), dismissPendingIntent);
+
+        this.interactiveNotificationBuilder = new NotificationCompat.Builder(context, basicNotificationBuilder.build())
+                .setContentTitle(context.getString(R.string.timer_interactive_notification_title))
+                .setOnlyAlertOnce(true);
     }
 
     public static TimerNotifications getInstance(Context context) {
@@ -83,132 +106,68 @@ public class TimerNotifications {
         return instance;
     }
 
-    public void launchNotification(boolean isInteractive) {
-        if (isInteractive) {
-            long milliseconds = timerData.getRemainingMilliseconds();
-            long hours = milliseconds / MILLIS_IN_HOUR;
-            long minutes = (milliseconds % MILLIS_IN_HOUR) / MILLIS_IN_MINUTE;
-            long seconds = (milliseconds % MILLIS_IN_MINUTE) / MILLIS_IN_SECOND;
-            String formattedTime = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
+    public void launchNotification(String notificationType) {
+        if (notificationType.equals("Finish")) {
+            dismissNotification(true);
 
-            NotificationCompat.Builder interactiveBuilder = new NotificationCompat.Builder(context.getApplicationContext(), "practical_parent_timer")
-                    .setSmallIcon(R.drawable.ic_time)
-                    .setContentTitle(context.getString(R.string.timer_interactive_notification_title))
-                    .setContentText(formattedTime)
-                    .setContentIntent(notificationClickPendingIntent)
-                    .setCategory(NotificationCompat.CATEGORY_ALARM)
-                    .setColor(Color.GREEN)
-                    .addAction(R.drawable.ic_sound, "Pause", toggleTimerPendingIntent)
-                    .addAction(R.drawable.ic_sound, "Cancel", cancelPendingIntent)
-                    .setAutoCancel(true)
-                    .setOngoing(true)
-                    .setOnlyAlertOnce(true);
+            notificationManager.notify(TIMER_NOTIFICATION_TAG, TIMER_FINISH_NOTIFICATION_ID, finishNotificationBuilder.build());
 
-            notificationManager.notify(TIMER_INTERACTIVE_NOTIFICATION_ID, interactiveBuilder.build());
-
-            tempHackyBool = true;
-        } else {
-            notificationManager.cancel(TIMER_INTERACTIVE_NOTIFICATION_ID);
-
-            NotificationCompat.Builder finishNotificationBuilder = new NotificationCompat.Builder(context.getApplicationContext(), "practical_parent_timer")
-                    .setSmallIcon(R.drawable.ic_time)
-                    .setContentTitle(context.getString(R.string.timer_finish_notification_title))
-                    .setContentIntent(notificationClickPendingIntent)
-                    .setCategory(NotificationCompat.CATEGORY_ALARM)
-                    .setColor(Color.GREEN)
-                    .addAction(R.drawable.ic_sound, context.getString(R.string.timer_notification_dismiss_button), dismissPendingIntent)
-                    .setAutoCancel(true)
-                    .setOngoing(true);
-
-            notificationManager.notify(TIMER_FINISH_NOTIFICATION_ID, finishNotificationBuilder.build());
-
-            timerFinishSound = MediaPlayer.create(context.getApplicationContext(), R.raw.timeralarm);
-            timerFinishSound.setLooping(true);
+            this.timerFinishSound = MediaPlayer.create(context, R.raw.timeralarm);
             timerFinishSound.start();
 
             timerFinishVibrator.vibrate(VibrationEffect.createWaveform(TIMER_VIBRATION_PATTERN, 0),
                     new AudioAttributes.Builder()
                             .setUsage(AudioAttributes.USAGE_ALARM)
                             .build());
+        } else if (!(notificationType.equals("Pause") || notificationType.equals("Resume"))) {
+            throw new IllegalArgumentException("notificationType must be one of \"Finish\", \"Pause\", or \"Resume\"");
+        } else {
+            String formattedTime = getFormattedTime();
+            this.lastFormattedTime = formattedTime;
 
-            tempHackyBool = false;
+            interactiveNotificationBuilder.setContentText(formattedTime);
+            interactiveNotificationBuilder.clearActions();
+
+            if (notificationType.equals("Pause")) {
+                interactiveNotificationBuilder.addAction(R.drawable.ic_sound, context.getString(R.string.timer_notification_pause_button), pauseTimerPendingIntent);
+            } else {
+                interactiveNotificationBuilder.addAction(R.drawable.ic_sound, context.getString(R.string.timer_notification_resume_button), resumeTimerPendingIntent);
+            }
+
+            interactiveNotificationBuilder.addAction(R.drawable.ic_sound, context.getString(R.string.timer_notification_cancel_button), cancelPendingIntent);
+            notificationManager.notify(TIMER_NOTIFICATION_TAG, TIMER_INTERACTIVE_NOTIFICATION_ID, interactiveNotificationBuilder.build());
         }
     }
 
-    public void dismissNotification(boolean isInteractive) {
-        if (isInteractive) {
-            notificationManager.cancel(TIMER_INTERACTIVE_NOTIFICATION_ID);
+    public void dismissNotification(boolean dismissInteractive) {
+        if (dismissInteractive) {
+            notificationManager.cancel(TIMER_NOTIFICATION_TAG, TIMER_INTERACTIVE_NOTIFICATION_ID);
         } else {
-            notificationManager.cancel(TIMER_FINISH_NOTIFICATION_ID);
+            notificationManager.cancel(TIMER_NOTIFICATION_TAG, TIMER_FINISH_NOTIFICATION_ID);
 
-            timerFinishSound.stop();
+            if (timerFinishSound != null) {
+                timerFinishSound.stop();
+            }
 
             timerFinishVibrator.cancel();
         }
-
-        tempHackyBool = false;
     }
 
     public void updateNotificationTime() {
-        if (tempHackyBool) {
-            long milliseconds = timerData.getRemainingMilliseconds();
-            long hours = milliseconds / MILLIS_IN_HOUR;
-            long minutes = (milliseconds % MILLIS_IN_HOUR) / MILLIS_IN_MINUTE;
-            long seconds = (milliseconds % MILLIS_IN_MINUTE) / MILLIS_IN_SECOND;
-            String formattedTime = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
+        String formattedTime = getFormattedTime();
 
-            NotificationCompat.Builder interactiveBuilder = new NotificationCompat.Builder(context.getApplicationContext(), "practical_parent_timer")
-                    .setSmallIcon(R.drawable.ic_time)
-                    .setContentTitle(context.getString(R.string.timer_interactive_notification_title))
-                    .setContentText(formattedTime)
-                    .setContentIntent(notificationClickPendingIntent)
-                    .setCategory(NotificationCompat.CATEGORY_ALARM)
-                    .setColor(Color.GREEN)
-                    .setAutoCancel(true)
-                    .setOngoing(true)
-                    .setOnlyAlertOnce(true);
-
-            if (toggleTimerIntent.getBooleanExtra("isNotificationResumed", false)) {
-                interactiveBuilder.addAction(R.drawable.ic_sound, "Pause", toggleTimerPendingIntent);
-            } else {
-                interactiveBuilder.addAction(R.drawable.ic_sound, "Resume", toggleTimerPendingIntent);
-            }
-
-            interactiveBuilder.addAction(R.drawable.ic_sound, "Cancel", cancelPendingIntent);
-            notificationManager.notify(TIMER_INTERACTIVE_NOTIFICATION_ID, interactiveBuilder.build());
+        if (!formattedTime.equals(lastFormattedTime)) {
+            this.lastFormattedTime = formattedTime;
+            interactiveNotificationBuilder.setContentText(formattedTime);
+            notificationManager.notify(TIMER_NOTIFICATION_TAG, TIMER_INTERACTIVE_NOTIFICATION_ID, interactiveNotificationBuilder.build());
         }
     }
 
-    public void changeInteractiveNotification(boolean hasPauseButton) {
+    private String getFormattedTime() {
         long milliseconds = timerData.getRemainingMilliseconds();
         long hours = milliseconds / MILLIS_IN_HOUR;
         long minutes = (milliseconds % MILLIS_IN_HOUR) / MILLIS_IN_MINUTE;
         long seconds = (milliseconds % MILLIS_IN_MINUTE) / MILLIS_IN_SECOND;
-        String formattedTime = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
-
-        NotificationCompat.Builder interactiveBuilder = new NotificationCompat.Builder(context.getApplicationContext(), "practical_parent_timer")
-                .setSmallIcon(R.drawable.ic_time)
-                .setContentTitle(context.getString(R.string.timer_interactive_notification_title))
-                .setContentText(formattedTime)
-                .setContentIntent(notificationClickPendingIntent)
-                .setCategory(NotificationCompat.CATEGORY_ALARM)
-                .setColor(Color.GREEN)
-                .setAutoCancel(true)
-                .setOngoing(true)
-                .setOnlyAlertOnce(true);
-
-        toggleTimerIntent.putExtra("isNotificationResumed", hasPauseButton);
-        toggleTimerIntent.putExtra("isNotificationPaused", !hasPauseButton);
-
-        this.toggleTimerPendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 1, toggleTimerIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        if (hasPauseButton) {
-            interactiveBuilder.addAction(R.drawable.ic_sound, "Pause", toggleTimerPendingIntent);
-        } else {
-            interactiveBuilder.addAction(R.drawable.ic_sound, "Resume", toggleTimerPendingIntent);
-        }
-
-        interactiveBuilder.addAction(R.drawable.ic_sound, "Cancel", cancelPendingIntent);
-        notificationManager.notify(TIMER_INTERACTIVE_NOTIFICATION_ID, interactiveBuilder.build());
+        return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
     }
 }

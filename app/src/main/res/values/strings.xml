@@ -79,5 +79,8 @@
     <string name="timer_zero_toast">Set non-zero time</string>
     <string name="timer_paused_toast">Timer paused</string>
     <string name="custom_time_toast">Enter time first</string>
+    <string name="timer_notification_cancel_button">Cancel</string>
+    <string name="timer_notification_resume_button">Resume</string>
+    <string name="timer_notification_pause_button">Pause</string>
 
 </resources>
