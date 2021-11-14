@@ -33,8 +33,8 @@ public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
 
         CoinFlip coinFlip = getItem(position);
 
-        ImageView resultImageView = (ImageView) convertView.findViewById(R.id.coinFlipIcon);
-        TextView childTextView = (TextView) convertView.findViewById(R.id.coinFlipChild);
+        ImageView resultImageView = convertView.findViewById(R.id.coinFlipIcon);
+        TextView childTextView = convertView.findViewById(R.id.coinFlipChild);
 
         String childChoice = coinFlip.getChildWhoPicksSide().getName() + " chose " + coinFlip.getSideThatChildPicks();
         childTextView.setText(childChoice);
@@ -47,10 +47,10 @@ public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
             resultImageView.setImageResource(R.drawable.xmark);
         }
 
-        TextView coinFlipDate = (TextView) convertView.findViewById(R.id.coinFlipDate);
+        TextView coinFlipDate = convertView.findViewById(R.id.coinFlipDate);
         coinFlipDate.setText(coinFlip.getTimeOfFlip());
 
-        TextView resultTextView = (TextView) convertView.findViewById(R.id.coinFlipResult2);
+        TextView resultTextView = convertView.findViewById(R.id.coinFlipResult2);
         String coinFlipResult = "Landed on " + coinFlip.getCoinSideLandedOn().toString();
         resultTextView.setText(coinFlipResult);
 

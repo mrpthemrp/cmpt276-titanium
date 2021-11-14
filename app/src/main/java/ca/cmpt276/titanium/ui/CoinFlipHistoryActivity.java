@@ -28,10 +28,10 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
         populateListView();
 
         if (CoinFlipHistory.getCoinFlipHistory().size() == 0) {
-            ConstraintLayout emptyStateLayout = (ConstraintLayout) findViewById(R.id.emptyStateLayout);
+            ConstraintLayout emptyStateLayout = findViewById(R.id.emptyStateLayout);
             emptyStateLayout.setVisibility(View.VISIBLE);
 
-            ListView listView = (ListView) findViewById(R.id.coinFlipHistoryList);
+            ListView listView = findViewById(R.id.coinFlipHistoryList);
             listView.setVisibility(View.GONE);
         }
     }
@@ -40,7 +40,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
         ArrayList<CoinFlip> coinFlipHistory = CoinFlipHistory.getCoinFlipHistory();
         Collections.reverse(coinFlipHistory);
         CoinFlipHistoryAdapter adapter = new CoinFlipHistoryAdapter(this, coinFlipHistory);
-        ListView list = (ListView) findViewById(R.id.coinFlipHistoryList);
+        ListView list = findViewById(R.id.coinFlipHistoryList);
         list.setAdapter(adapter);
     }
 }
