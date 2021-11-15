@@ -168,7 +168,14 @@ public class TimerActivity extends AppCompatActivity {
 
     private void updateGUI() {
         ProgressBar circularProgressBar = findViewById(R.id.circularProgressBar);
-        int progress = (int) ((timerData.getDurationMilliseconds() - timerData.getRemainingMilliseconds()) * 100 / timerData.getDurationMilliseconds());
+        int progress;
+
+        if (timerData.getDurationMilliseconds() == 0) {
+            progress = 0;
+        } else {
+            progress = (int) ((timerData.getDurationMilliseconds() - timerData.getRemainingMilliseconds()) * 100 / timerData.getDurationMilliseconds());
+        }
+
         circularProgressBar.setProgress(progress);
 
         ConstraintLayout inputComponents = findViewById(R.id.inputsConstraintLayout);
