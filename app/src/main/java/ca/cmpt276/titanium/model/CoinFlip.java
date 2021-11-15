@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
+// TODO: Remove/Use unused methods
+
 /**
  * This class represents a single coin flip.
  */
