@@ -21,6 +21,8 @@ import ca.cmpt276.titanium.model.Children;
 import java.util.Objects;
 import java.util.UUID;
 
+// TODO: Only call launchDiscardChangesPrompt() after user has made changes to a field
+
 /**
  * This activity represents the editing of a single child.
  */
