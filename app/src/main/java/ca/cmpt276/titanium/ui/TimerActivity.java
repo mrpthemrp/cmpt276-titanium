@@ -28,6 +28,8 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.TimerData;
 
 // TODO: Implement DataManager class?
+// TODO: Fix app crash bug due to background being too big, which occurs on at least API 27 (I
+//  think it just needs to be moved into a folder that signifies that it's "high resolution"
 
 /**
  * This activity represents the timer activity.
