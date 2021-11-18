@@ -45,10 +45,7 @@ public class CoinActivity extends AppCompatActivity {
     private TextView coinResult;
     private final Runnable result = () -> coinResult.setVisibility(View.VISIBLE);
     private CoinFlipHistory coinFlipHistory;
-    /*
-    Sound from https://www.youtube.com/watch?v=1QxX9ruPUXM
-     */
-    private MediaPlayer coinSound;
+    private MediaPlayer coinSound; // Sound from: https://www.youtube.com/watch?v=1QxX9ruPUXM
 
     public static Intent makeIntent(Context c) {
         return new Intent(c, CoinActivity.class);
@@ -90,7 +87,7 @@ public class CoinActivity extends AppCompatActivity {
         Button flipButton = findViewById(R.id.flipButton);
         coin = findViewById(R.id.coinBlank);
         coinResult = findViewById(R.id.coinFlipResult);
-        flipButton.setOnClickListener(view -> flipTheCoin());
+        flipButton.setOnClickListener(view -> animateCoinFlip());
     }
 
     private void setCoinChoiceButtonsGone() {
@@ -139,7 +136,7 @@ public class CoinActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.menuFlipCoinBtn);
     }
 
-    private void flipTheCoin() {
+    private void animateCoinFlip() {
         coin.setImageResource(R.drawable.ic_coin_blank);
         Coin coinSide = CoinFlip.flipCoin();
         Animation animation = AnimationUtils.loadAnimation(CoinActivity.this, R.anim.flip_coin);
