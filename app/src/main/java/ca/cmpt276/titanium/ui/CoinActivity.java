@@ -16,20 +16,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
 import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.Coin;
 import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-// TODO: Move non-UI code into CoinFlip
 
 /**
  * This activity represents the coin flip activity.
@@ -131,7 +122,7 @@ public class CoinActivity extends AppCompatActivity {
     }
 
     private void setChildNameText() {
-        childNameFormat = getString(R.string.childTurn, getChildForNextTurn().getName());
+        childNameFormat = getString(R.string.childTurn, coinFlipHistory.getChildForNextTurn().getName());
         childNameDisplay = findViewById((R.id.childsTurnText));
         childNameDisplay.setText(childNameFormat);
     }
@@ -167,51 +158,9 @@ public class CoinActivity extends AppCompatActivity {
 
         // If there are no children configured, we don't need to save any info
         if (!children.getChildren().isEmpty()) {
-            saveCoinFlip(coinSide);
+            coinFlipHistory.saveCoinFlip(coinChosen, coinSide);
 
             new Handler(Looper.getMainLooper()).postDelayed(this::setChildNameText, COIN_FLIP_DELAY);
         }
-    }
-
-    private void saveCoinFlip(Coin coinSideLandedOn) {
-        CoinFlip coinFlip;
-        LocalDateTime timeOfFlip = LocalDateTime.now();
-
-        Child childOfNextTurn = getChildForNextTurn();
-        if (CoinFlipHistory.getCoinFlipHistory().isEmpty()) {
-            coinFlip = new CoinFlip(children.getChildren().get(0), coinChosen, timeOfFlip, coinSideLandedOn);
-        } else {
-            coinFlip = new CoinFlip(childOfNextTurn, coinChosen, timeOfFlip, coinSideLandedOn);
-        }
-
-        coinFlipHistory.addCoinFlipToHistory(coinFlip);
-    }
-
-    private Child getChildForNextTurn() {
-        ArrayList<Child> childrenArray = children.getChildren();
-
-        Child childToPickLastTurn = getChildOfLastTurn();
-        if (childToPickLastTurn == null && !childrenArray.isEmpty()) {
-            return childrenArray.get(FIRST_CHILD_INDEX);
-        }
-
-        Child childOfNextTurn;
-        for (int i = 0; i < childrenArray.size(); i++) {
-            if (childrenArray.get(i).getUniqueId().toString().equals(childToPickLastTurn.getUniqueId().toString())) {
-                childOfNextTurn = childrenArray.get((i + 1) % childrenArray.size());
-                return childOfNextTurn;
-            }
-        }
-
-        return childrenArray.get(FIRST_CHILD_INDEX);
-    }
-
-    private Child getChildOfLastTurn() {
-        int sizeOfHistory = CoinFlipHistory.getCoinFlipHistory().size();
-        if (!CoinFlipHistory.getCoinFlipHistory().isEmpty()) {
-            return CoinFlipHistory.getCoinFlipHistory().get(sizeOfHistory - 1).getChildWhoPicksSide();
-        }
-
-        return null;
     }
 }
