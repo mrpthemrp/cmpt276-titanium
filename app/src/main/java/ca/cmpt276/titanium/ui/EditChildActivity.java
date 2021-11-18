@@ -3,8 +3,10 @@ package ca.cmpt276.titanium.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -47,7 +49,7 @@ public class EditChildActivity extends AppCompatActivity {
         this.childBeingEdited = children.getChild(childUniqueId);
         displayChildInfo();
 
-        setupSaveButton();
+        setupButtons();
     }
 
     @Override
@@ -75,11 +77,11 @@ public class EditChildActivity extends AppCompatActivity {
 
     private void displayChildInfo() {
         this.childName = findViewById(R.id.childName);
-        this.childName.setText(childBeingEdited.getName());
-        this.childName.setEnabled(true);
+        childName.setText(childBeingEdited.getName());
+        childName.setEnabled(true);
     }
 
-    private void setupSaveButton() {
+    private void setupButtons() {
         Button saveButton = findViewById(R.id.viewFunctionBtn);
         saveButton.setVisibility(View.VISIBLE);
 
@@ -88,6 +90,18 @@ public class EditChildActivity extends AppCompatActivity {
             children.saveData();
             Toast.makeText(this, R.string.edit_child_toast, Toast.LENGTH_SHORT).show();
             finish();
+        });
+
+        childName.setOnKeyListener((view, keyCode, keyEvent) -> {
+            if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                // minimize keyboard
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(childName.getWindowToken(), 0);
+
+                childName.clearFocus();
+            }
+
+            return false;
         });
     }
 
