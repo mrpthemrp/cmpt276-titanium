@@ -15,7 +15,7 @@ public class CoinFlip {
     private final UUID childUniqueID;
     private final Coin sideThatChildPicks;
     private final String timeOfFlip;
-    private Coin coinSideLandedOn;
+    private final Coin coinSideLandedOn;
 
     public CoinFlip(UUID childUniqueID, Coin sideThatChildPicks,
                     LocalDateTime timeOfFlip, Coin coinSideLandedOn) {
@@ -45,13 +45,5 @@ public class CoinFlip {
 
     public Coin getCoinSideLandedOn() {
         return coinSideLandedOn;
-    }
-
-    public void setCoinSideLandedOn(Coin coinSideLandedOn) {
-        this.coinSideLandedOn = coinSideLandedOn;
-    }
-
-    public void setCoinSideLandedOn() {
-        coinSideLandedOn = flipCoin();
     }
 }

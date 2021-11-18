@@ -8,7 +8,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * This class represents the coin flip history.
@@ -18,6 +20,8 @@ public class CoinFlipHistory {
     private static final Gson GSON = new Gson();
     private static final String EMPTY_STRING = "";
     private static final String COIN_FLIP_HISTORY_KEY = "coin_flip_history";
+    public static final int FIRST_CHILD_INDEX = 0;
+    private final Children children;
 
     private static ArrayList<CoinFlip> coinFlipHistory;
     private final SharedPreferences sharedPreferences;
@@ -25,6 +29,7 @@ public class CoinFlipHistory {
     public CoinFlipHistory(Context context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         coinFlipHistory = new ArrayList<>();
+        children = Children.getInstance(context);
 
         initializeCoinFlipHistory();
     }
@@ -50,5 +55,47 @@ public class CoinFlipHistory {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(COIN_FLIP_HISTORY_KEY, coinFlipsJson);
         editor.apply();
+    }
+
+    public void saveCoinFlip(Coin coinChosen, Coin coinSideLandedOn) {
+        CoinFlip coinFlip;
+        LocalDateTime timeOfFlip = LocalDateTime.now();
+
+        Child childOfNextTurn = getChildForNextTurn();
+        if (CoinFlipHistory.getCoinFlipHistory().isEmpty()) {
+            coinFlip = new CoinFlip(children.getChildren().get(0).getUniqueID(), coinChosen, timeOfFlip, coinSideLandedOn);
+        } else {
+            coinFlip = new CoinFlip(childOfNextTurn.getUniqueID(), coinChosen, timeOfFlip, coinSideLandedOn);
+        }
+
+        addCoinFlipToHistory(coinFlip);
+    }
+
+    public Child getChildForNextTurn() {
+        ArrayList<Child> childrenArray = children.getChildren();
+
+        Child childToPickLastTurn = children.getChild(getChildOfLastTurn());
+        if (childToPickLastTurn == null && !childrenArray.isEmpty()) {
+            return childrenArray.get(FIRST_CHILD_INDEX);
+        }
+
+        Child childOfNextTurn;
+        for (int i = 0; i < childrenArray.size(); i++) {
+            if (childrenArray.get(i).getUniqueID().toString().equals(childToPickLastTurn.getUniqueID().toString())) {
+                childOfNextTurn = childrenArray.get((i + 1) % childrenArray.size());
+                return childOfNextTurn;
+            }
+        }
+
+        return childrenArray.get(FIRST_CHILD_INDEX);
+    }
+
+    private UUID getChildOfLastTurn() {
+        int sizeOfHistory = CoinFlipHistory.getCoinFlipHistory().size();
+        if (!CoinFlipHistory.getCoinFlipHistory().isEmpty()) {
+            return CoinFlipHistory.getCoinFlipHistory().get(sizeOfHistory - 1).getChildWhoPicksSideID();
+        }
+
+        return null;
     }
 }
