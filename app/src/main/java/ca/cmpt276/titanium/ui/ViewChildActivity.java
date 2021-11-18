@@ -94,7 +94,7 @@ public class ViewChildActivity extends AppCompatActivity {
                 .setTitle(getString(R.string.delete_child_prompt_title) + childBeingViewed.getName())
                 .setMessage(R.string.delete_child_prompt_message)
                 .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
-                    children.removeChild(childBeingViewed.getUniqueId());
+                    children.removeChild(childBeingViewed.getUniqueID());
                     Toast.makeText(this, R.string.delete_child_prompt_toast, Toast.LENGTH_SHORT).show();
                     finish();
                 })

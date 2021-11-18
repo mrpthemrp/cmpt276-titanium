@@ -70,10 +70,14 @@ public class Children {
         saveData();
     }
 
-    public Child getChild(UUID uniqueId) {
-        for (int i = 0; i < children.size(); i++) {
-            if (uniqueId.toString().equals(children.get(i).getUniqueId().toString())) {
-                return children.get(i);
+    public Child getChild(UUID uniqueID) {
+        if (uniqueID == null) {
+            return null;
+        } else {
+            for (int i = 0; i < children.size(); i++) {
+                if (uniqueID.toString().equals(children.get(i).getUniqueID().toString())) {
+                    return children.get(i);
+                }
             }
         }
 
@@ -85,7 +89,7 @@ public class Children {
         Child badChildIndex = null;
 
         for (int i = 0; i < children.size(); i++) {
-            if (uniqueId.toString().equals(children.get(i).getUniqueId().toString())) {
+            if (uniqueId.toString().equals(children.get(i).getUniqueID().toString())) {
                 badChildIndex = Children.children.get(i);
             }
         }

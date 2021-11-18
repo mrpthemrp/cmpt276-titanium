@@ -3,6 +3,8 @@ package ca.cmpt276.titanium.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,8 +25,6 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 
-// TODO: Only call launchDiscardChangesPrompt() after user has made changes to a field
-
 /**
  * This activity represents the editing of a single child.
  */
@@ -33,6 +33,7 @@ public class EditChildActivity extends AppCompatActivity {
     private UUID childUniqueId;
     private Child childBeingEdited;
     private EditText childName;
+    private boolean changesAccepted = true;
 
     public static Intent makeIntent(Context context, UUID childUniqueId) {
         Intent editChildIntent = new Intent(context, EditChildActivity.class);
@@ -81,6 +82,7 @@ public class EditChildActivity extends AppCompatActivity {
         this.childName = findViewById(R.id.childName);
         childName.setText(childBeingEdited.getName());
         childName.setEnabled(true);
+        childName.setCursorVisible(true);
     }
 
     private void setupButtons() {
@@ -101,22 +103,44 @@ public class EditChildActivity extends AppCompatActivity {
                 inputMethodManager.hideSoftInputFromWindow(childName.getWindowToken(), 0);
 
                 childName.clearFocus();
+                childName.setText(childName.getText());
             }
 
             return false;
         });
+
+        childName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                changesAccepted = childName.getText().toString().equals(childBeingEdited.getName());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void launchDiscardChangesPrompt() {
-        new AlertDialog.Builder(this)
-                .setIcon(R.drawable.ic_baseline_warning_black_24)
-                .setTitle(R.string.discard_changes_title)
-                .setMessage(R.string.discard_changes_message)
-                .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
-                    Toast.makeText(this, R.string.changes_discarded_toast, Toast.LENGTH_SHORT).show();
-                    finish();
-                })
-                .setNegativeButton(R.string.prompt_negative, null)
-                .show();
+        if (!changesAccepted) {
+            new AlertDialog.Builder(this)
+                    .setIcon(R.drawable.ic_baseline_warning_black_24)
+                    .setTitle(R.string.discard_changes_title)
+                    .setMessage(R.string.discard_changes_message)
+                    .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
+                        Toast.makeText(this, R.string.changes_discarded_toast, Toast.LENGTH_SHORT).show();
+                        finish();
+                    })
+                    .setNegativeButton(R.string.prompt_negative, null)
+                    .show();
+        } else {
+            finish();
+        }
     }
 }
