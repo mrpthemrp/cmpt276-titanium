@@ -14,14 +14,18 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.CoinFlip;
 
 /**
  * This is an adapter for the coin flip history.
  */
 public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
+    private final Children children;
+
     public CoinFlipHistoryAdapter(Context context, List<CoinFlip> coinFlipHistory) {
         super(context, 0, coinFlipHistory);
+        children = Children.getInstance(context);
     }
 
     @NonNull
@@ -36,7 +40,7 @@ public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
         ImageView resultImageView = convertView.findViewById(R.id.coinFlipIcon);
         TextView childTextView = convertView.findViewById(R.id.coinFlipChild);
 
-        String childChoice = coinFlip.getChildWhoPicksSide().getName() + " chose " + coinFlip.getSideThatChildPicks();
+        String childChoice = children.getChild(coinFlip.getChildWhoPicksSideID()).getName() + " chose " + coinFlip.getSideThatChildPicks();
         childTextView.setText(childChoice);
 
         if (coinFlip.getCoinSideLandedOn() == coinFlip.getSideThatChildPicks()) {
