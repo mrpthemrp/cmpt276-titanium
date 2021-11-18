@@ -2,6 +2,8 @@ package ca.cmpt276.titanium.model;
 
 import java.util.UUID;
 
+// TODO: Remove uniqueIDs since we can just use object IDs
+
 /**
  * This class represents a single child.
  */

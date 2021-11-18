@@ -26,6 +26,11 @@ import ca.cmpt276.titanium.model.Coin;
 import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+// TODO: Move non-UI code into CoinFlip
+
 /**
  * This activity represents the coin flip activity.
  * Allows the user to choose heads or tails, and shows the results of the flip.
