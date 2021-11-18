@@ -79,9 +79,9 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void displayChildren() {
+        // TODO: Add empty state for when children is empty
         ArrayList<Child> childList = children.getChildren();
         ListView childrenList = (ListView) findViewById(R.id.childrenList);
-
         ChildrenListAdapter adapter = new ChildrenListAdapter(this, childList);
         childrenList.setAdapter(adapter);
         childrenList.setClickable(true);

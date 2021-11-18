@@ -9,6 +9,9 @@
     <string name="menuRemove">Remove Child</string>
     <string name="menuChildrenText">Added Children: </string>
 
+    <!-- Children List Strings -->
+    <string name="noChildrenConfigured">No Children to show.</string>
+
     <!-- Coin Flip Strings -->
     <string name="coinResult">RESULT</string>
     <string name="coinTapToFlip">Tap to flip!</string>
@@ -32,9 +35,6 @@
     <string name="timerDefaultTimeInput">00</string>
     <string name="timerTimeSeparator">:</string>
     <string name="timer_cancelled_toast">Timer cancelled</string>
-
-    <!-- Children List Strings -->
-    <string name="noChildrenConfigured">No Children to show.</string>
 
     <!-- View Child Strings-->
     <string name="menuViewChild">View Child</string>
