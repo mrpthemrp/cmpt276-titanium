@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
@@ -25,9 +26,6 @@ import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.Coin;
 import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 // TODO: Move non-UI code into CoinFlip
 
@@ -179,9 +177,9 @@ public class CoinActivity extends AppCompatActivity {
 
         Child childOfNextTurn = getChildForNextTurn();
         if (CoinFlipHistory.getCoinFlipHistory().isEmpty()) {
-            coinFlip = new CoinFlip(children.getChildren().get(0), coinChosen, timeOfFlip, coinSideLandedOn);
+            coinFlip = new CoinFlip(children.getChildren().get(0).getUniqueID(), coinChosen, timeOfFlip, coinSideLandedOn);
         } else {
-            coinFlip = new CoinFlip(childOfNextTurn, coinChosen, timeOfFlip, coinSideLandedOn);
+            coinFlip = new CoinFlip(childOfNextTurn.getUniqueID(), coinChosen, timeOfFlip, coinSideLandedOn);
         }
 
         coinFlipHistory.addCoinFlipToHistory(coinFlip);
@@ -190,14 +188,14 @@ public class CoinActivity extends AppCompatActivity {
     private Child getChildForNextTurn() {
         ArrayList<Child> childrenArray = children.getChildren();
 
-        Child childToPickLastTurn = getChildOfLastTurn();
+        Child childToPickLastTurn = children.getChild(getChildOfLastTurnID());
         if (childToPickLastTurn == null && !childrenArray.isEmpty()) {
             return childrenArray.get(FIRST_CHILD_INDEX);
         }
 
         Child childOfNextTurn;
         for (int i = 0; i < childrenArray.size(); i++) {
-            if (childrenArray.get(i).getUniqueId().toString().equals(childToPickLastTurn.getUniqueId().toString())) {
+            if (childrenArray.get(i).getUniqueID().toString().equals(childToPickLastTurn.getUniqueID().toString())) {
                 childOfNextTurn = childrenArray.get((i + 1) % childrenArray.size());
                 return childOfNextTurn;
             }
@@ -206,10 +204,10 @@ public class CoinActivity extends AppCompatActivity {
         return childrenArray.get(FIRST_CHILD_INDEX);
     }
 
-    private Child getChildOfLastTurn() {
+    private UUID getChildOfLastTurnID() {
         int sizeOfHistory = CoinFlipHistory.getCoinFlipHistory().size();
         if (!CoinFlipHistory.getCoinFlipHistory().isEmpty()) {
-            return CoinFlipHistory.getCoinFlipHistory().get(sizeOfHistory - 1).getChildWhoPicksSide();
+            return CoinFlipHistory.getCoinFlipHistory().get(sizeOfHistory - 1).getChildWhoPicksSideID();
         }
 
         return null;

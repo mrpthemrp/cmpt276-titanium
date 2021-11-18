@@ -3,6 +3,7 @@ package ca.cmpt276.titanium.model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
+import java.util.UUID;
 
 // TODO: Remove/Use unused methods
 
@@ -10,14 +11,15 @@ import java.util.Random;
  * This class represents a single coin flip.
  */
 public class CoinFlip {
-    private final Child childWhoPicksSide;
+    private static Children instance;
+    private final UUID childUniqueID;
     private final Coin sideThatChildPicks;
     private final String timeOfFlip;
     private Coin coinSideLandedOn;
 
-    public CoinFlip(Child childWhoPicksSide, Coin sideThatChildPicks,
+    public CoinFlip(UUID childUniqueID, Coin sideThatChildPicks,
                     LocalDateTime timeOfFlip, Coin coinSideLandedOn) {
-        this.childWhoPicksSide = childWhoPicksSide;
+        this.childUniqueID = childUniqueID;
         this.sideThatChildPicks = sideThatChildPicks;
         this.timeOfFlip = timeOfFlip.format(DateTimeFormatter.ofPattern("d-MMM-uuuu, HH:mm:ss"));
         this.coinSideLandedOn = coinSideLandedOn;
@@ -33,8 +35,8 @@ public class CoinFlip {
         return sideThatChildPicks;
     }
 
-    public Child getChildWhoPicksSide() {
-        return childWhoPicksSide;
+    public UUID getChildWhoPicksSideID() {
+        return childUniqueID;
     }
 
     public String getTimeOfFlip() {

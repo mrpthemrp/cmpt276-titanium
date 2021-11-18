@@ -8,16 +8,16 @@ import java.util.UUID;
  * This class represents a single child.
  */
 public class Child {
-    private final UUID uniqueId;
+    private final UUID uniqueID;
     private String name;
 
-    public Child(UUID uniqueId, String name) {
-        this.uniqueId = uniqueId;
+    public Child(UUID uniqueID, String name) {
+        this.uniqueID = uniqueID;
         this.name = name;
     }
 
-    public UUID getUniqueId() {
-        return uniqueId;
+    public UUID getUniqueID() {
+        return uniqueID;
     }
 
     public String getName() {
