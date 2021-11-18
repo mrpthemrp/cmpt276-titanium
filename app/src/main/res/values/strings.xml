@@ -33,6 +33,9 @@
     <string name="timerTimeSeparator">:</string>
     <string name="timer_cancelled_toast">Timer cancelled</string>
 
+    <!-- Children List Strings -->
+    <string name="noChildrenConfigured">No Children to show.</string>
+
     <!-- View Child Strings-->
     <string name="menuViewChild">View Child</string>
     <string name="delete_child_prompt_title">Delete&#160;</string>
