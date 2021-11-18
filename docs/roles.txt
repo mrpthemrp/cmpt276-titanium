@@ -6,3 +6,10 @@ Scrum Master: Mohammad Haris Ahmad
 Product Owner: Christopher Torunski
 Repo Manager: Michelle Vong
 Team Member: Deborah Wang
+
+Iteration #2
+------------
+Scrum Master: Deborah Wang
+Product Owner: Mohammad Haris Ahmad
+Repo Manager: Christopher Torunski
+Team Member: Michelle Vong
