@@ -37,8 +37,8 @@ public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
 
         CoinFlip coinFlip = getItem(position);
 
-        ImageView resultImageView = convertView.findViewById(R.id.coinFlipIcon);
-        TextView childTextView = convertView.findViewById(R.id.coinFlipChild);
+        ImageView resultImageView = convertView.findViewById(R.id.childIcon);
+        TextView childTextView = convertView.findViewById(R.id.childNameList);
 
         String childChoice = children.getChild(coinFlip.getChildWhoPicksSideID()).getName() + " chose " + coinFlip.getSideThatChildPicks();
         childTextView.setText(childChoice);
