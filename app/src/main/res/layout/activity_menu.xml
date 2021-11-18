@@ -7,22 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.MenuActivity">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/menuFAB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:contentDescription="@string/contentDescriptionFAB"
-        android:src="@drawable/ic_baseline_add_24"
-        app:backgroundTint="?attr/colorPrimary"
-        app:fabSize="auto"
-        app:layout_constraintBottom_toTopOf="@+id/childrenList"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.686"
-        tools:ignore="SpeakableTextPresentCheck,RedundantDescriptionCheck,ImageContrastCheck" />
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/menuGoToFlipCoin"
         style="@style/Widget.MaterialComponents.Button"
@@ -41,9 +25,27 @@
         app:iconTintMode="src_in"
         app:layout_constraintBottom_toTopOf="@+id/childrenList"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toEndOf="@+id/menuFAB"
         app:layout_constraintTop_toBottomOf="@+id/menuHeaderText"
         tools:ignore="TextContrastCheck" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/menuFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:contentDescription="@string/contentDescriptionFAB"
+        android:src="@drawable/ic_baseline_add_24"
+        app:backgroundTint="?attr/colorPrimary"
+        app:fabSize="auto"
+        app:layout_constraintBottom_toTopOf="@+id/childrenList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.686"
+        tools:ignore="SpeakableTextPresentCheck,RedundantDescriptionCheck,ImageContrastCheck" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/menuGoToTimer"
@@ -64,6 +66,7 @@
         app:iconTintMode="src_in"
         app:layout_constraintBottom_toTopOf="@+id/childrenList"
         app:layout_constraintEnd_toStartOf="@+id/menuFAB"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/menuHeaderText"
         tools:ignore="TextContrastCheck" />

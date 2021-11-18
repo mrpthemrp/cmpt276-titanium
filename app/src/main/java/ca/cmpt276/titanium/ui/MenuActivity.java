@@ -80,7 +80,6 @@ public class MenuActivity extends AppCompatActivity {
 
     private void displayChildren() {
         ArrayList<Child> childList = children.getChildren();
-        Collections.reverse(childList);
         ListView childrenList = (ListView) findViewById(R.id.childrenList);
 
         ChildrenListAdapter adapter = new ChildrenListAdapter(this, childList);
