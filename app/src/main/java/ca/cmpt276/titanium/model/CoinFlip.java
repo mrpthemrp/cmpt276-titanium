@@ -5,8 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.UUID;
 
-// TODO: Remove/Use unused methods
-
 /**
  * This class represents a single coin flip.
  */
