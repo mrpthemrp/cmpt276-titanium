@@ -9,9 +9,9 @@ public class Child {
     private final UUID uniqueID;
     private String name;
 
-    public Child(UUID uniqueID, String name) {
-        this.uniqueID = uniqueID;
-        this.name = name;
+    public Child(String name) {
+        this.uniqueID = UUID.randomUUID();
+        setName(name);
     }
 
     public UUID getUniqueID() {
@@ -23,6 +23,14 @@ public class Child {
     }
 
     public void setName(String name) {
+        char[] nameChars = name.toCharArray();
+
+        for (char nameChar : nameChars) {
+            if (!Character.isLetter(nameChar)) {
+                throw new IllegalArgumentException("Names must contain only letters");
+            }
+        }
+
         this.name = name;
     }
 }

@@ -10,8 +10,6 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * This class represents a group of children.
@@ -19,17 +17,13 @@ import java.util.logging.Logger;
  */
 public class Children {
     private static final Gson GSON = new Gson();
-    private static final Logger LOGGER = Logger.getLogger(Children.class.getName());
 
     private static Children instance;
     private static SharedPreferences prefs;
-    private static SharedPreferences.Editor prefsEditor;
     private static ArrayList<Child> children = new ArrayList<>();
 
     private Children(Context context) {
         Children.prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        Children.prefsEditor = prefs.edit();
-        loadSavedData();
     }
 
     public static Children getInstance(Context context) {
@@ -37,71 +31,62 @@ public class Children {
             Children.instance = new Children(context);
         }
 
+        loadSavedData();
         return instance;
     }
 
-    public void loadSavedData() {
-        String childrenJson = prefs.getString("children_json", null);
-
-        Type childrenType = new TypeToken<ArrayList<Child>>() {
-        }.getType();
+    private static void loadSavedData() {
+        String childrenJson = prefs.getString("childrenJson", null);
 
         if (childrenJson != null) {
+            Type childrenType = new TypeToken<ArrayList<Child>>() {
+            }.getType();
+
             Children.children = GSON.fromJson(childrenJson, childrenType);
-        } else {
-            LOGGER.log(Level.INFO, "No Child objects were loaded into Children.children");
         }
     }
 
-    public void saveData() {
+    private void saveData() {
         String childrenJson = GSON.toJson(children);
-
-        prefsEditor.putString("children_json", childrenJson);
-        prefsEditor.apply();
-    }
-
-    private UUID generateUniqueChildId() {
-        return UUID.randomUUID();
-    }
-
-    public void addChild(String name) {
-        Child newChild = new Child(generateUniqueChildId(), name);
-        Children.children.add(newChild);
-        saveData();
+        prefs.edit().putString("childrenJson", childrenJson).apply();
     }
 
     public Child getChild(UUID uniqueID) {
-        if (uniqueID == null) {
-            return null;
-        } else {
+        if (uniqueID != null) {
             for (int i = 0; i < children.size(); i++) {
-                if (uniqueID.toString().equals(children.get(i).getUniqueID().toString())) {
+                if (uniqueID.equals(children.get(i).getUniqueID())) {
                     return children.get(i);
                 }
             }
         }
 
-        LOGGER.log(Level.WARNING, "Attempted to get Child object with nonexistent unique ID");
         return null;
     }
 
-    public void removeChild(UUID uniqueId) {
-        Child badChildIndex = null;
+    public void addChild(String name) {
+        Children.children.add(new Child(name));
+        saveData();
+    }
 
-        for (int i = 0; i < children.size(); i++) {
-            if (uniqueId.toString().equals(children.get(i).getUniqueID().toString())) {
-                badChildIndex = Children.children.get(i);
+    public void removeChild(UUID uniqueID) {
+        if (uniqueID!= null) {
+            for (int i = 0; i < children.size(); i++) {
+                if (uniqueID.equals(children.get(i).getUniqueID())) {
+                    Children.children.remove(i);
+                    saveData();
+                    break;
+                }
             }
         }
+    }
 
-        if (badChildIndex != null) {
-            Children.children.remove(badChildIndex);
-        } else {
-            LOGGER.log(Level.WARNING, "Attempted to remove Child object with nonexistent " +
-                    "unique ID from Children.children");
+    public void setChildName(UUID uniqueID, String name) {
+        Child child = getChild(uniqueID);
+
+        if (child != null) {
+            child.setName(name);
+            saveData();
         }
-
-        saveData();
     }
 
     public ArrayList<Child> getChildren() {
