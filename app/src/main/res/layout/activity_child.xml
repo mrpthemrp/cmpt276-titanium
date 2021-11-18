@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/backgroundColor"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".ui.ViewChildActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -50,6 +52,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="20dp"
+        android:autofillHints="@string/viewDummyText"
         android:background="@android:color/transparent"
         android:enabled="false"
         android:fontFamily="sans-serif-medium"
@@ -62,8 +65,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/addProfilePic"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <ScrollView
         android:id="@+id/viewHistory"
