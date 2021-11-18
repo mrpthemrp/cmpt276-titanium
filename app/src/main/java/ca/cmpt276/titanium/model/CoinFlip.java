@@ -9,7 +9,6 @@ import java.util.UUID;
  * This class represents a single coin flip.
  */
 public class CoinFlip {
-    private static Children instance;
     private final UUID childUniqueID;
     private final Coin sideThatChildPicks;
     private final String timeOfFlip;
