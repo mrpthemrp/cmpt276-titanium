@@ -82,7 +82,7 @@ public class MenuActivity extends AppCompatActivity {
             childButton.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             childButton.setOnClickListener(view -> {
-                Intent viewChildIntent = ViewChildActivity.makeIntent(this, child.getUniqueId());
+                Intent viewChildIntent = ViewChildActivity.makeIntent(this, child.getUniqueID());
 
                 startActivity(viewChildIntent);
             });
