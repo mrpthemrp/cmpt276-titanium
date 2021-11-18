@@ -1,10 +1,13 @@
 package ca.cmpt276.titanium.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TableRow;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,21 +15,22 @@ import androidx.core.content.res.ResourcesCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.UUID;
+
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
+import ca.cmpt276.titanium.model.CoinFlip;
+import ca.cmpt276.titanium.model.CoinFlipHistory;
 
 /**
  * This activity represents the main menu.
  * Shows children and buttons to the timer and coin flip.
  */
 public class MenuActivity extends AppCompatActivity {
-    private static final int CHILD_BUTTON_HEIGHT = 300;
-    private static final int CHILD_BUTTON_WIDTH = 300;
-    private static final float CHILD_BUTTON_ALPHA = 1.0f;
-
     private Children children;
-    private TableRow childScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +38,6 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         this.children = Children.getInstance(this);
-        this.childScrollView = findViewById(R.id.menuRow);
 
         if (this.children.getChildren().size() > 0) {
             findViewById(R.id.menuTextChildrenList).setVisibility(View.VISIBLE);
@@ -60,7 +63,6 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        this.childScrollView.removeAllViews();
         displayChildren();
 
         if (this.children.getChildren().size() > 0) {
@@ -77,24 +79,21 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void displayChildren() {
-        for (int i = 0; i < children.getChildren().size(); i++) {
-            Child child = children.getChildren().get(i);
+        // TODO: Add empty state for when children is empty
+        ArrayList<Child> childList = children.getChildren();
+        ListView childrenList = (ListView) findViewById(R.id.childrenList);
+        ChildrenListAdapter adapter = new ChildrenListAdapter(this, childList);
+        childrenList.setAdapter(adapter);
+        childrenList.setClickable(true);
+        Context context = this;
 
-            Button childButton = new Button(this);
-            childButton.setLayoutParams(new TableRow.LayoutParams(CHILD_BUTTON_WIDTH, CHILD_BUTTON_HEIGHT, CHILD_BUTTON_ALPHA));
-            childButton.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_circle_green_24, getTheme()));
-
-            childButton.setText(child.getName());
-            childButton.setTextColor(getResources().getColor(R.color.black, getTheme()));
-            childButton.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
-            childButton.setOnClickListener(view -> {
-                Intent viewChildIntent = ViewChildActivity.makeIntent(this, child.getUniqueID());
+        childrenList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                UUID childUUID = childList.get(position).getUniqueID();
+                Intent viewChildIntent = ViewChildActivity.makeIntent(context, childUUID);
 
                 startActivity(viewChildIntent);
-            });
-
-            childScrollView.addView(childButton);
-        }
+            }
+        });
     }
 }

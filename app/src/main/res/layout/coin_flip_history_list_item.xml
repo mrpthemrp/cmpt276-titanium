@@ -14,11 +14,11 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/coinFlipIcon"
+        app:layout_constraintStart_toEndOf="@+id/childIcon"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/coinFlipChild"
+            android:id="@+id/childNameList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -36,7 +36,7 @@
             android:text="@string/flipCoinHistDate"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/coinFlipChild" />
+            app:layout_constraintTop_toBottomOf="@+id/childNameList" />
 
         <TextView
             android:id="@+id/coinFlipResult2"
@@ -50,7 +50,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/coinFlipIcon"
+        android:id="@+id/childIcon"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="15dp"
