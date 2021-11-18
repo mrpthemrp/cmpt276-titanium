@@ -26,9 +26,6 @@ import ca.cmpt276.titanium.model.Coin;
 import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
 // TODO: Move non-UI code into CoinFlip
 
 /**
@@ -197,7 +194,7 @@ public class CoinActivity extends AppCompatActivity {
 
         Child childOfNextTurn;
         for (int i = 0; i < childrenArray.size(); i++) {
-            if (childrenArray.get(i).getUniqueId().toString().equals(childToPickLastTurn.getUniqueId().toString())) {
+            if (childrenArray.get(i).getUniqueID().toString().equals(childToPickLastTurn.getUniqueID().toString())) {
                 childOfNextTurn = childrenArray.get((i + 1) % childrenArray.size());
                 return childOfNextTurn;
             }
