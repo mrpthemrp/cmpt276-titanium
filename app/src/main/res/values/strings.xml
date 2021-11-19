@@ -7,7 +7,7 @@
     <string name="menuTimerBtn">Timeout Timer</string>
     <string name="menuFlipCoinBtn">Flip Coin</string>
     <string name="menuRemove">Remove Child</string>
-    <string name="menuChildrenText">Added Children: </string>
+    <string name="menuChildrenText">No children added yet!</string>
 
     <!-- Children List Strings -->
     <string name="noChildrenConfigured">No Children to show.</string>
@@ -85,5 +85,6 @@
     <string name="timer_notification_cancel_button">Cancel</string>
     <string name="timer_notification_resume_button">Resume</string>
     <string name="timer_notification_pause_button">Pause</string>
+    <string name="add_child_button_text">Add Child</string>
 
 </resources>
