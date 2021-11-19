@@ -97,7 +97,7 @@ public class AddChildActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.add_child_toast, Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(this, "Name must contain only letters", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.name_with_non_letter_characters_toast, Toast.LENGTH_SHORT).show();
             }
         });
 
