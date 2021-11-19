@@ -28,7 +28,7 @@
         android:layout_marginTop="250dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customToolBar"
         app:srcCompat="@drawable/ic_coin_blank"
         tools:ignore="ContentDescription,ImageContrastCheck" />
 
@@ -115,6 +115,6 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/customToolBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
