@@ -36,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="45dp"
+        android:background="@drawable/rounded_button_style"
         android:backgroundTint="?attr/colorPrimary"
         android:text="@string/viewSave"
         android:textColor="?attr/colorOnPrimary"
