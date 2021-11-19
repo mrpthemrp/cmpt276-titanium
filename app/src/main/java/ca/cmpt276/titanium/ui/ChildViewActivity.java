@@ -23,7 +23,7 @@ import ca.cmpt276.titanium.model.Children;
 /**
  * This activity represents the viewing of a single child.
  */
-public class ViewChildActivity extends AppCompatActivity {
+public class ChildViewActivity extends AppCompatActivity {
     private static final String CHILD_UNIQUE_ID_INTENT = "childUniqueID";
 
     private final Children children = Children.getInstance(this);
@@ -33,7 +33,7 @@ public class ViewChildActivity extends AppCompatActivity {
 
 
     public static Intent makeIntent(Context context, UUID childUniqueId) {
-        Intent viewChildIntent = new Intent(context, ViewChildActivity.class);
+        Intent viewChildIntent = new Intent(context, ChildViewActivity.class);
         viewChildIntent.putExtra(CHILD_UNIQUE_ID_INTENT, childUniqueId);
 
         return viewChildIntent;
@@ -59,7 +59,7 @@ public class ViewChildActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_child, menu);
+        getMenuInflater().inflate(R.menu.menu_child_view, menu);
         return true;
     }
 
@@ -69,7 +69,7 @@ public class ViewChildActivity extends AppCompatActivity {
             finish();
             return true;
         } else if (item.getItemId() == R.id.optionsEdit) {
-            Intent editChildIntent = EditChildActivity.makeIntent(this, childUniqueId);
+            Intent editChildIntent = ChildEditActivity.makeIntent(this, childUniqueId);
             startActivity(editChildIntent);
             return true;
         } else if (item.getItemId() == R.id.optionsRemove) {

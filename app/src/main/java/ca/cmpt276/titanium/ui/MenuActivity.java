@@ -33,10 +33,10 @@ public class MenuActivity extends AppCompatActivity {
         this.children = Children.getInstance(this);
 
         Button addChildButton = findViewById(R.id.menuGoToAddChild);
-        addChildButton.setOnClickListener(view -> startActivity(AddChildActivity.makeIntent(this)));
+        addChildButton.setOnClickListener(view -> startActivity(ChildAddActivity.makeIntent(this)));
 
         Button coinFlipButton = findViewById(R.id.menuGoToFlipCoin);
-        coinFlipButton.setOnClickListener(view -> startActivity(CoinActivity.makeIntent(this)));
+        coinFlipButton.setOnClickListener(view -> startActivity(CoinFlipActivity.makeIntent(this)));
 
         Button timerButton = findViewById(R.id.menuGoToTimer);
         timerButton.setOnClickListener(view -> startActivity(TimerActivity.makeIntent(this)));
@@ -71,7 +71,7 @@ public class MenuActivity extends AppCompatActivity {
 
         childrenListView.setOnItemClickListener((parent, view, position, id) -> {
             UUID childUUID = children.getChildren().get(position).getUniqueID();
-            Intent viewChildIntent = ViewChildActivity.makeIntent(this, childUUID);
+            Intent viewChildIntent = ChildViewActivity.makeIntent(this, childUUID);
 
             startActivity(viewChildIntent);
         });

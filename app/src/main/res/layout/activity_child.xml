@@ -7,13 +7,13 @@
     android:background="?attr/backgroundColor"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".ui.ViewChildActivity">
+    tools:context=".ui.ChildViewActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/rounded_corners_menu"
+        android:background="@drawable/style_rounded_toolbar"
         android:backgroundTint="?attr/colorPrimary"
         android:theme="@style/Theme.Titanium.AppBarOverlay"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="45dp"
-        android:background="@drawable/rounded_button_style"
+        android:background="@drawable/style_rounded_button_20"
         android:backgroundTint="?attr/colorPrimary"
         android:text="@string/viewSave"
         android:textColor="?attr/colorOnPrimary"

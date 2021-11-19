@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 /**
  * This class stores the timer information.
  */
-public class TimerData {
+public class Timer {
     private static final String DURATION_KEY = "durationMilliseconds";
     private static final String REMAINING_KEY = "remainingMilliseconds";
     private static final String RUNNING_KEY = "isRunning";
@@ -19,18 +19,18 @@ public class TimerData {
     private static final boolean DEFAULT_PAUSED = false;
     private static final boolean DEFAULT_GUI_ENABLED = true;
 
-    private static TimerData instance;
+    private static Timer instance;
     private static SharedPreferences prefs;
     private static SharedPreferences.Editor prefsEditor;
 
-    private TimerData(Context context) {
-        TimerData.prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        TimerData.prefsEditor = prefs.edit();
+    private Timer(Context context) {
+        Timer.prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Timer.prefsEditor = prefs.edit();
     }
 
-    public static TimerData getInstance(Context context) {
+    public static Timer getInstance(Context context) {
         if (instance == null) {
-            TimerData.instance = new TimerData(context);
+            Timer.instance = new Timer(context);
         }
 
         return instance;

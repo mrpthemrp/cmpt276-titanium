@@ -19,21 +19,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 
 /**
- * This activity represents the adding of a single child.
+ * This activity represents the editing of a single child.
  */
-public class AddChildActivity extends AppCompatActivity {
-    private Children children;
+public class ChildEditActivity extends AppCompatActivity {
+    private static final String CHILD_UNIQUE_ID_INTENT = "childUniqueID";
+
+    private final Children children = Children.getInstance(this);
     private Toast toast; // prevents toast stacking
+    private UUID childUniqueId;
+    private Child childBeingEdited;
     private EditText childName;
     private boolean changesAccepted = true;
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, AddChildActivity.class);
+    public static Intent makeIntent(Context context, UUID childUniqueId) {
+        Intent editChildIntent = new Intent(context, ChildEditActivity.class);
+        editChildIntent.putExtra(CHILD_UNIQUE_ID_INTENT, childUniqueId);
+
+        return editChildIntent;
     }
 
     @Override
@@ -42,10 +51,11 @@ public class AddChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child);
         setupActionBar();
 
-        this.children = Children.getInstance(this);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+        this.childUniqueId = (UUID) getIntent().getSerializableExtra(CHILD_UNIQUE_ID_INTENT);
+        this.childBeingEdited = children.getChild(childUniqueId);
 
-        setupInputFields();
+        displayChildInfo();
         setupButtons();
     }
 
@@ -67,13 +77,14 @@ public class AddChildActivity extends AppCompatActivity {
     private void setupActionBar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle(R.string.menuAdd);
+        setTitle(R.string.menuEdit);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
-    private void setupInputFields() {
-        childName = findViewById(R.id.childName);
+    private void displayChildInfo() {
+        this.childName = findViewById(R.id.childName);
+        childName.setText(childBeingEdited.getName());
         childName.setEnabled(true);
         childName.setCursorVisible(true);
     }
@@ -98,8 +109,8 @@ public class AddChildActivity extends AppCompatActivity {
             if (childName.getText().toString().equals("")) {
                 updateToast(getString(R.string.name_field_empty_toast));
             } else if (nameContainsOnlyLetters(childName.getText().toString())) {
-                children.addChild(childName.getText().toString());
-                updateToast(getString(R.string.add_child_toast));
+                children.setChildName(childUniqueId, childName.getText().toString());
+                updateToast(getString(R.string.edit_child_toast));
                 finish();
             } else {
                 updateToast(getString(R.string.name_with_non_letter_characters_toast));
@@ -127,7 +138,7 @@ public class AddChildActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                changesAccepted = childName.getText().toString().equals("");
+                changesAccepted = childName.getText().toString().equals(childBeingEdited.getName());
             }
 
             @Override

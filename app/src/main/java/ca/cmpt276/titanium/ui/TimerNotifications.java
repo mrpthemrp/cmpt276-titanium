@@ -18,7 +18,7 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.model.TimerData;
+import ca.cmpt276.titanium.model.Timer;
 
 public class TimerNotifications {
     private static final int MILLIS_IN_HOUR = 3600000;
@@ -31,7 +31,7 @@ public class TimerNotifications {
 
     private static TimerNotifications instance;
     private final Context context;
-    private final TimerData timerData;
+    private final Timer timer;
     private final NotificationManagerCompat notificationManager;
     private final Vibrator timerFinishVibrator;
 
@@ -51,7 +51,7 @@ public class TimerNotifications {
                 NotificationManager.IMPORTANCE_HIGH);
 
         this.context = context.getApplicationContext();
-        this.timerData = TimerData.getInstance(context);
+        this.timer = Timer.getInstance(context);
         this.notificationManager = NotificationManagerCompat.from(context);
         this.timerFinishVibrator = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -64,24 +64,24 @@ public class TimerNotifications {
         notificationClickIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent notificationClickPendingIntent = PendingIntent.getActivity(this.context, atomicInteger.getAndIncrement(), notificationClickIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        Intent dismissIntent = new Intent(this.context, NotificationReceiver.class);
+        Intent dismissIntent = new Intent(this.context, TimerNotificationReceiver.class);
         dismissIntent.putExtra("notificationAction", "Dismiss");
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(this.context, atomicInteger.getAndIncrement(), dismissIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        Intent pauseTimerIntent = new Intent(this.context, NotificationReceiver.class);
+        Intent pauseTimerIntent = new Intent(this.context, TimerNotificationReceiver.class);
         pauseTimerIntent.putExtra("notificationAction", "Pause");
         this.pauseTimerPendingIntent = PendingIntent.getBroadcast(this.context, atomicInteger.getAndIncrement(), pauseTimerIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        Intent resumeTimerIntent = new Intent(this.context, NotificationReceiver.class);
+        Intent resumeTimerIntent = new Intent(this.context, TimerNotificationReceiver.class);
         resumeTimerIntent.putExtra("notificationAction", "Resume");
         this.resumeTimerPendingIntent = PendingIntent.getBroadcast(this.context, atomicInteger.getAndIncrement(), resumeTimerIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        Intent cancelIntent = new Intent(this.context, NotificationReceiver.class);
+        Intent cancelIntent = new Intent(this.context, TimerNotificationReceiver.class);
         cancelIntent.putExtra("notificationAction", "Cancel");
         this.cancelPendingIntent = PendingIntent.getBroadcast(this.context, atomicInteger.getAndIncrement(), cancelIntent, PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder basicNotificationBuilder = new NotificationCompat.Builder(this.context, "practicalParentTimer")
-                .setSmallIcon(R.drawable.ic_outline_timer_24)
+                .setSmallIcon(R.drawable.ic_outline_timer_white_24)
                 .setColor(Color.GREEN)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setContentIntent(notificationClickPendingIntent)
@@ -91,7 +91,7 @@ public class TimerNotifications {
 
         this.finishNotificationBuilder = new NotificationCompat.Builder(context, basicNotificationBuilder.build())
                 .setContentTitle(context.getString(R.string.timer_finish_notification_title))
-                .addAction(R.drawable.ic_baseline_cancel_24, context.getString(R.string.timer_notification_dismiss_button), dismissPendingIntent);
+                .addAction(R.drawable.ic_baseline_cancel_white_24, context.getString(R.string.timer_notification_dismiss_button), dismissPendingIntent);
 
         this.interactiveNotificationBuilder = new NotificationCompat.Builder(context, basicNotificationBuilder.build())
                 .setContentTitle(context.getString(R.string.timer_interactive_notification_title))
@@ -112,7 +112,7 @@ public class TimerNotifications {
 
             notificationManager.notify(TIMER_NOTIFICATION_TAG, TIMER_FINISH_NOTIFICATION_ID, finishNotificationBuilder.build());
 
-            this.timerFinishSound = MediaPlayer.create(context, R.raw.timeralarm);
+            this.timerFinishSound = MediaPlayer.create(context, R.raw.sound_timer_alarm);
             timerFinishSound.start();
 
             timerFinishVibrator.vibrate(VibrationEffect.createWaveform(TIMER_VIBRATION_PATTERN, 0),
@@ -129,12 +129,12 @@ public class TimerNotifications {
             interactiveNotificationBuilder.clearActions();
 
             if (notificationType.equals("Pause")) {
-                interactiveNotificationBuilder.addAction(R.drawable.ic_baseline_pause_24, context.getString(R.string.timer_notification_pause_button), pauseTimerPendingIntent);
+                interactiveNotificationBuilder.addAction(R.drawable.ic_baseline_pause_white_24, context.getString(R.string.timer_notification_pause_button), pauseTimerPendingIntent);
             } else {
-                interactiveNotificationBuilder.addAction(R.drawable.ic_baseline_play_arrow_24, context.getString(R.string.timer_notification_resume_button), resumeTimerPendingIntent);
+                interactiveNotificationBuilder.addAction(R.drawable.ic_baseline_play_arrow_white_24, context.getString(R.string.timer_notification_resume_button), resumeTimerPendingIntent);
             }
 
-            interactiveNotificationBuilder.addAction(R.drawable.ic_baseline_cancel_24, context.getString(R.string.timer_notification_cancel_button), cancelPendingIntent);
+            interactiveNotificationBuilder.addAction(R.drawable.ic_baseline_cancel_white_24, context.getString(R.string.timer_notification_cancel_button), cancelPendingIntent);
             notificationManager.notify(TIMER_NOTIFICATION_TAG, TIMER_INTERACTIVE_NOTIFICATION_ID, interactiveNotificationBuilder.build());
         }
     }
@@ -164,7 +164,7 @@ public class TimerNotifications {
     }
 
     private String getFormattedTime() {
-        long milliseconds = timerData.getRemainingMilliseconds();
+        long milliseconds = timer.getRemainingMilliseconds();
         long hours = milliseconds / MILLIS_IN_HOUR;
         long minutes = (milliseconds % MILLIS_IN_HOUR) / MILLIS_IN_MINUTE;
         long seconds = (milliseconds % MILLIS_IN_MINUTE) / MILLIS_IN_SECOND;

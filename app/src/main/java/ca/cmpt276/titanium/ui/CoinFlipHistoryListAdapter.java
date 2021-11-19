@@ -45,10 +45,10 @@ public class CoinFlipHistoryListAdapter extends ArrayAdapter<CoinFlip> {
 
         if (coinFlip.getResult() == coinFlip.getChosenSide()) {
             // image retrieved from https://www.vhv.rs/dpng/f/406-4067045_checkmark-png.png
-            resultImageView.setImageResource(R.drawable.mark_check);
+            resultImageView.setImageResource(R.drawable.ic_checkmark_green);
         } else {
             // image retrieved from https://www.nicepng.com/png/full/910-9107823_circle-cross-png.png
-            resultImageView.setImageResource(R.drawable.mark_x);
+            resultImageView.setImageResource(R.drawable.ic_xmark_red);
         }
 
         TextView coinFlipDate = convertView.findViewById(R.id.coinFlipDate);

@@ -33,7 +33,7 @@ public class TasksActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_whoseturn, menu);
+        getMenuInflater().inflate(R.menu.menu_tasks, menu);
         return true;
     }
 

@@ -4,13 +4,13 @@
 
     <item
         android:id="@+id/optionsEdit"
-        android:icon="@drawable/ic_baseline_edit_24"
+        android:icon="@drawable/ic_baseline_edit_white_24"
         android:title="@string/menuEdit"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/optionsRemove"
-        android:icon="@drawable/ic_baseline_delete_24"
+        android:icon="@drawable/ic_baseline_delete_white_24"
         android:title="@string/menuRemove"
         app:showAsAction="ifRoom" />
 </menu>

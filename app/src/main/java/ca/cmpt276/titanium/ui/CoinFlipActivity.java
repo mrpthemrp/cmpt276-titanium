@@ -32,7 +32,7 @@ import ca.cmpt276.titanium.model.CoinFlipHistory;
  * This activity represents the coin flip activity.
  * Allows the user to choose heads or tails, and shows the results of the flip.
  */
-public class CoinActivity extends AppCompatActivity {
+public class CoinFlipActivity extends AppCompatActivity {
     private static final int COIN_FLIP_DELAY = 1600;
     private static final Coin DEFAULT_COIN = Coin.HEADS;
 
@@ -40,13 +40,13 @@ public class CoinActivity extends AppCompatActivity {
     private CoinFlipHistory coinFlipHistory;
 
     public static Intent makeIntent(Context context) {
-        return new Intent(context, CoinActivity.class);
+        return new Intent(context, CoinFlipActivity.class);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_coin);
+        setContentView(R.layout.activity_coin_flip);
         setTitle(R.string.menuFlipCoinBtn);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
@@ -61,7 +61,7 @@ public class CoinActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_coinflip, menu);
+        getMenuInflater().inflate(R.menu.menu_coin_flip, menu);
         return true;
     }
 
@@ -111,25 +111,25 @@ public class CoinActivity extends AppCompatActivity {
 
     private void animateCoinFlip() {
         ImageView coin = findViewById(R.id.coinBlank);
-        coin.setImageResource(R.drawable.ic_coin_blank_200);
+        coin.setImageResource(R.drawable.ic_coin_blank_yellow_200);
 
         TextView coinResultMessage = findViewById(R.id.coinFlipResult);
         coinResultMessage.setVisibility(View.INVISIBLE);
 
-        Animation coinFlipAnimation = AnimationUtils.loadAnimation(CoinActivity.this, R.anim.coin_flip);
+        Animation coinFlipAnimation = AnimationUtils.loadAnimation(CoinFlipActivity.this, R.anim.coin_flip);
         coin.startAnimation(coinFlipAnimation);
 
-        MediaPlayer coinSound = MediaPlayer.create(CoinActivity.this, R.raw.coinflip); // Source: https://www.youtube.com/watch?v=1QxX9ruPUXM
+        MediaPlayer coinSound = MediaPlayer.create(CoinFlipActivity.this, R.raw.sound_coin_flip); // Source: https://www.youtube.com/watch?v=1QxX9ruPUXM
         coinSound.start();
 
         Coin coinResult = CoinFlip.flipCoin();
 
         if (coinResult.equals(Coin.HEADS)) {
             coinResultMessage.setText(R.string.heads_text);
-            coin.postDelayed(() -> coin.setImageResource(R.drawable.ic_coin_heads_200), COIN_FLIP_DELAY);
+            coin.postDelayed(() -> coin.setImageResource(R.drawable.ic_coin_heads_yellow_200), COIN_FLIP_DELAY);
         } else {
             coinResultMessage.setText(R.string.tails_text);
-            coin.postDelayed(() -> coin.setImageResource(R.drawable.ic_coin_tails_200), COIN_FLIP_DELAY);
+            coin.postDelayed(() -> coin.setImageResource(R.drawable.ic_coin_tails_yellow_200), COIN_FLIP_DELAY);
         }
 
         coinResultMessage.postDelayed(() -> coinResultMessage.setVisibility(View.VISIBLE), COIN_FLIP_DELAY);

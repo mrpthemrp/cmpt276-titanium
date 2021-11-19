@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Titanium">
 
 
-        <receiver android:name=".ui.NotificationReceiver" />
+        <receiver android:name=".ui.TimerNotificationReceiver" />
 
         <service android:name=".ui.TimerService" />
         <activity
@@ -27,31 +27,31 @@
             android:name=".ui.CoinFlipHistoryActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:parentActivityName=".ui.CoinActivity"
+            android:parentActivityName=".ui.CoinFlipActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.ViewChildActivity"
+            android:name=".ui.ChildViewActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Titanium.Child" />
         <activity
-            android:name=".ui.AddChildActivity"
+            android:name=".ui.ChildAddActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Titanium.Child" />
         <activity
-            android:name=".ui.EditChildActivity"
+            android:name=".ui.ChildEditActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:parentActivityName=".ui.ViewChildActivity"
+            android:parentActivityName=".ui.ChildViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Titanium.Child" />
         <activity
-            android:name=".ui.CoinActivity"
+            android:name=".ui.CoinFlipActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"

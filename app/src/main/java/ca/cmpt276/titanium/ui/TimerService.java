@@ -7,14 +7,14 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
-import ca.cmpt276.titanium.model.TimerData;
+import ca.cmpt276.titanium.model.Timer;
 
 public class TimerService extends Service {
     public static final String TIMER_UPDATE_INTENT = "timerUpdateIntent";
     private static final int TIMER_COUNTDOWN_INTERVAL = 50;
 
     private TimerNotifications timerNotifications;
-    private TimerData timerData;
+    private Timer timer;
     private Intent timerUpdateIntent;
     private CountDownTimer countDownTimer;
 
@@ -25,21 +25,21 @@ public class TimerService extends Service {
         this.timerNotifications = TimerNotifications.getInstance(this);
         timerNotifications.dismissNotification(false);
 
-        this.timerData = TimerData.getInstance(this);
-        timerData.setRunning();
+        this.timer = Timer.getInstance(this);
+        timer.setRunning();
 
         this.timerUpdateIntent = new Intent(TIMER_UPDATE_INTENT);
 
-        this.countDownTimer = new CountDownTimer(timerData.getRemainingMilliseconds(), TIMER_COUNTDOWN_INTERVAL) {
+        this.countDownTimer = new CountDownTimer(timer.getRemainingMilliseconds(), TIMER_COUNTDOWN_INTERVAL) {
             @Override
             public void onTick(long remainingMilliseconds) {
-                if (!timerData.isRunning()) {
+                if (!timer.isRunning()) {
                     stopSelf();
                 }
 
-                timerData.setRemainingMilliseconds(remainingMilliseconds);
+                timer.setRemainingMilliseconds(remainingMilliseconds);
 
-                if (timerData.isGUIEnabled()) {
+                if (timer.isGUIEnabled()) {
                     sendBroadcast(timerUpdateIntent);
                 } else {
                     timerNotifications.updateNotificationTime();
@@ -48,9 +48,9 @@ public class TimerService extends Service {
 
             @Override
             public void onFinish() {
-                timerData.setStopped();
+                timer.setStopped();
 
-                if (timerData.isGUIEnabled()) {
+                if (timer.isGUIEnabled()) {
                     sendBroadcast(timerUpdateIntent);
                 }
 
@@ -65,8 +65,8 @@ public class TimerService extends Service {
         countDownTimer.cancel();
 
         // for if onTick updated remainingMilliseconds after setStopped() initially called
-        if (!timerData.isPaused()) {
-            timerData.setStopped();
+        if (!timer.isPaused()) {
+            timer.setStopped();
         }
 
         super.onDestroy();

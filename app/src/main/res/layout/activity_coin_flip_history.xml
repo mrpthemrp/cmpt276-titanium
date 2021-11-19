@@ -10,7 +10,7 @@
         android:id="@+id/customToolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/rounded_corners_menu"
+        android:background="@drawable/style_rounded_toolbar"
         android:backgroundTint="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"

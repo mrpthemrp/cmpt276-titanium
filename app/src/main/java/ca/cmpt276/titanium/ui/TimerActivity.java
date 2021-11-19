@@ -28,7 +28,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.model.TimerData;
+import ca.cmpt276.titanium.model.Timer;
 
 /**
  * This activity represents the timer activity.
@@ -42,7 +42,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private TimerNotifications timerNotifications;
     private Toast toast; // prevents toast stacking
-    private TimerData timerData;
+    private Timer timer;
     private BroadcastReceiver timerReceiver;
 
     public static Intent makeIntent(Context context) {
@@ -68,7 +68,7 @@ public class TimerActivity extends AppCompatActivity {
         }
 
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
-        this.timerData = TimerData.getInstance(this);
+        this.timer = Timer.getInstance(this);
         this.timerReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -94,23 +94,23 @@ public class TimerActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         timerNotifications.dismissNotification(true);
-        timerData.setGUIEnabled(true);
+        timer.setGUIEnabled(true);
         registerReceiver(timerReceiver, new IntentFilter(TimerService.TIMER_UPDATE_INTENT));
 
-        if (!timerData.isRunning()) {
+        if (!timer.isRunning()) {
             updateGUI();
         }
     }
 
     @Override
     protected void onStop() {
-        if (timerData.isRunning()) {
+        if (timer.isRunning()) {
             timerNotifications.launchNotification(getString(R.string.timer_notification_pause_button));
-        } else if (timerData.isPaused()) {
+        } else if (timer.isPaused()) {
             timerNotifications.launchNotification(getString(R.string.timer_notification_resume_button));
         }
 
-        timerData.setGUIEnabled(false);
+        timer.setGUIEnabled(false);
         unregisterReceiver(timerReceiver);
         super.onStop();
     }
@@ -152,10 +152,10 @@ public class TimerActivity extends AppCompatActivity {
         // play/pause
         ImageView playPause = findViewById(R.id.timerPlayPauseBtn);
         playPause.setOnClickListener(view -> {
-            if (timerData.getDurationMilliseconds() == 0) {
+            if (timer.getDurationMilliseconds() == 0) {
                 updateToast(getString(R.string.timer_zero_toast));
-            } else if (timerData.isRunning()) {
-                timerData.setPaused();
+            } else if (timer.isRunning()) {
+                timer.setPaused();
             } else {
                 startTimer();
             }
@@ -185,10 +185,10 @@ public class TimerActivity extends AppCompatActivity {
         ProgressBar circularProgressBar = findViewById(R.id.circularProgressBar);
         int progress;
 
-        if (timerData.getDurationMilliseconds() == 0) {
+        if (timer.getDurationMilliseconds() == 0) {
             progress = 0;
         } else {
-            progress = (int) ((timerData.getDurationMilliseconds() - timerData.getRemainingMilliseconds()) * circularProgressBar.getMax() / timerData.getDurationMilliseconds());
+            progress = (int) ((timer.getDurationMilliseconds() - timer.getRemainingMilliseconds()) * circularProgressBar.getMax() / timer.getDurationMilliseconds());
         }
 
         circularProgressBar.setProgress(progress);
@@ -196,12 +196,12 @@ public class TimerActivity extends AppCompatActivity {
         ConstraintLayout inputComponents = findViewById(R.id.inputsConstraintLayout);
         ImageView playPause = findViewById(R.id.timerPlayPauseBtn);
 
-        if (!timerData.isRunning()) {
+        if (!timer.isRunning()) {
             inputComponents.setVisibility(View.VISIBLE);
-            playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_play_arrow_24, getTheme()));
+            playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_play_arrow_white_24, getTheme()));
         } else {
             inputComponents.setVisibility(View.INVISIBLE);
-            playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_pause_24, getTheme()));
+            playPause.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_pause_white_24, getTheme()));
         }
 
         displayTime();
@@ -209,7 +209,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void displayTime() {
-        long milliseconds = timerData.getRemainingMilliseconds();
+        long milliseconds = timer.getRemainingMilliseconds();
         long hours = milliseconds / MILLIS_IN_HOUR;
         long minutes = (milliseconds % MILLIS_IN_HOUR) / MILLIS_IN_MINUTE;
         long seconds = (milliseconds % MILLIS_IN_MINUTE) / MILLIS_IN_SECOND;
@@ -231,7 +231,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void changeTimerDuration(long minutes) {
-        timerData.setDurationMilliseconds(minutes * MILLIS_IN_MINUTE);
+        timer.setDurationMilliseconds(minutes * MILLIS_IN_MINUTE);
         resetTimer();
     }
 
@@ -241,9 +241,9 @@ public class TimerActivity extends AppCompatActivity {
 
     private void resetTimer() {
         timerNotifications.dismissNotification(false);
-        timerData.setStopped();
+        timer.setStopped();
 
-        if (!timerData.isRunning()) {
+        if (!timer.isRunning()) {
             updateGUI();
         }
     }
