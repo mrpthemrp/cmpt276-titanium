@@ -54,7 +54,7 @@
             <TextView
                 android:id="@+id/presetTextView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
@@ -69,8 +69,8 @@
 
             <Button
                 android:id="@+id/oneMin"
-                android:layout_width="47dp"
-                android:layout_height="47dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="15dp"
@@ -87,8 +87,8 @@
 
             <Button
                 android:id="@+id/twoMin"
-                android:layout_width="47dp"
-                android:layout_height="47dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="15dp"
@@ -105,8 +105,8 @@
 
             <Button
                 android:id="@+id/threeMin"
-                android:layout_width="47dp"
-                android:layout_height="47dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="15dp"
@@ -123,8 +123,8 @@
 
             <Button
                 android:id="@+id/fiveMin"
-                android:layout_width="47dp"
-                android:layout_height="47dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="15dp"
@@ -169,7 +169,7 @@
             <EditText
                 android:id="@+id/customMinutes"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
@@ -179,6 +179,7 @@
                 android:focusedByDefault="false"
                 android:hint="@string/timerEnterMinutes"
                 android:inputType="number"
+                android:minHeight="48dp"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

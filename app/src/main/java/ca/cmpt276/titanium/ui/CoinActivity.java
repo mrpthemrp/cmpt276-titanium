@@ -89,7 +89,7 @@ public class CoinActivity extends AppCompatActivity {
     }
 
     private void updateGUI(Coin coinChosen) {
-        TextView childNameDisplay = findViewById(R.id.childsTurnText);
+        TextView childNameDisplay = findViewById(R.id.childTurnText);
         TextView sideChosenDisplay = findViewById(R.id.sideChosenText);
         Button headsButton = findViewById(R.id.headsButton);
         Button tailsButton = findViewById(R.id.tailsButton);

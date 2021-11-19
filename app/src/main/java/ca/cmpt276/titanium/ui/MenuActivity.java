@@ -32,10 +32,6 @@ public class MenuActivity extends AppCompatActivity {
 
         this.children = Children.getInstance(this);
 
-        if (this.children.getChildren().size() > 0) {
-            findViewById(R.id.menuTextChildrenList).setVisibility(View.VISIBLE);
-        }
-
         Button addChildButton = findViewById(R.id.menuGoToAddChild);
         addChildButton.setOnClickListener(view -> startActivity(AddChildActivity.makeIntent(this)));
 
@@ -66,18 +62,18 @@ public class MenuActivity extends AppCompatActivity {
             findViewById(R.id.menuTextChildrenList).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.menuTextChildrenList).setVisibility(View.INVISIBLE);
-
-            ListView childrenListView = (ListView) findViewById(R.id.childrenList);
-            ChildrenListAdapter adapter = new ChildrenListAdapter(this, children.getChildren());
-            childrenListView.setAdapter(adapter);
-            childrenListView.setClickable(true);
-
-            childrenListView.setOnItemClickListener((parent, view, position, id) -> {
-                UUID childUUID = children.getChildren().get(position).getUniqueID();
-                Intent viewChildIntent = ViewChildActivity.makeIntent(this, childUUID);
-
-                startActivity(viewChildIntent);
-            });
         }
+
+        ListView childrenListView = (ListView) findViewById(R.id.childrenList);
+        ChildrenListAdapter adapter = new ChildrenListAdapter(this, children.getChildren());
+        childrenListView.setAdapter(adapter);
+        childrenListView.setClickable(true);
+
+        childrenListView.setOnItemClickListener((parent, view, position, id) -> {
+            UUID childUUID = children.getChildren().get(position).getUniqueID();
+            Intent viewChildIntent = ViewChildActivity.makeIntent(this, childUUID);
+
+            startActivity(viewChildIntent);
+        });
     }
 }
