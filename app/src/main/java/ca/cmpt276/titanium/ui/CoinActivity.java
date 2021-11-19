@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
@@ -50,6 +51,7 @@ public class CoinActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         coinFlipHistory = CoinFlipHistory.getInstance(this);
 
@@ -68,6 +70,9 @@ public class CoinActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.viewHistoryButton:
                 startActivity(new Intent(this, CoinFlipHistoryActivity.class));
+                return true;
+            case android.R.id.home:
+                finish();
                 return true;
         }
         return false;
