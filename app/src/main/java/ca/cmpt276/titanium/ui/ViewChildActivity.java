@@ -27,8 +27,10 @@ public class ViewChildActivity extends AppCompatActivity {
     private static final String CHILD_UNIQUE_ID_INTENT = "childUniqueID";
 
     private final Children children = Children.getInstance(this);
+    private Toast toast; // prevents toast stacking
     private UUID childUniqueId;
     private Child childBeingViewed;
+
 
     public static Intent makeIntent(Context context, UUID childUniqueId) {
         Intent viewChildIntent = new Intent(context, ViewChildActivity.class);
@@ -43,6 +45,7 @@ public class ViewChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child);
         setupActionBar();
 
+        this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
         this.childUniqueId = (UUID) getIntent().getSerializableExtra(CHILD_UNIQUE_ID_INTENT);
         this.childBeingViewed = children.getChild(childUniqueId);
     }
@@ -90,6 +93,12 @@ public class ViewChildActivity extends AppCompatActivity {
         childName.setText(childBeingViewed.getName());
     }
 
+    private void updateToast(String toastText) {
+        toast.cancel();
+        toast.setText(toastText);
+        toast.show();
+    }
+
     private void launchDeleteChildPrompt() {
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_baseline_delete_black_24)
@@ -97,7 +106,7 @@ public class ViewChildActivity extends AppCompatActivity {
                 .setMessage(R.string.delete_child_prompt_message)
                 .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
                     children.removeChild(childBeingViewed.getUniqueID());
-                    Toast.makeText(this, R.string.delete_child_prompt_toast, Toast.LENGTH_SHORT).show();
+                    updateToast(getString(R.string.delete_child_prompt_toast));
                     finish();
                 })
                 .setNegativeButton(R.string.prompt_negative, null)

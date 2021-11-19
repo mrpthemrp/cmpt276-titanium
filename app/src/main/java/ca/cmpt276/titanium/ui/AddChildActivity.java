@@ -27,7 +27,8 @@ import ca.cmpt276.titanium.model.Children;
  * This activity represents the adding of a single child.
  */
 public class AddChildActivity extends AppCompatActivity {
-    private final Children children = Children.getInstance(this);
+    private Children children;
+    private Toast toast; // prevents toast stacking
     private EditText childName;
     private boolean changesAccepted = true;
 
@@ -41,8 +42,10 @@ public class AddChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child);
         setupActionBar();
 
-        setupInputFields();
+        this.children = Children.getInstance(this);
+        this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
 
+        setupInputFields();
         setupButtons();
     }
 
@@ -92,12 +95,14 @@ public class AddChildActivity extends AppCompatActivity {
         saveButton.setVisibility(View.VISIBLE);
 
         saveButton.setOnClickListener(view -> {
-            if (nameContainsOnlyLetters(childName.getText().toString())) {
+            if (childName.getText().toString().equals("")) {
+                updateToast(getString(R.string.name_field_empty_toast));
+            } else if (nameContainsOnlyLetters(childName.getText().toString())) {
                 children.addChild(childName.getText().toString());
-                Toast.makeText(this, R.string.add_child_toast, Toast.LENGTH_SHORT).show();
+                updateToast(getString(R.string.add_child_toast));
                 finish();
             } else {
-                Toast.makeText(this, R.string.name_with_non_letter_characters_toast, Toast.LENGTH_SHORT).show();
+                updateToast(getString(R.string.name_with_non_letter_characters_toast));
             }
         });
 
@@ -132,6 +137,12 @@ public class AddChildActivity extends AppCompatActivity {
         });
     }
 
+    private void updateToast(String toastText) {
+        toast.cancel();
+        toast.setText(toastText);
+        toast.show();
+    }
+
     private void launchDiscardChangesPrompt() {
         if (!changesAccepted) {
             new AlertDialog.Builder(this)
@@ -139,7 +150,7 @@ public class AddChildActivity extends AppCompatActivity {
                     .setTitle(R.string.discard_changes_title)
                     .setMessage(R.string.discard_changes_message)
                     .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
-                        Toast.makeText(this, R.string.changes_discarded_toast, Toast.LENGTH_SHORT).show();
+                        updateToast(getString(R.string.changes_discarded_toast));
                         finish();
                     })
                     .setNegativeButton(R.string.prompt_negative, null)

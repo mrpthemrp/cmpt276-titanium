@@ -32,6 +32,7 @@ public class EditChildActivity extends AppCompatActivity {
     private static final String CHILD_UNIQUE_ID_INTENT = "childUniqueID";
 
     private final Children children = Children.getInstance(this);
+    private Toast toast; // prevents toast stacking
     private UUID childUniqueId;
     private Child childBeingEdited;
     private EditText childName;
@@ -50,10 +51,11 @@ public class EditChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child);
         setupActionBar();
 
+        this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
         this.childUniqueId = (UUID) getIntent().getSerializableExtra(CHILD_UNIQUE_ID_INTENT);
         this.childBeingEdited = children.getChild(childUniqueId);
-        displayChildInfo();
 
+        displayChildInfo();
         setupButtons();
     }
 
@@ -104,12 +106,14 @@ public class EditChildActivity extends AppCompatActivity {
         saveButton.setVisibility(View.VISIBLE);
 
         saveButton.setOnClickListener(view -> {
-            if (nameContainsOnlyLetters(childName.getText().toString())) {
+            if (childName.getText().toString().equals("")) {
+                updateToast(getString(R.string.name_field_empty_toast));
+            } else if (nameContainsOnlyLetters(childName.getText().toString())) {
                 children.setChildName(childUniqueId, childName.getText().toString());
-                Toast.makeText(this, R.string.edit_child_toast, Toast.LENGTH_SHORT).show();
+                updateToast(getString(R.string.edit_child_toast));
                 finish();
             } else {
-                Toast.makeText(this, R.string.name_with_non_letter_characters_toast, Toast.LENGTH_SHORT).show();
+                updateToast(getString(R.string.name_with_non_letter_characters_toast));
             }
         });
 
@@ -144,6 +148,12 @@ public class EditChildActivity extends AppCompatActivity {
         });
     }
 
+    private void updateToast(String toastText) {
+        toast.cancel();
+        toast.setText(toastText);
+        toast.show();
+    }
+
     private void launchDiscardChangesPrompt() {
         if (!changesAccepted) {
             new AlertDialog.Builder(this)
@@ -151,7 +161,7 @@ public class EditChildActivity extends AppCompatActivity {
                     .setTitle(R.string.discard_changes_title)
                     .setMessage(R.string.discard_changes_message)
                     .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
-                        Toast.makeText(this, R.string.changes_discarded_toast, Toast.LENGTH_SHORT).show();
+                        updateToast(getString(R.string.changes_discarded_toast));
                         finish();
                     })
                     .setNegativeButton(R.string.prompt_negative, null)
