@@ -111,12 +111,12 @@ public class CoinActivity extends AppCompatActivity {
 
     private void animateCoinFlip() {
         ImageView coin = findViewById(R.id.coinBlank);
-        coin.setImageResource(R.drawable.ic_coin_blank);
+        coin.setImageResource(R.drawable.ic_coin_blank_200);
 
         TextView coinResultMessage = findViewById(R.id.coinFlipResult);
         coinResultMessage.setVisibility(View.INVISIBLE);
 
-        Animation coinFlipAnimation = AnimationUtils.loadAnimation(CoinActivity.this, R.anim.flip_coin);
+        Animation coinFlipAnimation = AnimationUtils.loadAnimation(CoinActivity.this, R.anim.coin_flip);
         coin.startAnimation(coinFlipAnimation);
 
         MediaPlayer coinSound = MediaPlayer.create(CoinActivity.this, R.raw.coinflip); // Source: https://www.youtube.com/watch?v=1QxX9ruPUXM
@@ -126,10 +126,10 @@ public class CoinActivity extends AppCompatActivity {
 
         if (coinResult.equals(Coin.HEADS)) {
             coinResultMessage.setText(R.string.heads_text);
-            coin.postDelayed(() -> coin.setImageResource(R.drawable.ic_coin_heads), COIN_FLIP_DELAY);
+            coin.postDelayed(() -> coin.setImageResource(R.drawable.ic_coin_heads_200), COIN_FLIP_DELAY);
         } else {
             coinResultMessage.setText(R.string.tails_text);
-            coin.postDelayed(() -> coin.setImageResource(R.drawable.ic_coin_tails), COIN_FLIP_DELAY);
+            coin.postDelayed(() -> coin.setImageResource(R.drawable.ic_coin_tails_200), COIN_FLIP_DELAY);
         }
 
         coinResultMessage.postDelayed(() -> coinResultMessage.setVisibility(View.VISIBLE), COIN_FLIP_DELAY);

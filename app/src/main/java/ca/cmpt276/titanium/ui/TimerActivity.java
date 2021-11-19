@@ -117,7 +117,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private void setupCircularProgressBar() { // rotates progress bar so that it starts at top
         ProgressBar circularProgressBar = findViewById(R.id.circularProgressBar);
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.circular_progress);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.timer_progress_bar);
         circularProgressBar.startAnimation(animation);
     }
 

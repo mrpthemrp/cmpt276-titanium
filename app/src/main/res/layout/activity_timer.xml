@@ -226,7 +226,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_circle_timer" />
+            app:srcCompat="@drawable/ic_timer_increments_white_200" />
 
         <ProgressBar
             android:id="@+id/circularProgressBar"
@@ -235,7 +235,7 @@
             android:layout_height="300dp"
             android:layout_marginTop="15dp"
             android:max="10000"
-            android:progressDrawable="@drawable/circular_progress"
+            android:progressDrawable="@drawable/ic_timer_progress_bar_150"
             android:progressTint="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
