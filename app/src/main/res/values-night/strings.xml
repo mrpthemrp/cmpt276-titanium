@@ -43,7 +43,7 @@
 
     <string name="menuEdit">Edit Child</string>
     <string name="edit_child_toast">Child updated</string>
-    <string name="playPauseDescript">the play or pause button, depending on timer state.</string>
+    <string name="playPauseDescription">Starts, resumes, or pauses timer, depending on current state.</string>
 
     <!--Content Descriptions for Visually Impaired-->
     <string name="contentDescriptionFAB">Circle-shaped button with a plus sign in the middle.</string>

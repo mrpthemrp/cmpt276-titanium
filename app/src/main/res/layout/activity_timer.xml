@@ -27,13 +27,12 @@
         android:id="@+id/calmBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:alpha="0.9"
         android:background="@drawable/calm_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription,ImageContrastCheck" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/inputsConstraintLayout"
@@ -54,7 +53,7 @@
             <TextView
                 android:id="@+id/presetTextView"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
@@ -183,12 +182,13 @@
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
 
             <Button
                 android:id="@+id/setCustomTimeButton"
                 android:layout_width="76dp"
-                android:layout_height="46dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
