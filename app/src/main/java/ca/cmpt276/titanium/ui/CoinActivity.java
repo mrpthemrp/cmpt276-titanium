@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.UUID;
@@ -29,23 +28,11 @@ import ca.cmpt276.titanium.model.CoinFlipHistory;
  * Allows the user to choose heads or tails, and shows the results of the flip.
  */
 public class CoinActivity extends AppCompatActivity {
-    public static final int FIRST_CHILD_INDEX = 0;
     private static final int COIN_FLIP_DELAY = 1600;
+    private static final Coin DEFAULT_COIN = Coin.HEADS;
 
-    private final Children children = Children.getInstance(this);
-    private String childNameFormat;
-    private TextView childNameDisplay;
-    private TextView sideChosenDisplay;
-    private Button headsButton;
-    private Button tailsButton;
-    private Coin coinChosen = Coin.HEADS;
-    private ImageView coin;
-    private final Runnable displayHeads = () -> coin.setImageResource(R.drawable.ic_coin_heads);
-    private final Runnable displayTails = () -> coin.setImageResource(R.drawable.ic_coin_tails);
-    private TextView coinResult;
-    private final Runnable result = () -> coinResult.setVisibility(View.VISIBLE);
+    private Coin coinChosen;
     private CoinFlipHistory coinFlipHistory;
-    private MediaPlayer coinSound; // Sound from: https://www.youtube.com/watch?v=1QxX9ruPUXM
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, CoinActivity.class);
@@ -55,114 +42,75 @@ public class CoinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin);
-        setupTitle();
-
-        coinSound = MediaPlayer.create(CoinActivity.this, R.raw.coinflip);
+        setTitle(R.string.menuFlipCoinBtn);
 
         coinFlipHistory = CoinFlipHistory.getInstance(this);
 
+        setupButtons();
+        updateGUI(DEFAULT_COIN);
+    }
+
+    private void setupButtons() {
         Button historyButton = findViewById(R.id.viewHistoryButton);
-        historyButton.setOnClickListener((View view) -> {
-            Intent intent = new Intent(this, CoinFlipHistoryActivity.class);
-            startActivity(intent);
-        });
-
-        // doesn't matter which child chooses for first pick, so just start from beginning of children array
-        if (coinFlipHistory.getCoinFlipHistory().isEmpty() && !children.getChildren().isEmpty()) {
-            setChildNameTextFirstFlip();
-        } else if (!coinFlipHistory.getCoinFlipHistory().isEmpty() && !children.getChildren().isEmpty()) {
-            setChildNameText();
-        }
-        setUpCoinChoiceButtons();
-
-        childNameDisplay = findViewById((R.id.childsTurnText));
-        childNameDisplay = findViewById((R.id.childsTurnText));
-        headsButton = findViewById(R.id.headsButton);
-        tailsButton = findViewById(R.id.tailsButton);
-        if (children.getChildren().isEmpty()) {
-            setCoinChoiceButtonsGone();
-        }
-        setUpCoinChoiceButtons();
-
+        Button headsButton = findViewById(R.id.headsButton);
+        Button tailsButton = findViewById(R.id.tailsButton);
         Button flipButton = findViewById(R.id.flipButton);
-        coin = findViewById(R.id.coinBlank);
-        coinResult = findViewById(R.id.coinFlipResult);
+
+        historyButton.setOnClickListener((View view) -> startActivity(new Intent(this, CoinFlipHistoryActivity.class)));
+        headsButton.setOnClickListener((View view) -> updateGUI(Coin.HEADS));
+        tailsButton.setOnClickListener((View view) -> updateGUI(Coin.TAILS));
         flipButton.setOnClickListener(view -> animateCoinFlip());
     }
 
-    private void setCoinChoiceButtonsGone() {
-        childNameDisplay.setVisibility(View.GONE);
-        sideChosenDisplay.setVisibility(View.GONE);
-        headsButton.setVisibility(View.GONE);
-        tailsButton.setVisibility(View.GONE);
-    }
+    private void updateGUI(Coin coinChosen) {
+        TextView childNameDisplay = findViewById(R.id.childsTurnText);
+        TextView sideChosenDisplay = findViewById(R.id.sideChosenText);
+        Button headsButton = findViewById(R.id.headsButton);
+        Button tailsButton = findViewById(R.id.tailsButton);
 
-    private void setUpCoinChoiceButtons() {
-        setSideChosenText();
-        headsButton = findViewById(R.id.headsButton);
-        headsButton.setOnClickListener((View view) -> {
-            coinChosen = Coin.HEADS;
-            setSideChosenText();
-        });
+        UUID nextPickerUniqueID = coinFlipHistory.getNextPickerUniqueID();
 
-        tailsButton = findViewById(R.id.tailsButton);
-        tailsButton.setOnClickListener((View view) -> {
-            coinChosen = Coin.TAILS;
-            setSideChosenText();
-        });
-    }
-
-    private void setChildNameTextFirstFlip() {
-        childNameFormat = getString(R.string.childTurn, children.getChildren().get(FIRST_CHILD_INDEX).getName());
-        childNameDisplay = findViewById((R.id.childsTurnText));
-        childNameDisplay.setText(childNameFormat);
-    }
-
-    private void setChildNameText() {
-        UUID nextChildUniqueID = coinFlipHistory.getNextPickerUniqueID();
-
-        if (nextChildUniqueID != null) {
-            childNameFormat = getString(R.string.childTurn, children.getChild(nextChildUniqueID).getName());
+        if (nextPickerUniqueID != null) {
+            Children children = Children.getInstance(this);
+            childNameDisplay.setText(getString(R.string.childTurn, children.getChild(nextPickerUniqueID).getName()));
+            sideChosenDisplay.setText(getString(R.string.coinSideChosen, coinChosen.toString()));
+            this.coinChosen = coinChosen;
+        } else {
+            childNameDisplay.setVisibility(View.GONE);
+            sideChosenDisplay.setVisibility(View.GONE);
+            headsButton.setVisibility(View.GONE);
+            tailsButton.setVisibility(View.GONE);
         }
-
-        childNameDisplay = findViewById((R.id.childsTurnText));
-        childNameDisplay.setText(childNameFormat);
-    }
-
-    private void setSideChosenText() {
-        String sideChosenFormat = getString(R.string.coinSideChosen, coinChosen.toString());
-        sideChosenDisplay = findViewById(R.id.sideChosenText);
-        sideChosenDisplay.setText(sideChosenFormat);
-    }
-
-    private void setupTitle() {
-        ActionBar toolbar = getSupportActionBar();
-        assert toolbar != null;
-        toolbar.setTitle(R.string.menuFlipCoinBtn);
     }
 
     private void animateCoinFlip() {
+        ImageView coin = findViewById(R.id.coinBlank);
         coin.setImageResource(R.drawable.ic_coin_blank);
-        Coin coinSide = CoinFlip.flipCoin();
-        Animation animation = AnimationUtils.loadAnimation(CoinActivity.this, R.anim.flip_coin);
-        coin.startAnimation(animation);
-        coinResult.setVisibility(View.INVISIBLE);
+
+        TextView coinResultMessage = findViewById(R.id.coinFlipResult);
+        coinResultMessage.setVisibility(View.INVISIBLE);
+
+        Animation coinFlipAnimation = AnimationUtils.loadAnimation(CoinActivity.this, R.anim.flip_coin);
+        coin.startAnimation(coinFlipAnimation);
+
+        MediaPlayer coinSound = MediaPlayer.create(CoinActivity.this, R.raw.coinflip); // Source: https://www.youtube.com/watch?v=1QxX9ruPUXM
         coinSound.start();
 
-        if (coinSide == Coin.HEADS) {
-            coinResult.setText(R.string.heads_text);
-            coin.postDelayed(displayHeads, COIN_FLIP_DELAY);
-        } else { // tails
-            coinResult.setText(R.string.tails_text);
-            coin.postDelayed(displayTails, COIN_FLIP_DELAY);
+        Coin coinResult = CoinFlip.flipCoin();
+
+        if (coinResult.equals(Coin.HEADS)) {
+            coinResultMessage.setText(R.string.heads_text);
+            coin.postDelayed(() -> coin.setImageResource(R.drawable.ic_coin_heads), COIN_FLIP_DELAY);
+        } else {
+            coinResultMessage.setText(R.string.tails_text);
+            coin.postDelayed(() -> coin.setImageResource(R.drawable.ic_coin_tails), COIN_FLIP_DELAY);
         }
-        coinResult.postDelayed(result, COIN_FLIP_DELAY);
 
-        // If there are no children configured, we don't need to save any info
-        if (!children.getChildren().isEmpty()) {
-            coinFlipHistory.addCoinFlip(coinChosen, coinSide);
+        coinResultMessage.postDelayed(() -> coinResultMessage.setVisibility(View.VISIBLE), COIN_FLIP_DELAY);
 
-            new Handler(Looper.getMainLooper()).postDelayed(this::setChildNameText, COIN_FLIP_DELAY);
+        if (coinFlipHistory.getNextPickerUniqueID() != null) {
+            coinFlipHistory.addCoinFlip(coinChosen, coinResult);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> updateGUI(coinChosen), COIN_FLIP_DELAY);
         }
     }
 }
