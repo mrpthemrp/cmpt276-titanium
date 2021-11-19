@@ -85,15 +85,30 @@ public class EditChildActivity extends AppCompatActivity {
         childName.setCursorVisible(true);
     }
 
+    private boolean nameContainsOnlyLetters(String name) {
+        char[] nameChars = name.toCharArray();
+
+        for (char nameChar : nameChars) {
+            if (!Character.isLetter(nameChar)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private void setupButtons() {
         Button saveButton = findViewById(R.id.viewFunctionBtn);
         saveButton.setVisibility(View.VISIBLE);
 
         saveButton.setOnClickListener(view -> {
-            children.getChild(childUniqueId).setName(childName.getText().toString());
-            children.saveData();
-            Toast.makeText(this, R.string.edit_child_toast, Toast.LENGTH_SHORT).show();
-            finish();
+            if (nameContainsOnlyLetters(childName.getText().toString())) {
+                children.setChildName(childUniqueId, childName.getText().toString());
+                Toast.makeText(this, R.string.edit_child_toast, Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(this, "Name must contain only letters", Toast.LENGTH_SHORT).show();
+            }
         });
 
         childName.setOnKeyListener((view, keyCode, keyEvent) -> {
