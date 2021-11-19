@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".ui.CoinFlipHistoryActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/customToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/rounded_corners_menu"
+        android:backgroundTint="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:title="@string/coinFlipHistoryTitle"
+        app:titleTextColor="?attr/colorOnSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
     <ListView
         android:id="@+id/coinFlipHistoryList"
         android:layout_width="wrap_content"

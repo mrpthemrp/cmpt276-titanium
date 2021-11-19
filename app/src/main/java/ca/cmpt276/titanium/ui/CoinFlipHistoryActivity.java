@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.Collections;
@@ -24,6 +25,9 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip_history);
         setTitle(R.string.coinFlipHistoryTitle);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
+        setSupportActionBar(myToolbar);
 
         this.coinFlipHistory = CoinFlipHistory.getInstance(this);
         populateListView();
