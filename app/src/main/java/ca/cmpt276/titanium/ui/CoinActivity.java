@@ -67,15 +67,15 @@ public class CoinActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.viewHistoryButton:
-                startActivity(new Intent(this, CoinFlipHistoryActivity.class));
-                return true;
-            case android.R.id.home:
-                finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        } else if (item.getItemId() == R.id.viewHistoryButton) {
+            startActivity(new Intent(this, CoinFlipHistoryActivity.class));
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
-        return false;
     }
 
     private void setupButtons() {

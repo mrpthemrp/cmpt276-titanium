@@ -46,10 +46,12 @@
     </style>
 
     <style name="Theme.Titanium.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+
     <style name="Theme.Titanium.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="Theme.Titanium.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

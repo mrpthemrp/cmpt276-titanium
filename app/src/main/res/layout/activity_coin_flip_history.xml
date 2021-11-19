@@ -14,12 +14,12 @@
         android:backgroundTint="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="@string/coinFlipHistoryTitle"
-        app:titleTextColor="?attr/colorOnSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        app:title="@string/coinFlipHistoryTitle"
+        app:titleTextColor="?attr/colorOnSecondary" />
 
     <ListView
         android:id="@+id/coinFlipHistoryList"

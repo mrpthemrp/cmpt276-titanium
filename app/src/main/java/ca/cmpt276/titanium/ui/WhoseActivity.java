@@ -16,6 +16,10 @@ import ca.cmpt276.titanium.R;
 
 public class WhoseActivity extends AppCompatActivity {
 
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, WhoseActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,10 +29,6 @@ public class WhoseActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-    }
-
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, WhoseActivity.class);
     }
 
     @Override
@@ -42,8 +42,8 @@ public class WhoseActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        }else{
-            return false;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 }
