@@ -92,5 +92,9 @@
     <string name="coin_flip_result_initial_text">Landed on\u0020</string>
     <string name="coin_flip_child_choice_text">\u0020chose\u0020</string>
     <string name="name_field_empty_toast">Name field cannot be empty</string>
+    <string name="whoseTurn">Whose Turn</string>
+    <string name="add_task">Add Task</string>
+    <string name="edit_task">Edit Task</string>
+    <string name="remove_task">Remove Task</string>
 
 </resources>
