@@ -44,6 +44,9 @@ public class MenuActivity extends AppCompatActivity {
 
         Button timerButton = findViewById(R.id.menuGoToTimer);
         timerButton.setOnClickListener(view -> startActivity(TimerActivity.makeIntent(this)));
+
+        Button whoseTurnButton = findViewById(R.id.menuWhoseTurn);
+        whoseTurnButton.setOnClickListener(view -> startActivity(WhoseActivity.makeIntent(this)));
     }
 
     @Override
