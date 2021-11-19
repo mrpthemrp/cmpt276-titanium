@@ -218,6 +218,7 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_marginTop="15dp"
+            android:max="10000"
             android:progressDrawable="@drawable/circular_progress"
             android:progressTint="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"

@@ -171,7 +171,7 @@ public class TimerActivity extends AppCompatActivity {
         if (timerData.getDurationMilliseconds() == 0) {
             progress = 0;
         } else {
-            progress = (int) ((timerData.getDurationMilliseconds() - timerData.getRemainingMilliseconds()) * 100 / timerData.getDurationMilliseconds());
+            progress = (int) ((timerData.getDurationMilliseconds() - timerData.getRemainingMilliseconds()) * circularProgressBar.getMax() / timerData.getDurationMilliseconds());
         }
 
         circularProgressBar.setProgress(progress);
