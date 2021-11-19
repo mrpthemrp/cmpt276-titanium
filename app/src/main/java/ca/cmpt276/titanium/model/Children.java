@@ -17,9 +17,12 @@ import java.util.UUID;
  */
 public class Children {
     private static final Gson GSON = new Gson();
+    private static final String CHILDREN_JSON_KEY = "childrenJson";
 
     private static Children instance;
     private static SharedPreferences prefs;
+    private static CoinFlipHistory coinFlipHistory;
+
     private static ArrayList<Child> children = new ArrayList<>();
 
     private Children(Context context) {
@@ -29,6 +32,7 @@ public class Children {
     public static Children getInstance(Context context) {
         if (instance == null) {
             Children.instance = new Children(context);
+            Children.coinFlipHistory = CoinFlipHistory.getInstance(context);
         }
 
         loadSavedData();
@@ -36,7 +40,7 @@ public class Children {
     }
 
     private static void loadSavedData() {
-        String childrenJson = prefs.getString("childrenJson", null);
+        String childrenJson = prefs.getString(CHILDREN_JSON_KEY, null);
 
         if (childrenJson != null) {
             Type childrenType = new TypeToken<ArrayList<Child>>() {
@@ -48,7 +52,7 @@ public class Children {
 
     private void saveData() {
         String childrenJson = GSON.toJson(children);
-        prefs.edit().putString("childrenJson", childrenJson).apply();
+        prefs.edit().putString(CHILDREN_JSON_KEY, childrenJson).apply();
     }
 
     public Child getChild(UUID uniqueID) {
@@ -64,7 +68,9 @@ public class Children {
     }
 
     public void addChild(String name) {
-        Children.children.add(new Child(name));
+        Child newChild = new Child(name);
+        Children.children.add(newChild);
+        coinFlipHistory.updateCoinFlipHistory(true, newChild.getUniqueID());
         saveData();
     }
 
@@ -72,6 +78,7 @@ public class Children {
         if (uniqueID!= null) {
             for (int i = 0; i < children.size(); i++) {
                 if (uniqueID.equals(children.get(i).getUniqueID())) {
+                    coinFlipHistory.updateCoinFlipHistory(false, uniqueID);
                     Children.children.remove(i);
                     saveData();
                     break;

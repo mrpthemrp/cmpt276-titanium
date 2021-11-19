@@ -16,6 +16,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.UUID;
+
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.Coin;
@@ -59,7 +61,7 @@ public class CoinActivity extends AppCompatActivity {
 
         coinSound = MediaPlayer.create(CoinActivity.this, R.raw.coinflip);
 
-        coinFlipHistory = new CoinFlipHistory(getApplicationContext());
+        coinFlipHistory = CoinFlipHistory.getInstance(this);
 
         Button historyButton = findViewById(R.id.viewHistoryButton);
         historyButton.setOnClickListener((View view) -> {
@@ -68,9 +70,9 @@ public class CoinActivity extends AppCompatActivity {
         });
 
         // doesn't matter which child chooses for first pick, so just start from beginning of children array
-        if (CoinFlipHistory.getCoinFlipHistory().isEmpty() && !children.getChildren().isEmpty()) {
+        if (coinFlipHistory.getCoinFlipHistory().isEmpty() && !children.getChildren().isEmpty()) {
             setChildNameTextFirstFlip();
-        } else if (!CoinFlipHistory.getCoinFlipHistory().isEmpty() && !children.getChildren().isEmpty()) {
+        } else if (!coinFlipHistory.getCoinFlipHistory().isEmpty() && !children.getChildren().isEmpty()) {
             setChildNameText();
         }
         setUpCoinChoiceButtons();
@@ -119,7 +121,12 @@ public class CoinActivity extends AppCompatActivity {
     }
 
     private void setChildNameText() {
-        childNameFormat = getString(R.string.childTurn, coinFlipHistory.getChildForNextTurn().getName());
+        UUID nextChildUniqueID = coinFlipHistory.getPickerUniqueID();
+
+        if (nextChildUniqueID != null) {
+            childNameFormat = getString(R.string.childTurn, children.getChild(nextChildUniqueID).getName());
+        }
+
         childNameDisplay = findViewById((R.id.childsTurnText));
         childNameDisplay.setText(childNameFormat);
     }
@@ -155,7 +162,7 @@ public class CoinActivity extends AppCompatActivity {
 
         // If there are no children configured, we don't need to save any info
         if (!children.getChildren().isEmpty()) {
-            coinFlipHistory.saveCoinFlip(coinChosen, coinSide);
+            coinFlipHistory.addCoinFlip(coinChosen, coinSide);
 
             new Handler(Looper.getMainLooper()).postDelayed(this::setChildNameText, COIN_FLIP_DELAY);
         }

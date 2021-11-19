@@ -8,7 +8,13 @@ import android.preference.PreferenceManager;
  * This class stores the timer information.
  */
 public class TimerData {
-    private static final int INVALID_MILLISECONDS = -1;
+    private static final String DURATION_KEY = "durationMilliseconds";
+    private static final String REMAINING_KEY = "remainingMilliseconds";
+    private static final String RUNNING_KEY = "isRunning";
+    private static final String PAUSED_KEY = "isPaused";
+    private static final String GUI_ENABLED_KEY = "isGUIEnabled";
+
+    private static final int DEFAULT_MILLISECONDS = 0;
     private static final boolean DEFAULT_RUNNING = false;
     private static final boolean DEFAULT_PAUSED = false;
     private static final boolean DEFAULT_GUI_ENABLED = true;
@@ -31,9 +37,7 @@ public class TimerData {
     }
 
     public long getDurationMilliseconds() {
-        long durationMilliseconds = prefs.getLong("durationMilliseconds", INVALID_MILLISECONDS);
-        durationMilliseconds = durationMilliseconds <= 0 ? 0 : durationMilliseconds;
-        return durationMilliseconds;
+        return prefs.getLong(DURATION_KEY, DEFAULT_MILLISECONDS);
     }
 
     public void setDurationMilliseconds(long durationMilliseconds) {
@@ -41,14 +45,11 @@ public class TimerData {
             throw new IllegalArgumentException("durationMilliseconds must be >= 0");
         }
 
-        prefsEditor.putLong("durationMilliseconds", durationMilliseconds);
-        prefsEditor.apply();
+        prefsEditor.putLong(DURATION_KEY, durationMilliseconds).apply();
     }
 
     public long getRemainingMilliseconds() {
-        long remainingMilliseconds = prefs.getLong("remainingMilliseconds", INVALID_MILLISECONDS);
-        remainingMilliseconds = remainingMilliseconds <= 0 ? 0 : remainingMilliseconds;
-        return remainingMilliseconds;
+        return prefs.getLong(REMAINING_KEY, DEFAULT_MILLISECONDS);
     }
 
     public void setRemainingMilliseconds(long remainingMilliseconds) {
@@ -56,43 +57,41 @@ public class TimerData {
             throw new IllegalArgumentException("remainingMilliseconds must be >= 0");
         }
 
-        prefsEditor.putLong("remainingMilliseconds", remainingMilliseconds);
-        prefsEditor.apply();
+        prefsEditor.putLong(REMAINING_KEY, remainingMilliseconds).apply();
     }
 
     public boolean isRunning() {
-        return prefs.getBoolean("isRunning", DEFAULT_RUNNING);
+        return prefs.getBoolean(RUNNING_KEY, DEFAULT_RUNNING);
     }
 
     public void setRunning() {
-        prefsEditor.putBoolean("isRunning", true);
-        prefsEditor.putBoolean("isPaused", false);
+        prefsEditor.putBoolean(RUNNING_KEY, true);
+        prefsEditor.putBoolean(PAUSED_KEY, false);
         prefsEditor.apply();
     }
 
     public boolean isPaused() {
-        return prefs.getBoolean("isPaused", DEFAULT_PAUSED);
+        return prefs.getBoolean(PAUSED_KEY, DEFAULT_PAUSED);
     }
 
     public void setPaused() {
-        prefsEditor.putBoolean("isRunning", false);
-        prefsEditor.putBoolean("isPaused", true);
+        prefsEditor.putBoolean(RUNNING_KEY, false);
+        prefsEditor.putBoolean(PAUSED_KEY, true);
         prefsEditor.apply();
     }
 
     public void setStopped() {
-        prefsEditor.putLong("remainingMilliseconds", getDurationMilliseconds());
-        prefsEditor.putBoolean("isRunning", false);
-        prefsEditor.putBoolean("isPaused", false);
+        prefsEditor.putLong(REMAINING_KEY, getDurationMilliseconds());
+        prefsEditor.putBoolean(RUNNING_KEY, false);
+        prefsEditor.putBoolean(PAUSED_KEY, false);
         prefsEditor.apply();
     }
 
     public boolean isGUIEnabled() {
-        return prefs.getBoolean("isGUIEnabled", DEFAULT_GUI_ENABLED);
+        return prefs.getBoolean(GUI_ENABLED_KEY, DEFAULT_GUI_ENABLED);
     }
 
     public void setGUIEnabled(boolean isGUIEnabled) {
-        prefsEditor.putBoolean("isGUIEnabled", isGUIEnabled);
-        prefsEditor.apply();
+        prefsEditor.putBoolean(GUI_ENABLED_KEY, isGUIEnabled).apply();
     }
 }

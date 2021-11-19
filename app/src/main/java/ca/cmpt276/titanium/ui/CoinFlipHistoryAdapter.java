@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
@@ -23,7 +23,7 @@ import ca.cmpt276.titanium.model.CoinFlip;
 public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
     private final Children children;
 
-    public CoinFlipHistoryAdapter(Context context, List<CoinFlip> coinFlipHistory) {
+    public CoinFlipHistoryAdapter(Context context, ArrayList<CoinFlip> coinFlipHistory) {
         super(context, 0, coinFlipHistory);
         children = Children.getInstance(context);
     }
@@ -40,10 +40,10 @@ public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
         ImageView resultImageView = convertView.findViewById(R.id.childIcon);
         TextView childTextView = convertView.findViewById(R.id.childNameList);
 
-        String childChoice = children.getChild(coinFlip.getChildWhoPicksSideID()).getName() + " chose " + coinFlip.getSideThatChildPicks();
+        String childChoice = children.getChild(coinFlip.getPickerUniqueID()).getName() + " chose " + coinFlip.getChosenSide();
         childTextView.setText(childChoice);
 
-        if (coinFlip.getCoinSideLandedOn() == coinFlip.getSideThatChildPicks()) {
+        if (coinFlip.getResult() == coinFlip.getChosenSide()) {
             // image retrieved from https://www.vhv.rs/dpng/f/406-4067045_checkmark-png.png
             resultImageView.setImageResource(R.drawable.checkmark);
         } else {
@@ -55,7 +55,7 @@ public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
         coinFlipDate.setText(coinFlip.getTimeOfFlip());
 
         TextView resultTextView = convertView.findViewById(R.id.coinFlipResult2);
-        String coinFlipResult = "Landed on " + coinFlip.getCoinSideLandedOn().toString();
+        String coinFlipResult = "Landed on " + coinFlip.getResult().toString();
         resultTextView.setText(coinFlipResult);
 
         return convertView;

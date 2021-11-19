@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -18,84 +17,101 @@ import java.util.UUID;
  */
 public class CoinFlipHistory {
     private static final Gson GSON = new Gson();
-    private static final String EMPTY_STRING = "";
-    private static final String COIN_FLIP_HISTORY_KEY = "coin_flip_history";
-    public static final int FIRST_CHILD_INDEX = 0;
-    private final Children children;
+    private static final String COIN_FLIP_HISTORY_JSON_KEY = "coinFlipHistoryJson";
+    private static final String PICKER_UNIQUE_ID_JSON_KEY = "pickerUniqueIDJson";
 
-    private static ArrayList<CoinFlip> coinFlipHistory;
-    private final SharedPreferences sharedPreferences;
+    private static CoinFlipHistory instance;
+    private static SharedPreferences prefs;
+    private static SharedPreferences.Editor prefsEditor;
+    private static Children children;
 
-    public CoinFlipHistory(Context context) {
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        coinFlipHistory = new ArrayList<>();
-        children = Children.getInstance(context);
+    private static ArrayList<CoinFlip> coinFlipHistory = new ArrayList<>();
+    private static UUID pickerUniqueID;
 
-        initializeCoinFlipHistory();
+    private CoinFlipHistory(Context context) {
+        CoinFlipHistory.prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        CoinFlipHistory.prefsEditor = prefs.edit();
     }
 
-    public static ArrayList<CoinFlip> getCoinFlipHistory() {
-        return CoinFlipHistory.coinFlipHistory;
+    public static CoinFlipHistory getInstance(Context context) {
+        if (instance == null) {
+            CoinFlipHistory.instance = new CoinFlipHistory(context);
+            CoinFlipHistory.children = Children.getInstance(context);
+        }
+
+        loadSavedData();
+        return instance;
     }
 
-    private void initializeCoinFlipHistory() {
-        String coinFlipsJson = sharedPreferences.getString(COIN_FLIP_HISTORY_KEY, EMPTY_STRING);
-        Type coinFlipsType = new TypeToken<ArrayList<CoinFlip>>() {
-        }.getType();
+    private static void loadSavedData() {
+        String coinFlipHistoryJson = prefs.getString(COIN_FLIP_HISTORY_JSON_KEY, null);
+        String pickerUniqueIDJson = prefs.getString(PICKER_UNIQUE_ID_JSON_KEY, null);
 
-        if (!coinFlipsJson.equals(EMPTY_STRING)) {
-            CoinFlipHistory.coinFlipHistory = GSON.fromJson(coinFlipsJson, coinFlipsType);
+        if (coinFlipHistoryJson != null) {
+            Type coinFlipHistoryType = new TypeToken<ArrayList<CoinFlip>>() {
+            }.getType();
+
+            CoinFlipHistory.coinFlipHistory = GSON.fromJson(coinFlipHistoryJson, coinFlipHistoryType);
+        }
+
+        if (pickerUniqueIDJson != null) {
+            CoinFlipHistory.pickerUniqueID = GSON.fromJson(pickerUniqueIDJson, UUID.class);
         }
     }
 
-    public void addCoinFlipToHistory(CoinFlip coinFlip) {
-        coinFlipHistory.add(coinFlip);
+    private void saveData() {
+        String coinFlipHistoryJson = GSON.toJson(coinFlipHistory);
+        String pickerUniqueIDJson = GSON.toJson(pickerUniqueID);
 
-        String coinFlipsJson = GSON.toJson(coinFlipHistory);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(COIN_FLIP_HISTORY_KEY, coinFlipsJson);
-        editor.apply();
+        prefsEditor.putString(COIN_FLIP_HISTORY_JSON_KEY, coinFlipHistoryJson);
+        prefsEditor.putString(PICKER_UNIQUE_ID_JSON_KEY, pickerUniqueIDJson);
+        prefsEditor.apply();
     }
 
-    public void saveCoinFlip(Coin coinChosen, Coin coinSideLandedOn) {
-        CoinFlip coinFlip;
-        LocalDateTime timeOfFlip = LocalDateTime.now();
+    public void addCoinFlip(Coin chosenSide, Coin result) {
+        coinFlipHistory.add(new CoinFlip(pickerUniqueID, chosenSide, result));
+        incrementPickerUniqueID();
+        saveData();
+    }
 
-        Child childOfNextTurn = getChildForNextTurn();
-        if (CoinFlipHistory.getCoinFlipHistory().isEmpty()) {
-            coinFlip = new CoinFlip(children.getChildren().get(0).getUniqueID(), coinChosen, timeOfFlip, coinSideLandedOn);
+    public void updateCoinFlipHistory(boolean childAdded, UUID childUniqueID) {
+        if (childAdded) {
+            if (children.getChildren().size() == 1) {
+                CoinFlipHistory.pickerUniqueID = childUniqueID;
+            }
         } else {
-            coinFlip = new CoinFlip(childOfNextTurn.getUniqueID(), coinChosen, timeOfFlip, coinSideLandedOn);
-        }
+            ArrayList<CoinFlip> coinFlipHistoryCopy = new ArrayList<>(coinFlipHistory);
 
-        addCoinFlipToHistory(coinFlip);
-    }
+            for (int i = 0; i < coinFlipHistoryCopy.size(); i++) {
+                if (childUniqueID.equals(coinFlipHistoryCopy.get(i).getPickerUniqueID())) {
+                    coinFlipHistory.remove(coinFlipHistoryCopy.get(i));
+                }
+            }
 
-    public Child getChildForNextTurn() {
-        ArrayList<Child> childrenArray = children.getChildren();
-
-        Child childToPickLastTurn = children.getChild(getChildOfLastTurn());
-        if (childToPickLastTurn == null && !childrenArray.isEmpty()) {
-            return childrenArray.get(FIRST_CHILD_INDEX);
-        }
-
-        Child childOfNextTurn;
-        for (int i = 0; i < childrenArray.size(); i++) {
-            if (childrenArray.get(i).getUniqueID().toString().equals(childToPickLastTurn.getUniqueID().toString())) {
-                childOfNextTurn = childrenArray.get((i + 1) % childrenArray.size());
-                return childOfNextTurn;
+            if (children.getChildren().size() == 0) {
+                CoinFlipHistory.pickerUniqueID = null;
+            } else if (childUniqueID.equals(pickerUniqueID)) {
+                incrementPickerUniqueID();
             }
         }
 
-        return childrenArray.get(FIRST_CHILD_INDEX);
+        saveData();
     }
 
-    private UUID getChildOfLastTurn() {
-        int sizeOfHistory = CoinFlipHistory.getCoinFlipHistory().size();
-        if (!CoinFlipHistory.getCoinFlipHistory().isEmpty()) {
-            return CoinFlipHistory.getCoinFlipHistory().get(sizeOfHistory - 1).getChildWhoPicksSideID();
+    private void incrementPickerUniqueID() {
+        for (int i = 0; i < children.getChildren().size(); i++) {
+            if (pickerUniqueID.equals(children.getChildren().get(i).getUniqueID())) {
+                CoinFlipHistory.pickerUniqueID = children.getChildren().get((i + 1) % children.getChildren().size()).getUniqueID();
+                break;
+            }
         }
+    }
 
-        return null;
+    public ArrayList<CoinFlip> getCoinFlipHistory() {
+        return coinFlipHistory;
+    }
+
+    public UUID getPickerUniqueID() {
+        return pickerUniqueID;
     }
 }

@@ -9,17 +9,16 @@ import java.util.UUID;
  * This class represents a single coin flip.
  */
 public class CoinFlip {
-    private final UUID childUniqueID;
-    private final Coin sideThatChildPicks;
+    private final UUID pickerUniqueID;
+    private final Coin chosenSide;
     private final String timeOfFlip;
-    private final Coin coinSideLandedOn;
+    private final Coin result;
 
-    public CoinFlip(UUID childUniqueID, Coin sideThatChildPicks,
-                    LocalDateTime timeOfFlip, Coin coinSideLandedOn) {
-        this.childUniqueID = childUniqueID;
-        this.sideThatChildPicks = sideThatChildPicks;
-        this.timeOfFlip = timeOfFlip.format(DateTimeFormatter.ofPattern("d-MMM-uuuu, HH:mm:ss"));
-        this.coinSideLandedOn = coinSideLandedOn;
+    public CoinFlip(UUID pickerUniqueID, Coin chosenSide, Coin result) {
+        this.pickerUniqueID = pickerUniqueID;
+        this.chosenSide = chosenSide;
+        this.timeOfFlip = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MMM-yyyy, HH:mm:ss"));
+        this.result = result;
     }
 
     public static Coin flipCoin() {
@@ -28,19 +27,19 @@ public class CoinFlip {
         return coins[random.nextInt(coins.length)];
     }
 
-    public Coin getSideThatChildPicks() {
-        return sideThatChildPicks;
+    public UUID getPickerUniqueID() {
+        return pickerUniqueID;
     }
 
-    public UUID getChildWhoPicksSideID() {
-        return childUniqueID;
+    public Coin getChosenSide() {
+        return chosenSide;
     }
 
     public String getTimeOfFlip() {
         return timeOfFlip;
     }
 
-    public Coin getCoinSideLandedOn() {
-        return coinSideLandedOn;
+    public Coin getResult() {
+        return result;
     }
 }
