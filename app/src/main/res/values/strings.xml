@@ -86,5 +86,10 @@
     <string name="timer_notification_resume_button">Resume</string>
     <string name="timer_notification_pause_button">Pause</string>
     <string name="add_child_button_text">Add Child</string>
+    <string name="name_with_non_letter_characters_toast">Name must contain only letters</string>
+    <string name="tails_text">TAILS</string>
+    <string name="heads_text">HEADS</string>
+    <string name="coin_flip_result_initial_text">Landed on\u0020</string>
+    <string name="coin_flip_child_choice_text">\u0020chose\u0020</string>
 
 </resources>

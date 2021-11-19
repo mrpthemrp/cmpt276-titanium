@@ -30,17 +30,15 @@ import ca.cmpt276.titanium.model.CoinFlipHistory;
  */
 public class CoinActivity extends AppCompatActivity {
     public static final int FIRST_CHILD_INDEX = 0;
-    private static final Coin DEFAULT_COIN_CHOSEN = Coin.HEADS;
-    private static final String HEADS = "HEADS";
-    private static final String TAILS = "TAILS";
     private static final int COIN_FLIP_DELAY = 1600;
+
     private final Children children = Children.getInstance(this);
     private String childNameFormat;
     private TextView childNameDisplay;
     private TextView sideChosenDisplay;
     private Button headsButton;
     private Button tailsButton;
-    private Coin coinChosen = DEFAULT_COIN_CHOSEN;
+    private Coin coinChosen = Coin.HEADS;
     private ImageView coin;
     private final Runnable displayHeads = () -> coin.setImageResource(R.drawable.ic_coin_heads);
     private final Runnable displayTails = () -> coin.setImageResource(R.drawable.ic_coin_tails);
@@ -49,8 +47,8 @@ public class CoinActivity extends AppCompatActivity {
     private CoinFlipHistory coinFlipHistory;
     private MediaPlayer coinSound; // Sound from: https://www.youtube.com/watch?v=1QxX9ruPUXM
 
-    public static Intent makeIntent(Context c) {
-        return new Intent(c, CoinActivity.class);
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, CoinActivity.class);
     }
 
     @Override
@@ -152,10 +150,10 @@ public class CoinActivity extends AppCompatActivity {
         coinSound.start();
 
         if (coinSide == Coin.HEADS) {
-            coinResult.setText(HEADS);
+            coinResult.setText(R.string.heads_text);
             coin.postDelayed(displayHeads, COIN_FLIP_DELAY);
         } else { // tails
-            coinResult.setText(TAILS);
+            coinResult.setText(R.string.tails_text);
             coin.postDelayed(displayTails, COIN_FLIP_DELAY);
         }
         coinResult.postDelayed(result, COIN_FLIP_DELAY);

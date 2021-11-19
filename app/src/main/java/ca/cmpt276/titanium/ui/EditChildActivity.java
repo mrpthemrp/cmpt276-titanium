@@ -29,6 +29,8 @@ import ca.cmpt276.titanium.model.Children;
  * This activity represents the editing of a single child.
  */
 public class EditChildActivity extends AppCompatActivity {
+    private static final String CHILD_UNIQUE_ID_INTENT = "childUniqueID";
+
     private final Children children = Children.getInstance(this);
     private UUID childUniqueId;
     private Child childBeingEdited;
@@ -37,7 +39,7 @@ public class EditChildActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context context, UUID childUniqueId) {
         Intent editChildIntent = new Intent(context, EditChildActivity.class);
-        editChildIntent.putExtra("child_unique_id", childUniqueId);
+        editChildIntent.putExtra(CHILD_UNIQUE_ID_INTENT, childUniqueId);
 
         return editChildIntent;
     }
@@ -48,7 +50,7 @@ public class EditChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child);
         setupActionBar();
 
-        this.childUniqueId = (UUID) getIntent().getSerializableExtra("child_unique_id");
+        this.childUniqueId = (UUID) getIntent().getSerializableExtra(CHILD_UNIQUE_ID_INTENT);
         this.childBeingEdited = children.getChild(childUniqueId);
         displayChildInfo();
 
@@ -107,7 +109,7 @@ public class EditChildActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.edit_child_toast, Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(this, "Name must contain only letters", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.name_with_non_letter_characters_toast, Toast.LENGTH_SHORT).show();
             }
         });
 

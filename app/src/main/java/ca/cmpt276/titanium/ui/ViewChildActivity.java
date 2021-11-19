@@ -24,13 +24,15 @@ import ca.cmpt276.titanium.model.Children;
  * This activity represents the viewing of a single child.
  */
 public class ViewChildActivity extends AppCompatActivity {
+    private static final String CHILD_UNIQUE_ID_INTENT = "childUniqueID";
+
     private final Children children = Children.getInstance(this);
     private UUID childUniqueId;
     private Child childBeingViewed;
 
     public static Intent makeIntent(Context context, UUID childUniqueId) {
         Intent viewChildIntent = new Intent(context, ViewChildActivity.class);
-        viewChildIntent.putExtra("child_unique_id", childUniqueId);
+        viewChildIntent.putExtra(CHILD_UNIQUE_ID_INTENT, childUniqueId);
 
         return viewChildIntent;
     }
@@ -41,7 +43,7 @@ public class ViewChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child);
         setupActionBar();
 
-        this.childUniqueId = (UUID) getIntent().getSerializableExtra("child_unique_id");
+        this.childUniqueId = (UUID) getIntent().getSerializableExtra(CHILD_UNIQUE_ID_INTENT);
         this.childBeingViewed = children.getChild(childUniqueId);
     }
 
