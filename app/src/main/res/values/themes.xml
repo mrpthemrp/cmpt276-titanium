@@ -16,7 +16,7 @@
     </style>
 
     <!-- Calm theme. -->
-    <style name="Theme.Titanium.Calm" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Titanium.Calm" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/mutedBrown</item>
         <item name="colorPrimaryVariant">@color/mutedBrownDark</item>
