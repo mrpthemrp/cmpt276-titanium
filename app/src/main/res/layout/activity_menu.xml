@@ -7,21 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.MenuActivity">
 
-    <TextView
-        android:id="@+id/menuHeaderText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/menuHeader"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="?attr/colorPrimary"
-        android:typeface="normal"
-        app:layout_constraintBottom_toTopOf="@+id/menuGoToAddChild"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/customToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/rounded_corners_menu"
+        android:backgroundTint="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:title="@string/menuHeader"
+        app:titleTextColor="?attr/colorOnSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.366"
-        tools:ignore="TextContrastCheck" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/menuGoToFlipCoin"
@@ -32,18 +31,18 @@
         android:backgroundTint="?attr/colorPrimary"
         android:backgroundTintMode="src_in"
         android:text="@string/menuFlipCoinBtn"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="12sp"
         app:icon="@drawable/coin_icon"
         app:iconGravity="textTop"
         app:iconPadding="15dp"
         app:iconSize="60dp"
-        app:iconTint="?attr/colorOnPrimary"
+        app:iconTint="?attr/colorOnSecondary"
         app:iconTintMode="src_in"
         app:layout_constraintBottom_toTopOf="@+id/childrenList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/menuGoToAddChild"
-        app:layout_constraintTop_toBottomOf="@+id/menuHeaderText"
+        app:layout_constraintTop_toBottomOf="@+id/customToolBar"
         tools:ignore="TextContrastCheck" />
 
     <com.google.android.material.button.MaterialButton
@@ -55,18 +54,18 @@
         android:backgroundTint="?attr/colorPrimary"
         android:backgroundTintMode="src_in"
         android:text="@string/add_child_button_text"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="12sp"
         app:icon="@drawable/ic_baseline_person_add_24"
         app:iconGravity="textTop"
         app:iconPadding="15dp"
         app:iconSize="60dp"
-        app:iconTint="?attr/colorOnPrimary"
+        app:iconTint="?attr/colorOnSecondary"
         app:iconTintMode="src_in"
         app:layout_constraintBottom_toTopOf="@+id/childrenList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menuHeaderText"
+        app:layout_constraintTop_toBottomOf="@+id/customToolBar"
         tools:ignore="TextContrastCheck" />
 
     <com.google.android.material.button.MaterialButton
@@ -79,18 +78,18 @@
         android:backgroundTintMode="src_in"
         android:fontFamily="sans-serif-medium"
         android:text="@string/menuTimerBtn"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="11sp"
         app:icon="@drawable/ic_outline_timer_24"
         app:iconGravity="textTop"
         app:iconPadding="15dp"
         app:iconSize="60dp"
-        app:iconTint="?attr/colorOnPrimary"
+        app:iconTint="?attr/colorOnSecondary"
         app:iconTintMode="src_in"
         app:layout_constraintBottom_toTopOf="@+id/childrenList"
         app:layout_constraintEnd_toStartOf="@+id/menuGoToAddChild"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menuHeaderText"
+        app:layout_constraintTop_toBottomOf="@+id/customToolBar"
         tools:ignore="TextContrastCheck" />
 
     <TextView
@@ -108,7 +107,10 @@
     <ListView
         android:id="@+id/childrenList"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="330dp"
+        android:padding="10dp"
+        android:divider="?attr/colorOnPrimary"
+        android:dividerHeight="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.UUID;
 
@@ -25,7 +26,8 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
+        setSupportActionBar(myToolbar);
         this.children = Children.getInstance(this);
 
         if (this.children.getChildren().size() > 0) {
