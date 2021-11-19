@@ -6,6 +6,8 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -13,7 +15,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.UUID;
 
@@ -44,19 +48,36 @@ public class CoinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_coin);
         setTitle(R.string.menuFlipCoinBtn);
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
+        setSupportActionBar(myToolbar);
+
         coinFlipHistory = CoinFlipHistory.getInstance(this);
 
         setupButtons();
         updateGUI(DEFAULT_COIN);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_coinflip, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.viewHistoryButton:
+                startActivity(new Intent(this, CoinFlipHistoryActivity.class));
+                return true;
+        }
+        return false;
+    }
+
     private void setupButtons() {
-        Button historyButton = findViewById(R.id.viewHistoryButton);
         Button headsButton = findViewById(R.id.headsButton);
         Button tailsButton = findViewById(R.id.tailsButton);
         Button flipButton = findViewById(R.id.flipButton);
 
-        historyButton.setOnClickListener((View view) -> startActivity(new Intent(this, CoinFlipHistoryActivity.class)));
         headsButton.setOnClickListener((View view) -> updateGUI(Coin.HEADS));
         tailsButton.setOnClickListener((View view) -> updateGUI(Coin.TAILS));
         flipButton.setOnClickListener(view -> animateCoinFlip());
