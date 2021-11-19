@@ -78,6 +78,8 @@ public class CoinFlipHistory {
         if (childAdded) {
             if (children.getChildren().size() == 1) {
                 CoinFlipHistory.nextPickerUniqueID = childUniqueID;
+            } else if (children.getChildren().size() == 2 && coinFlipHistory.size() > 0) {
+                incrementNextPickerUniqueID();
             }
         } else {
             ArrayList<CoinFlip> coinFlipHistoryCopy = new ArrayList<>(coinFlipHistory);
