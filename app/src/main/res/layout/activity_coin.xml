@@ -59,8 +59,6 @@
         app:layout_constraintTop_toBottomOf="@+id/coinBlank"
         tools:ignore="TextContrastCheck" />
 
-
-
     <Button
         android:id="@+id/headsButton"
         style="@style/Widget.AppCompat.Button.Colored"
@@ -105,7 +103,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/customToolBar" />
 
     <TextView
         android:id="@+id/sideChosenText"
