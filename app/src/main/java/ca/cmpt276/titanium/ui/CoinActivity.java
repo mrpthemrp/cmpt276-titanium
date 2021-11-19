@@ -121,7 +121,7 @@ public class CoinActivity extends AppCompatActivity {
     }
 
     private void setChildNameText() {
-        UUID nextChildUniqueID = coinFlipHistory.getPickerUniqueID();
+        UUID nextChildUniqueID = coinFlipHistory.getNextPickerUniqueID();
 
         if (nextChildUniqueID != null) {
             childNameFormat = getString(R.string.childTurn, children.getChild(nextChildUniqueID).getName());

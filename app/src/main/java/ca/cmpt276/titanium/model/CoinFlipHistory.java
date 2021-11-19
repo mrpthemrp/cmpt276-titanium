@@ -69,8 +69,8 @@ public class CoinFlipHistory {
     }
 
     public void addCoinFlip(Coin chosenSide, Coin result) {
-        coinFlipHistory.add(new CoinFlip(pickerUniqueID, chosenSide, result));
         incrementPickerUniqueID();
+        coinFlipHistory.add(new CoinFlip(pickerUniqueID, chosenSide, result));
         saveData();
     }
 
@@ -107,11 +107,17 @@ public class CoinFlipHistory {
         }
     }
 
-    public ArrayList<CoinFlip> getCoinFlipHistory() {
-        return coinFlipHistory;
+    public UUID getNextPickerUniqueID() {
+        for (int i = 0; i < children.getChildren().size(); i++) {
+            if (pickerUniqueID.equals(children.getChildren().get(i).getUniqueID())) {
+                return children.getChildren().get((i + 1) % children.getChildren().size()).getUniqueID();
+            }
+        }
+
+        return null;
     }
 
-    public UUID getPickerUniqueID() {
-        return pickerUniqueID;
+    public ArrayList<CoinFlip> getCoinFlipHistory() {
+        return coinFlipHistory;
     }
 }
