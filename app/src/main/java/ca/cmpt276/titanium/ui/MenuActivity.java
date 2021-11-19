@@ -1,6 +1,5 @@
 package ca.cmpt276.titanium.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,13 +9,9 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
 import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 
 /**
@@ -37,7 +32,7 @@ public class MenuActivity extends AppCompatActivity {
             findViewById(R.id.menuTextChildrenList).setVisibility(View.VISIBLE);
         }
 
-        FloatingActionButton addChildButton = findViewById(R.id.menuFAB);
+        Button addChildButton = findViewById(R.id.menuGoToAddChild);
         addChildButton.setOnClickListener(view -> startActivity(AddChildActivity.makeIntent(this)));
 
         Button coinFlipButton = findViewById(R.id.menuGoToFlipCoin);
@@ -57,28 +52,25 @@ public class MenuActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         displayChildren();
-
-        if (this.children.getChildren().size() > 0) {
-            findViewById(R.id.menuTextChildrenList).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.menuTextChildrenList).setVisibility(View.INVISIBLE);
-        }
     }
 
     private void displayChildren() {
-        // TODO: Add empty state for when children is empty
-        ArrayList<Child> childList = children.getChildren();
-        ListView childrenList = (ListView) findViewById(R.id.childrenList);
-        ChildrenListAdapter adapter = new ChildrenListAdapter(this, childList);
-        childrenList.setAdapter(adapter);
-        childrenList.setClickable(true);
-        Context context = this;
+        if (children.getChildren().size() == 0) {
+            findViewById(R.id.menuTextChildrenList).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.menuTextChildrenList).setVisibility(View.INVISIBLE);
 
-        childrenList.setOnItemClickListener((parent, view, position, id) -> {
-            UUID childUUID = childList.get(position).getUniqueID();
-            Intent viewChildIntent = ViewChildActivity.makeIntent(context, childUUID);
+            ListView childrenListView = (ListView) findViewById(R.id.childrenList);
+            ChildrenListAdapter adapter = new ChildrenListAdapter(this, children.getChildren());
+            childrenListView.setAdapter(adapter);
+            childrenListView.setClickable(true);
 
-            startActivity(viewChildIntent);
-        });
+            childrenListView.setOnItemClickListener((parent, view, position, id) -> {
+                UUID childUUID = children.getChildren().get(position).getUniqueID();
+                Intent viewChildIntent = ViewChildActivity.makeIntent(this, childUUID);
+
+                startActivity(viewChildIntent);
+            });
+        }
     }
 }

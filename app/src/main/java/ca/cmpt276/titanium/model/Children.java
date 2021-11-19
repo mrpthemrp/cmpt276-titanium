@@ -75,7 +75,7 @@ public class Children {
     }
 
     public void removeChild(UUID uniqueID) {
-        if (uniqueID!= null) {
+        if (uniqueID != null) {
             for (int i = 0; i < children.size(); i++) {
                 if (uniqueID.equals(children.get(i).getUniqueID())) {
                     coinFlipHistory.updateCoinFlipHistory(false, uniqueID);

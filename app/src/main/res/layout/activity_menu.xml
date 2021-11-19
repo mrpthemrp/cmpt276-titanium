@@ -7,6 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".ui.MenuActivity">
 
+    <TextView
+        android:id="@+id/menuHeaderText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/menuHeader"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="?attr/colorPrimary"
+        android:typeface="normal"
+        app:layout_constraintBottom_toTopOf="@+id/menuGoToAddChild"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.366"
+        tools:ignore="TextContrastCheck" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/menuGoToFlipCoin"
         style="@style/Widget.MaterialComponents.Button"
@@ -25,27 +41,31 @@
         app:iconTintMode="src_in"
         app:layout_constraintBottom_toTopOf="@+id/childrenList"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
-        app:layout_constraintStart_toEndOf="@+id/menuFAB"
+        app:layout_constraintStart_toEndOf="@+id/menuGoToAddChild"
         app:layout_constraintTop_toBottomOf="@+id/menuHeaderText"
         tools:ignore="TextContrastCheck" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/menuFAB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:contentDescription="@string/contentDescriptionFAB"
-        android:src="@drawable/ic_baseline_add_24"
-        app:backgroundTint="?attr/colorPrimary"
-        app:fabSize="auto"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/menuGoToAddChild"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="90dp"
+        android:layout_height="125dp"
+        android:backgroundTint="?attr/colorPrimary"
+        android:backgroundTintMode="src_in"
+        android:text="@string/add_child_button_text"
+        android:textColor="?attr/colorOnPrimary"
+        android:textSize="12sp"
+        app:icon="@drawable/ic_baseline_person_add_24"
+        app:iconGravity="textTop"
+        app:iconPadding="15dp"
+        app:iconSize="60dp"
+        app:iconTint="?attr/colorOnPrimary"
+        app:iconTintMode="src_in"
         app:layout_constraintBottom_toTopOf="@+id/childrenList"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.686"
-        tools:ignore="SpeakableTextPresentCheck,RedundantDescriptionCheck,ImageContrastCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/menuHeaderText"
+        tools:ignore="TextContrastCheck" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/menuGoToTimer"
@@ -65,26 +85,9 @@
         app:iconTint="?attr/colorOnPrimary"
         app:iconTintMode="src_in"
         app:layout_constraintBottom_toTopOf="@+id/childrenList"
-        app:layout_constraintEnd_toStartOf="@+id/menuFAB"
-        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintEnd_toStartOf="@+id/menuGoToAddChild"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/menuHeaderText"
-        tools:ignore="TextContrastCheck" />
-
-    <TextView
-        android:id="@+id/menuHeaderText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/menuHeader"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="?attr/colorPrimary"
-        android:typeface="normal"
-        app:layout_constraintBottom_toTopOf="@+id/menuFAB"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.366"
         tools:ignore="TextContrastCheck" />
 
     <TextView
@@ -96,21 +99,18 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/childrenList"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menuFAB"
-        app:layout_constraintVertical_bias="0.171" />
+        app:layout_constraintTop_toTopOf="@+id/childrenList" />
 
     <ListView
         android:id="@+id/childrenList"
-        android:layout_width="409dp"
-        android:layout_height="290dp"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.987" >
-    </ListView>
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
