@@ -18,7 +18,7 @@ import java.util.UUID;
 public class CoinFlipHistory {
     private static final Gson GSON = new Gson();
     private static final String COIN_FLIP_HISTORY_JSON_KEY = "coinFlipHistoryJson";
-    private static final String PICKER_UNIQUE_ID_JSON_KEY = "pickerUniqueIDJson";
+    private static final String NEXT_PICKER_UNIQUE_ID_JSON_KEY = "nextPickerUniqueIDJson";
 
     private static CoinFlipHistory instance;
     private static SharedPreferences prefs;
@@ -26,7 +26,7 @@ public class CoinFlipHistory {
     private static Children children;
 
     private static ArrayList<CoinFlip> coinFlipHistory = new ArrayList<>();
-    private static UUID pickerUniqueID;
+    private static UUID nextPickerUniqueID;
 
     private CoinFlipHistory(Context context) {
         CoinFlipHistory.prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -45,7 +45,7 @@ public class CoinFlipHistory {
 
     private static void loadSavedData() {
         String coinFlipHistoryJson = prefs.getString(COIN_FLIP_HISTORY_JSON_KEY, null);
-        String pickerUniqueIDJson = prefs.getString(PICKER_UNIQUE_ID_JSON_KEY, null);
+        String nextPickerUniqueIDJson = prefs.getString(NEXT_PICKER_UNIQUE_ID_JSON_KEY, null);
 
         if (coinFlipHistoryJson != null) {
             Type coinFlipHistoryType = new TypeToken<ArrayList<CoinFlip>>() {
@@ -54,30 +54,30 @@ public class CoinFlipHistory {
             CoinFlipHistory.coinFlipHistory = GSON.fromJson(coinFlipHistoryJson, coinFlipHistoryType);
         }
 
-        if (pickerUniqueIDJson != null) {
-            CoinFlipHistory.pickerUniqueID = GSON.fromJson(pickerUniqueIDJson, UUID.class);
+        if (nextPickerUniqueIDJson != null) {
+            CoinFlipHistory.nextPickerUniqueID = GSON.fromJson(nextPickerUniqueIDJson, UUID.class);
         }
     }
 
     private void saveData() {
         String coinFlipHistoryJson = GSON.toJson(coinFlipHistory);
-        String pickerUniqueIDJson = GSON.toJson(pickerUniqueID);
+        String nextPickerUniqueIDJson = GSON.toJson(nextPickerUniqueID);
 
         prefsEditor.putString(COIN_FLIP_HISTORY_JSON_KEY, coinFlipHistoryJson);
-        prefsEditor.putString(PICKER_UNIQUE_ID_JSON_KEY, pickerUniqueIDJson);
+        prefsEditor.putString(NEXT_PICKER_UNIQUE_ID_JSON_KEY, nextPickerUniqueIDJson);
         prefsEditor.apply();
     }
 
     public void addCoinFlip(Coin chosenSide, Coin result) {
-        incrementPickerUniqueID();
-        coinFlipHistory.add(new CoinFlip(pickerUniqueID, chosenSide, result));
+        coinFlipHistory.add(new CoinFlip(nextPickerUniqueID, chosenSide, result));
+        incrementNextPickerUniqueID();
         saveData();
     }
 
     public void updateCoinFlipHistory(boolean childAdded, UUID childUniqueID) {
         if (childAdded) {
             if (children.getChildren().size() == 1) {
-                CoinFlipHistory.pickerUniqueID = childUniqueID;
+                CoinFlipHistory.nextPickerUniqueID = childUniqueID;
             }
         } else {
             ArrayList<CoinFlip> coinFlipHistoryCopy = new ArrayList<>(coinFlipHistory);
@@ -88,36 +88,30 @@ public class CoinFlipHistory {
                 }
             }
 
-            if (children.getChildren().size() == 0) {
-                CoinFlipHistory.pickerUniqueID = null;
-            } else if (childUniqueID.equals(pickerUniqueID)) {
-                incrementPickerUniqueID();
+            if (children.getChildren().size() == 1) {
+                CoinFlipHistory.nextPickerUniqueID = null;
+            } else if (childUniqueID.equals(nextPickerUniqueID)) {
+                incrementNextPickerUniqueID();
             }
         }
 
         saveData();
     }
 
-    private void incrementPickerUniqueID() {
+    private void incrementNextPickerUniqueID() {
         for (int i = 0; i < children.getChildren().size(); i++) {
-            if (pickerUniqueID.equals(children.getChildren().get(i).getUniqueID())) {
-                CoinFlipHistory.pickerUniqueID = children.getChildren().get((i + 1) % children.getChildren().size()).getUniqueID();
+            if (nextPickerUniqueID.equals(children.getChildren().get(i).getUniqueID())) {
+                CoinFlipHistory.nextPickerUniqueID = children.getChildren().get((i + 1) % children.getChildren().size()).getUniqueID();
                 break;
             }
         }
     }
 
-    public UUID getNextPickerUniqueID() {
-        for (int i = 0; i < children.getChildren().size(); i++) {
-            if (pickerUniqueID.equals(children.getChildren().get(i).getUniqueID())) {
-                return children.getChildren().get((i + 1) % children.getChildren().size()).getUniqueID();
-            }
-        }
-
-        return null;
-    }
-
     public ArrayList<CoinFlip> getCoinFlipHistory() {
         return coinFlipHistory;
+    }
+
+    public UUID getNextPickerUniqueID() {
+        return nextPickerUniqueID;
     }
 }
