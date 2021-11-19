@@ -19,9 +19,9 @@ import ca.cmpt276.titanium.model.Child;
 /**
  * This is an adapter for the children list.
  */
-public class ChildrenListAdapter extends ArrayAdapter<Child> {
+public class MenuChildrenListAdapter extends ArrayAdapter<Child> {
 
-    public ChildrenListAdapter(Context context, List<Child> children) {
+    public MenuChildrenListAdapter(Context context, List<Child> children) {
         super(context, 0, children);
     }
 
@@ -29,7 +29,7 @@ public class ChildrenListAdapter extends ArrayAdapter<Child> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.children_list_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_menu_children_list, parent, false);
         }
 
         Child child = getItem(position);

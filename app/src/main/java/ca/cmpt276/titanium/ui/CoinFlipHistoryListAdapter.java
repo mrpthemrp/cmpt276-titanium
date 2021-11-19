@@ -20,10 +20,10 @@ import ca.cmpt276.titanium.model.CoinFlip;
 /**
  * This is an adapter for the coin flip history.
  */
-public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
+public class CoinFlipHistoryListAdapter extends ArrayAdapter<CoinFlip> {
     private final Children children;
 
-    public CoinFlipHistoryAdapter(Context context, ArrayList<CoinFlip> coinFlipHistory) {
+    public CoinFlipHistoryListAdapter(Context context, ArrayList<CoinFlip> coinFlipHistory) {
         super(context, 0, coinFlipHistory);
         children = Children.getInstance(context);
     }
@@ -32,7 +32,7 @@ public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.coin_flip_history_list_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_coin_flip_history_list, parent, false);
         }
 
         CoinFlip coinFlip = getItem(position);
@@ -45,10 +45,10 @@ public class CoinFlipHistoryAdapter extends ArrayAdapter<CoinFlip> {
 
         if (coinFlip.getResult() == coinFlip.getChosenSide()) {
             // image retrieved from https://www.vhv.rs/dpng/f/406-4067045_checkmark-png.png
-            resultImageView.setImageResource(R.drawable.checkmark);
+            resultImageView.setImageResource(R.drawable.mark_check);
         } else {
             // image retrieved from https://www.nicepng.com/png/full/910-9107823_circle-cross-png.png
-            resultImageView.setImageResource(R.drawable.xmark);
+            resultImageView.setImageResource(R.drawable.mark_x);
         }
 
         TextView coinFlipDate = convertView.findViewById(R.id.coinFlipDate);

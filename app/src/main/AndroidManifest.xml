@@ -18,7 +18,7 @@
 
         <service android:name=".ui.TimerService" />
         <activity
-            android:name=".ui.WhoseActivity"
+            android:name=".ui.TasksActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"

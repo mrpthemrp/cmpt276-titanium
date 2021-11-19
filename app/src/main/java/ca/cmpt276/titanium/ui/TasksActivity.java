@@ -14,16 +14,16 @@ import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
 
-public class WhoseActivity extends AppCompatActivity {
+public class TasksActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context context) {
-        return new Intent(context, WhoseActivity.class);
+        return new Intent(context, TasksActivity.class);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_whose);
+        setContentView(R.layout.activity_tasks);
         setTitle(R.string.whoseTurn);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);

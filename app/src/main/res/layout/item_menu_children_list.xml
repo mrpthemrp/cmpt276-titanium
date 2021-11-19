@@ -7,7 +7,7 @@
     android:background="@drawable/rounded_button_child_list"
     android:backgroundTint="?attr/colorSecondary"
     android:padding="8dp"
-    tools:context=".ui.CoinFlipHistoryAdapter">
+    tools:context=".ui.CoinFlipHistoryListAdapter">
 
     <TextView
         android:id="@+id/childNameList"

@@ -42,7 +42,7 @@ public class MenuActivity extends AppCompatActivity {
         timerButton.setOnClickListener(view -> startActivity(TimerActivity.makeIntent(this)));
 
         Button whoseTurnButton = findViewById(R.id.menuWhoseTurn);
-        whoseTurnButton.setOnClickListener(view -> startActivity(WhoseActivity.makeIntent(this)));
+        whoseTurnButton.setOnClickListener(view -> startActivity(TasksActivity.makeIntent(this)));
     }
 
     @Override
@@ -65,7 +65,7 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         ListView childrenListView = (ListView) findViewById(R.id.childrenList);
-        ChildrenListAdapter adapter = new ChildrenListAdapter(this, children.getChildren());
+        MenuChildrenListAdapter adapter = new MenuChildrenListAdapter(this, children.getChildren());
         childrenListView.setAdapter(adapter);
         childrenListView.setClickable(true);
 
