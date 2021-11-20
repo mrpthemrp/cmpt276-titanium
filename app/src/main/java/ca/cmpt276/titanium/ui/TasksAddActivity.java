@@ -18,12 +18,14 @@ import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
+import ca.cmpt276.titanium.model.Tasks;
 
 public class TasksAddActivity extends AppCompatActivity {
 
     private Children children;
     private Button saveTaskButton;
     private EditText userTaskInput;
+    private Tasks taskManager;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, TasksAddActivity.class);
@@ -33,10 +35,13 @@ public class TasksAddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks_add);
+        taskManager = Tasks.getInstance();
+
         this.children = Children.getInstance(this);
         userTaskInput = findViewById(R.id.userTaskName);
         setUpButton();
         displayChildren();
+
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
@@ -48,11 +53,13 @@ public class TasksAddActivity extends AppCompatActivity {
         saveTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // save the info
                 if(userTaskInput.getText().toString().isEmpty()){
                     Toast.makeText(TasksAddActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                String task = userTaskInput.getText().toString();
+                taskManager.addTask(task);
+                taskManager.addChild("Nobody");
                 finish();
             }
         });
@@ -79,12 +86,16 @@ public class TasksAddActivity extends AppCompatActivity {
         childrenListView.setClickable(true);
 
         childrenListView.setOnItemClickListener((parent, view, position, id) -> {
-            UUID childUUID = children.getChildren().get(position).getUniqueID();
-            // save the info
+            String child =  children.getChildren().get(position).getName();
+
             if(userTaskInput.getText().toString().isEmpty()){
                 Toast.makeText(TasksAddActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            String task = userTaskInput.getText().toString();
+            taskManager.addTask(task);
+            taskManager.addChild(child);
             finish();
         });
     }

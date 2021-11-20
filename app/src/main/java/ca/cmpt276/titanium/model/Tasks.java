@@ -4,6 +4,16 @@ import java.util.ArrayList;
 
 public class Tasks {
     private final ArrayList<String> listOfTasks = new ArrayList<>();
+    private final ArrayList<String> childListForTasks = new ArrayList<>();
+
+    private static final Tasks instance = new Tasks();
+
+    private Tasks(){
+    }
+
+    public static Tasks getInstance(){
+        return instance;
+    }
 
     public void addTask(String task){
         listOfTasks.add(task);
@@ -19,5 +29,37 @@ public class Tasks {
 
     public String getTask(int index){
         return listOfTasks.get(index);
+    }
+
+    public int numberOfTasks(){
+        return listOfTasks.size();
+    }
+
+    public ArrayList<String> getListOfTasks() {
+        return listOfTasks;
+    }
+
+    public void addChild(String task){
+        childListForTasks.add(task);
+    }
+
+    public void removeChild(int index){
+        childListForTasks.remove(index);
+    }
+
+    public void editChild(int index, String newName){
+        childListForTasks.set(index, newName);
+    }
+
+    public String getChild(int index){
+        return childListForTasks.get(index);
+    }
+
+    public int numberOfChildren(){
+        return childListForTasks.size();
+    }
+
+    public ArrayList<String> getListOfChildren() {
+        return childListForTasks;
     }
 }
