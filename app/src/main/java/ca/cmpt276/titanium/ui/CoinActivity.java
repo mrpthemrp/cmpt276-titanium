@@ -73,6 +73,9 @@ public class CoinActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.viewHistoryButton) {
             startActivity(new Intent(this, CoinFlipHistoryActivity.class));
             return true;
+        } else if (item.getItemId() == R.id.viewQueueButton) {
+            startActivity(new Intent(this, CoinFlipQueueActivity.class));
+            return true;
         } else {
             return super.onOptionsItemSelected(item);
         }

@@ -8,8 +8,8 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/changeChildButton"
-        android:title="@string/changeChildTurn"
+        android:id="@+id/viewQueueButton"
+        android:title="@string/viewQueue"
         app:showAsAction="ifRoom" />
 
 </menu>
