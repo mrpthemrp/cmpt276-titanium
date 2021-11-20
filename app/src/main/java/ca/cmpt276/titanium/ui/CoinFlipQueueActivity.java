@@ -37,6 +37,9 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         children = Children.getInstance(this);
+        coinFlipHistory = CoinFlipHistory.getInstance(this);
+
+        updateGUI();
     }
 
     @Override
@@ -83,11 +86,11 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
 
         UUID nextPickerUniqueID = coinFlipHistory.getNextPickerUniqueID();
 
-        if (nextPickerUniqueID != null) {
-            currentChildTurnName.setText(getString(R.string.childTurn, children.getChild(nextPickerUniqueID).getName()));
-        } else {
+//        if (nextPickerUniqueID != null) {
+//            currentChildTurnName.setText(getString(R.string.childTurn, children.getChild(nextPickerUniqueID).getName()));
+//        } else {
             currentChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_24);
-            currentChildTurnName.setText(R.string.currentChild);
-        }
+            currentChildTurnName.setText(R.string.currentChildName);
+//        }
     }
 }
