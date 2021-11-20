@@ -13,7 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Titanium">
         <activity
+            android:name=".ui.TasksAddActivity"
+            android:windowSoftInputMode="adjustNothing"
+            android:configChanges="keyboard|keyboardHidden"
+            android:exported="true" />
+        <activity
             android:name=".ui.TasksViewActivity"
+            android:windowSoftInputMode="adjustNothing"
+            android:configChanges="keyboard|keyboardHidden"
             android:exported="true" />
 
         <receiver android:name=".ui.TimerBroadcastReceiver" />
