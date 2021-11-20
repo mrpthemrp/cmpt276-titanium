@@ -13,61 +13,53 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Titanium">
 
-
         <receiver android:name=".ui.TimerBroadcastReceiver" />
 
         <service android:name=".ui.TimerService" />
+
         <activity
             android:name=".ui.TasksActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:parentActivityName=".ui.MenuActivity"
-            android:screenOrientation="portrait"/>
+            android:parentActivityName=".ui.MenuActivity" />
         <activity
             android:name=".ui.CoinFlipHistoryActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:parentActivityName=".ui.CoinFlipActivity"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".ui.CoinFlipActivity" />
         <activity
             android:name=".ui.ChildViewActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.Titanium.Child" />
         <activity
             android:name=".ui.ChildAddActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.Titanium.Child" />
         <activity
             android:name=".ui.ChildEditActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.ChildViewActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.Titanium.Child" />
         <activity
             android:name=".ui.CoinFlipActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:parentActivityName=".ui.MenuActivity"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".ui.MenuActivity" />
         <activity
             android:name=".ui.TimerActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.Titanium.Calm" />
         <activity
             android:name=".ui.MenuActivity"
             android:configChanges="keyboard|keyboardHidden"
-            android:exported="true"
-            android:screenOrientation="portrait">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -7,7 +7,6 @@
     <color name="green_200">#C5E1A5</color>
     <color name="green_300">#AED581</color>
     <color name="green_600">#7CB342</color>
-    <color name="green_900">#33691E</color>
     <color name="mutedBrown">#C1A671</color>
     <color name="mutedBrownDark">#634408</color>
     <color name="olive">#748536</color>
@@ -15,5 +14,6 @@
     <color name="black">#000000</color>
     <color name="grey">#303030</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="ic_launcher_custom_background">#369888</color>
 
 </resources>

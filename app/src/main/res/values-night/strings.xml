@@ -4,29 +4,31 @@
 
     <!-- Main Menu Strings -->
     <string name="menuHeader">Main Menu</string>
-    <string name="menuTimerBtn">Timeout Timer</string>
+    <string name="menuTimerBtn">Timer</string>
     <string name="menuFlipCoinBtn">Flip Coin</string>
     <string name="menuRemove">Remove Child</string>
-    <string name="menuChildrenText">Added Children: </string>
+    <string name="menuChildrenText">No children added yet!</string>
 
     <!-- Coin Flip Strings -->
-    <string name="coinResult">RESULT</string>
-    <string name="coinTapToFlip">Tap to flip!</string>
     <string name="flip">Flip</string>
+    <string name="history">History</string>
+    <string name="heads">Heads</string>
+    <string name="tails">Tails</string>
+    <string name="childDoesNotExist">No child data recorded</string>
+    <string name="childTurn">%1$s\'s turn to pick</string>
+    <string name="coinSideChosen">Side chosen: %1$s</string>
+
+    <!-- View Coin Flip History Strings -->
+    <string name="coinFlipHistoryTitle">Coin Flip History</string>
+    <string name="noCoinFlipsConfigured">No coin flips to show.</string>
 
     <!-- Timer Strings -->
     <string name="timerTitle">Timer</string>
-    <string name="timerStart">Start</string>
-    <string name="timerPause">Pause</string>
-    <string name="timerEnd">Cancel</string>
-    <string name="timerDefaultTimeInput">00</string>
-    <string name="timerTimeSeparator">:</string>
-    <string name="timer_cancelled_toast">Timer cancelled</string>
 
     <!-- View Child Strings-->
     <string name="menuViewChild">View Child</string>
     <string name="delete_child_prompt_title">Delete&#160;</string>
-    <string name="delete_child_prompt_message">Are you sure? This action cannot be reversed.</string>
+    <string name="delete_child_prompt_message">Are you sure? This action cannot be reversed.\n\nAll associated coin flips will also be deleted.</string>
     <string name="prompt_positive">Yes</string>
     <string name="prompt_negative">No</string>
     <string name="delete_child_prompt_toast">Child deleted</string>
@@ -34,7 +36,7 @@
     <!-- Add/Edit Child Strings-->
     <string name="viewSave">SAVE</string>
     <string name="discard_changes_title">Discard Changes</string>
-    <string name="discard_changes_message">Are you sure? This action cannot be reversed.</string>
+    <string name="discard_changes_message">Are you sure? All changes will be lost.</string>
     <string name="changes_discarded_toast">Changes discarded</string>
 
     <string name="menuAdd">Add Child</string>
@@ -46,8 +48,41 @@
     <string name="playPauseDescription">Starts, resumes, or pauses timer, depending on current state.</string>
 
     <!--Content Descriptions for Visually Impaired-->
-    <string name="contentDescriptionFAB">Circle-shaped button with a plus sign in the middle.</string>
     <string name="circleContentDescription">Empty circle with light green fill.</string>
     <string name="timerCircleDescription">circle outline made up of lines to resemble a stopwatch</string>
+    <string name="timerReset">reset</string>
+    <string name="timerSet">set</string>
+    <string name="timerOne">1</string>
+    <string name="timerTwo">2</string>
+    <string name="timerThree">3</string>
+    <string name="timerFive">5</string>
+    <string name="timerTen">10</string>
+    <string name="timerZeros">00:00:00</string>
+    <string name="timerMinutes">Minutes:</string>
+    <string name="timerEnterMinutes">Enter Minutes</string>
+    <string name="flipCoinHistChildName">No Coin Flips Yet</string>
+    <string name="flipCoinHistDate">Date Goes Here</string>
+    <string name="flipCoinHistDummy">RESULT</string>
+    <string name="timer_notification_dismiss_button">Dismiss</string>
+    <string name="timer_channel_name">Timers</string>
+    <string name="timer_finish_notification_title">Timer Finished</string>
+    <string name="timer_interactive_notification_title">Timer</string>
+    <string name="timer_zero_toast">Set non-zero time</string>
+    <string name="custom_time_toast">Enter time first</string>
+    <string name="timer_notification_cancel_button">Cancel</string>
+    <string name="timer_notification_resume_button">Resume</string>
+    <string name="timer_notification_pause_button">Pause</string>
+    <string name="add_child_button_text">Add Child</string>
+    <string name="name_with_non_letter_characters_toast">Name must contain only letters</string>
+    <string name="tails_text">TAILS</string>
+    <string name="heads_text">HEADS</string>
+    <string name="coin_flip_result_initial_text">Landed on\u0020</string>
+    <string name="coin_flip_child_choice_text">\u0020chose\u0020</string>
+    <string name="name_field_empty_toast">Name field cannot be empty</string>
+    <string name="whoseTurn">Tasks</string>
+    <string name="add_task">Add Task</string>
+    <string name="edit_task">Edit Task</string>
+    <string name="remove_task">Remove Task</string>
+    <string name="default_text">DEFAULT TEXT</string>
 
 </resources>
