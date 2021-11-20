@@ -120,9 +120,6 @@ public class TasksActivity extends AppCompatActivity {
             TextView childName = taskItemView.findViewById(R.id.childNameForTaskInList);
             childName.setText(name);
 
-            //ImageView iconItem = taskItemView.findViewById(R.id.iconForTask);
-            //iconItem.setImageResource(game.icon());
-
             return taskItemView;
         }
     }
