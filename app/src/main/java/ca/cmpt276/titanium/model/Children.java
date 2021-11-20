@@ -18,6 +18,7 @@ import java.util.UUID;
 public class Children {
     private static final Gson GSON = new Gson();
     private static final String CHILDREN_JSON_KEY = "childrenJson";
+    private static final int FIRST_INDEX = 0;
 
     private static Children instance;
     private static SharedPreferences prefs;
