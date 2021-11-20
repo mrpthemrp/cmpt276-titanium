@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.os.VibratorManager;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -53,9 +55,15 @@ public class TimerNotification {
         this.context = context.getApplicationContext();
         this.timer = Timer.getInstance(context);
         this.notificationManager = NotificationManagerCompat.from(context);
-        this.timerFinishVibrator = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
 
         notificationManager.createNotificationChannel(channel);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            VibratorManager vibratorManager = (VibratorManager) this.context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE);
+            this.timerFinishVibrator = vibratorManager.getDefaultVibrator();
+        } else {
+            this.timerFinishVibrator = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
+        }
 
         AtomicInteger atomicInteger = new AtomicInteger();
 
