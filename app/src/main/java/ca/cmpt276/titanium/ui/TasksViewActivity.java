@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +49,7 @@ public class TasksViewActivity extends AppCompatActivity {
         displayData();
         setUpButtons();
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
+        Toolbar myToolbar = findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
@@ -81,20 +80,12 @@ public class TasksViewActivity extends AppCompatActivity {
 
     private void setUpButtons(){
         Button completeTask = findViewById(R.id.completeTaskButton);
-        completeTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        completeTask.setOnClickListener(view -> {
 
-            }
         });
 
         Button cancel = findViewById(R.id.cancelTaskButton);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        cancel.setOnClickListener(view -> finish());
     }
 
     @Override
