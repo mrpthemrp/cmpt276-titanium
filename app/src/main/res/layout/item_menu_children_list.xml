@@ -13,19 +13,19 @@
         android:id="@+id/childNameList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:text="@string/default_text"
         android:textColor="?attr/colorOnPrimary"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/childIcon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/childIcon"
-        android:layout_width="67dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="30dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
