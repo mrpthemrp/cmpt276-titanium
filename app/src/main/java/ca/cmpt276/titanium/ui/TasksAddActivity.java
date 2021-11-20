@@ -42,7 +42,6 @@ public class TasksAddActivity extends AppCompatActivity {
         setUpButton();
         displayChildren();
 
-
         Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);

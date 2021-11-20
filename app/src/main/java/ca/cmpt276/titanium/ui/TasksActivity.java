@@ -48,6 +48,7 @@ public class TasksActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        registerClickCallback();
     }
 
     private void checkTaskList(){
@@ -80,12 +81,6 @@ public class TasksActivity extends AppCompatActivity {
         }
         else if(item.getItemId() == R.id.taskAdd){
            startActivity(TasksAddActivity.makeIntent(this));
-        }
-        else if(item.getItemId() == R.id.taskEdit){
-
-        }
-        else if(item.getItemId() == R.id.taskRemove){
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -130,5 +125,13 @@ public class TasksActivity extends AppCompatActivity {
 
             return taskItemView;
         }
+    }
+
+    private void registerClickCallback(){
+        ListView list = findViewById(R.id.taskListView);
+        list.setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent = TasksViewActivity.makeIntent(TasksActivity.this, i, true);
+            startActivity(intent);
+        });
     }
 }
