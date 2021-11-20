@@ -1,15 +1,21 @@
 package ca.cmpt276.titanium.ui;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
@@ -47,6 +53,16 @@ public class TasksViewActivity extends AppCompatActivity {
         extractIntentData();
         displayData();
         setUpButtons();
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
+        setSupportActionBar(myToolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_tasks_view, menu);
+        return true;
     }
 
     private void displayData(){
@@ -86,12 +102,29 @@ public class TasksViewActivity extends AppCompatActivity {
         }
 
         else if(item.getItemId() == R.id.taskRemove){
-
+            launchDeleteTaskPrompt();
+            return true;
         }
 
         else if(item.getItemId() == R.id.taskEdit){
-
+            startActivity(TasksEditActivity.makeIntent(this));
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void launchDeleteTaskPrompt() {
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_baseline_delete_black_24)
+                .setTitle("Deleting Task: " + taskManager.getTask(index))
+                .setMessage("Are you sure? This action cannot be reversed.")
+                .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
+                    taskManager.removeTask(index);
+                    taskManager.removeChild(index);
+                    Toast.makeText(TasksViewActivity.this, "Task Deleted", Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .setNegativeButton(R.string.prompt_negative, null)
+                .show();
     }
 }
