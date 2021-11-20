@@ -60,11 +60,55 @@
         tools:ignore="TextContrastCheck" />
 
     <Button
+        android:id="@+id/tailsButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/rounded_button_style"
+        android:backgroundTint="?attr/colorPrimary"
+        android:backgroundTintMode="src_in"
+        android:text="@string/tails"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.518"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/childTurnText"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/sideChosenText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="172dp"
+        android:gravity="center"
+        android:text="@string/coinSideChosen"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customToolBar" />
+
+    <TextView
+        android:id="@+id/childTurnText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:gravity="center"
+        android:text="@string/childDoesNotExist"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customToolBar" />
+
+    <Button
         android:id="@+id/headsButton"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="105dp"
         android:background="@drawable/rounded_button_style"
         android:backgroundTint="?attr/colorPrimary"
@@ -72,49 +116,9 @@
         android:text="@string/heads"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/childTurnText"
         tools:ignore="TextContrastCheck" />
-
-    <Button
-        android:id="@+id/tailsButton"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="105dp"
-        android:layout_marginTop="17dp"
-        android:background="@drawable/rounded_button_style"
-        android:backgroundTint="?attr/colorPrimary"
-        android:backgroundTintMode="src_in"
-        android:text="@string/tails"
-        android:textColor="?attr/colorOnPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/childTurnText"
-        tools:ignore="TextContrastCheck" />
-
-    <TextView
-        android:id="@+id/childTurnText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:gravity="center"
-        android:text="@string/childDoesNotExist"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customToolBar" />
-
-    <TextView
-        android:id="@+id/sideChosenText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
-        android:gravity="center"
-        android:text="@string/coinSideChosen"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customToolBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

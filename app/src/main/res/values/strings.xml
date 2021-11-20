@@ -22,6 +22,7 @@
     <string name="childDoesNotExist">No child data recorded</string>
     <string name="childTurn">%1$s\'s turn to pick</string>
     <string name="coinSideChosen">Side chosen: %1$s</string>
+    <string name="changeChildTurn">Select child</string>
 
     <!-- View Coin Flip History Strings -->
     <string name="coinFlipHistoryTitle">Coin Flip History</string>
