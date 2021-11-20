@@ -33,6 +33,13 @@
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity" />
         <activity
+            android:name=".ui.TasksEditActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:exported="true"
+            android:parentActivityName=".ui.TasksViewActivity"
+            android:windowSoftInputMode="adjustNothing"
+            android:theme="@style/Theme.Titanium.Child" />
+        <activity
             android:name=".ui.CoinFlipHistoryActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"

@@ -129,7 +129,7 @@ public class TasksActivity extends AppCompatActivity {
     private void registerClickCallback(){
         ListView list = findViewById(R.id.taskListView);
         list.setOnItemClickListener((adapterView, view, i, l) -> {
-            Intent intent = TasksViewActivity.makeIntent(TasksActivity.this, i, true);
+            Intent intent = TasksViewActivity.makeIntent(TasksActivity.this, i);
             startActivity(intent);
         });
     }

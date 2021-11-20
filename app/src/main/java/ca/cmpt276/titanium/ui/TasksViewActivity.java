@@ -24,23 +24,19 @@ import ca.cmpt276.titanium.model.Tasks;
 public class TasksViewActivity extends AppCompatActivity {
 
     private static final String INDEX = "UserClicked";
-    private static final String BOOLEAN_VALUE = "isClicked";
     private int index;
-    private boolean edit;
     private Children children;
     private Tasks taskManager;
 
-    public static Intent makeIntent(Context context, int index, boolean edit){
+    public static Intent makeIntent(Context context, int index){
         Intent intent = new Intent(context, TasksViewActivity.class);
         intent.putExtra(INDEX, index);
-        intent.putExtra(BOOLEAN_VALUE, edit);
         return intent;
     }
 
     private void extractIntentData() {
         Intent intent = getIntent();
         index = intent.getIntExtra(INDEX, 0);
-        edit = intent.getBooleanExtra(BOOLEAN_VALUE,false);
     }
 
     @Override
@@ -57,6 +53,13 @@ public class TasksViewActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void onStart() {
+        displayData();
+        setUpButtons();
+        super.onStart();
     }
 
     @Override
@@ -107,7 +110,8 @@ public class TasksViewActivity extends AppCompatActivity {
         }
 
         else if(item.getItemId() == R.id.taskEdit){
-            startActivity(TasksEditActivity.makeIntent(this));
+            Intent intent = TasksEditActivity.makeIntent(TasksViewActivity.this, index);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
