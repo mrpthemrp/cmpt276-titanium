@@ -40,7 +40,7 @@ public class TimerActivity extends AppCompatActivity {
     private static final int MILLIS_IN_MINUTE = 60000;
     private static final int MILLIS_IN_HOUR = 3600000;
 
-    private TimerNotifications timerNotifications;
+    private TimerNotification timerNotification;
     private Toast toast; // prevents toast stacking
     private Timer timer;
     private BroadcastReceiver timerReceiver;
@@ -60,11 +60,11 @@ public class TimerActivity extends AppCompatActivity {
         setTitle(R.string.timerTitle);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        this.timerNotifications = TimerNotifications.getInstance(this);
+        this.timerNotification = TimerNotification.getInstance(this);
         boolean isClicked = getIntent().getBooleanExtra("isNotificationClicked", IS_CLICKED_DEFAULT);
 
         if (isClicked) {
-            timerNotifications.dismissNotification(false);
+            timerNotification.dismissNotification(false);
         }
 
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
@@ -93,7 +93,7 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        timerNotifications.dismissNotification(true);
+        timerNotification.dismissNotification(true);
         timer.setGUIEnabled(true);
         registerReceiver(timerReceiver, new IntentFilter(TimerService.TIMER_UPDATE_INTENT));
 
@@ -105,9 +105,9 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         if (timer.isRunning()) {
-            timerNotifications.launchNotification(getString(R.string.timer_notification_pause_button));
+            timerNotification.launchNotification(getString(R.string.timer_notification_pause_button));
         } else if (timer.isPaused()) {
-            timerNotifications.launchNotification(getString(R.string.timer_notification_resume_button));
+            timerNotification.launchNotification(getString(R.string.timer_notification_resume_button));
         }
 
         timer.setGUIEnabled(false);
@@ -240,7 +240,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void resetTimer() {
-        timerNotifications.dismissNotification(false);
+        timerNotification.dismissNotification(false);
         timer.setStopped();
 
         if (!timer.isRunning()) {

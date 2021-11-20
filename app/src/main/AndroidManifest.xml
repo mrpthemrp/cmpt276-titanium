@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Titanium">
 
 
-        <receiver android:name=".ui.TimerNotificationReceiver" />
+        <receiver android:name=".ui.TimerBroadcastReceiver" />
 
         <service android:name=".ui.TimerService" />
         <activity

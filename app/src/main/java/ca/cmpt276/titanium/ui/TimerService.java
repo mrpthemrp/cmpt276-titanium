@@ -13,7 +13,7 @@ public class TimerService extends Service {
     public static final String TIMER_UPDATE_INTENT = "timerUpdateIntent";
     private static final int TIMER_COUNTDOWN_INTERVAL = 50;
 
-    private TimerNotifications timerNotifications;
+    private TimerNotification timerNotification;
     private Timer timer;
     private Intent timerUpdateIntent;
     private CountDownTimer countDownTimer;
@@ -22,8 +22,8 @@ public class TimerService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        this.timerNotifications = TimerNotifications.getInstance(this);
-        timerNotifications.dismissNotification(false);
+        this.timerNotification = TimerNotification.getInstance(this);
+        timerNotification.dismissNotification(false);
 
         this.timer = Timer.getInstance(this);
         timer.setRunning();
@@ -42,7 +42,7 @@ public class TimerService extends Service {
                 if (timer.isGUIEnabled()) {
                     sendBroadcast(timerUpdateIntent);
                 } else {
-                    timerNotifications.updateNotificationTime();
+                    timerNotification.updateNotificationTime();
                 }
             }
 
@@ -54,7 +54,7 @@ public class TimerService extends Service {
                     sendBroadcast(timerUpdateIntent);
                 }
 
-                timerNotifications.launchNotification("Finish");
+                timerNotification.launchNotification("Finish");
                 stopSelf();
             }
         }.start();

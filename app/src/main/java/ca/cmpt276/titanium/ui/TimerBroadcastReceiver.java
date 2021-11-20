@@ -10,10 +10,10 @@ import ca.cmpt276.titanium.model.Timer;
 /**
  * NotificationReceiver is called when the user interacts with timer notification actions.
  */
-public class TimerNotificationReceiver extends BroadcastReceiver {
+public class TimerBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        TimerNotifications timerNotifications = TimerNotifications.getInstance(context);
+        TimerNotification timerNotification = TimerNotification.getInstance(context);
         Timer timer = Timer.getInstance(context);
 
         String action = intent.getStringExtra("notificationAction");
@@ -21,19 +21,19 @@ public class TimerNotificationReceiver extends BroadcastReceiver {
 
         switch (action) {
             case "Dismiss":
-                timerNotifications.dismissNotification(false);
+                timerNotification.dismissNotification(false);
                 break;
             case "Pause":
                 timer.setPaused();
-                timerNotifications.launchNotification(context.getString(R.string.timer_notification_resume_button));
+                timerNotification.launchNotification(context.getString(R.string.timer_notification_resume_button));
                 break;
             case "Resume":
                 context.getApplicationContext().startService(new Intent(context.getApplicationContext(), TimerService.class));
-                timerNotifications.launchNotification(context.getString(R.string.timer_notification_pause_button));
+                timerNotification.launchNotification(context.getString(R.string.timer_notification_pause_button));
                 break;
             case "Cancel":
                 timer.setStopped();
-                timerNotifications.dismissNotification(true);
+                timerNotification.dismissNotification(true);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid notificationAction");

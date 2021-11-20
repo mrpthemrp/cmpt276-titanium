@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Timer;
 
-public class TimerNotifications {
+public class TimerNotification {
     private static final int MILLIS_IN_HOUR = 3600000;
     private static final int MILLIS_IN_MINUTE = 60000;
     private static final int MILLIS_IN_SECOND = 1000;
@@ -29,7 +29,7 @@ public class TimerNotifications {
     private static final int TIMER_INTERACTIVE_NOTIFICATION_ID = 1;
     private static final long[] TIMER_VIBRATION_PATTERN = {0, 500, 1000};
 
-    private static TimerNotifications instance;
+    private static TimerNotification instance;
     private final Context context;
     private final Timer timer;
     private final NotificationManagerCompat notificationManager;
@@ -44,7 +44,7 @@ public class TimerNotifications {
     private MediaPlayer timerFinishSound;
     private String lastFormattedTime;
 
-    private TimerNotifications(Context context) {
+    private TimerNotification(Context context) {
         NotificationChannel channel = new NotificationChannel(
                 "practicalParentTimer",
                 context.getString(R.string.timer_channel_name),
@@ -64,19 +64,19 @@ public class TimerNotifications {
         notificationClickIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent notificationClickPendingIntent = PendingIntent.getActivity(this.context, atomicInteger.getAndIncrement(), notificationClickIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        Intent dismissIntent = new Intent(this.context, TimerNotificationReceiver.class);
+        Intent dismissIntent = new Intent(this.context, TimerBroadcastReceiver.class);
         dismissIntent.putExtra("notificationAction", "Dismiss");
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(this.context, atomicInteger.getAndIncrement(), dismissIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        Intent pauseTimerIntent = new Intent(this.context, TimerNotificationReceiver.class);
+        Intent pauseTimerIntent = new Intent(this.context, TimerBroadcastReceiver.class);
         pauseTimerIntent.putExtra("notificationAction", "Pause");
         this.pauseTimerPendingIntent = PendingIntent.getBroadcast(this.context, atomicInteger.getAndIncrement(), pauseTimerIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        Intent resumeTimerIntent = new Intent(this.context, TimerNotificationReceiver.class);
+        Intent resumeTimerIntent = new Intent(this.context, TimerBroadcastReceiver.class);
         resumeTimerIntent.putExtra("notificationAction", "Resume");
         this.resumeTimerPendingIntent = PendingIntent.getBroadcast(this.context, atomicInteger.getAndIncrement(), resumeTimerIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        Intent cancelIntent = new Intent(this.context, TimerNotificationReceiver.class);
+        Intent cancelIntent = new Intent(this.context, TimerBroadcastReceiver.class);
         cancelIntent.putExtra("notificationAction", "Cancel");
         this.cancelPendingIntent = PendingIntent.getBroadcast(this.context, atomicInteger.getAndIncrement(), cancelIntent, PendingIntent.FLAG_IMMUTABLE);
 
@@ -98,9 +98,9 @@ public class TimerNotifications {
                 .setOnlyAlertOnce(true);
     }
 
-    public static TimerNotifications getInstance(Context context) {
+    public static TimerNotification getInstance(Context context) {
         if (instance == null) {
-            TimerNotifications.instance = new TimerNotifications(context);
+            TimerNotification.instance = new TimerNotification(context);
         }
 
         return instance;
