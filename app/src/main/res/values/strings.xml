@@ -29,6 +29,7 @@
     <string name="noCoinFlipsConfigured">No coin flips to show.</string>
 
     <!-- View Child Queue Strings -->
+    <string name="currentChild">No child to display.</string>
     <string name="childrenQueueList">No children to display.</string>
     <string name="changeChild">Change child</string>
 

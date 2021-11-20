@@ -9,16 +9,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.Objects;
 import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
+import ca.cmpt276.titanium.model.Coin;
+import ca.cmpt276.titanium.model.CoinFlipHistory;
 
 public class CoinFlipQueueActivity extends AppCompatActivity {
     private Children children;
+    private CoinFlipHistory coinFlipHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +36,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        this.children = Children.getInstance(this);
+        children = Children.getInstance(this);
     }
 
     @Override
@@ -68,5 +74,20 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
         ListView childrenListView = (ListView) findViewById(R.id.childrenQueueList);
         CoinFlipQueueAdapter adapter = new CoinFlipQueueAdapter(this, children.getChildren());
         childrenListView.setAdapter(adapter);
+    }
+
+    private void updateGUI() {
+        // TODO: Add child icon when finished
+        ImageView currentChildIcon = findViewById(R.id.currentChildTurnIcon);
+        TextView currentChildTurnName = findViewById(R.id.currentChildTurnText);
+
+        UUID nextPickerUniqueID = coinFlipHistory.getNextPickerUniqueID();
+
+        if (nextPickerUniqueID != null) {
+            currentChildTurnName.setText(getString(R.string.childTurn, children.getChild(nextPickerUniqueID).getName()));
+        } else {
+            currentChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_24);
+            currentChildTurnName.setText(R.string.currentChild);
+        }
     }
 }
