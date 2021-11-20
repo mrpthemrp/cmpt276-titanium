@@ -84,5 +84,6 @@
     <string name="edit_task">Edit Task</string>
     <string name="remove_task">Remove Task</string>
     <string name="default_text">DEFAULT TEXT</string>
+    <string name="no_tasks_to_display_currently">No Tasks To Display Currently</string>
 
 </resources>

@@ -25,6 +25,7 @@ public class TasksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
         setTitle(R.string.whoseTurn);
+        getID();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
@@ -37,13 +38,25 @@ public class TasksActivity extends AppCompatActivity {
         return true;
     }
 
+    private void getID(){
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else {
-            return super.onOptionsItemSelected(item);
         }
+        else if(item.getItemId() == R.id.taskAdd){
+
+        }
+        else if(item.getItemId() == R.id.taskEdit){
+
+        }
+        else if(item.getItemId() == R.id.taskRemove){
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
