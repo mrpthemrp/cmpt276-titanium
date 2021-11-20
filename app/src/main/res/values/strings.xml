@@ -9,6 +9,9 @@
     <string name="menuRemove">Remove Child</string>
     <string name="menuChildrenText">No children added yet!</string>
 
+    <!-- Children List Strings -->
+    <string name="noChildrenConfigured">No children to show.</string>
+
     <!-- Coin Flip Strings -->
     <string name="flip">Flip</string>
     <string name="history">History</string>
@@ -17,10 +20,18 @@
     <string name="childDoesNotExist">No child data recorded</string>
     <string name="childTurn">%1$s\'s turn to pick</string>
     <string name="coinSideChosen">Side chosen: %1$s</string>
+    <string name="viewQueue">View Queue</string>
 
     <!-- View Coin Flip History Strings -->
     <string name="coinFlipHistoryTitle">Coin Flip History</string>
     <string name="noCoinFlipsConfigured">No coin flips to show.</string>
+
+    <!-- View Child Queue Strings -->
+    <string name="currentChildTitle">Current Child:</string>
+    <string name="currentChildName">No child to display</string>
+    <string name="queueTitle">Queue:</string>
+    <string name="childrenQueueList">No children to display.</string>
+    <string name="changeChild">Change child</string>
 
     <!-- Timer Strings -->
     <string name="timerTitle">Timer</string>
@@ -84,5 +95,14 @@
     <string name="edit_task">Edit Task</string>
     <string name="remove_task">Remove Task</string>
     <string name="default_text">DEFAULT TEXT</string>
+    <string name="title_activity_change_child">ChangeChildActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 </resources>

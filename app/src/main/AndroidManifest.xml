@@ -18,6 +18,14 @@
         <service android:name=".ui.TimerService" />
 
         <activity
+            android:name=".ui.ChangeChildActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.CoinFlipQueueActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:exported="true"
+            android:parentActivityName=".ui.CoinFlipActivity" />
+        <activity
             android:name=".ui.TasksActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"

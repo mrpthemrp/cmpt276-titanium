@@ -7,4 +7,9 @@
         android:title="@string/history"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/viewQueueButton"
+        android:title="@string/viewQueue"
+        app:showAsAction="ifRoom" />
+
 </menu>
