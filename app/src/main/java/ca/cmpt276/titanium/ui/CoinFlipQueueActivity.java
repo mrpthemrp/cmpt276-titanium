@@ -8,12 +8,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.Children;
 
 public class CoinFlipQueueActivity extends AppCompatActivity {
+    private Children children;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +29,20 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+        this.children = Children.getInstance(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_coinflipqueue, menu);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        displayQueue();
     }
 
     @Override
@@ -43,5 +56,17 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void displayQueue() {
+        if (children.getChildren().size() == 0) {
+            findViewById(R.id.childrenQueueListText).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.childrenQueueListText).setVisibility(View.INVISIBLE);
+        }
+
+        ListView childrenListView = (ListView) findViewById(R.id.childrenQueueList);
+        CoinFlipQueueAdapter adapter = new CoinFlipQueueAdapter(this, children.getChildren());
+        childrenListView.setAdapter(adapter);
     }
 }
