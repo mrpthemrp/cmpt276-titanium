@@ -12,6 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_custom_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Titanium">
+        <activity
+            android:name=".ui.TasksViewActivity"
+            android:exported="true" />
 
         <receiver android:name=".ui.TimerBroadcastReceiver" />
 
