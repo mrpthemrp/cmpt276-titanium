@@ -24,6 +24,7 @@ import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
+import ca.cmpt276.titanium.model.ChildrenQueue;
 import ca.cmpt276.titanium.model.Coin;
 import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
@@ -38,6 +39,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private Coin coinChosen;
     private CoinFlipHistory coinFlipHistory;
+    private ChildrenQueue childrenQueue;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, CoinFlipActivity.class);
@@ -54,9 +56,16 @@ public class CoinFlipActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         coinFlipHistory = CoinFlipHistory.getInstance(this);
+        childrenQueue = ChildrenQueue.getInstance(this);
 
         setupButtons();
         updateGUI(DEFAULT_COIN);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateGUI(coinChosen);
     }
 
     @Override
@@ -92,6 +101,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void updateGUI(Coin coinChosen) {
+        ImageView childIconDisplay = findViewById(R.id.coinFlipChildIcon);
         TextView childNameDisplay = findViewById(R.id.childTurnText);
         TextView sideChosenDisplay = findViewById(R.id.sideChosenText);
         Button headsButton = findViewById(R.id.headsButton);
@@ -101,6 +111,8 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         if (nextPickerUniqueID != null) {
             Children children = Children.getInstance(this);
+            // TODO: Add child icon when finished
+            childIconDisplay.setImageResource(R.drawable.ic_baseline_circle_green_24);
             childNameDisplay.setText(getString(R.string.childTurn, children.getChild(nextPickerUniqueID).getName()));
             sideChosenDisplay.setText(getString(R.string.coinSideChosen, coinChosen.toString()));
             this.coinChosen = coinChosen;
@@ -138,6 +150,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         coinResultMessage.postDelayed(() -> coinResultMessage.setVisibility(View.VISIBLE), COIN_FLIP_DELAY);
 
         if (coinFlipHistory.getNextPickerUniqueID() != null) {
+            childrenQueue.moveChildPositionToBack(coinFlipHistory.getNextPickerUniqueID());
             coinFlipHistory.addCoinFlip(coinChosen, coinResult);
             new Handler(Looper.getMainLooper()).postDelayed(() -> updateGUI(coinChosen), COIN_FLIP_DELAY);
         }

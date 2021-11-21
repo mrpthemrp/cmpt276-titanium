@@ -17,11 +17,11 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 
 /**
- * This is an adapter for the coin flip queue list.
+ * This is an adapter for the children list.
  */
-public class CoinFlipQueueAdapter extends ArrayAdapter<Child> {
+public class ChangeChildAdapter extends ArrayAdapter<Child> {
 
-    public CoinFlipQueueAdapter(Context context, List<Child> children) {
+    public ChangeChildAdapter(Context context, List<Child> children) {
         super(context, 0, children);
     }
 
@@ -29,18 +29,18 @@ public class CoinFlipQueueAdapter extends ArrayAdapter<Child> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_coin_flip_children_queue, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_change_child_list, parent, false);
         }
 
         Child child = getItem(position);
 
         // TODO: Retrieve image of child
-        ImageView childQueueIcon = convertView.findViewById(R.id.childQueueIcon);
-        childQueueIcon.setImageResource(R.drawable.ic_baseline_circle_green_200);
+        ImageView changeChildIcon = convertView.findViewById(R.id.changeChildIconList);
+        changeChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_24);
 
-        TextView childQueueNameText = convertView.findViewById(R.id.childQueueNameList);
-        String childQueueName = child.getName();
-        childQueueNameText.setText(childQueueName);
+        TextView childQueueNameText = convertView.findViewById(R.id.changeChildNameList);
+        String changeChildName = child.getName();
+        childQueueNameText.setText(changeChildName);
 
         return convertView;
     }
