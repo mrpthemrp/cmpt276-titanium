@@ -22,13 +22,14 @@ import java.util.UUID;
 public class Child {
     private final UUID uniqueID;
     private String name;
-    private final String portraitName;
+    private String portraitName;
 
-    public Child(String name, Bitmap portrait) {
+    public Child(String name, String portrait) {
         this.uniqueID = UUID.randomUUID();
         setName(name);
-        this.portraitName = "portrait_" + uniqueID.toString();
-        setPortrait(portrait);
+        this.portraitName = portrait;
+        //this.portraitName = "portrait_" + uniqueID.toString();
+        //setPortrait(portrait);
     }
 
     public UUID getUniqueID() {
@@ -52,7 +53,13 @@ public class Child {
     }
 
     public RoundedBitmapDrawable getPortrait(Resources resources) {
-        File cameraDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera");
+        Bitmap bitmap = BitmapFactory.decodeFile(portraitName);
+
+        RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
+        portraitDrawable.setCircular(true);
+
+
+        /*File cameraDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera");
         RoundedBitmapDrawable portrait = null;
 
         try {
@@ -64,13 +71,14 @@ public class Child {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
+        }*/
 
-        return portrait;
+        return portraitDrawable;
     }
 
-    public void setPortrait(Bitmap bitmap) {
-        File cameraDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera");
+    public void setPortrait(String photoPath) {
+        this.portraitName = photoPath;
+        /*File cameraDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera");
 
         try {
             if (cameraDirectory.exists() || cameraDirectory.mkdirs()) {
@@ -82,6 +90,6 @@ public class Child {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

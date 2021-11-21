@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.preference.PreferenceManager;
 
 import com.google.gson.Gson;
@@ -71,7 +72,7 @@ public class Children {
         return null;
     }
 
-    public void addChild(String name, Bitmap portrait) {
+    public void addChild(String name, String portrait) {
         Child newChild = new Child(name, portrait);
         Children.children.add(newChild);
         coinFlipHistory.updateCoinFlipHistory(true, newChild.getUniqueID());

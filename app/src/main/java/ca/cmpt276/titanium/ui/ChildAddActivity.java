@@ -36,6 +36,10 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 import ca.cmpt276.titanium.BuildConfig;
@@ -52,7 +56,7 @@ public class ChildAddActivity extends AppCompatActivity {
     private Toast toast; // prevents toast stacking
     private EditText childName;
     private boolean changesAccepted = true;
-    private Bitmap portrait;
+    private String portrait;
     private ImageView portraitView;
     private ActivityResultLauncher<Intent> startTakePhoto;
     private ActivityResultLauncher<Intent> startSelectFromGallery;
@@ -89,7 +93,7 @@ public class ChildAddActivity extends AppCompatActivity {
                                 String picturePath = cursor.getString(columnIndex);
 
                                 Bitmap portrait = BitmapFactory.decodeFile(picturePath);
-                                this.portrait = portrait;
+                                this.portrait = currentPhotoPath;
 
                                 RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(getResources(), portrait);
                                 portraitDrawable.setCircular(true);
@@ -113,7 +117,7 @@ public class ChildAddActivity extends AppCompatActivity {
                             Bitmap savedPortraitBitmap = null;
                             try {
                                 savedPortraitBitmap = BitmapFactory.decodeStream(new FileInputStream(portrait));
-                                this.portrait = savedPortraitBitmap;
+                                this.portrait = currentPhotoPath;
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             }
@@ -219,7 +223,7 @@ public class ChildAddActivity extends AppCompatActivity {
         Drawable defaultPortraitDrawable = Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.ic_baseline_circle_green_200));
         Bitmap defaultPortraitBitmap = Bitmap.createBitmap(defaultPortraitDrawable.getIntrinsicWidth(), defaultPortraitDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         Canvas defaultPortraitCanvas = new Canvas(defaultPortraitBitmap);
-        this.portrait = defaultPortraitBitmap;
+        this.portrait = currentPhotoPath;
 
         defaultPortraitDrawable.setBounds(0, 0, defaultPortraitCanvas.getWidth(), defaultPortraitCanvas.getHeight());
         defaultPortraitDrawable.draw(defaultPortraitCanvas);
@@ -263,6 +267,110 @@ public class ChildAddActivity extends AppCompatActivity {
         }
     }
 
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(currentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    }
+
+    String currentPhotoPath;
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        SimpleDateFormat timeStampFormatter = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+        Date currentDate = new Date();
+        String timeStamp = timeStampFormatter.format(currentDate.getTime());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException e) {
+                // Error occurred while creating the File
+                e.getStackTrace();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("activity result");
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            setPic();
+            galleryAddPic();
+
+            /*RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(this.getResources(), savedPortraitBitmap);
+            portraitDrawable.setCircular(true);
+
+            portraitView.setImageDrawable(portraitDrawable);
+            children.getChild(childUniqueId).setPortrait(savedPortraitBitmap);
+
+            assert portrait.delete();
+
+
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageView.setImageBitmap(imageBitmap);*/
+        }
+    }
+
+    private void setPic() {
+        // Get the dimensions of the View
+        int targetW = portraitView.getWidth();
+        int targetH = portraitView.getHeight();
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.max(1, Math.min(photoW/targetW, photoH/targetH));
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+
+        RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        portraitDrawable.setCircular(true);
+        portraitView.setImageDrawable(portraitDrawable);
+        this.portrait = currentPhotoPath;
+    }
+
     private void selectImage() {
         final String[] dialogOptions = {getString(R.string.prompt_select_image_option1), getString(R.string.prompt_select_image_option2), getString(R.string.prompt_select_image_option3)};
 
@@ -271,12 +379,14 @@ public class ChildAddActivity extends AppCompatActivity {
                 .setItems(dialogOptions, (dialog, item) -> {
                     switch (dialogOptions[item]) {
                         case "Take Photo":
-                            File cameraDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera/temp.png");
+                            dispatchTakePictureIntent();
+
+                            /*File cameraDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera/temp.png");
                             Uri photoUri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", cameraDirectory);
 
                             Intent takePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             takePhoto.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                            startTakePhoto.launch(takePhoto);
+                            startTakePhoto.launch(takePhoto);*/
                             break;
                         case "Select from Gallery":
                             startSelectFromGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
