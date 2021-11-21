@@ -82,6 +82,25 @@ public class TasksViewActivity extends AppCompatActivity {
         Button completeTask = findViewById(R.id.completeTaskButton);
         completeTask.setOnClickListener(view -> {
 
+            String child = taskManager.getListOfChildren().get(index);
+            int nextIndex = 0;
+
+            for (int i = 0; i < children.getChildren().size(); i++) {
+                if(children.getChildren().get(i).getName().equals(child)){
+                    break;
+                }
+                nextIndex++;
+            }
+            nextIndex+=1;
+
+            if(nextIndex >= children.getChildren().size()){
+                nextIndex = 0;
+            }
+
+            String nextChild = children.getChildren().get(nextIndex).getName();
+
+            taskManager.nextChild(index, nextChild);
+            finish();
         });
 
         Button cancel = findViewById(R.id.cancelTaskButton);

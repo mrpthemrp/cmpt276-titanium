@@ -2,9 +2,12 @@ package ca.cmpt276.titanium.model;
 
 import java.util.ArrayList;
 
+
 public class Tasks {
     private final ArrayList<String> listOfTasks = new ArrayList<>();
     private final ArrayList<String> childListForTasks = new ArrayList<>();
+
+    private Children children;
 
     private static final Tasks instance = new Tasks();
 
@@ -47,16 +50,12 @@ public class Tasks {
         childListForTasks.remove(index);
     }
 
-    public void editChild(int index, String newName){
-        childListForTasks.set(index, newName);
+    public void nextChild(int index, String nextChild){
+        childListForTasks.set(index, nextChild);
     }
 
     public String getChild(int index){
         return childListForTasks.get(index);
-    }
-
-    public int numberOfChildren(){
-        return childListForTasks.size();
     }
 
     public ArrayList<String> getListOfChildren() {

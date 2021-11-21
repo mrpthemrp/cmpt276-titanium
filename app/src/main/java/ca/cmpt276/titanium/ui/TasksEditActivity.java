@@ -75,8 +75,9 @@ public class TasksEditActivity extends AppCompatActivity {
                 return;
             }
             String task = userTaskInput.getText().toString();
-            taskManager.addTask(task);
-            taskManager.addChild("Nobody");
+            taskManager.editTask(index, task);
+            // TODO: need to fix edit for child (as it replaces the index, so it will be there twice and the other child is gone
+            //taskManager.nextChild(index);
             finish();
         });
     }
@@ -112,7 +113,7 @@ public class TasksEditActivity extends AppCompatActivity {
             String task = userTaskInput.getText().toString();
             taskManager.editTask(index, task);
             // TODO: need to fix edit for child (as it replaces the index, so it will be there twice and the other child is gone)
-            taskManager.editChild(index, child);
+            //taskManager.nextChild(index);
             finish();
         });
     }
