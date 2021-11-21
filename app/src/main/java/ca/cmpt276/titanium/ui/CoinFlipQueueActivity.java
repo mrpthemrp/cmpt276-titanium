@@ -85,12 +85,19 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
     }
 
     private void updateGUI() {
-        // TODO: Add child icon when finished
         ImageView currentChildIcon = findViewById(R.id.currentChildTurnIcon);
         TextView currentChildTurnName = findViewById(R.id.currentChildTurnText);
 
-        // TODO: Implement queue of children
-        currentChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_24);
-        currentChildTurnName.setText(R.string.currentChildName);
+        Child currentChildTurn = childrenQueue.getChild(coinFlipHistory.getNextPickerUniqueID());
+        if (currentChildTurn != null) {
+            currentChildTurnName.setText(currentChildTurn.getName());
+            // TODO: Add child icon when finished
+            currentChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_24);
+        } else {
+            currentChildTurnName.setText(R.string.currentChildName);
+            currentChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_24);
+        }
+
+
     }
 }
