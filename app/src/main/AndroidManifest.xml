@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.cmpt276.titanium">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -14,6 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_custom_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Titanium">
+        <activity
+            android:name=".ui.HelpActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -33,7 +36,7 @@
             android:name=".ui.ChangeChildActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="false"
-            android:parentActivityName=".ui.CoinFlipQueueActivity"/>
+            android:parentActivityName=".ui.CoinFlipQueueActivity" />
         <activity
             android:name=".ui.CoinFlipQueueActivity"
             android:configChanges="keyboard|keyboardHidden"

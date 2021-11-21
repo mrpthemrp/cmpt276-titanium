@@ -3,10 +3,12 @@ package ca.cmpt276.titanium.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -55,6 +57,19 @@ public class MenuActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         displayChildren();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        } else if (item.getItemId() == R.id.optionsHelp) {
+            startActivity(HelpActivity.makeIntent(this));
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     private void displayChildren() {
