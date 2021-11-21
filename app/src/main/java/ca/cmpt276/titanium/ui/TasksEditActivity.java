@@ -4,10 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +17,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.Tasks;
 
@@ -58,25 +55,16 @@ public class TasksEditActivity extends AppCompatActivity {
         TextView titleAddText = findViewById(R.id.titleAddText);
         titleAddText.setText("Edit Name of Task:");
         userTaskInput = findViewById(R.id.userTaskName);
-
-        if (taskManager.getListOfChildren().size() > 0) {
-            UUID Id = taskManager.getChildID(index);
-            String name = children.getChild(Id).getName();
-            userTaskInput.setText(name);
-        } else {
-            userTaskInput.setText("Nobody");
-        }
+        userTaskInput.setText(taskManager.getTask(index));
 
         extractIntentData();
 
         this.children = Children.getInstance(this);
         setUpButton();
-        displayChildren();
-
     }
 
     private void setUpButton() {
-        saveTaskButton = findViewById(R.id.saveTaskNoChildren);
+        saveTaskButton = findViewById(R.id.saveTask);
         saveTaskButton.setOnClickListener(view -> {
             if (userTaskInput.getText().toString().isEmpty()) {
                 Toast.makeText(TasksEditActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();
@@ -91,36 +79,6 @@ public class TasksEditActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        displayChildren();
-    }
-
-    private void displayChildren() {
-        if (children.getChildren().size() == 0) {
-            findViewById(R.id.menuTextChildrenList).setVisibility(View.VISIBLE);
-            saveTaskButton.setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.menuTextChildrenList).setVisibility(View.INVISIBLE);
-            saveTaskButton.setVisibility(View.INVISIBLE);
-        }
-
-        ListView childrenListView = findViewById(R.id.childrenList);
-        MenuChildrenListAdapter adapter = new MenuChildrenListAdapter(this, children.getChildren());
-        childrenListView.setAdapter(adapter);
-        childrenListView.setClickable(true);
-
-        childrenListView.setOnItemClickListener((parent, view, position, id) -> {
-            Child child = children.getChildren().get(position);
-
-            if (userTaskInput.getText().toString().isEmpty()) {
-                Toast.makeText(TasksEditActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            String task = userTaskInput.getText().toString();
-            taskManager.editTask(index, task);
-            taskManager.editChild(index, child);
-            finish();
-        });
     }
 
     @Override

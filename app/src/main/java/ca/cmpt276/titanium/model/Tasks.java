@@ -46,11 +46,10 @@ public class Tasks {
     }
 
     public void removeChild(int index) {
+        if(childListForTasks.size() == 0){
+            return;
+        }
         childListForTasks.remove(index);
-    }
-
-    public void nextChild(int index, Child nextChild) {
-        childListForTasks.set(index, nextChild);
     }
 
     public UUID getChildID(int index){
@@ -58,6 +57,20 @@ public class Tasks {
             index = 0;
         }
         return childListForTasks.get(index).getUniqueID();
+    }
+
+    public void updateChild(UUID Id, Child child, int size){
+        if(size == 1){
+            for(int i = 0; i < childListForTasks.size(); i++){
+                removeChild(i);
+            }
+            return;
+        }
+        for(int i = 0; i < childListForTasks.size(); i++){
+            if(childListForTasks.get(i).getUniqueID().equals(Id)){
+                childListForTasks.set(i, child);
+            }
+        }
     }
 
     public void editChild(int index, Child newName) {

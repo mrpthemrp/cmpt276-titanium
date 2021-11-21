@@ -22,6 +22,7 @@ public class Children {
     private static Children instance;
     private static SharedPreferences prefs;
     private static CoinFlipHistory coinFlipHistory;
+    private static final Tasks taskManager = Tasks.getInstance();
 
     private static ArrayList<Child> children = new ArrayList<>();
 
@@ -79,6 +80,14 @@ public class Children {
             for (int i = 0; i < children.size(); i++) {
                 if (uniqueID.equals(children.get(i).getUniqueID())) {
                     coinFlipHistory.updateCoinFlipHistory(false, uniqueID);
+                    int nextChild = i;
+                    nextChild+=1;
+
+                    if(nextChild >= children.size()){
+                        nextChild = 0;
+                    }
+                    Child child = children.get(nextChild);
+                    taskManager.updateChild(uniqueID, child, children.size());
                     Children.children.remove(i);
                     saveData();
                     break;

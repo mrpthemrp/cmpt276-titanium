@@ -73,8 +73,16 @@ public class TasksViewActivity extends AppCompatActivity {
         TextView childName = findViewById(R.id.childNameText);
         TextView taskName = findViewById(R.id.taskNameText);
 
-        UUID Id = taskManager.getChildID(index);
-        String name = children.getChild(Id).getName();
+        String name = "";
+
+        if(taskManager.getListOfChildren().size() > 0){
+            UUID Id = taskManager.getChildID(index);
+            name = children.getChild(Id).getName();
+        }
+        else{
+            name = "Nobody";
+        }
+
         String task = taskManager.getTask(index);
 
         childName.setText(name);
@@ -87,30 +95,28 @@ public class TasksViewActivity extends AppCompatActivity {
         Button completeTask = findViewById(R.id.completeTaskButton);
         completeTask.setOnClickListener(view -> {
 
-            UUID Id = taskManager.getChildID(index);
-            Child nextChild;
+            if(children.getChildren().size() > 0 && taskManager.getListOfChildren().size() > 0){
+                // first get index of selected child
+                UUID childID = taskManager.getChildID(index);
 
-            int nextIndex = 0;
-
-            for (int i = 0; i < children.getChildren().size(); i++) {
-                if (children.getChildren().get(i).getUniqueID().equals(Id)) {
-                    break;
+                // get child to the next index in the array of children
+                int nextIndex = 0;
+                for(int i = 0; i < children.getChildren().size(); i++){
+                    if(children.getChildren().get(i).getUniqueID().equals(childID)){
+                        nextIndex = i;
+                    }
                 }
                 nextIndex++;
-            }
+                if(nextIndex >= children.getChildren().size()){
+                    nextIndex = 0;
+                }
 
-            nextIndex++;
+                Child nextChild = children.getChildren().get(nextIndex);
 
-            if (nextIndex >= children.getChildren().size()) {
-                nextIndex = 0;
-            }
-
-            if (children.getChildren().size() > 0) {
-                nextChild = children.getChildren().get(nextIndex);
-                taskManager.nextChild(index, nextChild);
+                // update the array of selected children
+                taskManager.editChild(index, nextChild);
             }
             finish();
-
         });
 
         Button cancel = findViewById(R.id.cancelTaskButton);

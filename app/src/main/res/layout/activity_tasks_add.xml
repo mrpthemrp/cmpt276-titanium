@@ -35,20 +35,6 @@
         app:layout_constraintTop_toBottomOf="@+id/customToolBar"
         app:layout_constraintVertical_bias="0.21" />
 
-    <TextView
-        android:id="@+id/titleSelectChild"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="350dp"
-        android:text="Select Child For The Task: "
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userTaskName" />
-
     <EditText
         android:id="@+id/userTaskName"
         android:layout_width="253dp"
@@ -62,42 +48,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleAddText" />
 
-    <ListView
-        android:id="@+id/childrenList"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="25dp"
-        android:divider="?attr/colorOnPrimary"
-        android:dividerHeight="10dp"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleSelectChild"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <TextView
-        android:id="@+id/menuTextChildrenList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:text="@string/menuChildrenText"
-        android:textColor="?attr/colorPrimary"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleSelectChild" />
-
     <Button
-        android:id="@+id/saveTaskNoChildren"
+        android:id="@+id/saveTask"
         android:layout_width="122dp"
         android:layout_height="54dp"
         android:text="add task"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menuTextChildrenList"
+        app:layout_constraintTop_toBottomOf="@+id/userTaskName"
         tools:ignore="TextContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -93,7 +94,6 @@ public class TasksActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public void set() {
         taskList = taskManager.getListOfTasks();
     }
@@ -124,23 +124,12 @@ public class TasksActivity extends AppCompatActivity {
             String task = taskList.get(position);
             String name = "";
 
-            if (taskManager.getListOfChildren().size() != 0 && children.getChildren().size() != 0) {
+            if (children.getChildren().size() != 0) {
+                if(taskManager.getListOfChildren().size() == 0){
+                    taskManager.addChild(children.getChildren().get(0));
+                }
                 UUID Id = taskManager.getChildID(position);
-                boolean isFound = false;
-
-                for (int i = 0; i < children.getChildren().size(); i++) {
-                    if (children.getChildren().get(i).getUniqueID().equals(Id)) {
-                        name = children.getChild(Id).getName();
-                        isFound = true;
-                        break;
-                    }
-                }
-
-                if (!isFound) {
-                    taskManager.removeChild(position);
-                    UUID nextChildID = taskManager.getChildID(position);
-                    name = children.getChild(nextChildID).getName();
-                }
+                name = children.getChild(Id).getName();
             } else {
                 name = "Nobody";
             }
