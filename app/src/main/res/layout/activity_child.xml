@@ -39,7 +39,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_person_black_150" />
+            app:srcCompat="@drawable/ic_baseline_circle_green_200" />
 
         <EditText
             android:id="@+id/childName"

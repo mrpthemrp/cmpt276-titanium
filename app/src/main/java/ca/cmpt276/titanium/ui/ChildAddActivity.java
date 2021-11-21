@@ -214,7 +214,7 @@ public class ChildAddActivity extends AppCompatActivity {
             }
         });
 
-        Drawable defaultPortraitDrawable = Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.ic_baseline_circle_green_150));
+        Drawable defaultPortraitDrawable = Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.ic_baseline_circle_green_200));
         Bitmap defaultPortraitBitmap = Bitmap.createBitmap(defaultPortraitDrawable.getIntrinsicWidth(), defaultPortraitDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         Canvas defaultPortraitCanvas = new Canvas(defaultPortraitBitmap);
         this.portrait = defaultPortraitBitmap;

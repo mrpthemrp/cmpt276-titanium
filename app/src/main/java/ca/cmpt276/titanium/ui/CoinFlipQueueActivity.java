@@ -79,7 +79,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
         TextView currentChildTurnName = findViewById(R.id.currentChildTurnText);
 
         // TODO: Implement queue of children
-        currentChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_150);
+        currentChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_200);
         currentChildTurnName.setText(R.string.currentChildName);
     }
 }
