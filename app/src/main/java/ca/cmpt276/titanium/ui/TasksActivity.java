@@ -19,16 +19,18 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
+import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.Tasks;
 
 public class TasksActivity extends AppCompatActivity {
 
     private ArrayList<String> taskList = new ArrayList<>();
-    private ArrayList<Child> childList = new ArrayList<>();
     private Tasks taskManager;
+    private Children children;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, TasksActivity.class);
@@ -39,6 +41,7 @@ public class TasksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
         setTitle(R.string.whoseTurn);
+        this.children = Children.getInstance(this);
 
         taskManager = Tasks.getInstance();
         checkTaskList();
@@ -90,9 +93,9 @@ public class TasksActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public void set() {
         taskList = taskManager.getListOfTasks();
-        childList = taskManager.getListOfChildren();
     }
 
     private void populate() {
@@ -111,6 +114,7 @@ public class TasksActivity extends AppCompatActivity {
         @SuppressLint("SetTextI18n")
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
             View taskItemView = convertView;
 
             if (taskItemView == null) {
@@ -118,7 +122,15 @@ public class TasksActivity extends AppCompatActivity {
             }
 
             String task = taskList.get(position);
-            String name = taskManager.getListOfChildren().get(position).getName();
+            String name;
+
+            if(taskManager.getListOfChildren().size() != 0 && children.getChildren().size() != 0){
+                UUID Id = taskManager.getChildID(position);
+                name = children.getChild(Id).getName();
+            }
+            else{
+                name = "Nobody";
+            }
 
             TextView taskName = taskItemView.findViewById(R.id.taskNameInList);
             taskName.setText("Task: " + task);

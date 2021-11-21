@@ -1,6 +1,7 @@
 package ca.cmpt276.titanium.model;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 
 public class Tasks {
@@ -52,8 +53,11 @@ public class Tasks {
         childListForTasks.set(index, nextChild);
     }
 
-    public String getChild(int index) {
-        return childListForTasks.get(index).getName();
+    public UUID getChildID(int index){
+        if(index >= childListForTasks.size()){
+            index = 0;
+        }
+        return childListForTasks.get(index).getUniqueID();
     }
 
     public void editChild(int index, Child newName) {

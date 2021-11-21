@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
@@ -84,10 +85,12 @@ public class TasksAddActivity extends AppCompatActivity {
         childrenListView.setClickable(true);
 
         childrenListView.setOnItemClickListener((parent, view, position, id) -> {
+
             position += 1;
             if (position >= children.getChildren().size()) {
                 position = 0;
             }
+
             Child child = children.getChildren().get(position);
 
             if (userTaskInput.getText().toString().isEmpty()) {

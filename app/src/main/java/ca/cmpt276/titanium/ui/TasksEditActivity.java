@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
@@ -57,7 +58,10 @@ public class TasksEditActivity extends AppCompatActivity {
         TextView titleAddText = findViewById(R.id.titleAddText);
         titleAddText.setText("Edit Name of Task:");
         userTaskInput = findViewById(R.id.userTaskName);
-        userTaskInput.setText(taskManager.getTask(index));
+
+        UUID Id = taskManager.getChildID(index);
+        String name = children.getChild(Id).getName();
+        userTaskInput.setText(name);
 
         extractIntentData();
 

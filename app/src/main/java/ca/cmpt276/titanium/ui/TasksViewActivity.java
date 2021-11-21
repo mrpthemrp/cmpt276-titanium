@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
@@ -72,24 +73,27 @@ public class TasksViewActivity extends AppCompatActivity {
         TextView childName = findViewById(R.id.childNameText);
         TextView taskName = findViewById(R.id.taskNameText);
 
-        String name = taskManager.getChild(index);
+        UUID Id = taskManager.getChildID(index);
+        String name = children.getChild(Id).getName();
         String task = taskManager.getTask(index);
 
         childName.setText(name);
         taskName.setText(task);
+
+        // TODO: Add image here from ID Above (UUID Id)
     }
 
     private void setUpButtons() {
         Button completeTask = findViewById(R.id.completeTaskButton);
         completeTask.setOnClickListener(view -> {
 
-            String child = taskManager.getListOfChildren().get(index).getName();
+            UUID Id = taskManager.getListOfChildren().get(index).getUniqueID();
             Child nextChild;
 
             int nextIndex = 0;
 
             for (int i = 0; i < children.getChildren().size(); i++) {
-                if (children.getChildren().get(i).getName().equals(child)) {
+                if (children.getChildren().get(i).getUniqueID().equals(Id)) {
                     break;
                 }
                 nextIndex++;
@@ -101,21 +105,12 @@ public class TasksViewActivity extends AppCompatActivity {
                 nextIndex = 0;
             }
 
-            if (!child.equals("Nobody")) {
-                if (children.getChildren().size() > 0) {
-                    nextChild = children.getChildren().get(nextIndex);
-                    taskManager.nextChild(index, nextChild);
-                } else {
-                    //taskManager.nextChild(index, "Nobody");
-                }
-            } else {
-                if (children.getChildren().size() > 0) {
-                    nextIndex = 0;
-                    nextChild = children.getChildren().get(nextIndex);
-                    taskManager.nextChild(index, nextChild);
-                }
+            if (children.getChildren().size() > 0) {
+                nextChild = children.getChildren().get(nextIndex);
+                taskManager.nextChild(index, nextChild);
             }
             finish();
+
         });
 
         Button cancel = findViewById(R.id.cancelTaskButton);
