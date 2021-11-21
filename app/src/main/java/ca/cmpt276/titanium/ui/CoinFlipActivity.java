@@ -63,6 +63,12 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        updateGUI(coinChosen);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_coin_flip, menu);
         return true;
