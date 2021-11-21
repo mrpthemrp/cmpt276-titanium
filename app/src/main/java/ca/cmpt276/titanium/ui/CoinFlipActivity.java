@@ -101,6 +101,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void updateGUI(Coin coinChosen) {
+        ImageView childIconDisplay = findViewById(R.id.coinFlipChildIcon);
         TextView childNameDisplay = findViewById(R.id.childTurnText);
         TextView sideChosenDisplay = findViewById(R.id.sideChosenText);
         Button headsButton = findViewById(R.id.headsButton);
@@ -110,6 +111,8 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         if (nextPickerUniqueID != null) {
             Children children = Children.getInstance(this);
+            // TODO: Add child icon when finished
+            childIconDisplay.setImageResource(R.drawable.ic_baseline_circle_green_24);
             childNameDisplay.setText(getString(R.string.childTurn, children.getChild(nextPickerUniqueID).getName()));
             sideChosenDisplay.setText(getString(R.string.coinSideChosen, coinChosen.toString()));
             this.coinChosen = coinChosen;
