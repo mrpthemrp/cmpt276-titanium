@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 
 import java.util.List;
 
@@ -20,9 +21,11 @@ import ca.cmpt276.titanium.model.Child;
  * This is an adapter for the children list.
  */
 public class ChangeChildAdapter extends ArrayAdapter<Child> {
+    private Context context;
 
     public ChangeChildAdapter(Context context, List<Child> children) {
         super(context, 0, children);
+        this.context = context;
     }
 
     @NonNull
@@ -34,9 +37,9 @@ public class ChangeChildAdapter extends ArrayAdapter<Child> {
 
         Child child = getItem(position);
 
-        // TODO: Retrieve image of child
+        RoundedBitmapDrawable drawable = child.getPortrait(context.getResources());
         ImageView changeChildIcon = convertView.findViewById(R.id.changeChildIconList);
-        changeChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_200);
+        changeChildIcon.setImageDrawable(drawable);
 
         TextView childQueueNameText = convertView.findViewById(R.id.changeChildNameList);
         String changeChildName = child.getName();
