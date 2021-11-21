@@ -24,7 +24,6 @@ public class ChildrenQueue {
     private static SharedPreferences prefs;
 
     private static ArrayList<Child> childrenQueue = new ArrayList<>();
-    private static CoinFlipHistory coinFlipHistory;
 
     private ChildrenQueue(Context context) {
         ChildrenQueue.prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -33,7 +32,6 @@ public class ChildrenQueue {
     public static ChildrenQueue getInstance(Context context) {
         if (instance == null) {
             ChildrenQueue.instance = new ChildrenQueue(context);
-            ChildrenQueue.coinFlipHistory = CoinFlipHistory.getInstance(context);
         }
 
         loadSavedData();
