@@ -17,7 +17,7 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 
 /**
- * This is an adapter for the children list.
+ * This is an adapter for the coin flip queue list.
  */
 public class CoinFlipQueueAdapter extends ArrayAdapter<Child> {
 

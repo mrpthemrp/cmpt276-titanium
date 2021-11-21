@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+/**
+ * This class represents the children queue.
+ */
 public class ChildrenQueue {
     private static final Gson GSON = new Gson();
     private static final String CHILDREN_QUEUE_JSON_KEY = "childrenQueueJson";

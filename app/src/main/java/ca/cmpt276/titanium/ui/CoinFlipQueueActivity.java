@@ -25,6 +25,9 @@ import ca.cmpt276.titanium.model.ChildrenQueue;
 import ca.cmpt276.titanium.model.Coin;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
 
+/**
+ * This activity represents the coin flip queue.
+ */
 public class CoinFlipQueueActivity extends AppCompatActivity {
     private Children children;
     private ChildrenQueue childrenQueue;

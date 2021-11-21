@@ -16,10 +16,13 @@ import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.ChildrenQueue;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
 
+/**
+ * This activity represents the children list.
+ * Allows the user to change the current child turn.
+ */
 public class ChangeChildActivity extends AppCompatActivity {
     private Children children;
     private ChildrenQueue childrenQueue;
-    private CoinFlipHistory coinFlipHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,6 @@ public class ChangeChildActivity extends AppCompatActivity {
 
         this.children = Children.getInstance(this);
         this.childrenQueue = ChildrenQueue.getInstance(this);
-        this.coinFlipHistory = CoinFlipHistory.getInstance(this);
 
         displayChildrenList();
     }
