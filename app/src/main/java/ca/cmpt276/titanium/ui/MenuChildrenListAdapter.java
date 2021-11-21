@@ -36,7 +36,7 @@ public class MenuChildrenListAdapter extends ArrayAdapter<Child> {
 
         // TODO: Retrieve image of child
         ImageView childIcon = convertView.findViewById(R.id.childIcon);
-        childIcon.setImageResource(R.drawable.ic_baseline_circle_green_24);
+        childIcon.setImageResource(R.drawable.ic_baseline_circle_green_150);
 
         TextView childTextView = convertView.findViewById(R.id.childNameList);
         String childName = child.getName();

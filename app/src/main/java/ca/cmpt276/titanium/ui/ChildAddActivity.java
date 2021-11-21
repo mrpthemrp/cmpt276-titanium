@@ -2,7 +2,15 @@ package ca.cmpt276.titanium.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -11,15 +19,26 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Objects;
 
+import ca.cmpt276.titanium.BuildConfig;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
 
@@ -31,6 +50,10 @@ public class ChildAddActivity extends AppCompatActivity {
     private Toast toast; // prevents toast stacking
     private EditText childName;
     private boolean changesAccepted = true;
+    private Bitmap portrait;
+    private ImageView imageView;
+    private ActivityResultLauncher<Intent> startTakePicture;
+    private ActivityResultLauncher<Intent> startChooseFromGallery;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, ChildAddActivity.class);
@@ -45,8 +68,91 @@ public class ChildAddActivity extends AppCompatActivity {
         this.children = Children.getInstance(this);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
 
+        Drawable defaultPortraitDrawable = Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.ic_baseline_circle_green_150));
+        Bitmap defaultPortraitBitmap = Bitmap.createBitmap(defaultPortraitDrawable.getIntrinsicWidth(), defaultPortraitDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas defaultPortraitCanvas = new Canvas(defaultPortraitBitmap);
+        defaultPortraitDrawable.setBounds(0, 0, defaultPortraitCanvas.getWidth(), defaultPortraitCanvas.getHeight());
+        defaultPortraitDrawable.draw(defaultPortraitCanvas);
+
+        Bitmap newBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_person_black_150); //Source: http://www.onlinewebfonts.com
+        this.imageView = findViewById(R.id.addProfilePic);
+        RoundedBitmapDrawable newDrawable = RoundedBitmapDrawableFactory.create(getResources(), newBitmap);
+        newDrawable.setCircular(true);
+        this.portrait = newBitmap;
+        imageView.setImageDrawable(newDrawable);
+
         setupInputFields();
         setupButtons();
+
+        ImageView editIcon = findViewById(R.id.editIcon);
+        editIcon.setVisibility(View.VISIBLE);
+
+        imageView.setAlpha(0.75f);
+        imageView.setClickable(true);
+
+        imageView.setOnClickListener(view -> selectImage());
+
+        this.startChooseFromGallery = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
+                        Intent data = result.getData();
+                        Uri selectedImage =  Objects.requireNonNull(data).getData();
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                        if (selectedImage != null) {
+                            Cursor cursor = getContentResolver().query(selectedImage,
+                                    filePathColumn, null, null, null);
+                            if (cursor != null) {
+                                cursor.moveToFirst();
+
+                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                                String picturePath = cursor.getString(columnIndex);
+
+                                Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
+                                this.portrait = bitmap;
+
+                                RoundedBitmapDrawable mDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+                                mDrawable.setCircular(true);
+
+                                this.portrait = bitmap;
+
+                                imageView.setImageDrawable(mDrawable);
+                                cursor.close();
+                            }
+                        }
+                    }
+                });
+
+        this.startTakePicture = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
+                        String cameraDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera";
+                        File file = new File(cameraDirectory, "temp" + ".png");
+
+                        Bitmap savedPortraitBitmap = null;
+                        try {
+                            savedPortraitBitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+                        this.portrait = savedPortraitBitmap;
+
+                        RoundedBitmapDrawable portrait = RoundedBitmapDrawableFactory.create(this.getResources(), savedPortraitBitmap);
+                        portrait.setCircular(true);
+
+                        imageView.setImageDrawable(portrait);
+
+                        assert file.delete();
+
+                        // TODO: Delete photo from device if child deleted
+                        // TODO: Store photos in separate location from D C I M/Camera?
+                        // TODO: like when taking photo, store a default photo as if it was from camera app
+                        // TODO: Then copy that into practical parent directory for use/deletion as required?
+                        // TODO: Go back to default image if user deletes portrait photo for a given child via files app or something
+                    }
+                });
     }
 
     @Override
@@ -67,7 +173,7 @@ public class ChildAddActivity extends AppCompatActivity {
     private void setupActionBar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle(R.string.menuAdd);
+        setTitle(R.string.title_child_add);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
@@ -96,13 +202,13 @@ public class ChildAddActivity extends AppCompatActivity {
 
         saveButton.setOnClickListener(view -> {
             if (childName.getText().toString().equals("")) {
-                updateToast(getString(R.string.name_field_empty_toast));
+                updateToast(getString(R.string.toast_no_name));
             } else if (nameContainsOnlyLetters(childName.getText().toString())) {
-                children.addChild(childName.getText().toString());
-                updateToast(getString(R.string.add_child_toast));
+                children.addChild(this, ChildAddActivity.this, childName.getText().toString(), portrait);
+                updateToast(getString(R.string.toast_child_saved));
                 finish();
             } else {
-                updateToast(getString(R.string.name_with_non_letter_characters_toast));
+                updateToast(getString(R.string.toast_invalid_name));
             }
         });
 
@@ -147,16 +253,43 @@ public class ChildAddActivity extends AppCompatActivity {
         if (!changesAccepted) {
             new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_baseline_warning_black_24)
-                    .setTitle(R.string.discard_changes_title)
-                    .setMessage(R.string.discard_changes_message)
-                    .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
-                        updateToast(getString(R.string.changes_discarded_toast));
+                    .setTitle(R.string.prompt_discard_changes_title)
+                    .setMessage(R.string.prompt_discard_changes_message)
+                    .setPositiveButton(R.string.prompt_discard_changes_positive, (dialog, which) -> {
+                        updateToast(getString(R.string.toast_changes_discarded));
                         finish();
                     })
-                    .setNegativeButton(R.string.prompt_negative, null)
+                    .setNegativeButton(R.string.prompt_discard_changes_negative, null)
                     .show();
         } else {
             finish();
         }
+    }
+
+    private void selectImage() {
+        final String[] dialogOptions = {"Take Photo", "Select from Gallery", "Cancel"};
+
+        new android.app.AlertDialog.Builder(this)
+                .setTitle("Add Portrait")
+                .setItems(dialogOptions, (dialog, item) -> {
+                    switch (dialogOptions[item]) {
+                        case "Take Photo":
+                            Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            String cameraDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera/temp.png";
+
+                            Uri photoURI = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", new File(cameraDirectory));
+                            takePicture.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+
+                            startTakePicture.launch(takePicture);
+                            break;
+                        case "Choose from Gallery":
+                            Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startChooseFromGallery.launch(pickPhoto);
+                            break;
+                        case "Cancel":
+                            dialog.dismiss();
+                            break;
+                    }
+                }).show();
     }
 }

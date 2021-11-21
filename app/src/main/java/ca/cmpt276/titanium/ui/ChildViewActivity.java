@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -26,7 +29,7 @@ import ca.cmpt276.titanium.model.Children;
 public class ChildViewActivity extends AppCompatActivity {
     private static final String CHILD_UNIQUE_ID_INTENT = "childUniqueID";
 
-    private final Children children = Children.getInstance(this);
+    private Children children;
     private Toast toast; // prevents toast stacking
     private UUID childUniqueId;
     private Child childBeingViewed;
@@ -45,9 +48,21 @@ public class ChildViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child);
         setupActionBar();
 
+        this.children = Children.getInstance(this);
+
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
         this.childUniqueId = (UUID) getIntent().getSerializableExtra(CHILD_UNIQUE_ID_INTENT);
         this.childBeingViewed = children.getChild(childUniqueId);
+
+        RoundedBitmapDrawable image = null;
+        try {
+            image = children.getChild(childUniqueId).getPortrait(this, ChildViewActivity.this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ImageView imageView = findViewById(R.id.addProfilePic);
+        imageView.setImageDrawable(image);
     }
 
     @Override
@@ -83,7 +98,7 @@ public class ChildViewActivity extends AppCompatActivity {
     private void setupActionBar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle(R.string.menuViewChild);
+        setTitle(R.string.title_child_view);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
@@ -102,14 +117,14 @@ public class ChildViewActivity extends AppCompatActivity {
     private void launchDeleteChildPrompt() {
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_baseline_delete_black_24)
-                .setTitle(getString(R.string.delete_child_prompt_title) + childBeingViewed.getName())
-                .setMessage(R.string.delete_child_prompt_message)
-                .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
+                .setTitle(getString(R.string.prompt_delete_child_title, childBeingViewed.getName()))
+                .setMessage(R.string.prompt_delete_child_message)
+                .setPositiveButton(R.string.prompt_discard_changes_positive, (dialog, which) -> {
                     children.removeChild(childBeingViewed.getUniqueID());
-                    updateToast(getString(R.string.delete_child_prompt_toast));
+                    updateToast(getString(R.string.toast_child_deleted));
                     finish();
                 })
-                .setNegativeButton(R.string.prompt_negative, null)
+                .setNegativeButton(R.string.prompt_discard_changes_negative, null)
                 .show();
     }
 }

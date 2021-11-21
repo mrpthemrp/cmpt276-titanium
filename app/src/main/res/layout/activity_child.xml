@@ -20,16 +20,60 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="?attr/colorOnSecondary" />
 
-    <ImageView
-        android:id="@+id/addProfilePic"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:contentDescription="@string/circleContentDescription"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:srcCompat="@drawable/ic_baseline_circle_green_24" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <ImageView
+            android:id="@+id/addProfilePic"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/content_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_person_black_150" />
+
+        <EditText
+            android:id="@+id/childName"
+            android:layout_width="195dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="24dp"
+            android:autofillHints="autofillHints"
+            android:background="@android:color/transparent"
+            android:cursorVisible="false"
+            android:enabled="false"
+            android:fontFamily="sans-serif-medium"
+            android:hint="@string/hint_child_name"
+            android:inputType="textCapWords"
+            android:minHeight="48dp"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="?attr/colorPrimaryVariant"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/addProfilePic"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/editIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_baseline_edit_white_24"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/addProfilePic"
+            app:layout_constraintEnd_toEndOf="@+id/addProfilePic"
+            app:layout_constraintStart_toStartOf="@+id/addProfilePic"
+            app:layout_constraintTop_toTopOf="@+id/addProfilePic"
+            android:contentDescription="@string/content_description" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/viewFunctionBtn"
@@ -38,47 +82,12 @@
         android:layout_marginBottom="45dp"
         android:background="@drawable/style_rounded_button_20"
         android:backgroundTint="?attr/colorPrimary"
-        android:text="@string/viewSave"
+        android:text="@string/button_save"
         android:textColor="?attr/colorOnPrimary"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
-
-    <EditText
-        android:id="@+id/childName"
-        android:layout_width="195dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="20dp"
-        android:autofillHints="@string/viewDummyText"
-        android:background="@android:color/transparent"
-        android:cursorVisible="false"
-        android:enabled="false"
-        android:fontFamily="sans-serif-medium"
-        android:hint="@string/viewDummyText"
-        android:inputType="textCapWords"
-        android:minHeight="48dp"
-        android:textAlignment="viewStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="?attr/colorPrimaryVariant"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/addProfilePic"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <ScrollView
-        android:id="@+id/viewHistory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addProfilePic"
-        tools:ignore="SpeakableTextPresentCheck">
-
-    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
