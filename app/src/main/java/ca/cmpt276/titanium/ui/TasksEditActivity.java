@@ -59,9 +59,13 @@ public class TasksEditActivity extends AppCompatActivity {
         titleAddText.setText("Edit Name of Task:");
         userTaskInput = findViewById(R.id.userTaskName);
 
-        UUID Id = taskManager.getChildID(index);
-        String name = children.getChild(Id).getName();
-        userTaskInput.setText(name);
+        if (taskManager.getListOfChildren().size() > 0) {
+            UUID Id = taskManager.getChildID(index);
+            String name = children.getChild(Id).getName();
+            userTaskInput.setText(name);
+        } else {
+            userTaskInput.setText("Nobody");
+        }
 
         extractIntentData();
 
@@ -80,7 +84,6 @@ public class TasksEditActivity extends AppCompatActivity {
             }
             String task = userTaskInput.getText().toString();
             taskManager.editTask(index, task);
-            //taskManager.editChild(index, "Nobody");
             finish();
         });
     }

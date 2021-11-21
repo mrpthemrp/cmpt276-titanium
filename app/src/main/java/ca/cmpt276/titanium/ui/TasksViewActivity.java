@@ -87,7 +87,7 @@ public class TasksViewActivity extends AppCompatActivity {
         Button completeTask = findViewById(R.id.completeTaskButton);
         completeTask.setOnClickListener(view -> {
 
-            UUID Id = taskManager.getListOfChildren().get(index).getUniqueID();
+            UUID Id = taskManager.getChildID(index);
             Child nextChild;
 
             int nextIndex = 0;
