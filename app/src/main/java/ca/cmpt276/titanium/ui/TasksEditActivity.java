@@ -25,13 +25,12 @@ public class TasksEditActivity extends AppCompatActivity {
 
     private static final String INDEX = "EditClicked";
     private int index;
-    private boolean changesAccepted = true;
     private Children children;
     private Button saveTaskButton;
     private EditText userTaskInput;
     private Tasks taskManager;
 
-    public static Intent makeIntent(Context context, int index){
+    public static Intent makeIntent(Context context, int index) {
         Intent intent = new Intent(context, TasksEditActivity.class);
         intent.putExtra(INDEX, index);
         return intent;
@@ -67,10 +66,10 @@ public class TasksEditActivity extends AppCompatActivity {
 
     }
 
-    private void setUpButton(){
+    private void setUpButton() {
         saveTaskButton = findViewById(R.id.saveTaskNoChildren);
         saveTaskButton.setOnClickListener(view -> {
-            if(userTaskInput.getText().toString().isEmpty()){
+            if (userTaskInput.getText().toString().isEmpty()) {
                 Toast.makeText(TasksEditActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -102,9 +101,9 @@ public class TasksEditActivity extends AppCompatActivity {
         childrenListView.setClickable(true);
 
         childrenListView.setOnItemClickListener((parent, view, position, id) -> {
-            String child =  children.getChildren().get(position).getName();
+            String child = children.getChildren().get(position).getName();
 
-            if(userTaskInput.getText().toString().isEmpty()){
+            if (userTaskInput.getText().toString().isEmpty()) {
                 Toast.makeText(TasksEditActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -122,20 +121,17 @@ public class TasksEditActivity extends AppCompatActivity {
     }
 
     private void launchDiscardChangesPrompt() {
-        if (!changesAccepted) {
-            new AlertDialog.Builder(this)
-                    .setIcon(R.drawable.ic_baseline_warning_black_24)
-                    .setTitle(R.string.discard_changes_title)
-                    .setMessage(R.string.discard_changes_message)
-                    .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
-                        Toast.makeText(TasksEditActivity.this, R.string.changes_discarded_toast, Toast.LENGTH_SHORT).show();
-                        finish();
-                    })
-                    .setNegativeButton(R.string.prompt_negative, null)
-                    .show();
-        } else {
-            finish();
-        }
-    }
 
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_baseline_warning_black_24)
+                .setTitle(R.string.discard_changes_title)
+                .setMessage(R.string.discard_changes_message)
+                .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
+                    Toast.makeText(TasksEditActivity.this, R.string.changes_discarded_toast, Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .setNegativeButton(R.string.prompt_negative, null)
+                .show();
+
+    }
 }

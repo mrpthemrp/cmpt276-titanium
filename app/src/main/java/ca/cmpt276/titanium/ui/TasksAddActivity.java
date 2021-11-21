@@ -1,9 +1,5 @@
 package ca.cmpt276.titanium.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +11,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import java.util.Objects;
-import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
@@ -44,25 +43,22 @@ public class TasksAddActivity extends AppCompatActivity {
         setUpButton();
         displayChildren();
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
+        Toolbar myToolbar = findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
-    private void setUpButton(){
+    private void setUpButton() {
         saveTaskButton = findViewById(R.id.saveTaskNoChildren);
-        saveTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(userTaskInput.getText().toString().isEmpty()){
-                    Toast.makeText(TasksAddActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String task = userTaskInput.getText().toString();
-                taskManager.addTask(task);
-                taskManager.addChild("Nobody");
-                finish();
+        saveTaskButton.setOnClickListener(view -> {
+            if (userTaskInput.getText().toString().isEmpty()) {
+                Toast.makeText(TasksAddActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();
+                return;
             }
+            String task = userTaskInput.getText().toString();
+            taskManager.addTask(task);
+            taskManager.addChild("Nobody");
+            finish();
         });
     }
 
@@ -81,20 +77,25 @@ public class TasksAddActivity extends AppCompatActivity {
             saveTaskButton.setVisibility(View.INVISIBLE);
         }
 
-        ListView childrenListView = (ListView) findViewById(R.id.childrenList);
+        ListView childrenListView = findViewById(R.id.childrenList);
         MenuChildrenListAdapter adapter = new MenuChildrenListAdapter(this, children.getChildren());
         childrenListView.setAdapter(adapter);
         childrenListView.setClickable(true);
 
         childrenListView.setOnItemClickListener((parent, view, position, id) -> {
-            String child =  children.getChildren().get(position).getName();
+            position += 1;
+            if (position >= children.getChildren().size()) {
+                position = 0;
+            }
+            String child = children.getChildren().get(position).getName();
 
-            if(userTaskInput.getText().toString().isEmpty()){
+            if (userTaskInput.getText().toString().isEmpty()) {
                 Toast.makeText(TasksAddActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             String task = userTaskInput.getText().toString();
+
             taskManager.addTask(task);
             taskManager.addChild(child);
             finish();

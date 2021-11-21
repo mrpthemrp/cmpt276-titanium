@@ -1,5 +1,6 @@
 package ca.cmpt276.titanium.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,7 +28,6 @@ public class TasksActivity extends AppCompatActivity {
     private ArrayList<String> taskList = new ArrayList<>();
     private ArrayList<String> childList = new ArrayList<>();
     private Tasks taskManager;
-    private TextView noTasks;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, TasksActivity.class);
@@ -40,23 +38,22 @@ public class TasksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
         setTitle(R.string.whoseTurn);
-        noTasks = findViewById(R.id.noTasksText);
 
         taskManager = Tasks.getInstance();
         checkTaskList();
         populate();
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
+        Toolbar myToolbar = findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         registerClickCallback();
     }
 
-    private void checkTaskList(){
-        if(taskManager.numberOfTasks() == 0){
+    private void checkTaskList() {
+        TextView noTasks = findViewById(R.id.noTasksText);
+        if (taskManager.numberOfTasks() == 0) {
             noTasks.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             noTasks.setVisibility(View.INVISIBLE);
         }
     }
@@ -79,20 +76,18 @@ public class TasksActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        }
-
-        else if(item.getItemId() == R.id.taskAdd){
-           startActivity(TasksAddActivity.makeIntent(this));
+        } else if (item.getItemId() == R.id.taskAdd) {
+            startActivity(TasksAddActivity.makeIntent(this));
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void set(){
+    public void set() {
         taskList = taskManager.getListOfTasks();
         childList = taskManager.getListOfChildren();
     }
 
-    private void populate(){
+    private void populate() {
         set();
         ArrayAdapter<String> adapter = new adapter();
         ListView list = findViewById(R.id.taskListView);
@@ -100,33 +95,34 @@ public class TasksActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    public class adapter extends ArrayAdapter<String>{
-        public adapter(){
+    public class adapter extends ArrayAdapter<String> {
+        public adapter() {
             super(TasksActivity.this, R.layout.list_item, taskList);
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View taskItemView = convertView;
 
-            if(taskItemView == null){
-                taskItemView = getLayoutInflater().inflate(R.layout.list_item, parent, false );
+            if (taskItemView == null) {
+                taskItemView = getLayoutInflater().inflate(R.layout.list_item, parent, false);
             }
 
             String task = taskList.get(position);
             String name = childList.get(position);
 
             TextView taskName = taskItemView.findViewById(R.id.taskNameInList);
-            taskName.setText(task);
+            taskName.setText("Task: " + task);
 
             TextView childName = taskItemView.findViewById(R.id.childNameForTaskInList);
-            childName.setText(name);
+            childName.setText("Next Child: " + name);
 
             return taskItemView;
         }
     }
 
-    private void registerClickCallback(){
+    private void registerClickCallback() {
         ListView list = findViewById(R.id.taskListView);
         list.setOnItemClickListener((adapterView, view, i, l) -> {
             Intent intent = TasksViewActivity.makeIntent(TasksActivity.this, i);

@@ -7,34 +7,32 @@ public class Tasks {
     private final ArrayList<String> listOfTasks = new ArrayList<>();
     private final ArrayList<String> childListForTasks = new ArrayList<>();
 
-    private Children children;
-
     private static final Tasks instance = new Tasks();
 
-    private Tasks(){
+    private Tasks() {
     }
 
-    public static Tasks getInstance(){
+    public static Tasks getInstance() {
         return instance;
     }
 
-    public void addTask(String task){
+    public void addTask(String task) {
         listOfTasks.add(task);
     }
 
-    public void removeTask(int index){
+    public void removeTask(int index) {
         listOfTasks.remove(index);
     }
 
-    public void editTask(int index, String newTask){
+    public void editTask(int index, String newTask) {
         listOfTasks.set(index, newTask);
     }
 
-    public String getTask(int index){
+    public String getTask(int index) {
         return listOfTasks.get(index);
     }
 
-    public int numberOfTasks(){
+    public int numberOfTasks() {
         return listOfTasks.size();
     }
 
@@ -42,23 +40,23 @@ public class Tasks {
         return listOfTasks;
     }
 
-    public void addChild(String task){
+    public void addChild(String task) {
         childListForTasks.add(task);
     }
 
-    public void removeChild(int index){
+    public void removeChild(int index) {
         childListForTasks.remove(index);
     }
 
-    public void nextChild(int index, String nextChild){
+    public void nextChild(int index, String nextChild) {
         childListForTasks.set(index, nextChild);
     }
 
-    public String getChild(int index){
+    public String getChild(int index) {
         return childListForTasks.get(index);
     }
 
-    public void editChild(int index, String newName){
+    public void editChild(int index, String newName) {
         childListForTasks.set(index, newName);
     }
 

@@ -27,7 +27,7 @@ public class TasksViewActivity extends AppCompatActivity {
     private Children children;
     private Tasks taskManager;
 
-    public static Intent makeIntent(Context context, int index){
+    public static Intent makeIntent(Context context, int index) {
         Intent intent = new Intent(context, TasksViewActivity.class);
         intent.putExtra(INDEX, index);
         return intent;
@@ -67,7 +67,7 @@ public class TasksViewActivity extends AppCompatActivity {
         return true;
     }
 
-    private void displayData(){
+    private void displayData() {
         TextView childName = findViewById(R.id.childNameText);
         TextView taskName = findViewById(R.id.taskNameText);
 
@@ -78,31 +78,42 @@ public class TasksViewActivity extends AppCompatActivity {
         taskName.setText(task);
     }
 
-    private void setUpButtons(){
+    private void setUpButtons() {
         Button completeTask = findViewById(R.id.completeTaskButton);
         completeTask.setOnClickListener(view -> {
 
             String child = taskManager.getListOfChildren().get(index);
+            String nextChild;
 
             int nextIndex = 0;
 
             for (int i = 0; i < children.getChildren().size(); i++) {
-                if(children.getChildren().get(i).getName().equals(child)){
+                if (children.getChildren().get(i).getName().equals(child)) {
                     break;
                 }
                 nextIndex++;
             }
-            if(children.getChildren().size() != 0){
-                nextIndex++;
-            }
 
-            if(nextIndex >= children.getChildren().size()){
+            nextIndex++;
+
+            if (nextIndex >= children.getChildren().size()) {
                 nextIndex = 0;
             }
 
-            String nextChild = children.getChildren().get(nextIndex).getName();
-
-            taskManager.nextChild(index, nextChild);
+            if (!child.equals("Nobody")) {
+                if (children.getChildren().size() > 0) {
+                    nextChild = children.getChildren().get(nextIndex).getName();
+                    taskManager.nextChild(index, nextChild);
+                } else {
+                    taskManager.nextChild(index, "Nobody");
+                }
+            } else {
+                if (children.getChildren().size() > 0) {
+                    nextIndex = 0;
+                    nextChild = children.getChildren().get(nextIndex).getName();
+                    taskManager.nextChild(index, nextChild);
+                }
+            }
             finish();
         });
 
@@ -115,14 +126,10 @@ public class TasksViewActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        }
-
-        else if(item.getItemId() == R.id.taskRemove){
+        } else if (item.getItemId() == R.id.taskRemove) {
             launchDeleteTaskPrompt();
             return true;
-        }
-
-        else if(item.getItemId() == R.id.taskEdit){
+        } else if (item.getItemId() == R.id.taskEdit) {
             Intent intent = TasksEditActivity.makeIntent(TasksViewActivity.this, index);
             startActivity(intent);
             return true;
