@@ -109,5 +109,11 @@
     <string name="prompt_select_image_option1">Take Photo</string>
     <string name="prompt_select_image_option2">Select from Gallery</string>
     <string name="prompt_select_image_option3">Cancel</string>
+    <string name="title_help">Help</string>
+    <string name="help_team_name">Team Titanium</string>
+    <string name="help_developers">\u2022 Haris Ahmad\n\u2022 Christopher Torunski\n\u2022 Michelle Vong\n\u2022 Deborah Wang</string>
+    <string name="help_developers_title">Developers</string>
+    <string name="help_subtitle_copyright">Copyright</string>
+    <string name="help_copyright_material">Coin flip sound: https://www.youtube.com/watch?v=1QxX9ruPUXM\n</string>
 
 </resources>

@@ -76,7 +76,7 @@ public class ChildViewActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else if (item.getItemId() == R.id.optionsEdit) {
+        } else if (item.getItemId() == R.id.optionsHelp) {
             Intent editChildIntent = ChildEditActivity.makeIntent(this, childUniqueId);
             startActivity(editChildIntent);
             return true;
