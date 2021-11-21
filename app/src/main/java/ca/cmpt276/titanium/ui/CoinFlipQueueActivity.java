@@ -21,11 +21,13 @@ import java.util.UUID;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
+import ca.cmpt276.titanium.model.ChildrenQueue;
 import ca.cmpt276.titanium.model.Coin;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
 
 public class CoinFlipQueueActivity extends AppCompatActivity {
     private Children children;
+    private ChildrenQueue childrenQueue;
     private CoinFlipHistory coinFlipHistory;
 
     @Override
@@ -39,6 +41,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         children = Children.getInstance(this);
+        childrenQueue = ChildrenQueue.getInstance(this);
         coinFlipHistory = CoinFlipHistory.getInstance(this);
 
         updateGUI();
@@ -77,7 +80,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
         }
 
         ListView childrenListView = (ListView) findViewById(R.id.childrenQueueList);
-        CoinFlipQueueAdapter adapter = new CoinFlipQueueAdapter(this, children.getChildren());
+        CoinFlipQueueAdapter adapter = new CoinFlipQueueAdapter(this, childrenQueue.getChildrenQueue());
         childrenListView.setAdapter(adapter);
     }
 

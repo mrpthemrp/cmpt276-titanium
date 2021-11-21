@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class ChildrenQueue {
     private static final Gson GSON = new Gson();
-    private static final String CHILDREN_JSON_KEY = "childrenQueueJson";
+    private static final String CHILDREN_QUEUE_JSON_KEY = "childrenQueueJson";
     private static final int FIRST_INDEX = 0;
 
     private static ChildrenQueue instance;
@@ -37,7 +37,7 @@ public class ChildrenQueue {
     }
 
     private static void loadSavedData() {
-        String childrenQueueJson = prefs.getString(CHILDREN_JSON_KEY, null);
+        String childrenQueueJson = prefs.getString(CHILDREN_QUEUE_JSON_KEY, null);
 
         if (childrenQueueJson != null) {
             Type childrenType = new TypeToken<ArrayList<Child>>() {
@@ -47,9 +47,9 @@ public class ChildrenQueue {
         }
     }
 
-    private void saveData() {
+    public void saveData() {
         String childrenQueueJson = GSON.toJson(childrenQueue);
-        prefs.edit().putString(CHILDREN_JSON_KEY, childrenQueueJson).apply();
+        prefs.edit().putString(CHILDREN_QUEUE_JSON_KEY, childrenQueueJson).apply();
     }
 
     public Child getChild(UUID uniqueID) {
@@ -63,7 +63,6 @@ public class ChildrenQueue {
 
         return null;
     }
-
 
     public ArrayList<Child> getChildrenQueue() {
         return childrenQueue;
@@ -93,7 +92,7 @@ public class ChildrenQueue {
 
         Child childToMove = getChild(uniqueID);
         childrenQueue.remove(childIndex);
-        childrenQueue.add(childrenQueue.size() - 1, childToMove);
+        childrenQueue.add(childrenQueue.size(), childToMove);
         saveData();
     }
 }

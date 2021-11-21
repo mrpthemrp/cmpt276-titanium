@@ -23,6 +23,7 @@ public class Children {
     private static Children instance;
     private static SharedPreferences prefs;
     private static CoinFlipHistory coinFlipHistory;
+    private static ChildrenQueue childrenQueue;
 
     private static ArrayList<Child> children = new ArrayList<>();
 
@@ -34,6 +35,7 @@ public class Children {
         if (instance == null) {
             Children.instance = new Children(context);
             Children.coinFlipHistory = CoinFlipHistory.getInstance(context);
+            Children.childrenQueue = ChildrenQueue.getInstance(context);
         }
 
         loadSavedData();
@@ -72,6 +74,8 @@ public class Children {
         Child newChild = new Child(name);
         Children.children.add(newChild);
         coinFlipHistory.updateCoinFlipHistory(true, newChild.getUniqueID());
+        childrenQueue.getChildrenQueue().add(newChild);
+        childrenQueue.saveData();
         saveData();
     }
 
@@ -80,6 +84,10 @@ public class Children {
             for (int i = 0; i < children.size(); i++) {
                 if (uniqueID.equals(children.get(i).getUniqueID())) {
                     coinFlipHistory.updateCoinFlipHistory(false, uniqueID);
+
+                    childrenQueue.getChildrenQueue().remove(childrenQueue.getChildQueueIndex(uniqueID));
+                    childrenQueue.saveData();
+
                     Children.children.remove(i);
                     saveData();
                     break;
@@ -90,10 +98,13 @@ public class Children {
 
     public void setChildName(UUID uniqueID, String name) {
         Child child = getChild(uniqueID);
+        Child childInQueue = childrenQueue.getChild(uniqueID);
 
         if (child != null) {
             child.setName(name);
+            childInQueue.setName(name);
             saveData();
+            childrenQueue.saveData();
         }
     }
 

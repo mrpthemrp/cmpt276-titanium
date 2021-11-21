@@ -21,7 +21,9 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
+import ca.cmpt276.titanium.model.ChildrenQueue;
 
 /**
  * This activity represents the adding of a single child.
