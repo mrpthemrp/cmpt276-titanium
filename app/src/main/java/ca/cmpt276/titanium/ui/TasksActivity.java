@@ -67,6 +67,13 @@ public class TasksActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        checkTaskList();
+        populate();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_tasks, menu);
         return true;
@@ -111,7 +118,7 @@ public class TasksActivity extends AppCompatActivity {
             }
 
             String task = taskList.get(position);
-            String name = childList.get(position).getName();
+            String name = taskManager.getListOfChildren().get(position).getName();
 
             TextView taskName = taskItemView.findViewById(R.id.taskNameInList);
             taskName.setText("Task: " + task);
