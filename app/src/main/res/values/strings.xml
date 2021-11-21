@@ -100,5 +100,9 @@
     <string name="queueTitle">Queue:</string>
     <string name="title_activity_change_child">ChangeChildActivity</string>
     <string name="viewQueue">View Queue</string>
+    <string name="prompt_select_image_title">Update Portrait</string>
+    <string name="prompt_select_image_option1">Take Photo</string>
+    <string name="prompt_select_image_option2">Select from Gallery</string>
+    <string name="prompt_select_image_option3">Cancel</string>
 
 </resources>

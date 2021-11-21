@@ -1,6 +1,5 @@
 package ca.cmpt276.titanium.model;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -70,8 +69,8 @@ public class Children {
         return null;
     }
 
-    public void addChild(Context context, Activity activity, String name, Bitmap portrait) {
-        Child newChild = new Child(context, activity, name, portrait);
+    public void addChild(String name, Bitmap portrait) {
+        Child newChild = new Child(name, portrait);
         Children.children.add(newChild);
         coinFlipHistory.updateCoinFlipHistory(true, newChild.getUniqueID());
         saveData();

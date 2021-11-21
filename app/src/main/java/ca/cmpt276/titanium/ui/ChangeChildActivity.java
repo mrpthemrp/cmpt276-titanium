@@ -1,8 +1,8 @@
 package ca.cmpt276.titanium.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import ca.cmpt276.titanium.R;
 

@@ -1,19 +1,16 @@
 package ca.cmpt276.titanium.model;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -27,16 +24,11 @@ public class Child {
     private String name;
     private final String portraitName;
 
-    public Child(Context context, Activity activity, String name, Bitmap portrait) {
+    public Child(String name, Bitmap portrait) {
         this.uniqueID = UUID.randomUUID();
         setName(name);
         this.portraitName = "portrait_" + uniqueID.toString();
-
-        try {
-            setPortrait(context, activity, portrait);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        setPortrait(portrait);
     }
 
     public UUID getUniqueID() {
@@ -59,38 +51,37 @@ public class Child {
         this.name = name;
     }
 
-    public RoundedBitmapDrawable getPortrait(Context context, Activity activity) throws IOException {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+    public RoundedBitmapDrawable getPortrait(Resources resources) {
+        File cameraDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera");
+        RoundedBitmapDrawable portrait = null;
+
+        try {
+            if (cameraDirectory.exists() || cameraDirectory.mkdirs()) {
+                File portraitFile = new File(cameraDirectory, portraitName + ".png");
+
+                portrait = RoundedBitmapDrawableFactory.create(resources, BitmapFactory.decodeStream(new FileInputStream(portraitFile)));
+                portrait.setCircular(true);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-
-        String cameraDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera";
-        File file = new File(cameraDirectory, portraitName + ".png");
-
-        Bitmap savedPortraitBitmap = BitmapFactory.decodeStream(new FileInputStream(file));
-
-        RoundedBitmapDrawable portrait = RoundedBitmapDrawableFactory.create(context.getResources(), savedPortraitBitmap);
-        portrait.setCircular(true);
 
         return portrait;
     }
 
-    public void setPortrait(Context context, Activity activity, Bitmap bitmap) throws IOException {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-        }
+    public void setPortrait(Bitmap bitmap) {
+        File cameraDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera");
 
-        String cameraDirectoryName = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera";
-        File cameraDirectory = new File(cameraDirectoryName);
+        try {
+            if (cameraDirectory.exists() || cameraDirectory.mkdirs()) {
+                File portrait = new File(cameraDirectory, portraitName + ".png");
 
-        if (cameraDirectory.exists() || cameraDirectory.mkdirs()) {
-            File portrait = new File(cameraDirectory, portraitName + ".png");
-            OutputStream outputStream = new FileOutputStream(portrait);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-
-            outputStream.close();
-        } else {
-            assert false;
+                OutputStream outputStream = new FileOutputStream(portrait);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                outputStream.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -34,8 +34,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
-            android:scaleType="centerCrop"
             android:contentDescription="@string/content_description"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -65,13 +65,13 @@
             android:id="@+id/editIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:contentDescription="@string/content_description"
             android:src="@drawable/ic_baseline_edit_white_24"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/addProfilePic"
             app:layout_constraintEnd_toEndOf="@+id/addProfilePic"
             app:layout_constraintStart_toStartOf="@+id/addProfilePic"
-            app:layout_constraintTop_toTopOf="@+id/addProfilePic"
-            android:contentDescription="@string/content_description" />
+            app:layout_constraintTop_toTopOf="@+id/addProfilePic" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

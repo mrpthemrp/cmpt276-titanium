@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 
-import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -49,20 +48,14 @@ public class ChildViewActivity extends AppCompatActivity {
         setupActionBar();
 
         this.children = Children.getInstance(this);
-
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
         this.childUniqueId = (UUID) getIntent().getSerializableExtra(CHILD_UNIQUE_ID_INTENT);
         this.childBeingViewed = children.getChild(childUniqueId);
 
-        RoundedBitmapDrawable image = null;
-        try {
-            image = children.getChild(childUniqueId).getPortrait(this, ChildViewActivity.this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        RoundedBitmapDrawable portrait = children.getChild(childUniqueId).getPortrait(getResources());
 
-        ImageView imageView = findViewById(R.id.addProfilePic);
-        imageView.setImageDrawable(image);
+        ImageView portraitView = findViewById(R.id.addProfilePic);
+        portraitView.setImageDrawable(portrait);
     }
 
     @Override
