@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Tasks {
     private final ArrayList<String> listOfTasks = new ArrayList<>();
-    private final ArrayList<String> childListForTasks = new ArrayList<>();
+    private final ArrayList<Child> childListForTasks = new ArrayList<>();
 
     private static final Tasks instance = new Tasks();
 
@@ -40,27 +40,27 @@ public class Tasks {
         return listOfTasks;
     }
 
-    public void addChild(String task) {
-        childListForTasks.add(task);
+    public void addChild(Child child) {
+        childListForTasks.add(child);
     }
 
     public void removeChild(int index) {
         childListForTasks.remove(index);
     }
 
-    public void nextChild(int index, String nextChild) {
+    public void nextChild(int index, Child nextChild) {
         childListForTasks.set(index, nextChild);
     }
 
     public String getChild(int index) {
-        return childListForTasks.get(index);
+        return childListForTasks.get(index).getName();
     }
 
-    public void editChild(int index, String newName) {
+    public void editChild(int index, Child newName) {
         childListForTasks.set(index, newName);
     }
 
-    public ArrayList<String> getListOfChildren() {
+    public ArrayList<Child> getListOfChildren() {
         return childListForTasks;
     }
 }

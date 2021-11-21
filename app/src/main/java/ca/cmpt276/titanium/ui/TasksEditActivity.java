@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.Tasks;
 
@@ -75,7 +76,7 @@ public class TasksEditActivity extends AppCompatActivity {
             }
             String task = userTaskInput.getText().toString();
             taskManager.editTask(index, task);
-            taskManager.editChild(index, "Nobody");
+            //taskManager.editChild(index, "Nobody");
             finish();
         });
     }
@@ -101,7 +102,7 @@ public class TasksEditActivity extends AppCompatActivity {
         childrenListView.setClickable(true);
 
         childrenListView.setOnItemClickListener((parent, view, position, id) -> {
-            String child = children.getChildren().get(position).getName();
+            Child child = children.getChildren().get(position);
 
             if (userTaskInput.getText().toString().isEmpty()) {
                 Toast.makeText(TasksEditActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();

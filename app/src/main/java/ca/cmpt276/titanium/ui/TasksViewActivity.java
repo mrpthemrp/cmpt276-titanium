@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.Tasks;
 
@@ -82,8 +83,8 @@ public class TasksViewActivity extends AppCompatActivity {
         Button completeTask = findViewById(R.id.completeTaskButton);
         completeTask.setOnClickListener(view -> {
 
-            String child = taskManager.getListOfChildren().get(index);
-            String nextChild;
+            String child = taskManager.getListOfChildren().get(index).getName();
+            Child nextChild;
 
             int nextIndex = 0;
 
@@ -102,15 +103,15 @@ public class TasksViewActivity extends AppCompatActivity {
 
             if (!child.equals("Nobody")) {
                 if (children.getChildren().size() > 0) {
-                    nextChild = children.getChildren().get(nextIndex).getName();
+                    nextChild = children.getChildren().get(nextIndex);
                     taskManager.nextChild(index, nextChild);
                 } else {
-                    taskManager.nextChild(index, "Nobody");
+                    //taskManager.nextChild(index, "Nobody");
                 }
             } else {
                 if (children.getChildren().size() > 0) {
                     nextIndex = 0;
-                    nextChild = children.getChildren().get(nextIndex).getName();
+                    nextChild = children.getChildren().get(nextIndex);
                     taskManager.nextChild(index, nextChild);
                 }
             }

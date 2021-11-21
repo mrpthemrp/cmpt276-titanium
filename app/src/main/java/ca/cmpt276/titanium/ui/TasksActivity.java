@@ -21,12 +21,13 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Tasks;
 
 public class TasksActivity extends AppCompatActivity {
 
     private ArrayList<String> taskList = new ArrayList<>();
-    private ArrayList<String> childList = new ArrayList<>();
+    private ArrayList<Child> childList = new ArrayList<>();
     private Tasks taskManager;
 
     public static Intent makeIntent(Context context) {
@@ -110,7 +111,7 @@ public class TasksActivity extends AppCompatActivity {
             }
 
             String task = taskList.get(position);
-            String name = childList.get(position);
+            String name = childList.get(position).getName();
 
             TextView taskName = taskItemView.findViewById(R.id.taskNameInList);
             taskName.setText("Task: " + task);

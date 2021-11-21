@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.Tasks;
 
@@ -57,7 +58,7 @@ public class TasksAddActivity extends AppCompatActivity {
             }
             String task = userTaskInput.getText().toString();
             taskManager.addTask(task);
-            taskManager.addChild("Nobody");
+            //taskManager.addChild("Nobody");
             finish();
         });
     }
@@ -87,7 +88,7 @@ public class TasksAddActivity extends AppCompatActivity {
             if (position >= children.getChildren().size()) {
                 position = 0;
             }
-            String child = children.getChildren().get(position).getName();
+            Child child = children.getChildren().get(position);
 
             if (userTaskInput.getText().toString().isEmpty()) {
                 Toast.makeText(TasksAddActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();
