@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -122,7 +121,7 @@ public class TasksActivity extends AppCompatActivity {
             }
 
             String task = taskList.get(position);
-            String name = "";
+            String name;
 
             if (children.getChildren().size() != 0) {
                 if (taskManager.getListOfChildren().size() == 0) {
