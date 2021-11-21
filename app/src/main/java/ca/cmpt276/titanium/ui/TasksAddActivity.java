@@ -54,7 +54,7 @@ public class TasksAddActivity extends AppCompatActivity {
             }
             String task = userTaskInput.getText().toString();
             taskManager.addTask(task);
-            if(children.getChildren().size() > 0){
+            if (children.getChildren().size() > 0) {
                 taskManager.addChild(children.getChildren().get(0));
             }
 

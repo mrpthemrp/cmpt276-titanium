@@ -46,41 +46,41 @@ public class Tasks {
     }
 
     public void removeChild(int index) {
-        if(childListForTasks.size() == 0){
+        if (childListForTasks.size() == 0) {
             return;
         }
         childListForTasks.remove(index);
     }
 
-    public void clearChildList(){
-        for(int i = 0; i < childListForTasks.size(); i++){
+    public void clearChildList() {
+        for (int i = 0; i < childListForTasks.size(); i++) {
             removeChild(i);
         }
     }
 
-    public UUID getChildID(int index){
-        if(index >= childListForTasks.size()){
+    public UUID getChildID(int index) {
+        if (index >= childListForTasks.size()) {
             index = 0;
         }
         return childListForTasks.get(index).getUniqueID();
     }
 
-    public void updateChild(UUID Id, Child child, int size){
-        if(size == 1){
-            for(int i = 0; i < childListForTasks.size(); i++){
+    public void updateChild(UUID Id, Child child, int size) {
+        if (size == 1) {
+            for (int i = 0; i < childListForTasks.size(); i++) {
                 removeChild(i);
             }
             return;
         }
-        for(int i = 0; i < childListForTasks.size(); i++){
-            if(childListForTasks.get(i).getUniqueID().equals(Id)){
+        for (int i = 0; i < childListForTasks.size(); i++) {
+            if (childListForTasks.get(i).getUniqueID().equals(Id)) {
                 childListForTasks.set(i, child);
             }
         }
     }
 
     public void editChild(int index, Child newName) {
-        if(index >= childListForTasks.size()){
+        if (index >= childListForTasks.size()) {
             index = 0;
         }
         childListForTasks.set(index, newName);

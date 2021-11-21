@@ -75,17 +75,16 @@ public class TasksViewActivity extends AppCompatActivity {
 
         String name = "";
 
-        if(children.getChildren().size() > 0 && taskManager.getListOfChildren().size() > 0){
+        if (children.getChildren().size() > 0 && taskManager.getListOfChildren().size() > 0) {
             UUID childID = taskManager.getChildID(index);
             int nextIndex = 0;
-            for(int i = 0; i < children.getChildren().size(); i++){
-                if(children.getChildren().get(i).getUniqueID().equals(childID)){
+            for (int i = 0; i < children.getChildren().size(); i++) {
+                if (children.getChildren().get(i).getUniqueID().equals(childID)) {
                     nextIndex = i;
                 }
             }
             name = children.getChildren().get(nextIndex).getName();
-        }
-        else{
+        } else {
             name = "Nobody";
         }
 
@@ -101,19 +100,19 @@ public class TasksViewActivity extends AppCompatActivity {
         Button completeTask = findViewById(R.id.completeTaskButton);
         completeTask.setOnClickListener(view -> {
 
-            if(children.getChildren().size() > 0 && taskManager.getListOfChildren().size() > 0){
+            if (children.getChildren().size() > 0 && taskManager.getListOfChildren().size() > 0) {
                 // first get index of selected child
                 UUID childID = taskManager.getChildID(index);
 
                 // get child to the next index in the array of children
                 int nextIndex = 0;
-                for(int i = 0; i < children.getChildren().size(); i++){
-                    if(children.getChildren().get(i).getUniqueID().equals(childID)){
+                for (int i = 0; i < children.getChildren().size(); i++) {
+                    if (children.getChildren().get(i).getUniqueID().equals(childID)) {
                         nextIndex = i;
                     }
                 }
                 nextIndex++;
-                if(nextIndex >= children.getChildren().size()){
+                if (nextIndex >= children.getChildren().size()) {
                     nextIndex = 0;
                 }
 
