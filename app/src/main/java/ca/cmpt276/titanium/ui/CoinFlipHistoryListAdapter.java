@@ -1,6 +1,7 @@
 package ca.cmpt276.titanium.ui;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 
 import java.util.ArrayList;
 
@@ -22,10 +24,12 @@ import ca.cmpt276.titanium.model.CoinFlip;
  */
 public class CoinFlipHistoryListAdapter extends ArrayAdapter<CoinFlip> {
     private final Children children;
+    private Context context;
 
     public CoinFlipHistoryListAdapter(Context context, ArrayList<CoinFlip> coinFlipHistory) {
         super(context, 0, coinFlipHistory);
         children = Children.getInstance(context);
+        this.context = context;
     }
 
     @NonNull
@@ -41,10 +45,11 @@ public class CoinFlipHistoryListAdapter extends ArrayAdapter<CoinFlip> {
         ImageView resultImageView = convertView.findViewById(R.id.childIcon);
         TextView childTextView = convertView.findViewById(R.id.childNameList);
 
-        // TODO: Add child icon when finished
-        childIcon.setImageResource(R.drawable.ic_baseline_circle_green_200);
+        RoundedBitmapDrawable drawable = children.getChild(coinFlip.getPickerUniqueID()).getPortrait(context.getResources());
+        childIcon.setImageDrawable(drawable);
 
-        String childChoice = children.getChild(coinFlip.getPickerUniqueID()).getName() + getContext().getString(R.string.coin_flip_child_choice_text) + coinFlip.getChosenSide();
+        String childChoice = children.getChild(coinFlip.getPickerUniqueID()).getName() +
+                getContext().getString(R.string.coin_flip_child_choice_text) + coinFlip.getChosenSide();
         childTextView.setText(childChoice);
 
         if (coinFlip.getResult() == coinFlip.getChosenSide()) {
