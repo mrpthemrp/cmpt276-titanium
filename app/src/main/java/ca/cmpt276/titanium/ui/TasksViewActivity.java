@@ -83,6 +83,7 @@ public class TasksViewActivity extends AppCompatActivity {
         completeTask.setOnClickListener(view -> {
 
             String child = taskManager.getListOfChildren().get(index);
+
             int nextIndex = 0;
 
             for (int i = 0; i < children.getChildren().size(); i++) {
@@ -91,7 +92,9 @@ public class TasksViewActivity extends AppCompatActivity {
                 }
                 nextIndex++;
             }
-            nextIndex+=1;
+            if(children.getChildren().size() != 0){
+                nextIndex++;
+            }
 
             if(nextIndex >= children.getChildren().size()){
                 nextIndex = 0;

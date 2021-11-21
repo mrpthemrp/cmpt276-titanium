@@ -58,6 +58,10 @@ public class Tasks {
         return childListForTasks.get(index);
     }
 
+    public void editChild(int index, String newName){
+        childListForTasks.set(index, newName);
+    }
+
     public ArrayList<String> getListOfChildren() {
         return childListForTasks;
     }
