@@ -81,9 +81,9 @@ public class Children {
                 if (uniqueID.equals(children.get(i).getUniqueID())) {
                     coinFlipHistory.updateCoinFlipHistory(false, uniqueID);
                     int nextChild = i;
-                    nextChild+=1;
+                    nextChild += 1;
 
-                    if(nextChild >= children.size()){
+                    if (nextChild >= children.size()) {
                         nextChild = 0;
                     }
                     Child child = children.get(nextChild);
