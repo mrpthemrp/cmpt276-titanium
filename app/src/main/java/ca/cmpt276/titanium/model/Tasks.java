@@ -52,6 +52,12 @@ public class Tasks {
         childListForTasks.remove(index);
     }
 
+    public void clearChildList(){
+        for(int i = 0; i < childListForTasks.size(); i++){
+            removeChild(i);
+        }
+    }
+
     public UUID getChildID(int index){
         if(index >= childListForTasks.size()){
             index = 0;
@@ -74,6 +80,9 @@ public class Tasks {
     }
 
     public void editChild(int index, Child newName) {
+        if(index >= childListForTasks.size()){
+            index = 0;
+        }
         childListForTasks.set(index, newName);
     }
 

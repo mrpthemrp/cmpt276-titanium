@@ -75,9 +75,15 @@ public class TasksViewActivity extends AppCompatActivity {
 
         String name = "";
 
-        if(taskManager.getListOfChildren().size() > 0){
-            UUID Id = taskManager.getChildID(index);
-            name = children.getChild(Id).getName();
+        if(children.getChildren().size() > 0 && taskManager.getListOfChildren().size() > 0){
+            UUID childID = taskManager.getChildID(index);
+            int nextIndex = 0;
+            for(int i = 0; i < children.getChildren().size(); i++){
+                if(children.getChildren().get(i).getUniqueID().equals(childID)){
+                    nextIndex = i;
+                }
+            }
+            name = children.getChildren().get(nextIndex).getName();
         }
         else{
             name = "Nobody";

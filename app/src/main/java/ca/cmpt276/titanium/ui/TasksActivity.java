@@ -125,11 +125,31 @@ public class TasksActivity extends AppCompatActivity {
             String name = "";
 
             if (children.getChildren().size() != 0) {
-                if(taskManager.getListOfChildren().size() == 0){
-                    taskManager.addChild(children.getChildren().get(0));
+                if (taskManager.getListOfChildren().size() == 0) {
+                    taskManager.clearChildList();
+                    for (int i = 0; i < taskManager.getListOfTasks().size(); i++) {
+                        Child child = children.getChildren().get(0);
+                        taskManager.addChild(child);
+                    }
                 }
-                UUID Id = taskManager.getChildID(position);
-                name = children.getChild(Id).getName();
+
+                UUID childID = taskManager.getChildID(position);
+                int nextIndex = 0;
+                for(int i = 0; i < children.getChildren().size(); i++){
+                    if(children.getChildren().get(i).getUniqueID().equals(childID)){
+                        nextIndex = i;
+                    }
+                }
+                /*
+                nextIndex++;
+                if(nextIndex >= children.getChildren().size()){
+                    nextIndex = 0;
+                }
+
+                 */
+                name = children.getChildren().get(nextIndex).getName();
+                //name = children.getChild(childID).getName();
+
             } else {
                 name = "Nobody";
             }
