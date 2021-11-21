@@ -24,6 +24,7 @@ import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
+import ca.cmpt276.titanium.model.ChildrenQueue;
 import ca.cmpt276.titanium.model.Coin;
 import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
@@ -38,6 +39,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private Coin coinChosen;
     private CoinFlipHistory coinFlipHistory;
+    private ChildrenQueue childrenQueue;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, CoinFlipActivity.class);
@@ -54,6 +56,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         coinFlipHistory = CoinFlipHistory.getInstance(this);
+        childrenQueue = ChildrenQueue.getInstance(this);
 
         setupButtons();
         updateGUI(DEFAULT_COIN);
@@ -138,6 +141,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         coinResultMessage.postDelayed(() -> coinResultMessage.setVisibility(View.VISIBLE), COIN_FLIP_DELAY);
 
         if (coinFlipHistory.getNextPickerUniqueID() != null) {
+            childrenQueue.moveChildPositionToBack(coinFlipHistory.getNextPickerUniqueID());
             coinFlipHistory.addCoinFlip(coinChosen, coinResult);
             new Handler(Looper.getMainLooper()).postDelayed(() -> updateGUI(coinChosen), COIN_FLIP_DELAY);
         }

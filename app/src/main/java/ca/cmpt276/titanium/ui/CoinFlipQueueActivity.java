@@ -14,16 +14,20 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
+import ca.cmpt276.titanium.model.ChildrenQueue;
 import ca.cmpt276.titanium.model.Coin;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
 
 public class CoinFlipQueueActivity extends AppCompatActivity {
     private Children children;
+    private ChildrenQueue childrenQueue;
     private CoinFlipHistory coinFlipHistory;
 
     @Override
@@ -37,6 +41,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         children = Children.getInstance(this);
+        childrenQueue = ChildrenQueue.getInstance(this);
         coinFlipHistory = CoinFlipHistory.getInstance(this);
 
         updateGUI();
@@ -75,17 +80,24 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
         }
 
         ListView childrenListView = (ListView) findViewById(R.id.childrenQueueList);
-        CoinFlipQueueAdapter adapter = new CoinFlipQueueAdapter(this, children.getChildren());
+        CoinFlipQueueAdapter adapter = new CoinFlipQueueAdapter(this, childrenQueue.getChildrenQueue());
         childrenListView.setAdapter(adapter);
     }
 
     private void updateGUI() {
-        // TODO: Add child icon when finished
         ImageView currentChildIcon = findViewById(R.id.currentChildTurnIcon);
         TextView currentChildTurnName = findViewById(R.id.currentChildTurnText);
 
-        // TODO: Implement queue of children
-        currentChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_24);
-        currentChildTurnName.setText(R.string.currentChildName);
+        Child currentChildTurn = childrenQueue.getChild(coinFlipHistory.getNextPickerUniqueID());
+        if (currentChildTurn != null) {
+            currentChildTurnName.setText(currentChildTurn.getName());
+            // TODO: Add child icon when finished
+            currentChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_24);
+        } else {
+            currentChildTurnName.setText(R.string.currentChildName);
+            currentChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_24);
+        }
+
+
     }
 }
