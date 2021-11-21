@@ -36,7 +36,7 @@ public class CoinFlipQueueAdapter extends ArrayAdapter<Child> {
 
         // TODO: Retrieve image of child
         ImageView childQueueIcon = convertView.findViewById(R.id.childQueueIcon);
-        childQueueIcon.setImageResource(R.drawable.ic_baseline_circle_green_24);
+        childQueueIcon.setImageResource(R.drawable.ic_baseline_circle_green_200);
 
         TextView childQueueNameText = convertView.findViewById(R.id.childQueueNameList);
         String childQueueName = child.getName();

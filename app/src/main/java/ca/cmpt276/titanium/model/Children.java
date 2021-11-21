@@ -2,6 +2,8 @@ package ca.cmpt276.titanium.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+
 import androidx.preference.PreferenceManager;
 
 import com.google.gson.Gson;
@@ -67,8 +69,8 @@ public class Children {
         return null;
     }
 
-    public void addChild(String name) {
-        Child newChild = new Child(name);
+    public void addChild(String name, Bitmap portrait) {
+        Child newChild = new Child(name, portrait);
         Children.children.add(newChild);
         coinFlipHistory.updateCoinFlipHistory(true, newChild.getUniqueID());
         saveData();
