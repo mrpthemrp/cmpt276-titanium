@@ -36,7 +36,7 @@ public class ChangeChildAdapter extends ArrayAdapter<Child> {
 
         // TODO: Retrieve image of child
         ImageView changeChildIcon = convertView.findViewById(R.id.changeChildIconList);
-        changeChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_24);
+        changeChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_200);
 
         TextView childQueueNameText = convertView.findViewById(R.id.changeChildNameList);
         String changeChildName = child.getName();

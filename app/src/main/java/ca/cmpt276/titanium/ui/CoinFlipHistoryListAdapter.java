@@ -42,7 +42,7 @@ public class CoinFlipHistoryListAdapter extends ArrayAdapter<CoinFlip> {
         TextView childTextView = convertView.findViewById(R.id.childNameList);
 
         // TODO: Add child icon when finished
-        childIcon.setImageResource(R.drawable.ic_baseline_circle_green_24);
+        childIcon.setImageResource(R.drawable.ic_baseline_circle_green_200);
 
         String childChoice = children.getChild(coinFlip.getPickerUniqueID()).getName() + getContext().getString(R.string.coin_flip_child_choice_text) + coinFlip.getChosenSide();
         childTextView.setText(childChoice);

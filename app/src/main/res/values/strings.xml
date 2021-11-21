@@ -67,9 +67,6 @@
     <!-- Change Child Strings -->
     <string name="changeChildTitle">Change Current Child</string>
 
-    <!-- Timer Strings -->
-    <string name="timerTitle">Timer</string>
-
     <!-- Tasks -->
     <string name="add_task">Add Task</string>
     <string name="edit_task">Edit Task</string>
@@ -105,12 +102,7 @@
     <string name="whoseTurn">Tasks</string>
 
     <!-- New -->
-    <string name="changeChild">Change child</string>
-    <string name="childrenQueueList">No children to display.</string>
-    <string name="currentChildName">No child to display</string>
-    <string name="currentChildTitle">Current Child:</string>
     <string name="noChildrenConfigured">No children to show.</string>
-    <string name="queueTitle">Queue:</string>
     <string name="title_activity_change_child">ChangeChildActivity</string>
     <string name="viewQueue">View Queue</string>
     <string name="prompt_select_image_title">Update Portrait</string>
