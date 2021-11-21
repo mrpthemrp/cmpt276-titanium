@@ -115,5 +115,6 @@
     <string name="help_developers_title">Developers</string>
     <string name="help_subtitle_copyright">Copyright</string>
     <string name="help_copyright_material">Coin flip sound: https://www.youtube.com/watch?v=1QxX9ruPUXM\n</string>
+    <string name="no_tasks_to_display_currently">No Tasks To Display Currently</string>
 
 </resources>

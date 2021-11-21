@@ -25,6 +25,7 @@ public class Children {
     private static SharedPreferences prefs;
     private static CoinFlipHistory coinFlipHistory;
     private static ChildrenQueue childrenQueue;
+    private static final Tasks taskManager = Tasks.getInstance();
 
     private static ArrayList<Child> children = new ArrayList<>();
 
@@ -89,6 +90,14 @@ public class Children {
                     childrenQueue.getChildrenQueue().remove(childrenQueue.getChildQueueIndex(uniqueID));
                     childrenQueue.saveData();
 
+                    int nextChild = i;
+                    nextChild += 1;
+
+                    if (nextChild >= children.size()) {
+                        nextChild = 0;
+                    }
+                    Child child = children.get(nextChild);
+                    taskManager.updateChild(uniqueID, child, children.size());
                     Children.children.remove(i);
                     saveData();
                     break;
