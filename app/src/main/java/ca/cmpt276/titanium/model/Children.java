@@ -2,7 +2,7 @@ package ca.cmpt276.titanium.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import androidx.preference.PreferenceManager;
+import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,7 +18,6 @@ import java.util.UUID;
 public class Children {
     private static final Gson GSON = new Gson();
     private static final String CHILDREN_JSON_KEY = "childrenJson";
-    private static final int FIRST_INDEX = 0;
 
     private static Children instance;
     private static SharedPreferences prefs;

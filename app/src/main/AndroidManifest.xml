@@ -19,7 +19,9 @@
 
         <activity
             android:name=".ui.ChangeChildActivity"
-            android:exported="false" />
+            android:configChanges="keyboard|keyboardHidden"
+            android:exported="false"
+            android:parentActivityName=".ui.CoinFlipQueueActivity"/>
         <activity
             android:name=".ui.CoinFlipQueueActivity"
             android:configChanges="keyboard|keyboardHidden"

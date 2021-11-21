@@ -57,6 +57,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         displayQueue();
+        updateGUI();
     }
 
     @Override
@@ -97,7 +98,5 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
             currentChildTurnName.setText(R.string.currentChildName);
             currentChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_24);
         }
-
-
     }
 }

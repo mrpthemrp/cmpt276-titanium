@@ -33,6 +33,9 @@
     <string name="childrenQueueList">No children to display.</string>
     <string name="changeChild">Change child</string>
 
+    <!-- Change Child Strings -->
+    <string name="changeChildTitle">Change Current Child</string>
+
     <!-- Timer Strings -->
     <string name="timerTitle">Timer</string>
 

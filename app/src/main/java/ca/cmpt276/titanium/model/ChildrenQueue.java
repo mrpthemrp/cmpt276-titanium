@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 public class ChildrenQueue {
@@ -69,13 +70,13 @@ public class ChildrenQueue {
     }
 
     public int getChildQueueIndex(UUID uniqueID) {
-        int childIndex = 0;
         for (int i = 0; i < childrenQueue.size(); i++) {
-            if (childrenQueue.get(i).getUniqueID() == uniqueID) {
-                childIndex = i;
+            if (childrenQueue.get(i).getUniqueID().toString().equals(uniqueID.toString())) {
+                return i;
             }
         }
-        return childIndex;
+
+        throw new NoSuchElementException("Child with given unique ID does not exist.");
     }
 
     public void moveChildPositionToFront(UUID uniqueID) {
