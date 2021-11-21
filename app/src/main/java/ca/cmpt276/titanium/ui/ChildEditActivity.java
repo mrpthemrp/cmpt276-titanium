@@ -110,22 +110,22 @@ public class ChildEditActivity extends AppCompatActivity {
                 result -> {
                     if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
                         String cameraDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera";
-                        File file = new File(cameraDirectory, "temp.png");
+                        File portrait = new File(cameraDirectory, "temp.png");
 
                         Bitmap savedPortraitBitmap = null;
                         try {
-                            savedPortraitBitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+                            savedPortraitBitmap = BitmapFactory.decodeStream(new FileInputStream(portrait));
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
 
-                        RoundedBitmapDrawable portrait = RoundedBitmapDrawableFactory.create(this.getResources(), savedPortraitBitmap);
-                        portrait.setCircular(true);
+                        RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(this.getResources(), savedPortraitBitmap);
+                        portraitDrawable.setCircular(true);
 
-                        portraitView.setImageDrawable(portrait);
+                        portraitView.setImageDrawable(portraitDrawable);
                         children.getChild(childUniqueId).setPortrait(savedPortraitBitmap);
 
-                        assert file.delete();
+                        assert portrait.delete();
 
                         // TODO: Delete photo from device if child deleted
                         // TODO: Store photos in separate location from D C I M/Camera?

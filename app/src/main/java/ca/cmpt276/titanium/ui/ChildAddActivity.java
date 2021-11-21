@@ -120,8 +120,6 @@ public class ChildAddActivity extends AppCompatActivity {
                             portraitDrawable.setCircular(true);
                             portraitView.setImageDrawable(portraitDrawable);
 
-                            assert file.delete();
-
                             // TODO: Delete photo from device if child deleted
                             // TODO: Store photos in separate location from D C I M/Camera?
                             // TODO: like when taking photo, store a default photo as if it was from camera app
