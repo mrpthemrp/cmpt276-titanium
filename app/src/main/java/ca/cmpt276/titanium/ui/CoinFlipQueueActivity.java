@@ -44,6 +44,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
         childrenQueue = ChildrenQueue.getInstance(this);
         coinFlipHistory = CoinFlipHistory.getInstance(this);
 
+        displayQueue();
         updateGUI();
     }
 
