@@ -144,5 +144,6 @@
     <string name="helpAppInfo">App Information</string>
     <string name="taskListTitle">List of Tasks</string>
     <string name="taskViewTaskTitle">Manage Task</string>
+    <string name="taskTurnTitle">Child Whose Turn It Is:</string>
 
 </resources>
