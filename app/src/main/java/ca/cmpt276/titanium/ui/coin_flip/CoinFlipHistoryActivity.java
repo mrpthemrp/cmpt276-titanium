@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import java.util.Collections;
 import java.util.Objects;
 
 import ca.cmpt276.titanium.R;

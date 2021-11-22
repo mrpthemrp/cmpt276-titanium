@@ -2,7 +2,6 @@ package ca.cmpt276.titanium.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
@@ -46,7 +45,6 @@ public class CoinFlip {
 
     public LocalDateTime getLocalDateTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy, HH:mm:ss");
-        LocalDateTime dateTime = LocalDateTime.parse(timeOfFlip, formatter);
-        return dateTime;
+        return LocalDateTime.parse(timeOfFlip, formatter);
     }
 }
