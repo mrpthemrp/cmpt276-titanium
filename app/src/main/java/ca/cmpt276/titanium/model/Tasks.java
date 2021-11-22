@@ -14,9 +14,7 @@ import java.util.UUID;
 
 public class Tasks {
     private static final Tasks instance = new Tasks();
-    private static final String TASK_LIST = "taskName";
     private static final String TASK_PREF = "taskPref";
-    private static final String CHILD_LIST = "childName";
     private static final String CHILD_PREF = "childPref";
     private static final Gson GSON = new Gson();
     private static SharedPreferences prefs, childPrefs;
@@ -30,7 +28,7 @@ public class Tasks {
         return instance;
     }
 
-    public void saveTaskChildData(Context context) {
+    public void saveTaskChildData() {
         String json = GSON.toJson(listOfTasks);
         String jsonChild = GSON.toJson(childListForTasks);
         prefs.edit().putString(TASK_PREF, json).apply();
