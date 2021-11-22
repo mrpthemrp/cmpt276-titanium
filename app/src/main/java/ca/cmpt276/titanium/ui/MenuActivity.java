@@ -29,9 +29,6 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
-        setSupportActionBar(myToolbar);
-
         this.children = Children.getInstance(this);
 
         Button addChildButton = findViewById(R.id.menuGoToAddChild);
@@ -45,12 +42,6 @@ public class MenuActivity extends AppCompatActivity {
 
         Button whoseTurnButton = findViewById(R.id.menuWhoseTurn);
         whoseTurnButton.setOnClickListener(view -> startActivity(TasksActivity.makeIntent(this)));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_menu, menu);
-        return true;
     }
 
     @Override
