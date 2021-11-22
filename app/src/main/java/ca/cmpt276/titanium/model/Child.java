@@ -1,12 +1,15 @@
 package ca.cmpt276.titanium.model;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import java.util.UUID;
+
+import ca.cmpt276.titanium.R;
 
 /**
  * This class is used to get and set the attributes of a single child.
@@ -23,16 +26,23 @@ public class Child {
     }
 
     public static RoundedBitmapDrawable getSpecifiedPortrait(Resources resources, String portraitPath) {
-        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-        bitmapOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(portraitPath, bitmapOptions);
+        RoundedBitmapDrawable portrait;
+        Bitmap portraitBitmap;
 
-        int scaleFactor = Math.max(1, Math.min(bitmapOptions.outWidth / 500, bitmapOptions.outHeight / 500)); // TODO: Scale according to device pixel density
+        if (portraitPath == null) {
+            portraitBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_default_portrait_light_green);
+        } else {
+            BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+            bitmapOptions.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(portraitPath, bitmapOptions);
 
-        bitmapOptions.inJustDecodeBounds = false;
-        bitmapOptions.inSampleSize = scaleFactor;
+            bitmapOptions.inJustDecodeBounds = false;
+            bitmapOptions.inSampleSize = Math.max(1, Math.min(bitmapOptions.outWidth / 500, bitmapOptions.outHeight / 500)); // TODO: Scale according to device pixel density
 
-        RoundedBitmapDrawable portrait = RoundedBitmapDrawableFactory.create(resources, BitmapFactory.decodeFile(portraitPath, bitmapOptions));
+            portraitBitmap = BitmapFactory.decodeFile(portraitPath, bitmapOptions);
+        }
+
+        portrait = RoundedBitmapDrawableFactory.create(resources, portraitBitmap);
         portrait.setCircular(true);
 
         return portrait;

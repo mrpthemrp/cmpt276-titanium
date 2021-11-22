@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -46,8 +47,8 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 
-// TODO: Replace current default portrait with PNG and move associated code into Child
-// TODO: Save cropped versions of photos rather than originals
+// TODO: Replace default portrait with multiple versions for different device pixel densities
+// TODO: Save cropped versions of photos rather than originals, ?including for gallery photos?
 // TODO: Add ability to manually crop photos in-app
 
 /**
@@ -236,15 +237,10 @@ public class ChildActivity extends AppCompatActivity {
         RoundedBitmapDrawable portrait;
 
         if (intentType.equals(ADD_CHILD_INTENT)) {
-            Drawable defaultPortraitDrawable = Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.ic_baseline_circle_green_200));
-            Bitmap defaultPortraitBitmap = Bitmap.createBitmap(defaultPortraitDrawable.getIntrinsicWidth(), defaultPortraitDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-            Canvas defaultPortraitCanvas = new Canvas(defaultPortraitBitmap);
-
-            defaultPortraitDrawable.setBounds(0, 0, defaultPortraitCanvas.getWidth(), defaultPortraitCanvas.getHeight());
-            defaultPortraitDrawable.draw(defaultPortraitCanvas);
-
-            portrait = RoundedBitmapDrawableFactory.create(getResources(), defaultPortraitBitmap);
+            portrait = RoundedBitmapDrawableFactory.create(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.ic_default_portrait_light_green));
             portrait.setCircular(true);
+
+            this.currentPortraitPath = null;
         } else {
             portrait = children.getChild(focusedChildUniqueID).getPortrait(getResources());
             childName.setText(children.getChild(focusedChildUniqueID).getName());
