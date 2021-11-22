@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--<string name="label_home">Home</string> : how = label & home is description of the string.
-    <string name="hint_user_name">Enter Your Name</string> : how = hint & user_name is the description of string.-->
-
     <!-- Android Manifest -->
     <string name="app_name">Practical Parent</string>
 
     <!-- Child -->
     <string name="button_save">SAVE</string>
+    <string name="content_description">content_description</string>
     <string name="hint_child_name">Child Name</string>
     <string name="prompt_discard_changes_message">Are you sure? All changes will be lost.</string>
     <string name="prompt_discard_changes_negative">No</string>
@@ -45,8 +43,8 @@
 
     <!-- Coin Flip History -->
     <string name="coinFlipHistoryTitle">Coin Flip History</string>
-    <string name="coin_flip_child_choice_text">&#32;chose&#32;</string> <!-- space: &#32; -->
-    <string name="coin_flip_result_initial_text">Landed on&#32;</string> <!-- space: &#32; -->
+    <string name="coin_flip_child_choice_text">&#160;chose&#160;</string> <!-- space: &#160; -->
+    <string name="coin_flip_result_initial_text">Landed on&#160;</string> <!-- space: &#160; -->
     <string name="flipCoinHistChildName">No Coin Flips Yet</string>
     <string name="flipCoinHistDate">Date Goes Here</string>
     <string name="flipCoinHistDummy">RESULT</string>
@@ -58,6 +56,16 @@
     <string name="menuChildrenText">No children added yet!</string>
     <string name="menuHeader">Main Menu</string>
     <string name="menuTimerBtn">Timer</string>
+
+    <!-- View Child Queue Strings -->
+    <string name="currentChildTitle">Current Child:</string>
+    <string name="currentChildName">No child to display</string>
+    <string name="queueTitle">Queue:</string>
+    <string name="childrenQueueList">No children to display.</string>
+    <string name="changeChild">Change child</string>
+
+    <!-- Change Child Strings -->
+    <string name="changeChildTitle">Change Current Child</string>
 
     <!-- Tasks -->
     <string name="add_task">Add Task</string>
@@ -92,16 +100,26 @@
     <string name="menuEdit">Edit Child</string>
     <string name="menuFlipCoinBtn">Flip Coin</string>
     <string name="whoseTurn">Tasks</string>
-    <string name="content_description">content_description</string>
 
     <!-- New -->
     <string name="noChildrenConfigured">No children to show.</string>
-    <string name="currentChildName">No child to display</string>
-    <string name="childrenQueueList">No children to display.</string>
-    <string name="viewQueue">View Queue</string>
-    <string name="currentChildTitle">Current Child:</string>
-    <string name="queueTitle">Queue:</string>
-    <string name="changeChild">Change child</string>
     <string name="title_activity_change_child">ChangeChildActivity</string>
+    <string name="viewQueue">View Queue</string>
+    <string name="prompt_select_image_title">Update Portrait</string>
+    <string name="prompt_select_image_option1">Take Photo</string>
+    <string name="prompt_select_image_option2">Select from Gallery</string>
+    <string name="prompt_select_image_option3">Cancel</string>
+    <string name="title_help">Help</string>
+    <string name="help_team_name">Team Titanium</string>
+    <string name="help_developers">\u2022 Haris Ahmad\n\u2022 Christopher Torunski\n\u2022 Michelle Vong\n\u2022 Deborah Wang</string>
+    <string name="help_developers_title">Developers</string>
+    <string name="help_subtitle_copyright">Copyright</string>
+    <string name="help_copyright_material">Coin flip sound: https://www.youtube.com/watch?v=1QxX9ruPUXM\n</string>
+    <string name="no_tasks_to_display_currently">No Tasks To Display Currently</string>
+    <string name="menuAfternoon">Good Afternoon,</string>
+    <string name="menuEvening">Good Evening,</string>
+    <string name="menuMorning">Good Morning,</string>
+    <string name="menuDefaultMessage">Hello there!</string>
+    <string name="menuSubMessage">select any of the buttons below to begin!</string>
 
 </resources>

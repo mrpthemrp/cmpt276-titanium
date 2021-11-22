@@ -161,7 +161,8 @@
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/menuSubMessage"
@@ -170,10 +171,23 @@
         android:layout_marginStart="41dp"
         android:layout_marginTop="10dp"
         android:text="@string/menuSubMessage"
+        android:textColor="?attr/colorSecondary"
         android:textSize="13sp"
         android:textStyle="bold"
-        android:textColor="?attr/colorSecondary"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainMenuWelcomeMessage" />
+        app:layout_constraintTop_toBottomOf="@+id/mainMenuWelcomeMessage"
+        tools:ignore="TextContrastCheck" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/helpButton"
+        android:layout_width="56dp"
+        android:layout_height="59dp"
+        android:background="@android:color/transparent"
+        android:gravity="end"
+        app:icon="@drawable/ic_baseline_help_outline_white_24"
+        app:iconTint="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
