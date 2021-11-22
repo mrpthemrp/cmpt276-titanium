@@ -43,6 +43,7 @@ import ca.cmpt276.titanium.BuildConfig;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
+import ca.cmpt276.titanium.model.ChildrenQueue;
 
 // TODO: Save cropped versions of photos rather than originals, ?including for gallery photos?
 // TODO: Add ability to manually crop photos in-app
@@ -61,6 +62,7 @@ public class ChildActivity extends AppCompatActivity {
 
     private String intentType;
     private Children children;
+    private ChildrenQueue childrenQueue;
     private Toast toast; // prevents toast stacking
     EditText childName;
     private ImageView portraitView;
@@ -87,6 +89,7 @@ public class ChildActivity extends AppCompatActivity {
         setupActionBar(intentType);
 
         this.children = Children.getInstance(this);
+        this.childrenQueue = ChildrenQueue.getInstance(this);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
         this.portraitView = findViewById(R.id.addProfilePic);
         this.childName = findViewById(R.id.childName);
@@ -174,6 +177,7 @@ public class ChildActivity extends AppCompatActivity {
 
                         if (intentType.equals(EDIT_CHILD_INTENT)) {
                             children.getChild(focusedChildUniqueID).setPortraitPath(currentPortraitPath);
+                            childrenQueue.getChild(focusedChildUniqueID).setPortraitPath(currentPortraitPath);
                         }
                     }
                 });
@@ -197,6 +201,7 @@ public class ChildActivity extends AppCompatActivity {
 
                         if (intentType.equals(EDIT_CHILD_INTENT)) {
                             children.getChild(focusedChildUniqueID).setPortraitPath(currentPortraitPath);
+                            childrenQueue.getChild(focusedChildUniqueID).setPortraitPath(currentPortraitPath);
                         }
                     }
                 });
