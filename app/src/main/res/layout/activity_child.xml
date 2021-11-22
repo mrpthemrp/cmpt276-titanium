@@ -40,7 +40,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_circle_green_200" />
+            app:srcCompat="@drawable/ic_baseline_circle_green_200"
+            tools:ignore="ImageContrastCheck" />
 
         <EditText
             android:id="@+id/childName"
@@ -67,7 +68,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:contentDescription="@string/content_description"
-            android:src="@drawable/ic_baseline_edit_white_24"
+            android:src="@drawable/ic_baseline_edit_white_24_border"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/addProfilePic"
             app:layout_constraintEnd_toEndOf="@+id/addProfilePic"
