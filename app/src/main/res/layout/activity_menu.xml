@@ -13,12 +13,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:columnCount="4"
         android:useDefaultMargins="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menuSubMessage">
+        app:layout_constraintTop_toBottomOf="@+id/mainMenuWelcomeMessage">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/menuGoToTimer"
@@ -134,26 +134,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:text="@string/menuDefaultMessage"
         android:textColor="?attr/colorSecondaryVariant"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck" />
-
-    <TextView
-        android:id="@+id/menuSubMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="27dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/menuSubMessage"
-        android:textColor="?attr/colorSecondary"
-        android:textSize="13sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainMenuWelcomeMessage"
         tools:ignore="TextContrastCheck" />
 
     <com.google.android.material.button.MaterialButton

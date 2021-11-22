@@ -52,9 +52,9 @@
     <string name="menuChildrenText">No children added yet!</string>
     <string name="menuHeader">Main Menu</string>
     <string name="menuTimerBtn">Timer</string>
-    <string name="menuAfternoon">Good Afternoon,</string>
-    <string name="menuEvening">Good Evening,</string>
-    <string name="menuMorning">Good Morning,</string>
+    <string name="menuAfternoon">Good Afternoon</string>
+    <string name="menuEvening">Good Evening</string>
+    <string name="menuMorning">Good Morning</string>
     <string name="menuDefaultMessage">Hello there!</string>
     <string name="menuSubMessage">select any of the buttons below to begin!</string>
 
