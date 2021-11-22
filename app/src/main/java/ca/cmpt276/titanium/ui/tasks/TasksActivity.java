@@ -72,7 +72,7 @@ public class TasksActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        taskManager.saveTaskChildData(this);
+        taskManager.saveTaskChildData();
         super.onResume();
         checkTaskList();
         populate();
@@ -81,7 +81,7 @@ public class TasksActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        taskManager.saveTaskChildData(this);
+        taskManager.saveTaskChildData();
     }
 
     @Override
