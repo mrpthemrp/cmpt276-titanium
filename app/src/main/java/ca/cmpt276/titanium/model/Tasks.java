@@ -18,10 +18,17 @@ public class Tasks {
     private static final String TASK_PREF = "taskPref";
     private static final String CHILD_LIST = "childName";
     private static final String CHILD_PREF = "childPref";
-    private static SharedPreferences prefs, childPrefs;
     private static final Gson GSON = new Gson();
+    private static SharedPreferences prefs, childPrefs;
     private static ArrayList<String> listOfTasks = new ArrayList<>();
     private static ArrayList<Child> childListForTasks = new ArrayList<>();
+
+    private Tasks() {
+    }
+
+    public static Tasks getInstance() {
+        return instance;
+    }
 
     public void saveTaskChildData(Context context) {
         String json = GSON.toJson(listOfTasks);
@@ -34,29 +41,22 @@ public class Tasks {
         Tasks.prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String json = prefs.getString(TASK_PREF, null);
 
-        if(json != null){
+        if (json != null) {
             Type type = new TypeToken<ArrayList<String>>() {
             }.getType();
             Tasks.listOfTasks = GSON.fromJson(json, type);
         }
     }
 
-    public void loadChildData(Context context){
+    public void loadChildData(Context context) {
         Tasks.childPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         String jsonChild = childPrefs.getString(CHILD_PREF, null);
 
-        if(jsonChild != null){
+        if (jsonChild != null) {
             Type type = new TypeToken<ArrayList<Child>>() {
             }.getType();
             Tasks.childListForTasks = GSON.fromJson(jsonChild, type);
         }
-    }
-
-    private Tasks() {
-    }
-
-    public static Tasks getInstance() {
-        return instance;
     }
 
     public void addTask(String task) {
