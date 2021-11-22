@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -51,11 +50,6 @@ public class ChildViewActivity extends AppCompatActivity {
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
         this.childUniqueId = (UUID) getIntent().getSerializableExtra(CHILD_UNIQUE_ID_INTENT);
         this.childBeingViewed = children.getChild(childUniqueId);
-
-        RoundedBitmapDrawable portrait = children.getChild(childUniqueId).getPortrait(getResources());
-
-        ImageView portraitView = findViewById(R.id.addProfilePic);
-        portraitView.setImageDrawable(portrait);
     }
 
     @Override
@@ -77,7 +71,7 @@ public class ChildViewActivity extends AppCompatActivity {
             finish();
             return true;
         } else if (item.getItemId() == R.id.optionsHelp) {
-            Intent editChildIntent = ChildEditActivity.makeIntent(this, childUniqueId);
+            Intent editChildIntent = ChildEditActivity.makeIntent(this, "Edit Child", childUniqueId);
             startActivity(editChildIntent);
             return true;
         } else if (item.getItemId() == R.id.optionsRemove) {
@@ -99,6 +93,9 @@ public class ChildViewActivity extends AppCompatActivity {
     private void displayChildInfo() {
         TextView childName = findViewById(R.id.childName);
         childName.setText(childBeingViewed.getName());
+
+        ImageView portraitView = findViewById(R.id.addProfilePic);
+        portraitView.setImageDrawable(children.getChild(childUniqueId).getPortrait(getResources()));
     }
 
     private void updateToast(String toastText) {

@@ -86,16 +86,9 @@
             android:parentActivityName=".ui.MenuActivity"
             android:theme="@style/Theme.Titanium.Child" />
         <activity
-            android:name=".ui.child.ChildAddActivity"
-            android:configChanges="keyboard|keyboardHidden"
-            android:exported="true"
-            android:parentActivityName=".ui.MenuActivity"
-            android:theme="@style/Theme.Titanium.Child" />
-        <activity
             android:name=".ui.child.ChildEditActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:parentActivityName=".ui.child.ChildViewActivity"
             android:theme="@style/Theme.Titanium.Child" />
         <activity
             android:name=".ui.coin_flip.CoinFlipActivity"

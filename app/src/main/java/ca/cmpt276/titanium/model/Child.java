@@ -3,17 +3,11 @@ package ca.cmpt276.titanium.model;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
+import android.widget.ImageView;
 
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.UUID;
 
 /**
@@ -22,14 +16,12 @@ import java.util.UUID;
 public class Child {
     private final UUID uniqueID;
     private String name;
-    private String portraitName;
+    private String portraitPath;
 
-    public Child(String name, String portrait) {
+    public Child(String name, String portraitPath) {
         this.uniqueID = UUID.randomUUID();
         setName(name);
-        this.portraitName = portrait;
-        //this.portraitName = "portrait_" + uniqueID.toString();
-        //setPortrait(portrait);
+        this.portraitPath = portraitPath;
     }
 
     public UUID getUniqueID() {
@@ -53,43 +45,24 @@ public class Child {
     }
 
     public RoundedBitmapDrawable getPortrait(Resources resources) {
-        Bitmap bitmap = BitmapFactory.decodeFile(portraitName);
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(portraitPath, bmOptions);
+
+        int scaleFactor = Math.max(1, Math.min(bmOptions.outWidth / 500, bmOptions.outHeight / 500)); // TODO: Scale according to device pixel density
+
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(portraitPath, bmOptions);
 
         RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
         portraitDrawable.setCircular(true);
 
-
-        /*File cameraDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera");
-        RoundedBitmapDrawable portrait = null;
-
-        try {
-            if (cameraDirectory.exists() || cameraDirectory.mkdirs()) {
-                File portraitFile = new File(cameraDirectory, portraitName + ".png");
-
-                portrait = RoundedBitmapDrawableFactory.create(resources, BitmapFactory.decodeStream(new FileInputStream(portraitFile)));
-                portrait.setCircular(true);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }*/
-
         return portraitDrawable;
     }
 
-    public void setPortrait(String photoPath) {
-        this.portraitName = photoPath;
-        /*File cameraDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera");
-
-        try {
-            if (cameraDirectory.exists() || cameraDirectory.mkdirs()) {
-                File portrait = new File(cameraDirectory, portraitName + ".png");
-
-                OutputStream outputStream = new FileOutputStream(portrait);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-                outputStream.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+    public void setPortraitPath(String portraitPath) {
+        this.portraitPath = portraitPath;
     }
 }

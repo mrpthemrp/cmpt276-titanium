@@ -16,7 +16,7 @@ import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
-import ca.cmpt276.titanium.ui.child.ChildAddActivity;
+import ca.cmpt276.titanium.ui.child.ChildEditActivity;
 import ca.cmpt276.titanium.ui.child.ChildViewActivity;
 import ca.cmpt276.titanium.ui.coin_flip.CoinFlipActivity;
 import ca.cmpt276.titanium.ui.tasks.TasksActivity;
@@ -40,7 +40,7 @@ public class MenuActivity extends AppCompatActivity {
         this.children = Children.getInstance(this);
 
         Button addChildButton = findViewById(R.id.menuGoToAddChild);
-        addChildButton.setOnClickListener(view -> startActivity(ChildAddActivity.makeIntent(this)));
+        addChildButton.setOnClickListener(view -> startActivity(ChildEditActivity.makeIntent(this, "Add Child", null)));
 
         Button coinFlipButton = findViewById(R.id.menuGoToFlipCoin);
         coinFlipButton.setOnClickListener(view -> startActivity(CoinFlipActivity.makeIntent(this)));

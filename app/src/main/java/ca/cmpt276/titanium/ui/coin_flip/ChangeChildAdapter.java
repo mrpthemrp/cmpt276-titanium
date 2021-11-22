@@ -37,8 +37,8 @@ public class ChangeChildAdapter extends ArrayAdapter<Child> {
 
         Child child = getItem(position);
 
-        RoundedBitmapDrawable drawable = child.getPortrait(context.getResources());
         ImageView changeChildIcon = convertView.findViewById(R.id.changeChildIconList);
+        RoundedBitmapDrawable drawable = child.getPortrait(context.getResources());
         changeChildIcon.setImageDrawable(drawable);
 
         TextView childQueueNameText = convertView.findViewById(R.id.changeChildNameList);

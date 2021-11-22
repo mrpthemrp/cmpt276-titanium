@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,13 +28,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,106 +41,66 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
+import ca.cmpt276.titanium.BuildConfig;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 
 /**
- * This activity represents the editing of a single child.
+ * This activity represents the adding of a single child.
  */
 public class ChildEditActivity extends AppCompatActivity {
-    private static final String CHILD_UNIQUE_ID_INTENT = "childUniqueID";
+    private static final String INTENT_TYPE_KEY = "intentType";
+    private static final String EDIT_CHILD_INTENT = "Edit Child";
+    private static final String CHILD_UNIQUE_ID_KEY = "childUniqueID";
 
-    private final Children children = Children.getInstance(this);
+    private String intentType;
+    private Children children;
     private Toast toast; // prevents toast stacking
     private UUID childUniqueId;
     private Child childBeingEdited;
+
+
     private EditText childName;
     private boolean changesAccepted = true;
     private ImageView portraitView;
+    private String currentPhotoPath;
     private ActivityResultLauncher<Intent> startTakePhoto;
     private ActivityResultLauncher<Intent> startSelectFromGallery;
 
-    public static Intent makeIntent(Context context, UUID childUniqueId) {
-        Intent editChildIntent = new Intent(context, ChildEditActivity.class);
-        editChildIntent.putExtra(CHILD_UNIQUE_ID_INTENT, childUniqueId);
+    public static Intent makeIntent(Context context, String intentType, UUID childUniqueID) {
+        Intent intent = new Intent(context, ChildEditActivity.class);
+        intent.putExtra(INTENT_TYPE_KEY, intentType);
+        intent.putExtra(CHILD_UNIQUE_ID_KEY, childUniqueID);
 
-        return editChildIntent;
+        return intent;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child);
-        setupActionBar();
 
+        this.intentType = getIntent().getStringExtra(INTENT_TYPE_KEY);
+        setupActionBar(intentType);
+
+        this.children = Children.getInstance(this);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
-        this.childUniqueId = (UUID) getIntent().getSerializableExtra(CHILD_UNIQUE_ID_INTENT);
-        this.childBeingEdited = children.getChild(childUniqueId);
 
-        displayChildInfo();
-        setupButtons();
+        if (intentType.equals(EDIT_CHILD_INTENT)) {
+            this.childUniqueId = (UUID) getIntent().getSerializableExtra(CHILD_UNIQUE_ID_KEY);
+            this.childBeingEdited = children.getChild(childUniqueId);
+        }
 
-        this.startSelectFromGallery = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
-                        Intent data = result.getData();
-                        Uri selectedImage = Objects.requireNonNull(data).getData();
-                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                        if (selectedImage != null) {
-                            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                            if (cursor != null) {
-                                cursor.moveToFirst();
-
-                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                                String picturePath = cursor.getString(columnIndex);
-
-                                Bitmap portrait = BitmapFactory.decodeFile(picturePath);
-
-                                RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(getResources(), portrait);
-                                portraitDrawable.setCircular(true);
-                                children.getChild(childUniqueId).setPortrait(currentPhotoPath);
-
-                                portraitView.setImageDrawable(portraitDrawable);
-                                cursor.close();
-                            }
-                        }
-                    }
-                });
-
-        this.startTakePhoto = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
-                        String cameraDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera";
-                        File portrait = new File(cameraDirectory, "temp.png");
-
-                        Bitmap savedPortraitBitmap = null;
-                        try {
-                            savedPortraitBitmap = BitmapFactory.decodeStream(new FileInputStream(portrait));
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-
-                        RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(this.getResources(), savedPortraitBitmap);
-                        portraitDrawable.setCircular(true);
-
-                        portraitView.setImageDrawable(portraitDrawable);
-                        children.getChild(childUniqueId).setPortrait(currentPhotoPath);
-
-                        assert portrait.delete();
-
-                        // TODO: Delete photo from device if child deleted
-                        // TODO: Go back to default image if user deletes portrait photo for a given child via files app or something
-                    }
-                });
+        setupActivityResults();
+        setupInputFields();
+        setupGUI();
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            launchDiscardChangesPrompt();
+            onBackPressed();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -151,19 +112,61 @@ public class ChildEditActivity extends AppCompatActivity {
         launchDiscardChangesPrompt();
     }
 
-    private void setupActionBar() {
+    private void setupActionBar(String intentType) {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle(R.string.menuEdit);
+        setTitle(intentType);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
-    private void displayChildInfo() {
-        this.childName = findViewById(R.id.childName);
-        childName.setText(childBeingEdited.getName());
+    private void setupActivityResults() {
+        this.startTakePhoto = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
+                        setPic();
+                        galleryAddPic();
+
+                        if (intentType.equals(EDIT_CHILD_INTENT)) {
+                            children.getChild(childUniqueId).setPortraitPath(currentPhotoPath);
+                        }
+                    }
+                });
+
+        this.startSelectFromGallery = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
+                        Uri selectedImage = Objects.requireNonNull(result.getData()).getData();
+                        String[] projection = {MediaStore.Images.Media.DATA};
+                        Cursor cursor = getContentResolver().query(selectedImage, projection, null, null, null);
+
+                        if (cursor != null) {
+                            int columnIndex = cursor.getColumnIndex(projection[0]);
+
+                            cursor.moveToFirst();
+                            this.currentPhotoPath = cursor.getString(columnIndex);
+                            cursor.close();
+
+                            setPic();
+
+                            if (intentType.equals(EDIT_CHILD_INTENT)) {
+                                children.getChild(childUniqueId).setPortraitPath(currentPhotoPath);
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void setupInputFields() {
+        childName = findViewById(R.id.childName);
         childName.setEnabled(true);
         childName.setCursorVisible(true);
+
+        if (intentType.equals(EDIT_CHILD_INTENT)) {
+            childName.setText(childBeingEdited.getName());
+        }
     }
 
     private boolean nameContainsOnlyLetters(String name) {
@@ -178,7 +181,7 @@ public class ChildEditActivity extends AppCompatActivity {
         return true;
     }
 
-    private void setupButtons() {
+    private void setupGUI() {
         Button saveButton = findViewById(R.id.viewFunctionBtn);
         saveButton.setVisibility(View.VISIBLE);
 
@@ -186,8 +189,13 @@ public class ChildEditActivity extends AppCompatActivity {
             if (childName.getText().toString().equals("")) {
                 updateToast(getString(R.string.toast_no_name));
             } else if (nameContainsOnlyLetters(childName.getText().toString())) {
-                children.setChildName(childUniqueId, childName.getText().toString());
-                updateToast(getString(R.string.toast_child_updated));
+                if (intentType.equals(EDIT_CHILD_INTENT)) {
+                    children.setChildName(childUniqueId, childName.getText().toString());
+                } else {
+                    children.addChild(childName.getText().toString(), currentPhotoPath);
+                }
+
+                updateToast(getString(R.string.toast_child_saved));
                 finish();
             } else {
                 updateToast(getString(R.string.toast_invalid_name));
@@ -215,7 +223,11 @@ public class ChildEditActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                changesAccepted = childName.getText().toString().equals(childBeingEdited.getName());
+                if (intentType.equals(EDIT_CHILD_INTENT)) {
+                    changesAccepted = childName.getText().toString().equals(childBeingEdited.getName());
+                } else {
+                    changesAccepted = childName.getText().toString().equals("");
+                }
             }
 
             @Override
@@ -223,6 +235,24 @@ public class ChildEditActivity extends AppCompatActivity {
 
             }
         });
+
+        RoundedBitmapDrawable portrait = null;
+
+        if (intentType.equals(EDIT_CHILD_INTENT)) {
+            portrait = children.getChild(childUniqueId).getPortrait(getResources());
+        }
+
+        if (portrait == null) {
+            Drawable defaultPortraitDrawable = Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.ic_baseline_circle_green_200));
+            Bitmap defaultPortraitBitmap = Bitmap.createBitmap(defaultPortraitDrawable.getIntrinsicWidth(), defaultPortraitDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            Canvas defaultPortraitCanvas = new Canvas(defaultPortraitBitmap);
+
+            defaultPortraitDrawable.setBounds(0, 0, defaultPortraitCanvas.getWidth(), defaultPortraitCanvas.getHeight());
+            defaultPortraitDrawable.draw(defaultPortraitCanvas);
+
+            portrait = RoundedBitmapDrawableFactory.create(getResources(), defaultPortraitBitmap);
+            portrait.setCircular(true);
+        }
 
         ImageView editIcon = findViewById(R.id.editIcon);
         editIcon.setVisibility(View.VISIBLE);
@@ -232,7 +262,6 @@ public class ChildEditActivity extends AppCompatActivity {
         portraitView.setClickable(true);
         portraitView.setOnClickListener(view -> selectImage());
 
-        RoundedBitmapDrawable portrait = children.getChild(childUniqueId).getPortrait(getResources());
         portraitView.setImageDrawable(portrait);
     }
 
@@ -267,103 +296,43 @@ public class ChildEditActivity extends AppCompatActivity {
         this.sendBroadcast(mediaScanIntent);
     }
 
-    String currentPhotoPath;
-
     private File createImageFile() throws IOException {
-        // Create an image file name
         SimpleDateFormat timeStampFormatter = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
         Date currentDate = new Date();
         String timeStamp = timeStampFormatter.format(currentDate.getTime());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
+                imageFileName,
+                ".jpg",
+                storageDir
         );
 
-        // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException e) {
-                // Error occurred while creating the File
-                e.getStackTrace();
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            setPic();
-            savePic();
-
-            /*RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(this.getResources(), savedPortraitBitmap);
-            portraitDrawable.setCircular(true);
-
-            portraitView.setImageDrawable(portraitDrawable);
-            children.getChild(childUniqueId).setPortrait(savedPortraitBitmap);
-
-            assert portrait.delete();
-
-
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(imageBitmap);*/
-        }
-    }
-
-    private void savePic() {
-
-    }
-
     private void setPic() {
-        // Get the dimensions of the View
-        int targetW = portraitView.getWidth();
-        int targetH = portraitView.getHeight();
+        // TODO: Delete photo from device if child deleted
+        // TODO: Go back to default image if user deletes portrait photo for a given child via files app (i.e. if getPortrait returns null)
+        // TODO: Consider cropping + saving portraits in separate location so things don't need to be recropped repeatedly and
+        // TODO:    to make it more difficult for user to manually delete image
 
-        // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
-
         BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
 
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
+        int scaleFactor = Math.max(1, Math.min(bmOptions.outWidth / portraitView.getWidth(), bmOptions.outHeight / portraitView.getHeight()));
 
-        // Determine how much to scale down the image
-        int scaleFactor = Math.max(1, Math.min(photoW/targetW, photoH/targetH));
-
-        // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;
         bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
 
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
-        portraitView.setImageBitmap(bitmap);
-    }
 
+        RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        portraitDrawable.setCircular(true);
+        portraitView.setImageDrawable(portraitDrawable);
+    }
 
     private void selectImage() {
         final String[] dialogOptions = {getString(R.string.prompt_select_image_option1), getString(R.string.prompt_select_image_option2), getString(R.string.prompt_select_image_option3)};
@@ -373,15 +342,22 @@ public class ChildEditActivity extends AppCompatActivity {
                 .setItems(dialogOptions, (dialog, item) -> {
                     switch (dialogOptions[item]) {
                         case "Take Photo":
-                            dispatchTakePictureIntent();
-                            galleryAddPic();
+                            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); // TODO: Way for user to crop images?
 
-                            /*File cameraDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera/temp.png");
-                            Uri photoUri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", cameraDirectory);
+                            File photoFile = null;
+                            try {
+                                photoFile = createImageFile();
+                            } catch (IOException e) {
+                                e.getStackTrace();
+                            }
 
-                            Intent takePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            takePhoto.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                            startTakePhoto.launch(takePhoto);*/
+                            if (photoFile != null) {
+                                Uri photoURI = FileProvider.getUriForFile(this,
+                                        BuildConfig.APPLICATION_ID + ".provider",
+                                        photoFile);
+                                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                                startTakePhoto.launch(takePictureIntent);
+                            }
                             break;
                         case "Select from Gallery":
                             startSelectFromGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
