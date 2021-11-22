@@ -21,12 +21,11 @@ import java.util.UUID;
 public class Children {
     private static final Gson GSON = new Gson();
     private static final String CHILDREN_JSON_KEY = "childrenJson";
-
+    private static final Tasks taskManager = Tasks.getInstance();
     private static Children instance;
     private static SharedPreferences prefs;
     private static CoinFlipHistory coinFlipHistory;
     private static ChildrenQueue childrenQueue;
-
     private static ArrayList<Child> children = new ArrayList<>();
 
     private Children(Context context) {
@@ -90,6 +89,14 @@ public class Children {
                     childrenQueue.getChildrenQueue().remove(childrenQueue.getChildQueueIndex(uniqueID));
                     childrenQueue.saveData();
 
+                    int nextChild = i;
+                    nextChild += 1;
+
+                    if (nextChild >= children.size()) {
+                        nextChild = 0;
+                    }
+                    Child child = children.get(nextChild);
+                    taskManager.updateChild(uniqueID, child, children.size());
                     Children.children.remove(i);
                     saveData();
                     break;

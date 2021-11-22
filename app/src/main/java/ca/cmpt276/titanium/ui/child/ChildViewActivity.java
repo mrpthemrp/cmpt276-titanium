@@ -1,4 +1,4 @@
-package ca.cmpt276.titanium.ui;
+package ca.cmpt276.titanium.ui.child;
 
 import android.content.Context;
 import android.content.Intent;

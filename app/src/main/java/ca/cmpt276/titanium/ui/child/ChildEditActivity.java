@@ -1,12 +1,10 @@
-package ca.cmpt276.titanium.ui;
+package ca.cmpt276.titanium.ui.child;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,7 +26,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -41,28 +38,33 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.UUID;
 
-import ca.cmpt276.titanium.BuildConfig;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
-import ca.cmpt276.titanium.model.ChildrenQueue;
 
 /**
- * This activity represents the adding of a single child.
+ * This activity represents the editing of a single child.
  */
-public class ChildAddActivity extends AppCompatActivity {
-    private Children children;
+public class ChildEditActivity extends AppCompatActivity {
+    private static final String CHILD_UNIQUE_ID_INTENT = "childUniqueID";
+
+    private final Children children = Children.getInstance(this);
     private Toast toast; // prevents toast stacking
+    private UUID childUniqueId;
+    private Child childBeingEdited;
     private EditText childName;
     private boolean changesAccepted = true;
-    private String portrait;
     private ImageView portraitView;
     private ActivityResultLauncher<Intent> startTakePhoto;
     private ActivityResultLauncher<Intent> startSelectFromGallery;
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, ChildAddActivity.class);
+    public static Intent makeIntent(Context context, UUID childUniqueId) {
+        Intent editChildIntent = new Intent(context, ChildEditActivity.class);
+        editChildIntent.putExtra(CHILD_UNIQUE_ID_INTENT, childUniqueId);
+
+        return editChildIntent;
     }
 
     @Override
@@ -71,11 +73,12 @@ public class ChildAddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child);
         setupActionBar();
 
-        this.children = Children.getInstance(this);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+        this.childUniqueId = (UUID) getIntent().getSerializableExtra(CHILD_UNIQUE_ID_INTENT);
+        this.childBeingEdited = children.getChild(childUniqueId);
 
-        setupInputFields();
-        setupGUI();
+        displayChildInfo();
+        setupButtons();
 
         this.startSelectFromGallery = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -93,12 +96,12 @@ public class ChildAddActivity extends AppCompatActivity {
                                 String picturePath = cursor.getString(columnIndex);
 
                                 Bitmap portrait = BitmapFactory.decodeFile(picturePath);
-                                this.portrait = currentPhotoPath;
 
                                 RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(getResources(), portrait);
                                 portraitDrawable.setCircular(true);
-                                portraitView.setImageDrawable(portraitDrawable);
+                                children.getChild(childUniqueId).setPortrait(currentPhotoPath);
 
+                                portraitView.setImageDrawable(portraitDrawable);
                                 cursor.close();
                             }
                         }
@@ -109,26 +112,26 @@ public class ChildAddActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
-                        File cameraDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera");
+                        String cameraDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera";
+                        File portrait = new File(cameraDirectory, "temp.png");
 
-                        if (cameraDirectory.exists() || cameraDirectory.mkdirs()) {
-                            File portrait = new File(cameraDirectory, "temp.png");
-
-                            Bitmap savedPortraitBitmap = null;
-                            try {
-                                savedPortraitBitmap = BitmapFactory.decodeStream(new FileInputStream(portrait));
-                                this.portrait = currentPhotoPath;
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
-
-                            RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(this.getResources(), savedPortraitBitmap);
-                            portraitDrawable.setCircular(true);
-                            portraitView.setImageDrawable(portraitDrawable);
-
-                            // TODO: Delete photo from device if child deleted
-                            // TODO: Go back to default image if user deletes portrait photo for a given child via files app or something
+                        Bitmap savedPortraitBitmap = null;
+                        try {
+                            savedPortraitBitmap = BitmapFactory.decodeStream(new FileInputStream(portrait));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
                         }
+
+                        RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(this.getResources(), savedPortraitBitmap);
+                        portraitDrawable.setCircular(true);
+
+                        portraitView.setImageDrawable(portraitDrawable);
+                        children.getChild(childUniqueId).setPortrait(currentPhotoPath);
+
+                        assert portrait.delete();
+
+                        // TODO: Delete photo from device if child deleted
+                        // TODO: Go back to default image if user deletes portrait photo for a given child via files app or something
                     }
                 });
     }
@@ -151,13 +154,14 @@ public class ChildAddActivity extends AppCompatActivity {
     private void setupActionBar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle(R.string.title_child_add);
+        setTitle(R.string.menuEdit);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
-    private void setupInputFields() {
-        childName = findViewById(R.id.childName);
+    private void displayChildInfo() {
+        this.childName = findViewById(R.id.childName);
+        childName.setText(childBeingEdited.getName());
         childName.setEnabled(true);
         childName.setCursorVisible(true);
     }
@@ -174,7 +178,7 @@ public class ChildAddActivity extends AppCompatActivity {
         return true;
     }
 
-    private void setupGUI() {
+    private void setupButtons() {
         Button saveButton = findViewById(R.id.viewFunctionBtn);
         saveButton.setVisibility(View.VISIBLE);
 
@@ -182,8 +186,8 @@ public class ChildAddActivity extends AppCompatActivity {
             if (childName.getText().toString().equals("")) {
                 updateToast(getString(R.string.toast_no_name));
             } else if (nameContainsOnlyLetters(childName.getText().toString())) {
-                children.addChild(childName.getText().toString(), portrait);
-                updateToast(getString(R.string.toast_child_saved));
+                children.setChildName(childUniqueId, childName.getText().toString());
+                updateToast(getString(R.string.toast_child_updated));
                 finish();
             } else {
                 updateToast(getString(R.string.toast_invalid_name));
@@ -211,7 +215,7 @@ public class ChildAddActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                changesAccepted = childName.getText().toString().equals("");
+                changesAccepted = childName.getText().toString().equals(childBeingEdited.getName());
             }
 
             @Override
@@ -219,16 +223,6 @@ public class ChildAddActivity extends AppCompatActivity {
 
             }
         });
-
-        Drawable defaultPortraitDrawable = Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.ic_baseline_circle_green_200));
-        Bitmap defaultPortraitBitmap = Bitmap.createBitmap(defaultPortraitDrawable.getIntrinsicWidth(), defaultPortraitDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas defaultPortraitCanvas = new Canvas(defaultPortraitBitmap);
-        this.portrait = currentPhotoPath;
-
-        defaultPortraitDrawable.setBounds(0, 0, defaultPortraitCanvas.getWidth(), defaultPortraitCanvas.getHeight());
-        defaultPortraitDrawable.draw(defaultPortraitCanvas);
-
-        //Bitmap newBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_person_black_150); //Source: http://www.onlinewebfonts.com
 
         ImageView editIcon = findViewById(R.id.editIcon);
         editIcon.setVisibility(View.VISIBLE);
@@ -238,10 +232,8 @@ public class ChildAddActivity extends AppCompatActivity {
         portraitView.setClickable(true);
         portraitView.setOnClickListener(view -> selectImage());
 
-        RoundedBitmapDrawable portrait = RoundedBitmapDrawableFactory.create(getResources(), defaultPortraitBitmap);
-        portrait.setCircular(true);
+        RoundedBitmapDrawable portrait = children.getChild(childUniqueId).getPortrait(getResources());
         portraitView.setImageDrawable(portrait);
-
     }
 
     private void updateToast(String toastText) {
@@ -323,10 +315,9 @@ public class ChildAddActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("activity result");
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             setPic();
-            galleryAddPic();
+            savePic();
 
             /*RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(this.getResources(), savedPortraitBitmap);
             portraitDrawable.setCircular(true);
@@ -343,6 +334,10 @@ public class ChildAddActivity extends AppCompatActivity {
         }
     }
 
+    private void savePic() {
+
+    }
+
     private void setPic() {
         // Get the dimensions of the View
         int targetW = portraitView.getWidth();
@@ -351,6 +346,8 @@ public class ChildAddActivity extends AppCompatActivity {
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
+
+        BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
 
         int photoW = bmOptions.outWidth;
         int photoH = bmOptions.outHeight;
@@ -364,12 +361,9 @@ public class ChildAddActivity extends AppCompatActivity {
         bmOptions.inPurgeable = true;
 
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
-
-        RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        portraitDrawable.setCircular(true);
-        portraitView.setImageDrawable(portraitDrawable);
-        this.portrait = currentPhotoPath;
+        portraitView.setImageBitmap(bitmap);
     }
+
 
     private void selectImage() {
         final String[] dialogOptions = {getString(R.string.prompt_select_image_option1), getString(R.string.prompt_select_image_option2), getString(R.string.prompt_select_image_option3)};
@@ -380,6 +374,7 @@ public class ChildAddActivity extends AppCompatActivity {
                     switch (dialogOptions[item]) {
                         case "Take Photo":
                             dispatchTakePictureIntent();
+                            galleryAddPic();
 
                             /*File cameraDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/Camera/temp.png");
                             Uri photoUri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", cameraDirectory);

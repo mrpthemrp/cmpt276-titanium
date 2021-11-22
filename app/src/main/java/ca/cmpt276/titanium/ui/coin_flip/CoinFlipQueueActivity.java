@@ -1,4 +1,4 @@
-package ca.cmpt276.titanium.ui;
+package ca.cmpt276.titanium.ui.coin_flip;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 
 import java.util.Objects;
 
@@ -92,8 +93,8 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
         Child currentChildTurn = childrenQueue.getChild(coinFlipHistory.getNextPickerUniqueID());
         if (currentChildTurn != null) {
             currentChildTurnName.setText(currentChildTurn.getName());
-            // TODO: Add child icon when finished
-            currentChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_200);
+            RoundedBitmapDrawable drawable = children.getChild(coinFlipHistory.getNextPickerUniqueID()).getPortrait(getResources());
+            currentChildIcon.setImageDrawable(drawable);
         } else {
             currentChildTurnName.setText(R.string.currentChildName);
             currentChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_200);

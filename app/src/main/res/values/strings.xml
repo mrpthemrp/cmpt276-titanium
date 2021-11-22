@@ -43,8 +43,8 @@
 
     <!-- Coin Flip History -->
     <string name="coinFlipHistoryTitle">Coin Flip History</string>
-    <string name="coin_flip_child_choice_text">&#32;chose&#32;</string> <!-- space: &#32; -->
-    <string name="coin_flip_result_initial_text">Landed on&#32;</string> <!-- space: &#32; -->
+    <string name="coin_flip_child_choice_text">&#160;chose&#160;</string> <!-- space: &#160; -->
+    <string name="coin_flip_result_initial_text">Landed on&#160;</string> <!-- space: &#160; -->
     <string name="flipCoinHistChildName">No Coin Flips Yet</string>
     <string name="flipCoinHistDate">Date Goes Here</string>
     <string name="flipCoinHistDummy">RESULT</string>
@@ -102,8 +102,6 @@
     <string name="whoseTurn">Tasks</string>
 
     <!-- New -->
-    <string name="noChildrenConfigured">No children to show.</string>
-    <string name="title_activity_change_child">ChangeChildActivity</string>
     <string name="viewQueue">View Queue</string>
     <string name="prompt_select_image_title">Update Portrait</string>
     <string name="prompt_select_image_option1">Take Photo</string>
@@ -115,5 +113,13 @@
     <string name="help_developers_title">Developers</string>
     <string name="help_subtitle_copyright">Copyright</string>
     <string name="help_copyright_material">Coin flip sound: https://www.youtube.com/watch?v=1QxX9ruPUXM\n</string>
+    <string name="no_tasks_to_display_currently">No Tasks To Display Currently</string>
+    <string name="taskName_start_text">Task: %1$s</string>
+    <string name="childName_start_text">Next Child: %1$s</string>
+    <string name="complete_task">Complete Task</string>
+    <string name="cancel_task">Cancel</string>
+    <string name="enter_task_name">Enter Name of Task:</string>
+    <string name="task_name_title">Task Name</string>
+    <string name="add_task_button">add task</string>
 
 </resources>

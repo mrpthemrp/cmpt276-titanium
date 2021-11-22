@@ -1,4 +1,4 @@
-package ca.cmpt276.titanium.ui;
+package ca.cmpt276.titanium.ui.timer;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

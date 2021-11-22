@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.coin_flip.ChangeChildActivity">
+    tools:context=".ui.tasks.TasksAddActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/customToolBar"
@@ -18,36 +18,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="@string/changeChildTitle"
+        app:title="Add Task"
         app:titleTextColor="?attr/colorOnSecondary" />
 
-    <ListView
-        android:id="@+id/changeChildList"
-        android:layout_width="406dp"
-        android:layout_height="600dp"
-        android:divider="?attr/colorOnPrimary"
-        android:dividerHeight="10dp"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/customToolBar"
-        app:layout_constraintVertical_bias="0.949"
-        tools:ignore="TouchTargetSizeCheck" />
-
     <TextView
-        android:id="@+id/changeChildText"
+        android:id="@+id/titleAddText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/childrenQueueList"
-        android:textColor="@color/green_600"
-        android:visibility="invisible"
+        android:layout_marginBottom="300dp"
+        android:text="@string/enter_task_name"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/customToolBar"
-        app:layout_constraintVertical_bias="0.472" />
+        app:layout_constraintVertical_bias="0.21" />
+
+    <EditText
+        android:id="@+id/userTaskName"
+        android:layout_width="253dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:autofillHints="@string/default_text"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:hint="@string/task_name_title"
+        app:layout_constraintTop_toBottomOf="@+id/titleAddText" />
+
+    <Button
+        android:id="@+id/saveTask"
+        android:layout_width="122dp"
+        android:layout_height="54dp"
+        android:text="@string/add_task_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userTaskName"
+        tools:ignore="TextContrastCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

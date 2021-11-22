@@ -1,4 +1,4 @@
-package ca.cmpt276.titanium.ui;
+package ca.cmpt276.titanium.ui.coin_flip;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 
 import java.util.List;
 
@@ -20,9 +21,11 @@ import ca.cmpt276.titanium.model.Child;
  * This is an adapter for the coin flip queue list.
  */
 public class CoinFlipQueueAdapter extends ArrayAdapter<Child> {
+    private final Context context;
 
     public CoinFlipQueueAdapter(Context context, List<Child> children) {
         super(context, 0, children);
+        this.context = context;
     }
 
     @NonNull
@@ -34,9 +37,9 @@ public class CoinFlipQueueAdapter extends ArrayAdapter<Child> {
 
         Child child = getItem(position);
 
-        // TODO: Retrieve image of child
+        RoundedBitmapDrawable drawable = child.getPortrait(context.getResources());
         ImageView childQueueIcon = convertView.findViewById(R.id.childQueueIcon);
-        childQueueIcon.setImageResource(R.drawable.ic_baseline_circle_green_200);
+        childQueueIcon.setImageDrawable(drawable);
 
         TextView childQueueNameText = convertView.findViewById(R.id.childQueueNameList);
         String childQueueName = child.getName();
