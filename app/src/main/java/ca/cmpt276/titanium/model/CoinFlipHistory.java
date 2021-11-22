@@ -129,9 +129,9 @@ public class CoinFlipHistory {
     public void sortCoinFlipHistory() {
         coinFlipHistory.sort((coinFlip1, coinFlip2) -> {
             if (coinFlip1.getLocalDateTime().isAfter(coinFlip2.getLocalDateTime())) {
-                return 0;
+                return -1;
             } else {
-                return 1;
+                return 0;
             }
         });
     }
