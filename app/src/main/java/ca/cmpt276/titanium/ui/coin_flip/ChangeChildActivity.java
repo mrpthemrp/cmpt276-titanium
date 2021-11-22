@@ -48,7 +48,7 @@ public class ChangeChildActivity extends AppCompatActivity {
         }
 
         ListView changeChildListView = (ListView) findViewById(R.id.changeChildList);
-        ChangeChildAdapter adapter = new ChangeChildAdapter(this, children.getChildren());
+        ChangeChildAdapter adapter = new ChangeChildAdapter(this, childrenQueue.getChildrenQueue());
         changeChildListView.setAdapter(adapter);
         changeChildListView.setClickable(true);
 
