@@ -13,7 +13,6 @@
     <string name="prompt_discard_changes_positive">Yes</string>
     <string name="prompt_discard_changes_title">Discard Changes</string>
     <string name="toast_changes_discarded">Changes discarded</string>
-    <string name="toast_invalid_name">Name must contain only letters</string>
     <string name="toast_no_name">Name field cannot be empty</string>
 
     <!-- Child Add -->
@@ -141,5 +140,7 @@
     <string name="add_task_button">add task</string>
 
     <string name="helpAppInfo">App Information</string>
+    <string name="toast_permission_denied">Permission denied</string>
+    <string name="portrait_image_prefix">portrait_</string>
 
 </resources>

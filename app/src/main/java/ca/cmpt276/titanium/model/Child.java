@@ -22,19 +22,7 @@ public class Child {
         this.portraitPath = portraitPath;
     }
 
-    public UUID getUniqueID() {
-        return uniqueID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public static RoundedBitmapDrawable getOtherPortrait(Resources resources, String portraitPath) {
+    public static RoundedBitmapDrawable getSpecifiedPortrait(Resources resources, String portraitPath) {
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(portraitPath, bitmapOptions);
@@ -50,8 +38,20 @@ public class Child {
         return portrait;
     }
 
+    public UUID getUniqueID() {
+        return uniqueID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public RoundedBitmapDrawable getPortrait(Resources resources) {
-        return getOtherPortrait(resources, portraitPath);
+        return getSpecifiedPortrait(resources, portraitPath);
     }
 
     public void setPortraitPath(String portraitPath) {

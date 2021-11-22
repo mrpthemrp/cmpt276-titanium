@@ -1,7 +1,9 @@
 package ca.cmpt276.titanium.ui;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -28,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
@@ -43,7 +46,6 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 
-// TODO: Fix select from gallery option
 // TODO: Replace current default portrait with PNG and move associated code into Child
 // TODO: Save cropped versions of photos rather than originals
 // TODO: Add ability to manually crop photos in-app
@@ -52,6 +54,8 @@ import ca.cmpt276.titanium.model.Children;
  * This activity represents the viewing, adding, and editing of a single child.
  */
 public class ChildActivity extends AppCompatActivity {
+    private static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 0;
+    private static final float PORTRAIT_ALPHA_WHILE_EDITED = 0.75f;
     private static final String INTENT_TYPE_KEY = "intentType";
     private static final String CHILD_UNIQUE_ID_KEY = "childUniqueID";
     private static final String ADD_CHILD_INTENT = "Add Child";
@@ -67,7 +71,7 @@ public class ChildActivity extends AppCompatActivity {
     private boolean changesAccepted = true;
     private ActivityResultLauncher<Intent> takePhoto;
     private ActivityResultLauncher<Intent> selectFromGallery;
-    private String currentPhotoPath;
+    private String currentPortraitPath;
 
     public static Intent makeIntent(Context context, String intentType, UUID childUniqueID) {
         Intent intent = new Intent(context, ChildActivity.class);
@@ -143,6 +147,19 @@ public class ChildActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == READ_EXTERNAL_STORAGE_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                selectFromGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
+            } else {
+                updateToast(getString(R.string.toast_permission_denied));
+            }
+        }
+    }
+
     private void setupActionBar(String intentType) {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -156,10 +173,10 @@ public class ChildActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
-                        portraitView.setImageDrawable(Child.getOtherPortrait(getResources(), currentPhotoPath));
+                        portraitView.setImageDrawable(Child.getSpecifiedPortrait(getResources(), currentPortraitPath));
 
                         if (intentType.equals(EDIT_CHILD_INTENT)) {
-                            children.getChild(focusedChildUniqueID).setPortraitPath(currentPhotoPath);
+                            children.getChild(focusedChildUniqueID).setPortraitPath(currentPortraitPath);
                         }
                     }
                 });
@@ -174,15 +191,15 @@ public class ChildActivity extends AppCompatActivity {
 
                         if (cursor.moveToFirst()) {
                             int columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
-                            this.currentPhotoPath = cursor.getString(columnIndex);
+                            this.currentPortraitPath = cursor.getString(columnIndex);
                         }
 
                         cursor.close();
 
-                        portraitView.setImageDrawable(Child.getOtherPortrait(getResources(), selectedImage.getPath()));
+                        portraitView.setImageDrawable(Child.getSpecifiedPortrait(getResources(), currentPortraitPath));
 
                         if (intentType.equals(EDIT_CHILD_INTENT)) {
-                            children.getChild(focusedChildUniqueID).setPortraitPath(currentPhotoPath);
+                            children.getChild(focusedChildUniqueID).setPortraitPath(currentPortraitPath);
                         }
                     }
                 });
@@ -204,7 +221,7 @@ public class ChildActivity extends AppCompatActivity {
                 updateToast(getString(R.string.toast_no_name));
             } else {
                 if (intentType.equals(ADD_CHILD_INTENT)) {
-                    children.addChild(childName.getText().toString(), currentPhotoPath);
+                    children.addChild(childName.getText().toString(), currentPortraitPath);
                 } else if (intentType.equals(EDIT_CHILD_INTENT)) {
                     children.setChildName(focusedChildUniqueID, childName.getText().toString());
                 }
@@ -234,7 +251,7 @@ public class ChildActivity extends AppCompatActivity {
         }
 
         portraitView.setImageDrawable(portrait);
-        portraitView.setAlpha(0.75f);
+        portraitView.setAlpha(PORTRAIT_ALPHA_WHILE_EDITED);
         portraitView.setClickable(true);
         portraitView.setOnClickListener(view -> selectImage());
 
@@ -316,8 +333,8 @@ public class ChildActivity extends AppCompatActivity {
                             File portraitFile = null;
 
                             try {
-                                portraitFile = File.createTempFile("portrait_", ".jpg", getExternalFilesDir(Environment.DIRECTORY_PICTURES));
-                                this.currentPhotoPath = portraitFile.getAbsolutePath();
+                                portraitFile = File.createTempFile(getString(R.string.portrait_image_prefix), ".jpg", getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+                                this.currentPortraitPath = portraitFile.getAbsolutePath();
                             } catch (IOException e) {
                                 e.getStackTrace();
                             }
@@ -330,7 +347,11 @@ public class ChildActivity extends AppCompatActivity {
 
                             break;
                         case "Select from Gallery":
-                            selectFromGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
+                            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_EXTERNAL_STORAGE_REQUEST_CODE);
+                            } else {
+                                selectFromGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
+                            }
                             break;
                         case "Cancel":
                             dialog.dismiss();

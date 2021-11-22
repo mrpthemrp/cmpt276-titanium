@@ -131,7 +131,7 @@ public class CoinFlipHistory {
         Collections.sort(coinFlipHistory, (c1, c2) -> {
             if (c1.getLocalDateTime().isAfter(c2.getLocalDateTime())) {
                 return -1;
-            } else  {
+            } else {
                 return 1;
             }
         });
