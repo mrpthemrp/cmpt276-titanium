@@ -22,15 +22,13 @@ import ca.cmpt276.titanium.model.Tasks;
 public class TasksEditActivity extends AppCompatActivity {
 
     private static final String INDEX = "EditClicked";
-    private static final String TASK = "taskName";
     private int index;
     private TextView userTaskName;
     private Tasks taskManager;
 
-    public static Intent makeIntent(Context context, int index, String task) {
+    public static Intent makeIntent(Context context, int index) {
         Intent intent = new Intent(context, TasksEditActivity.class);
         intent.putExtra(INDEX, index);
-        intent.putExtra(TASK, task);
         return intent;
     }
 

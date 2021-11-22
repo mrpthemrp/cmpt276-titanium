@@ -141,9 +141,7 @@ public class TasksViewActivity extends AppCompatActivity {
             launchDeleteTaskPrompt();
             return true;
         } else if (item.getItemId() == R.id.taskEdit) {
-            task = taskManager.getTask(index);
-            Toast.makeText(this, task, Toast.LENGTH_SHORT).show();
-            Intent intent = TasksEditActivity.makeIntent(TasksViewActivity.this, index, task);
+            Intent intent = TasksEditActivity.makeIntent(TasksViewActivity.this, index);
             startActivity(intent);
             return true;
         }
