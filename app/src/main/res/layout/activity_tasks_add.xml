@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.TasksAddActivity">
+    tools:context=".ui.tasks.TasksAddActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/customToolBar"
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="300dp"
-        android:text="Enter Name of Task: "
+        android:text="@string/enter_task_name"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,18 +41,19 @@
         android:layout_height="48dp"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="Task Name"
+        android:autofillHints="@string/default_text"
         android:inputType="textPersonName"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:hint="@string/task_name_title"
         app:layout_constraintTop_toBottomOf="@+id/titleAddText" />
 
     <Button
         android:id="@+id/saveTask"
         android:layout_width="122dp"
         android:layout_height="54dp"
-        android:text="add task"
+        android:text="@string/add_task_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

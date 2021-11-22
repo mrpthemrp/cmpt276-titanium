@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.TasksViewActivity">
+    tools:context=".ui.tasks.TasksViewActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/customToolBar"
@@ -26,7 +26,7 @@
         android:layout_width="168dp"
         android:layout_height="160dp"
         android:layout_marginTop="50dp"
-        android:contentDescription="TODO"
+        android:contentDescription="@string/content_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/customToolBar"
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="TextView"
+        android:text="@string/default_text"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="TextView"
+        android:text="@string/default_text"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/childNameText"
@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="Complete Task"
+        android:text="@string/complete_task"
         app:layout_constraintEnd_toEndOf="@+id/taskNameText"
         app:layout_constraintStart_toStartOf="@+id/taskNameText"
         app:layout_constraintTop_toBottomOf="@+id/taskNameText"
@@ -74,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:text="Cancel"
+        android:text="@string/cancel_task"
         app:layout_constraintEnd_toEndOf="@+id/completeTaskButton"
         app:layout_constraintStart_toStartOf="@+id/completeTaskButton"
         app:layout_constraintTop_toBottomOf="@+id/completeTaskButton"

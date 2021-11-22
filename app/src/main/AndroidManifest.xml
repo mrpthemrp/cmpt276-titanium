@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -30,72 +29,72 @@
         </provider>
 
         <activity
-            android:name=".ui.TasksAddActivity"
+            android:name=".ui.tasks.TasksAddActivity"
             android:windowSoftInputMode="adjustNothing"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true" />
         <activity
-            android:name=".ui.TasksViewActivity"
+            android:name=".ui.tasks.TasksViewActivity"
             android:windowSoftInputMode="adjustNothing"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true" />
 
-        <receiver android:name=".ui.TimerBroadcastReceiver" />
+        <receiver android:name=".ui.timer.TimerBroadcastReceiver" />
 
-        <service android:name=".ui.TimerService" />
+        <service android:name=".ui.timer.TimerService" />
 
         <activity
-            android:name=".ui.ChangeChildActivity"
+            android:name=".ui.coin_flip.ChangeChildActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="false"
-            android:parentActivityName=".ui.CoinFlipQueueActivity" />
+            android:parentActivityName=".ui.coin_flip.CoinFlipQueueActivity" />
         <activity
-            android:name=".ui.CoinFlipQueueActivity"
+            android:name=".ui.coin_flip.CoinFlipQueueActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:parentActivityName=".ui.CoinFlipActivity" />
+            android:parentActivityName=".ui.coin_flip.CoinFlipActivity" />
         <activity
-            android:name=".ui.TasksActivity"
+            android:name=".ui.tasks.TasksActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity" />
         <activity
-            android:name=".ui.TasksEditActivity"
+            android:name=".ui.tasks.TasksEditActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:parentActivityName=".ui.TasksViewActivity"
+            android:parentActivityName=".ui.tasks.TasksViewActivity"
             android:windowSoftInputMode="adjustNothing"
             android:theme="@style/Theme.Titanium.Child" />
         <activity
-            android:name=".ui.CoinFlipHistoryActivity"
+            android:name=".ui.coin_flip.CoinFlipHistoryActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:parentActivityName=".ui.CoinFlipActivity" />
+            android:parentActivityName=".ui.coin_flip.CoinFlipActivity" />
         <activity
-            android:name=".ui.ChildViewActivity"
-            android:configChanges="keyboard|keyboardHidden"
-            android:exported="true"
-            android:parentActivityName=".ui.MenuActivity"
-            android:theme="@style/Theme.Titanium.Child" />
-        <activity
-            android:name=".ui.ChildAddActivity"
+            android:name=".ui.child.ChildViewActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"
             android:theme="@style/Theme.Titanium.Child" />
         <activity
-            android:name=".ui.ChildEditActivity"
+            android:name=".ui.child.ChildAddActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:parentActivityName=".ui.ChildViewActivity"
+            android:parentActivityName=".ui.MenuActivity"
             android:theme="@style/Theme.Titanium.Child" />
         <activity
-            android:name=".ui.CoinFlipActivity"
+            android:name=".ui.child.ChildEditActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:exported="true"
+            android:parentActivityName=".ui.child.ChildViewActivity"
+            android:theme="@style/Theme.Titanium.Child" />
+        <activity
+            android:name=".ui.coin_flip.CoinFlipActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity" />
         <activity
-            android:name=".ui.TimerActivity"
+            android:name=".ui.timer.TimerActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"

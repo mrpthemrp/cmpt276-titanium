@@ -1,4 +1,4 @@
-package ca.cmpt276.titanium.ui;
+package ca.cmpt276.titanium.ui.tasks;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +22,6 @@ import ca.cmpt276.titanium.model.Tasks;
 public class TasksAddActivity extends AppCompatActivity {
 
     private Children children;
-    private Button saveTaskButton;
     private EditText userTaskInput;
     private Tasks taskManager;
 
@@ -46,7 +45,7 @@ public class TasksAddActivity extends AppCompatActivity {
     }
 
     private void setUpButton() {
-        saveTaskButton = findViewById(R.id.saveTask);
+        Button saveTaskButton = findViewById(R.id.saveTask);
         saveTaskButton.setOnClickListener(view -> {
             if (userTaskInput.getText().toString().isEmpty()) {
                 Toast.makeText(TasksAddActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();

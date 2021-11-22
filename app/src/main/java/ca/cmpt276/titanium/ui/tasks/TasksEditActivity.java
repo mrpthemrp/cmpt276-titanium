@@ -1,4 +1,4 @@
-package ca.cmpt276.titanium.ui;
+package ca.cmpt276.titanium.ui.tasks;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,15 +16,12 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.Tasks;
 
 public class TasksEditActivity extends AppCompatActivity {
 
     private static final String INDEX = "EditClicked";
     private int index;
-    private Children children;
-    private Button saveTaskButton;
     private EditText userTaskInput;
     private Tasks taskManager;
 
@@ -57,13 +54,11 @@ public class TasksEditActivity extends AppCompatActivity {
         userTaskInput.setText(taskManager.getTask(index));
 
         extractIntentData();
-
-        this.children = Children.getInstance(this);
         setUpButton();
     }
 
     private void setUpButton() {
-        saveTaskButton = findViewById(R.id.saveTask);
+        Button saveTaskButton = findViewById(R.id.saveTask);
         saveTaskButton.setOnClickListener(view -> {
             if (userTaskInput.getText().toString().isEmpty()) {
                 Toast.makeText(TasksEditActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();
@@ -73,11 +68,6 @@ public class TasksEditActivity extends AppCompatActivity {
             taskManager.editTask(index, task);
             finish();
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override

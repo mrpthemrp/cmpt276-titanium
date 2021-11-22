@@ -1,4 +1,4 @@
-package ca.cmpt276.titanium.ui;
+package ca.cmpt276.titanium.ui.coin_flip;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -23,7 +23,7 @@ import ca.cmpt276.titanium.model.CoinFlip;
  */
 public class CoinFlipHistoryListAdapter extends ArrayAdapter<CoinFlip> {
     private final Children children;
-    private Context context;
+    private final Context context;
 
     public CoinFlipHistoryListAdapter(Context context, ArrayList<CoinFlip> coinFlipHistory) {
         super(context, 0, coinFlipHistory);

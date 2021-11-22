@@ -1,4 +1,4 @@
-package ca.cmpt276.titanium.ui;
+package ca.cmpt276.titanium.ui.tasks;
 
 import android.content.Context;
 import android.content.Intent;
@@ -73,7 +73,7 @@ public class TasksViewActivity extends AppCompatActivity {
         TextView childName = findViewById(R.id.childNameText);
         TextView taskName = findViewById(R.id.taskNameText);
 
-        String name = "";
+        String name;
 
         if (children.getChildren().size() > 0 && taskManager.getListOfChildren().size() > 0) {
             UUID childID = taskManager.getChildID(index);

@@ -16,6 +16,11 @@ import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
+import ca.cmpt276.titanium.ui.child.ChildAddActivity;
+import ca.cmpt276.titanium.ui.child.ChildViewActivity;
+import ca.cmpt276.titanium.ui.coin_flip.CoinFlipActivity;
+import ca.cmpt276.titanium.ui.tasks.TasksActivity;
+import ca.cmpt276.titanium.ui.timer.TimerActivity;
 
 /**
  * This activity represents the main menu.

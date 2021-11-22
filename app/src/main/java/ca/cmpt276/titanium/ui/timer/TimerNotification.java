@@ -1,4 +1,4 @@
-package ca.cmpt276.titanium.ui;
+package ca.cmpt276.titanium.ui.timer;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;

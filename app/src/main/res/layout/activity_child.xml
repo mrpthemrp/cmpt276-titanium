@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".ui.ChildViewActivity">
+    tools:context=".ui.child.ChildViewActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:focusable="true"
-    tools:context=".ui.TimerActivity">
+    tools:context=".ui.timer.TimerActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/customToolBar"

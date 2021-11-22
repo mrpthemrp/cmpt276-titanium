@@ -1,4 +1,4 @@
-package ca.cmpt276.titanium.ui;
+package ca.cmpt276.titanium.ui.tasks;
 
 import android.content.Context;
 import android.content.Intent;
@@ -153,10 +153,10 @@ public class TasksActivity extends AppCompatActivity {
             }
 
             TextView taskName = taskItemView.findViewById(R.id.taskNameInList);
-            taskName.setText("Task: " + task);
+            taskName.setText(getString(R.string.taskName_start_text, task));
 
             TextView childName = taskItemView.findViewById(R.id.childNameForTaskInList);
-            childName.setText("Next Child: " + name);
+            childName.setText(getString(R.string.childName_start_text, name));
 
             return taskItemView;
         }

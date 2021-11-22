@@ -1,4 +1,4 @@
-package ca.cmpt276.titanium.ui;
+package ca.cmpt276.titanium.ui.coin_flip;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -21,7 +21,7 @@ import ca.cmpt276.titanium.model.Child;
  * This is an adapter for the coin flip queue list.
  */
 public class CoinFlipQueueAdapter extends ArrayAdapter<Child> {
-    private Context context;
+    private final Context context;
 
     public CoinFlipQueueAdapter(Context context, List<Child> children) {
         super(context, 0, children);

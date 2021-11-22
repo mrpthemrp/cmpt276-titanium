@@ -20,7 +20,7 @@ import ca.cmpt276.titanium.model.Child;
  * This is an adapter for the children list.
  */
 public class MenuChildrenListAdapter extends ArrayAdapter<Child> {
-    private Context context;
+    private final Context context;
 
     public MenuChildrenListAdapter(Context context, List<Child> children) {
         super(context, 0, children);

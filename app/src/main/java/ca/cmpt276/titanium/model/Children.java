@@ -20,13 +20,11 @@ import java.util.UUID;
 public class Children {
     private static final Gson GSON = new Gson();
     private static final String CHILDREN_JSON_KEY = "childrenJson";
-
+    private static final Tasks taskManager = Tasks.getInstance();
     private static Children instance;
     private static SharedPreferences prefs;
     private static CoinFlipHistory coinFlipHistory;
     private static ChildrenQueue childrenQueue;
-    private static final Tasks taskManager = Tasks.getInstance();
-
     private static ArrayList<Child> children = new ArrayList<>();
 
     private Children(Context context) {

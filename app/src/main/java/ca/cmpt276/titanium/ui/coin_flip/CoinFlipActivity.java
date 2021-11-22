@@ -1,4 +1,4 @@
-package ca.cmpt276.titanium.ui;
+package ca.cmpt276.titanium.ui.coin_flip;
 
 import android.content.Context;
 import android.content.Intent;

@@ -21,8 +21,8 @@ import java.util.UUID;
  */
 public class Child {
     private final UUID uniqueID;
-    private String name;
     private final String portraitName;
+    private String name;
 
     public Child(String name, Bitmap portrait) {
         this.uniqueID = UUID.randomUUID();
