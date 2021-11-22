@@ -41,8 +41,10 @@ public class TasksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tasks);
         setTitle(R.string.whoseTurn);
         this.children = Children.getInstance(this);
-
         taskManager = Tasks.getInstance();
+
+        taskManager.loadTaskData(this);
+        taskManager.loadChildData(this);
         checkTaskList();
         populate();
 
@@ -70,9 +72,16 @@ public class TasksActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        taskManager.saveTaskChildData(this);
         super.onResume();
         checkTaskList();
         populate();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        taskManager.saveTaskChildData(this);
     }
 
     @Override
