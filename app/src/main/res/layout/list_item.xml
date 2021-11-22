@@ -1,49 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/taskNameInList"
-        android:layout_width="183dp"
-        android:layout_height="45dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="156dp"
-        android:text="@string/default_text"
-        android:textAlignment="viewStart"
-        android:textColor="#000000"
-        android:textSize="17sp" />
+    <FrameLayout
+        android:id="@+id/listFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/childNameForTaskInList"
-        android:layout_width="140dp"
-        android:layout_height="46dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="262dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="9dp"
-        android:text="@string/default_text"
-        android:textColor="#000000"
-        android:textSize="17sp" />
+        <ImageView
+            android:id="@+id/iconForTask"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/ic_baseline_task_alt_24"
+            android:backgroundTint="?attr/colorPrimaryVariant"
+            android:contentDescription="@string/content_description" />
 
-    <ImageView
-        android:id="@+id/iconForTask"
-        android:layout_width="57dp"
-        android:layout_height="48dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="346dp"
-        android:contentDescription="@string/content_description"
-        app:srcCompat="@drawable/ic_baseline_task_alt_24" />
+        <TextView
+            android:id="@+id/taskNameInList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/default_text"
+            android:textAlignment="viewStart"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/childNameForTaskInList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="45dp"
+            android:text="@string/default_text"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:textSize="16sp" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
