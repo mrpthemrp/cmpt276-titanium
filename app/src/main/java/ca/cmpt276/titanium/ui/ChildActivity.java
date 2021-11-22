@@ -64,8 +64,9 @@ public class ChildActivity extends AppCompatActivity {
     private Children children;
     private ChildrenQueue childrenQueue;
     private Toast toast; // prevents toast stacking
-    EditText childName;
     private ImageView portraitView;
+    private EditText childName;
+
     private UUID focusedChildUniqueID;
     private boolean changesAccepted = true;
     private ActivityResultLauncher<Intent> takePhoto;

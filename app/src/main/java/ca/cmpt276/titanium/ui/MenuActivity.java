@@ -97,15 +97,15 @@ public class MenuActivity extends AppCompatActivity {
 
     // setMessage function written from the following resource:
     // https://stackoverflow.com/questions/27589701/showing-morning-afternoon-evening-night-message-based-on-time-in-java
-    private void setMessage(){
+    private void setMessage() {
         Calendar currentCalendar = Calendar.getInstance();
         int currentHour = currentCalendar.get(Calendar.HOUR_OF_DAY);
 
-        if(currentHour < 12){
+        if (currentHour < 12) {
             welcomeMessage.setText(getString(R.string.menuMorning));
-        } else if(currentHour < 16){
+        } else if (currentHour < 16) {
             welcomeMessage.setText(getString(R.string.menuAfternoon));
-        }else if(currentHour >=17){
+        } else if (currentHour >= 17) {
             welcomeMessage.setText(getString(R.string.menuEvening));
         }
     }
