@@ -3,7 +3,9 @@ package ca.cmpt276.titanium.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +30,17 @@ public class HelpActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_help);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+        setUpHyperLinks();
+    }
+
+    private void setUpHyperLinks() {
+        TextView youtubeLink = findViewById(R.id.helpCoinFlipLink);
+        youtubeLink.setMovementMethod(LinkMovementMethod.getInstance());
+
+
+        TextView imageLink = findViewById(R.id.helpCalmImageLink);
+        imageLink.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
