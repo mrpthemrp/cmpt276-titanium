@@ -11,14 +11,14 @@
         android:id="@+id/scrollView"
         android:layout_width="wrap_content"
         android:layout_height="174dp"
-        android:layout_marginTop="180dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="25dp"
+        android:scrollbarFadeDuration="5"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@+id/childrenList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:scrollbars="vertical"
-        android:scrollbarFadeDuration="5">
+        app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
@@ -127,7 +127,7 @@
         android:id="@+id/childrenList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="10dp"
         android:divider="?attr/colorOnPrimary"
         android:dividerHeight="10dp"
         android:padding="10dp"
@@ -149,5 +149,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView" />
+
+    <TextView
+        android:id="@+id/mainMenuWelcomeMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/menuDefaultMessage"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/menuSubMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/menuSubMessage"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="?attr/colorSecondary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainMenuWelcomeMessage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
