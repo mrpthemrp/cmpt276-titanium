@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="?attr/colorPrimary"
+    android:backgroundTintMode="src_in"
     tools:context=".ui.tasks.TasksAddActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -21,40 +23,46 @@
         app:title="Add Task"
         app:titleTextColor="?attr/colorOnSecondary" />
 
-    <TextView
-        android:id="@+id/titleAddText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="300dp"
-        android:text="@string/enter_task_name"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customToolBar"
-        app:layout_constraintVertical_bias="0.21" />
-
     <EditText
         android:id="@+id/userTaskName"
         android:layout_width="253dp"
         android:layout_height="48dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
+        android:layout_marginTop="28dp"
         android:autofillHints="@string/default_text"
+        android:backgroundTint="?attr/colorPrimary"
+        android:backgroundTintMode="add"
+        android:ems="10"
+        android:hint="@string/task_name_title"
         android:inputType="textPersonName"
         android:textAlignment="center"
+        android:textColor="?attr/colorPrimaryVariant"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:hint="@string/task_name_title"
         app:layout_constraintTop_toBottomOf="@+id/titleAddText" />
+
+    <TextView
+        android:id="@+id/titleAddText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="177dp"
+        android:text="@string/enter_task_name"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customToolBar" />
 
     <Button
         android:id="@+id/saveTask"
-        android:layout_width="122dp"
-        android:layout_height="54dp"
+        android:layout_width="110dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="39dp"
+        android:background="@drawable/style_rounded_button_20"
+        android:backgroundTint="?attr/colorPrimary"
         android:text="@string/add_task_button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="?attr/colorOnSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userTaskName"
