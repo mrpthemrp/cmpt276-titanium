@@ -50,7 +50,6 @@ public class TasksViewActivity extends AppCompatActivity {
         taskManager = Tasks.getInstance();
         imageView = findViewById(R.id.imageView);
 
-
         extractIntentData();
         displayData();
         setUpButtons();
