@@ -10,6 +10,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.UUID;
 
 /**
@@ -124,5 +126,15 @@ public class CoinFlipHistory {
     public static void setNextPickerUniqueID(UUID nextPickerUniqueID) {
         CoinFlipHistory.nextPickerUniqueID = nextPickerUniqueID;
         saveData();
+    }
+
+    public void sortCoinFlipHistory() {
+        Collections.sort(coinFlipHistory, (c1, c2) -> {
+            if (c1.getLocalDateTime().isAfter(c2.getLocalDateTime())) {
+                return -1;
+            } else  {
+                return 1;
+            }
+        });
     }
 }
