@@ -131,6 +131,14 @@
     <string name="help_alarm_resource"><a href="https://www.youtube.com/watch?v=kcT-i9xzC-8">Click here to go to YouTube link</a></string>
     <string name="help_calm_image_resource"><a href="https://unsplash.com/photos/4N6qT784t3A">Click here to go to image link</a></string>
     <string name="no_tasks_to_display_currently">No Tasks To Display Currently</string>
+    <string name="taskName_start_text">Task: %1$s</string>
+    <string name="childName_start_text">Next Child: %1$s</string>
+    <string name="complete_task">Complete Task</string>
+    <string name="cancel_task">Cancel</string>
+    <string name="enter_task_name">Enter Name of Task:</string>
+    <string name="task_name_title">Task Name</string>
+    <string name="add_task_button">add task</string>
+
     <string name="helpAppInfo">App Information</string>
 
 </resources>
