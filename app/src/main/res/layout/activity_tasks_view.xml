@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="Manage Tasks"
+        app:title="@string/taskViewTaskTitle"
         app:titleTextColor="?attr/colorOnSecondary" />
 
     <ImageView
