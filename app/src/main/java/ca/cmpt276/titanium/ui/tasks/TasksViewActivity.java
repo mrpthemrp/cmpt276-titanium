@@ -27,6 +27,7 @@ public class TasksViewActivity extends AppCompatActivity {
 
     private static final String INDEX = "UserClicked";
     private int index;
+    private String task;
     private Children children;
     private Tasks taskManager;
     private ImageView imageView;
@@ -91,7 +92,7 @@ public class TasksViewActivity extends AppCompatActivity {
             name = "Nobody";
         }
 
-        String task = taskManager.getTask(index);
+        task = taskManager.getTask(index);
 
         childName.setText(name);
         taskName.setText(task);
@@ -140,7 +141,9 @@ public class TasksViewActivity extends AppCompatActivity {
             launchDeleteTaskPrompt();
             return true;
         } else if (item.getItemId() == R.id.taskEdit) {
-            Intent intent = TasksEditActivity.makeIntent(TasksViewActivity.this, index);
+            task = taskManager.getTask(index);
+            //Toast.makeText(this, task, Toast.LENGTH_SHORT).show();
+            Intent intent = TasksEditActivity.makeIntent(TasksViewActivity.this, index, task);
             startActivity(intent);
             return true;
         }

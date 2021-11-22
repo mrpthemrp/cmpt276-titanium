@@ -4,14 +4,18 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import org.w3c.dom.Text;
 
 import java.util.Objects;
 
@@ -21,19 +25,23 @@ import ca.cmpt276.titanium.model.Tasks;
 public class TasksEditActivity extends AppCompatActivity {
 
     private static final String INDEX = "EditClicked";
+    private static final String TASK = "taskName";
     private int index;
-    private EditText userTaskInput;
+    private String task;
+    private TextView userTaskName;
     private Tasks taskManager;
 
-    public static Intent makeIntent(Context context, int index) {
+    public static Intent makeIntent(Context context, int index, String task) {
         Intent intent = new Intent(context, TasksEditActivity.class);
         intent.putExtra(INDEX, index);
+        intent.putExtra(TASK, task);
         return intent;
     }
 
     private void extractIntentData() {
         Intent intent = getIntent();
         index = intent.getIntExtra(INDEX, 0);
+        task = intent.getStringExtra(TASK);
     }
 
     @SuppressLint("SetTextI18n")
@@ -47,13 +55,14 @@ public class TasksEditActivity extends AppCompatActivity {
         setTitle("Edit Task");
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
+        extractIntentData();
+
         taskManager = Tasks.getInstance();
         TextView titleAddText = findViewById(R.id.titleAddText);
         titleAddText.setText("Edit Name of Task:");
-        userTaskInput = findViewById(R.id.userTaskName);
-        userTaskInput.setText(taskManager.getTask(index));
+        userTaskName = findViewById(R.id.userTaskName);
+        userTaskName.setText(taskManager.getTask(index));
 
-        extractIntentData();
         setUpButton();
     }
 
@@ -61,19 +70,29 @@ public class TasksEditActivity extends AppCompatActivity {
         Button saveTaskButton = findViewById(R.id.saveTask);
         saveTaskButton.setText(getResources().getString(R.string.edit_task_button));
         saveTaskButton.setOnClickListener(view -> {
-            if (userTaskInput.getText().toString().isEmpty()) {
+            if (userTaskName.getText().toString().isEmpty()) {
                 Toast.makeText(TasksEditActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();
                 return;
             }
-            String task = userTaskInput.getText().toString();
+            String task = userTaskName.getText().toString();
             taskManager.editTask(index, task);
             finish();
         });
     }
 
+    
     @Override
     public void onBackPressed() {
         launchDiscardChangesPrompt();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            launchDiscardChangesPrompt();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void launchDiscardChangesPrompt() {
