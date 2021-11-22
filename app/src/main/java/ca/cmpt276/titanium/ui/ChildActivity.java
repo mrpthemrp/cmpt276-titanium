@@ -208,15 +208,17 @@ public class ChildActivity extends AppCompatActivity {
             portrait.setCircular(true);
         }
 
-        ImageView editIcon = findViewById(R.id.editIcon);
-        editIcon.setVisibility(View.VISIBLE);
-
         this.portraitView = findViewById(R.id.addProfilePic);
-        portraitView.setAlpha(0.75f);
-        portraitView.setClickable(true);
-        portraitView.setOnClickListener(view -> selectImage());
-
         portraitView.setImageDrawable(portrait);
+
+        if (!intentType.equals(VIEW_CHILD_INTENT)) {
+            ImageView editIcon = findViewById(R.id.editIcon);
+            editIcon.setVisibility(View.VISIBLE);
+
+            portraitView.setAlpha(0.75f);
+            portraitView.setClickable(true);
+            portraitView.setOnClickListener(view -> selectImage());
+        }
     }
 
     private boolean nameContainsOnlyLetters(String name) {
