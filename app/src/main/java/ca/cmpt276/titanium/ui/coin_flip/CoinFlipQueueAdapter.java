@@ -37,8 +37,8 @@ public class CoinFlipQueueAdapter extends ArrayAdapter<Child> {
 
         Child child = getItem(position);
 
-        RoundedBitmapDrawable drawable = child.getPortrait(context.getResources());
         ImageView childQueueIcon = convertView.findViewById(R.id.childQueueIcon);
+        RoundedBitmapDrawable drawable = child.getPortrait(context.getResources());
         childQueueIcon.setImageDrawable(drawable);
 
         TextView childQueueNameText = convertView.findViewById(R.id.childQueueNameList);
