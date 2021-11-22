@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -36,34 +35,39 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
 import ca.cmpt276.titanium.BuildConfig;
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
+
+// TODO: Fix select from gallery option
+// TODO: Replace current default portrait with PNG and move associated code into Child
+// TODO: Save cropped versions of photos rather than originals
+// TODO: Add ability to manually crop photos in-app
 
 /**
  * This activity represents the viewing, adding, and editing of a single child.
  */
 public class ChildActivity extends AppCompatActivity {
     private static final String INTENT_TYPE_KEY = "intentType";
+    private static final String CHILD_UNIQUE_ID_KEY = "childUniqueID";
+    private static final String ADD_CHILD_INTENT = "Add Child";
     private static final String EDIT_CHILD_INTENT = "Edit Child";
     private static final String VIEW_CHILD_INTENT = "View Child";
-    private static final String CHILD_UNIQUE_ID_KEY = "childUniqueID";
 
     private String intentType;
     private Children children;
     private Toast toast; // prevents toast stacking
+    EditText childName;
+    private ImageView portraitView;
     private UUID focusedChildUniqueID;
     private boolean changesAccepted = true;
-    private ImageView portraitView;
+    private ActivityResultLauncher<Intent> takePhoto;
+    private ActivityResultLauncher<Intent> selectFromGallery;
     private String currentPhotoPath;
-    private ActivityResultLauncher<Intent> startTakePhoto;
-    private ActivityResultLauncher<Intent> startSelectFromGallery;
 
     public static Intent makeIntent(Context context, String intentType, UUID childUniqueID) {
         Intent intent = new Intent(context, ChildActivity.class);
@@ -83,13 +87,14 @@ public class ChildActivity extends AppCompatActivity {
 
         this.children = Children.getInstance(this);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+        this.portraitView = findViewById(R.id.addProfilePic);
+        this.childName = findViewById(R.id.childName);
 
         if (intentType.equals(EDIT_CHILD_INTENT) || intentType.equals(VIEW_CHILD_INTENT)) {
             this.focusedChildUniqueID = (UUID) getIntent().getSerializableExtra(CHILD_UNIQUE_ID_KEY);
         }
 
         setupActivityResults();
-        setupInputFields();
         setupGUI();
     }
 
@@ -100,6 +105,23 @@ public class ChildActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (intentType.equals(VIEW_CHILD_INTENT)) {
+            portraitView.setImageDrawable(children.getChild(focusedChildUniqueID).getPortrait(getResources()));
+            childName.setText(children.getChild(focusedChildUniqueID).getName());
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        launchPrompt(getString(R.string.prompt_discard_changes_title),
+                getString(R.string.prompt_discard_changes_message),
+                getString(R.string.toast_changes_discarded));
     }
 
     @Override
@@ -121,19 +143,6 @@ public class ChildActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setupInputFields();
-    }
-
-    @Override
-    public void onBackPressed() {
-        launchPrompt(getString(R.string.prompt_discard_changes_title),
-                getString(R.string.prompt_discard_changes_message),
-                getString(R.string.toast_changes_discarded));
-    }
-
     private void setupActionBar(String intentType) {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -143,12 +152,11 @@ public class ChildActivity extends AppCompatActivity {
     }
 
     private void setupActivityResults() {
-        this.startTakePhoto = registerForActivityResult(
+        this.takePhoto = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
-                        setPic();
-                        galleryAddPic();
+                        portraitView.setImageDrawable(Child.getOtherPortrait(getResources(), currentPhotoPath));
 
                         if (intentType.equals(EDIT_CHILD_INTENT)) {
                             children.getChild(focusedChildUniqueID).setPortraitPath(currentPhotoPath);
@@ -156,7 +164,7 @@ public class ChildActivity extends AppCompatActivity {
                     }
                 });
 
-        this.startSelectFromGallery = registerForActivityResult(
+        this.selectFromGallery = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
@@ -164,39 +172,53 @@ public class ChildActivity extends AppCompatActivity {
                         String[] projection = {MediaStore.Images.Media.DATA};
                         Cursor cursor = getContentResolver().query(selectedImage, projection, null, null, null);
 
-                        if (cursor != null) {
-                            int columnIndex = cursor.getColumnIndex(projection[0]);
-
-                            cursor.moveToFirst();
+                        if (cursor.moveToFirst()) {
+                            int columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
                             this.currentPhotoPath = cursor.getString(columnIndex);
-                            cursor.close();
+                        }
 
-                            setPic();
+                        cursor.close();
 
-                            if (intentType.equals(EDIT_CHILD_INTENT)) {
-                                children.getChild(focusedChildUniqueID).setPortraitPath(currentPhotoPath);
-                            }
+                        portraitView.setImageDrawable(Child.getOtherPortrait(getResources(), selectedImage.getPath()));
+
+                        if (intentType.equals(EDIT_CHILD_INTENT)) {
+                            children.getChild(focusedChildUniqueID).setPortraitPath(currentPhotoPath);
                         }
                     }
                 });
     }
 
-    private void setupInputFields() {
-        EditText childName = findViewById(R.id.childName);
-        childName.setEnabled(true);
-        childName.setCursorVisible(true);
-
-        if (intentType.equals(EDIT_CHILD_INTENT) || intentType.equals(VIEW_CHILD_INTENT)) {
-            childName.setText(children.getChild(focusedChildUniqueID).getName());
+    private void setupGUI() {
+        if (intentType.equals(VIEW_CHILD_INTENT)) {
+            return;
         }
 
-        RoundedBitmapDrawable portrait = null;
+        setupPortrait();
+        setupChildName();
 
-        if (intentType.equals(EDIT_CHILD_INTENT) || intentType.equals(VIEW_CHILD_INTENT)) {
-            portrait = children.getChild(focusedChildUniqueID).getPortrait(getResources());
-        }
+        Button saveButton = findViewById(R.id.viewFunctionBtn);
+        saveButton.setVisibility(View.VISIBLE);
 
-        if (portrait == null) {
+        saveButton.setOnClickListener(view -> {
+            if (childName.getText().toString().equals("")) {
+                updateToast(getString(R.string.toast_no_name));
+            } else {
+                if (intentType.equals(ADD_CHILD_INTENT)) {
+                    children.addChild(childName.getText().toString(), currentPhotoPath);
+                } else if (intentType.equals(EDIT_CHILD_INTENT)) {
+                    children.setChildName(focusedChildUniqueID, childName.getText().toString());
+                }
+
+                updateToast(getString(R.string.toast_child_saved));
+                finish();
+            }
+        });
+    }
+
+    private void setupPortrait() {
+        RoundedBitmapDrawable portrait;
+
+        if (intentType.equals(ADD_CHILD_INTENT)) {
             Drawable defaultPortraitDrawable = Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.ic_baseline_circle_green_200));
             Bitmap defaultPortraitBitmap = Bitmap.createBitmap(defaultPortraitDrawable.getIntrinsicWidth(), defaultPortraitDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
             Canvas defaultPortraitCanvas = new Canvas(defaultPortraitBitmap);
@@ -206,58 +228,26 @@ public class ChildActivity extends AppCompatActivity {
 
             portrait = RoundedBitmapDrawableFactory.create(getResources(), defaultPortraitBitmap);
             portrait.setCircular(true);
+        } else {
+            portrait = children.getChild(focusedChildUniqueID).getPortrait(getResources());
+            childName.setText(children.getChild(focusedChildUniqueID).getName());
         }
 
-        this.portraitView = findViewById(R.id.addProfilePic);
         portraitView.setImageDrawable(portrait);
+        portraitView.setAlpha(0.75f);
+        portraitView.setClickable(true);
+        portraitView.setOnClickListener(view -> selectImage());
 
-        if (!intentType.equals(VIEW_CHILD_INTENT)) {
-            ImageView editIcon = findViewById(R.id.editIcon);
-            editIcon.setVisibility(View.VISIBLE);
-
-            portraitView.setAlpha(0.75f);
-            portraitView.setClickable(true);
-            portraitView.setOnClickListener(view -> selectImage());
-        }
+        ImageView editIcon = findViewById(R.id.editIcon);
+        editIcon.setVisibility(View.VISIBLE);
     }
 
-    private boolean nameContainsOnlyLetters(String name) {
-        char[] nameChars = name.toCharArray();
-
-        for (char nameChar : nameChars) {
-            if (!Character.isLetter(nameChar)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private void setupGUI() {
-        Button saveButton = findViewById(R.id.viewFunctionBtn);
-        saveButton.setVisibility(View.VISIBLE);
-
-        EditText childName = findViewById(R.id.childName);
-        saveButton.setOnClickListener(view -> {
-            if (childName.getText().toString().equals("")) {
-                updateToast(getString(R.string.toast_no_name));
-            } else if (nameContainsOnlyLetters(childName.getText().toString())) {
-                if (intentType.equals(EDIT_CHILD_INTENT)) {
-                    children.setChildName(focusedChildUniqueID, childName.getText().toString());
-                } else {
-                    children.addChild(childName.getText().toString(), currentPhotoPath);
-                }
-
-                updateToast(getString(R.string.toast_child_saved));
-                finish();
-            } else {
-                updateToast(getString(R.string.toast_invalid_name));
-            }
-        });
+    private void setupChildName() {
+        childName.setEnabled(true);
+        childName.setCursorVisible(true);
 
         childName.setOnKeyListener((view, keyCode, keyEvent) -> {
             if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                // minimize keyboard
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(childName.getWindowToken(), 0);
 
@@ -276,10 +266,10 @@ public class ChildActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (intentType.equals(EDIT_CHILD_INTENT)) {
-                    changesAccepted = childName.getText().toString().equals(children.getChild(focusedChildUniqueID).getName());
-                } else {
+                if (intentType.equals(ADD_CHILD_INTENT)) {
                     changesAccepted = childName.getText().toString().equals("");
+                } else if (intentType.equals(EDIT_CHILD_INTENT)) {
+                    changesAccepted = childName.getText().toString().equals(children.getChild(focusedChildUniqueID).getName());
                 }
             }
 
@@ -315,44 +305,6 @@ public class ChildActivity extends AppCompatActivity {
         }
     }
 
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        mediaScanIntent.setData(Uri.fromFile(new File(currentPhotoPath)));
-        this.sendBroadcast(mediaScanIntent);
-    }
-
-    private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date().getTime());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-    private void setPic() {
-        // TODO: Delete photo from device if child deleted
-        // TODO: Go back to default image if user deletes portrait photo for a given child via files app (i.e. if getPortrait returns null)
-        // TODO: Consider cropping + saving portraits in separate location so things don't need to be recropped repeatedly and
-        // TODO:    to make it more difficult for user to manually delete image
-
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
-
-        int scaleFactor = Math.max(1, Math.min(bmOptions.outWidth / portraitView.getWidth(), bmOptions.outHeight / portraitView.getHeight()));
-
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
-
-        RoundedBitmapDrawable portraitDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        portraitDrawable.setCircular(true);
-        portraitView.setImageDrawable(portraitDrawable);
-    }
-
     private void selectImage() {
         final String[] dialogOptions = {getString(R.string.prompt_select_image_option1), getString(R.string.prompt_select_image_option2), getString(R.string.prompt_select_image_option3)};
 
@@ -361,25 +313,24 @@ public class ChildActivity extends AppCompatActivity {
                 .setItems(dialogOptions, (dialog, item) -> {
                     switch (dialogOptions[item]) {
                         case "Take Photo":
-                            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); // TODO: Way for user to crop images?
+                            File portraitFile = null;
 
-                            File photoFile = null;
                             try {
-                                photoFile = createImageFile();
+                                portraitFile = File.createTempFile("portrait_", ".jpg", getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+                                this.currentPhotoPath = portraitFile.getAbsolutePath();
                             } catch (IOException e) {
                                 e.getStackTrace();
                             }
 
-                            if (photoFile != null) {
-                                Uri photoURI = FileProvider.getUriForFile(this,
-                                        BuildConfig.APPLICATION_ID + ".provider",
-                                        photoFile);
-                                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                                startTakePhoto.launch(takePictureIntent);
+                            if (portraitFile != null) {
+                                Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", portraitFile));
+                                takePhoto.launch(takePhotoIntent);
                             }
+
                             break;
                         case "Select from Gallery":
-                            startSelectFromGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
+                            selectFromGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
                             break;
                         case "Cancel":
                             dialog.dismiss();
