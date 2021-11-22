@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ public class TasksViewActivity extends AppCompatActivity {
     private int index;
     private Children children;
     private Tasks taskManager;
+    private ImageView imageView;
 
     public static Intent makeIntent(Context context, int index) {
         Intent intent = new Intent(context, TasksViewActivity.class);
@@ -46,6 +48,8 @@ public class TasksViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tasks_view);
         this.children = Children.getInstance(this);
         taskManager = Tasks.getInstance();
+        imageView = findViewById(R.id.imageView);
+
 
         extractIntentData();
         displayData();
@@ -72,12 +76,12 @@ public class TasksViewActivity extends AppCompatActivity {
     private void displayData() {
         TextView childName = findViewById(R.id.childNameText);
         TextView taskName = findViewById(R.id.taskNameText);
+        int nextIndex = 0;
 
         String name;
 
         if (children.getChildren().size() > 0 && taskManager.getListOfChildren().size() > 0) {
             UUID childID = taskManager.getChildID(index);
-            int nextIndex = 0;
             for (int i = 0; i < children.getChildren().size(); i++) {
                 if (children.getChildren().get(i).getUniqueID().equals(childID)) {
                     nextIndex = i;
@@ -93,7 +97,7 @@ public class TasksViewActivity extends AppCompatActivity {
         childName.setText(name);
         taskName.setText(task);
 
-        // TODO: Add image here from ID Above (UUID Id)
+        imageView.setImageDrawable(children.getChildren().get(nextIndex).getPortrait(this.getResources()));
     }
 
     private void setUpButtons() {
