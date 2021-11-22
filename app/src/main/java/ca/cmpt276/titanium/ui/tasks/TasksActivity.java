@@ -123,7 +123,7 @@ public class TasksActivity extends AppCompatActivity {
 
     public class adapter extends ArrayAdapter<String> {
         public adapter() {
-            super(TasksActivity.this, R.layout.list_item, taskList);
+            super(TasksActivity.this, R.layout.item_task_list, taskList);
         }
 
         @Override
@@ -132,7 +132,7 @@ public class TasksActivity extends AppCompatActivity {
             View taskItemView = convertView;
 
             if (taskItemView == null) {
-                taskItemView = getLayoutInflater().inflate(R.layout.list_item, parent, false);
+                taskItemView = getLayoutInflater().inflate(R.layout.item_task_list, parent, false);
             }
 
             String task = taskList.get(position);
