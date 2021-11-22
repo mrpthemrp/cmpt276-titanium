@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/style_rounded_button_20"
+    android:background="@drawable/style_rounded_button_60"
     android:backgroundTint="?attr/colorSecondary"
     android:padding="8dp"
     tools:context=".ui.coin_flip.CoinFlipHistoryListAdapter">
@@ -26,7 +26,7 @@
     <ImageView
         android:id="@+id/changeChildIconList"
         android:layout_width="67dp"
-        android:layout_height="64dp"
+        android:layout_height="67dp"
         android:layout_marginStart="30dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
