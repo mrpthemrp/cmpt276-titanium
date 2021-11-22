@@ -38,11 +38,17 @@ public class HelpActivity extends AppCompatActivity {
         TextView coinLink = findViewById(R.id.helpCoinFlipLink);
         coinLink.setMovementMethod(LinkMovementMethod.getInstance());
 
-        TextView imageLink = findViewById(R.id.helpCalmImageLink);
-        imageLink.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView calmImageLink = findViewById(R.id.helpCalmImageLink);
+        calmImageLink.setMovementMethod(LinkMovementMethod.getInstance());
 
         TextView alarmLink = findViewById(R.id.helpAlarmSoundLink);
         alarmLink.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView checkmarkImageLink = findViewById(R.id.helpCheckMarkLink);
+        checkmarkImageLink.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView xMarkImageLink = findViewById(R.id.helpXLink);
+        xMarkImageLink.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
