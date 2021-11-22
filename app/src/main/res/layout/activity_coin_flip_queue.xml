@@ -25,27 +25,25 @@
         android:id="@+id/currentChildTurnIcon"
         android:layout_width="92dp"
         android:layout_height="92dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/content_description"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentChildTurnText" />
+        app:layout_constraintTop_toBottomOf="@+id/customToolBar" />
 
     <TextView
         android:id="@+id/currentChildTurnText"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="16dp"
         android:text="@string/default_text"
         android:textAlignment="center"
         android:textColor="?attr/colorSecondaryVariant"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentChildTitleText" />
 
@@ -53,49 +51,42 @@
         android:id="@+id/currentChildTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="@string/currentChildTitle"
         android:textColor="?attr/colorSecondary"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/childrenQueueList"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.375" />
+        app:layout_constraintTop_toBottomOf="@+id/currentChildTurnIcon" />
 
     <TextView
         android:id="@+id/queueTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="30dp"
         android:text="@string/queueTitle"
         android:textAllCaps="true"
         android:textColor="?attr/colorSecondaryVariant"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/childrenQueueList"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@id/currentChildTurnText" />
 
     <ListView
         android:id="@+id/childrenQueueList"
         android:layout_width="match_parent"
-        android:layout_height="330dp"
+        android:layout_height="250dp"
         android:layout_margin="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:divider="?attr/colorOnPrimary"
         android:dividerHeight="10dp"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customToolBar"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/queueTitleText"
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
@@ -107,10 +98,8 @@
         android:textColor="?attr/colorSecondaryVariant"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customToolBar"
-        app:layout_constraintVertical_bias="0.726" />
+        app:layout_constraintEnd_toEndOf="@+id/childrenQueueList"
+        app:layout_constraintStart_toStartOf="@+id/childrenQueueList"
+        app:layout_constraintTop_toTopOf="@+id/childrenQueueList" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
