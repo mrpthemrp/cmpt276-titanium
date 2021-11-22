@@ -7,10 +7,12 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.ChildrenQueue;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
@@ -47,13 +49,14 @@ public class ChangeChildActivity extends AppCompatActivity {
             findViewById(R.id.changeChildText).setVisibility(View.INVISIBLE);
         }
 
+        ArrayList<Child> childrenQueueCopy = new ArrayList<>(childrenQueue.getChildrenQueue());
         ListView changeChildListView = (ListView) findViewById(R.id.changeChildList);
-        ChangeChildAdapter adapter = new ChangeChildAdapter(this, childrenQueue.getChildrenQueue());
+        ChangeChildAdapter adapter = new ChangeChildAdapter(this, childrenQueueCopy);
         changeChildListView.setAdapter(adapter);
         changeChildListView.setClickable(true);
 
         changeChildListView.setOnItemClickListener((parent, view, position, id) -> {
-            UUID childUUID = children.getChildren().get(position).getUniqueID();
+            UUID childUUID = childrenQueueCopy.get(position).getUniqueID();
             childrenQueue.moveChildPositionToFront(childUUID);
             CoinFlipHistory.setNextPickerUniqueID(childUUID);
             finish();
