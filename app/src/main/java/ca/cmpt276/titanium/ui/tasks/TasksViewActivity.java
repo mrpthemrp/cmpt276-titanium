@@ -142,7 +142,7 @@ public class TasksViewActivity extends AppCompatActivity {
             return true;
         } else if (item.getItemId() == R.id.taskEdit) {
             task = taskManager.getTask(index);
-            //Toast.makeText(this, task, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, task, Toast.LENGTH_SHORT).show();
             Intent intent = TasksEditActivity.makeIntent(TasksViewActivity.this, index, task);
             startActivity(intent);
             return true;
