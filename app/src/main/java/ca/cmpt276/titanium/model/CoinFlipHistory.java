@@ -2,14 +2,13 @@ package ca.cmpt276.titanium.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.UUID;
 
 /**
@@ -127,9 +126,9 @@ public class CoinFlipHistory {
     }
 
     public void sortCoinFlipHistory() {
-        Collections.sort(coinFlipHistory, (c1, c2) -> {
-            if (c1.getLocalDateTime().isAfter(c2.getLocalDateTime())) {
-                return -1;
+        coinFlipHistory.sort((coinFlip1, coinFlip2) -> {
+            if (coinFlip1.getLocalDateTime().isAfter(coinFlip2.getLocalDateTime())) {
+                return 0;
             } else {
                 return 1;
             }
