@@ -131,7 +131,7 @@ public class CoinFlipHistory {
             if (coinFlip1.getLocalDateTime().isAfter(coinFlip2.getLocalDateTime())) {
                 return -1;
             } else {
-                return 0;
+                return 1;
             }
         });
     }
