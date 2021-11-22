@@ -23,17 +23,16 @@
 
     <ListView
         android:id="@+id/changeChildList"
-        android:layout_width="406dp"
-        android:layout_height="600dp"
-        android:divider="?attr/colorOnPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:divider="@android:color/transparent"
         android:dividerHeight="10dp"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/customToolBar"
-        app:layout_constraintVertical_bias="0.949"
+        app:layout_constraintTop_toBottomOf="@+id/customToolBar"
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
@@ -42,8 +41,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/childrenQueueList"
-        android:textColor="@color/green_600"
+        android:textColor="?attr/colorPrimaryVariant"
         android:visibility="invisible"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
