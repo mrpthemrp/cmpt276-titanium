@@ -22,9 +22,6 @@
     <string name="title_child_add">Add Child</string>
     <string name="toast_child_saved">Child saved</string>
 
-    <!-- Child Edit -->
-    <string name="toast_child_updated">Child updated</string>
-
     <!-- Child View -->
     <string name="button_delete_child">Remove Child</string>
     <string name="prompt_delete_child_message">Are you sure? This action cannot be reversed.\n\nAll associated coin flips will also be deleted.</string>

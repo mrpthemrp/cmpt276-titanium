@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-feature android:name="android.hardware.camera"
         android:required="true" />
 
@@ -80,13 +79,7 @@
             android:exported="true"
             android:parentActivityName=".ui.coin_flip.CoinFlipActivity" />
         <activity
-            android:name=".ui.child.ChildViewActivity"
-            android:configChanges="keyboard|keyboardHidden"
-            android:exported="true"
-            android:parentActivityName=".ui.MenuActivity"
-            android:theme="@style/Theme.Titanium.Child" />
-        <activity
-            android:name=".ui.child.ChildEditActivity"
+            android:name=".ui.ChildActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:theme="@style/Theme.Titanium.Child" />
