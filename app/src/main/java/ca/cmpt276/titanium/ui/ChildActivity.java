@@ -246,6 +246,9 @@ public class ChildActivity extends AppCompatActivity {
         portraitView.setAlpha(PORTRAIT_ALPHA_WHILE_EDITED);
         portraitView.setClickable(true);
         portraitView.setOnClickListener(view -> selectImage());
+
+        ImageView editIcon = findViewById(R.id.editIcon);
+        editIcon.setVisibility(View.VISIBLE);
     }
 
     private void setupChildName() {

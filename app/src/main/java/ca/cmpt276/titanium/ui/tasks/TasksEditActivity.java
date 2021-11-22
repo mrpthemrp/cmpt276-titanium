@@ -75,7 +75,7 @@ public class TasksEditActivity extends AppCompatActivity {
         });
     }
 
-    
+
     @Override
     public void onBackPressed() {
         launchDiscardChangesPrompt();
