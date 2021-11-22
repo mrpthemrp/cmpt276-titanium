@@ -7,127 +7,135 @@
     android:layout_height="match_parent"
     tools:context=".ui.MenuActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/customToolBar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/style_rounded_toolbar"
-        android:backgroundTint="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="@string/menuHeader"
-        app:titleTextColor="?attr/colorOnSecondary" />
-
-    <GridLayout
-        android:id="@+id/gridLayout"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:columnCount="4"
-        android:useDefaultMargins="true"
+        android:layout_height="174dp"
+        android:layout_marginTop="180dp"
+        android:scrollbarFadeDuration="15"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/childrenList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customToolBar">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/menuGoToTimer"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:background="@drawable/style_rounded_button_20"
-            android:backgroundTint="?attr/colorPrimary"
-            android:backgroundTintMode="src_in"
-            android:text="@string/menuTimerBtn"
-            android:textColor="?attr/colorOnSecondary"
-            app:icon="@drawable/ic_outline_timer_white_24"
-            app:iconGravity="textTop"
-            app:iconPadding="15dp"
-            app:iconSize="60dp"
-            app:iconTint="?attr/colorOnSecondary"
-            app:iconTintMode="src_in"
-            tools:ignore="TextContrastCheck" />
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/menuGoToFlipCoin"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:background="@drawable/style_rounded_button_20"
-            android:backgroundTint="?attr/colorPrimary"
-            android:backgroundTintMode="src_in"
-            android:text="@string/menuFlipCoinBtn"
-            android:textColor="?attr/colorOnSecondary"
-            app:icon="@drawable/ic_coin_button_white_24"
-            app:iconGravity="textTop"
-            app:iconPadding="15dp"
-            app:iconSize="60dp"
-            app:iconTint="?attr/colorOnSecondary"
-            app:iconTintMode="src_in"
-            tools:ignore="TextContrastCheck" />
+            <GridLayout
+                android:id="@+id/gridLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:columnCount="4"
+                android:useDefaultMargins="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/menuGoToAddChild"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:background="@drawable/style_rounded_button_20"
-            android:backgroundTint="?attr/colorPrimary"
-            android:backgroundTintMode="src_in"
-            android:text="@string/add_child_button_text"
-            android:textColor="?attr/colorOnSecondary"
-            app:icon="@drawable/ic_baseline_person_add_white_24"
-            app:iconGravity="textTop"
-            app:iconPadding="15dp"
-            app:iconSize="60dp"
-            app:iconTint="?attr/colorOnSecondary"
-            app:iconTintMode="src_in"
-            tools:ignore="TextContrastCheck" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/menuGoToTimer"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:background="@drawable/style_rounded_button_20"
+                    android:backgroundTint="?attr/colorPrimary"
+                    android:backgroundTintMode="src_in"
+                    android:text="@string/menuTimerBtn"
+                    android:textColor="?attr/colorOnSecondary"
+                    app:icon="@drawable/ic_outline_timer_white_24"
+                    app:iconGravity="textTop"
+                    app:iconPadding="15dp"
+                    app:iconSize="60dp"
+                    app:iconTint="?attr/colorOnSecondary"
+                    app:iconTintMode="src_in"
+                    tools:ignore="TextContrastCheck" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/menuWhoseTurn"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:background="@drawable/style_rounded_button_20"
-            android:backgroundTint="?attr/colorPrimary"
-            android:backgroundTintMode="src_in"
-            android:text="@string/whoseTurn"
-            android:textColor="?attr/colorOnSecondary"
-            app:icon="@drawable/ic_baseline_format_list_bulleted_white_24"
-            app:iconGravity="textTop"
-            app:iconPadding="15dp"
-            app:iconSize="60dp"
-            app:iconTint="?attr/colorOnSecondary"
-            app:iconTintMode="src_in"
-            tools:ignore="TextContrastCheck" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/menuGoToFlipCoin"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:background="@drawable/style_rounded_button_20"
+                    android:backgroundTint="?attr/colorPrimary"
+                    android:backgroundTintMode="src_in"
+                    android:text="@string/menuFlipCoinBtn"
+                    android:textColor="?attr/colorOnSecondary"
+                    app:icon="@drawable/ic_coin_button_white_24"
+                    app:iconGravity="textTop"
+                    app:iconPadding="15dp"
+                    app:iconSize="60dp"
+                    app:iconTint="?attr/colorOnSecondary"
+                    app:iconTintMode="src_in"
+                    tools:ignore="TextContrastCheck" />
 
-    </GridLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/menuGoToAddChild"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_row="1"
+                    android:layout_column="0"
+                    android:background="@drawable/style_rounded_button_20"
+                    android:backgroundTint="?attr/colorPrimary"
+                    android:backgroundTintMode="src_in"
+                    android:text="@string/add_child_button_text"
+                    android:textColor="?attr/colorOnSecondary"
+                    app:icon="@drawable/ic_baseline_person_add_white_24"
+                    app:iconGravity="textTop"
+                    app:iconPadding="15dp"
+                    app:iconSize="60dp"
+                    app:iconTint="?attr/colorOnSecondary"
+                    app:iconTintMode="src_in"
+                    tools:ignore="TextContrastCheck" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/menuWhoseTurn"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_row="1"
+                    android:layout_column="1"
+                    android:background="@drawable/style_rounded_button_20"
+                    android:backgroundTint="?attr/colorPrimary"
+                    android:backgroundTintMode="src_in"
+                    android:text="@string/whoseTurn"
+                    android:textColor="?attr/colorOnSecondary"
+                    app:icon="@drawable/ic_baseline_format_list_bulleted_white_24"
+                    app:iconGravity="textTop"
+                    app:iconPadding="15dp"
+                    app:iconSize="60dp"
+                    app:iconTint="?attr/colorOnSecondary"
+                    app:iconTintMode="src_in"
+                    tools:ignore="TextContrastCheck" />
+            </GridLayout>
+        </RelativeLayout>
+    </ScrollView>
 
     <ListView
         android:id="@+id/childrenList"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="250dp"
+        android:layout_margin="10dp"
         android:divider="?attr/colorOnPrimary"
         android:dividerHeight="10dp"
         android:padding="10dp"
+        android:scrollbarFadeDuration="15"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView"
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
@@ -141,6 +149,45 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView" />
+
+    <TextView
+        android:id="@+id/mainMenuWelcomeMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/menuDefaultMessage"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/menuSubMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/menuSubMessage"
+        android:textColor="?attr/colorSecondary"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainMenuWelcomeMessage"
+        tools:ignore="TextContrastCheck" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/helpButton"
+        android:layout_width="56dp"
+        android:layout_height="59dp"
+        android:background="@android:color/transparent"
+        android:gravity="end"
+        app:icon="@drawable/ic_baseline_help_outline_white_24"
+        app:iconTint="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

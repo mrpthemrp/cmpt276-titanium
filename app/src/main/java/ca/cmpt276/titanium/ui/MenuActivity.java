@@ -2,16 +2,18 @@ package ca.cmpt276.titanium.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.button.MaterialButton;
+
+import java.util.Calendar;
 import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
@@ -28,14 +30,12 @@ import ca.cmpt276.titanium.ui.timer.TimerActivity;
  */
 public class MenuActivity extends AppCompatActivity {
     private Children children;
+    private TextView welcomeMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
-        setSupportActionBar(myToolbar);
 
         this.children = Children.getInstance(this);
 
@@ -50,18 +50,19 @@ public class MenuActivity extends AppCompatActivity {
 
         Button whoseTurnButton = findViewById(R.id.menuWhoseTurn);
         whoseTurnButton.setOnClickListener(view -> startActivity(TasksActivity.makeIntent(this)));
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_menu, menu);
-        return true;
+        MaterialButton helpScreen = findViewById(R.id.helpButton);
+        helpScreen.setOnClickListener(view -> startActivity(HelpActivity.makeIntent(this)));
+
+        welcomeMessage = findViewById(R.id.mainMenuWelcomeMessage);
+        setMessage();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         displayChildren();
+        setMessage();
     }
 
     @Override
@@ -70,7 +71,6 @@ public class MenuActivity extends AppCompatActivity {
             finish();
             return true;
         } else if (item.getItemId() == R.id.optionsHelp) {
-            startActivity(HelpActivity.makeIntent(this));
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -95,5 +95,20 @@ public class MenuActivity extends AppCompatActivity {
 
             startActivity(viewChildIntent);
         });
+    }
+
+    // setMessage function written from the following resource:
+    // https://stackoverflow.com/questions/27589701/showing-morning-afternoon-evening-night-message-based-on-time-in-java
+    private void setMessage(){
+        Calendar currentCalendar = Calendar.getInstance();
+        int currentHour = currentCalendar.get(Calendar.HOUR_OF_DAY);
+
+        if(currentHour < 12){
+            welcomeMessage.setText(getString(R.string.menuMorning));
+        } else if(currentHour < 16){
+            welcomeMessage.setText(getString(R.string.menuAfternoon));
+        }else if(currentHour >=17){
+            welcomeMessage.setText(getString(R.string.menuEvening));
+        }
     }
 }

@@ -56,6 +56,11 @@
     <string name="menuChildrenText">No children added yet!</string>
     <string name="menuHeader">Main Menu</string>
     <string name="menuTimerBtn">Timer</string>
+    <string name="menuAfternoon">Good Afternoon,</string>
+    <string name="menuEvening">Good Evening,</string>
+    <string name="menuMorning">Good Morning,</string>
+    <string name="menuDefaultMessage">Hello there!</string>
+    <string name="menuSubMessage">select any of the buttons below to begin!</string>
 
     <!-- View Child Queue Strings -->
     <string name="currentChildTitle">Current Child:</string>
@@ -102,24 +107,30 @@
     <string name="whoseTurn">Tasks</string>
 
     <!-- New -->
+    <string name="noChildrenConfigured">No children to show.</string>
+    <string name="title_activity_change_child">ChangeChildActivity</string>
     <string name="viewQueue">View Queue</string>
     <string name="prompt_select_image_title">Update Portrait</string>
     <string name="prompt_select_image_option1">Take Photo</string>
     <string name="prompt_select_image_option2">Select from Gallery</string>
     <string name="prompt_select_image_option3">Cancel</string>
     <string name="title_help">Help</string>
-    <string name="help_team_name">Team Titanium</string>
+    <string name="help_team_name">Team Titanium:</string>
     <string name="help_developers">\u2022 Haris Ahmad\n\u2022 Christopher Torunski\n\u2022 Michelle Vong\n\u2022 Deborah Wang</string>
     <string name="help_developers_title">Developers</string>
-    <string name="help_subtitle_copyright">Copyright</string>
-    <string name="help_copyright_material">Coin flip sound: https://www.youtube.com/watch?v=1QxX9ruPUXM\n</string>
+    <string name="help_subtitle_copyright">Copyright Information</string>
+    <string name="help_coinFlip_full_link">Link Address: youtube.com/watch?v=1QxX9ruPUXM</string>
+    <string name="help_calm_image_full_link">Link Address: unsplash.com/photos/4N6qT784t3A</string>
+    <string name="help_alarm_full_link">Link Address: youtube.com/watch?v=kcT-i9xzC-8</string>
+    <string name="help_sound_title">Sounds</string>
+    <string name="help_image_title">Images</string>
+    <string name="help_alarm_title">Notification Alarm</string>
+    <string name="help_copyright">SFU Fall 2021 | CMPT 276</string>
+    <string name="help_timer_image_title">Timer Background</string>
+    <string name="help_coinFlip_resource"><a href="https://www.youtube.com/watch?v=1QxX9ruPUXM">Click here to go to YouTube link</a></string>
+    <string name="help_alarm_resource"><a href="https://www.youtube.com/watch?v=kcT-i9xzC-8">Click here to go to YouTube link</a></string>
+    <string name="help_calm_image_resource"><a href="https://unsplash.com/photos/4N6qT784t3A">Click here to go to image link</a></string>
     <string name="no_tasks_to_display_currently">No Tasks To Display Currently</string>
-    <string name="taskName_start_text">Task: %1$s</string>
-    <string name="childName_start_text">Next Child: %1$s</string>
-    <string name="complete_task">Complete Task</string>
-    <string name="cancel_task">Cancel</string>
-    <string name="enter_task_name">Enter Name of Task:</string>
-    <string name="task_name_title">Task Name</string>
-    <string name="add_task_button">add task</string>
+    <string name="helpAppInfo">App Information</string>
 
 </resources>
