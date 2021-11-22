@@ -10,9 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
 
 /**
@@ -55,8 +58,13 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
     }
 
     private void populateListView() {
-        coinFlipHistory.sortCoinFlipHistory();
-        CoinFlipHistoryListAdapter adapter = new CoinFlipHistoryListAdapter(this, coinFlipHistory.getCoinFlipHistory());
+        //coinFlipHistory.sortCoinFlipHistory();
+        //CoinFlipHistoryListAdapter adapter = new CoinFlipHistoryListAdapter(this, coinFlipHistory.getCoinFlipHistory());
+
+        ArrayList<CoinFlip> coinFlipHistoryCopy = new ArrayList<>(coinFlipHistory.getCoinFlipHistory());
+        Collections.reverse(coinFlipHistoryCopy);
+        CoinFlipHistoryListAdapter adapter = new CoinFlipHistoryListAdapter(this, coinFlipHistoryCopy);
+
         ListView list = findViewById(R.id.coinFlipHistoryList);
         list.setAdapter(adapter);
     }
