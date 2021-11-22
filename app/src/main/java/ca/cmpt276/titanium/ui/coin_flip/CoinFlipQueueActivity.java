@@ -97,7 +97,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
             currentChildIcon.setImageDrawable(drawable);
         } else {
             currentChildTurnName.setText(R.string.currentChildName);
-            currentChildIcon.setImageResource(R.drawable.ic_baseline_circle_green_200);
+            currentChildIcon.setImageResource(R.drawable.ic_default_portrait_green);
         }
     }
 }

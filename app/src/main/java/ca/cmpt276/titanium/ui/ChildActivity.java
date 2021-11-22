@@ -44,7 +44,6 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 
-// TODO: Replace default portrait with multiple versions for different device pixel densities
 // TODO: Save cropped versions of photos rather than originals, ?including for gallery photos?
 // TODO: Add ability to manually crop photos in-app
 
@@ -234,7 +233,7 @@ public class ChildActivity extends AppCompatActivity {
         RoundedBitmapDrawable portrait;
 
         if (intentType.equals(ADD_CHILD_INTENT)) {
-            portrait = RoundedBitmapDrawableFactory.create(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.ic_default_portrait_light_green));
+            portrait = RoundedBitmapDrawableFactory.create(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.ic_default_portrait_green));
             portrait.setCircular(true);
 
             this.currentPortraitPath = null;

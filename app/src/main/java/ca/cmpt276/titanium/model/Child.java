@@ -30,7 +30,7 @@ public class Child {
         Bitmap portraitBitmap;
 
         if (portraitPath == null) {
-            portraitBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_default_portrait_light_green);
+            portraitBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_default_portrait_green);
         } else {
             BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
             bitmapOptions.inJustDecodeBounds = true;

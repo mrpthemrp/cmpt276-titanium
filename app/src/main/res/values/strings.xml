@@ -50,7 +50,6 @@
     <string name="add_child_button_text">Add Child</string>
     <string name="default_text">DEFAULT TEXT</string>
     <string name="menuChildrenText">No children added yet!</string>
-    <string name="menuHeader">Main Menu</string>
     <string name="menuTimerBtn">Timer</string>
     <string name="menuAfternoon">Good Afternoon,</string>
     <string name="menuEvening">Good Evening,</string>
