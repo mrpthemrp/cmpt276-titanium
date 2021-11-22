@@ -45,21 +45,22 @@
 
         <EditText
             android:id="@+id/childName"
-            android:layout_width="195dp"
-            android:layout_height="49dp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="50dp"
             android:autofillHints="autofillHints"
             android:background="@android:color/transparent"
             android:cursorVisible="false"
+            android:scrollHorizontally="false"
             android:enabled="false"
             android:fontFamily="sans-serif-medium"
             android:hint="@string/hint_child_name"
-            android:inputType="textCapWords"
+            android:inputType="textCapWords|textMultiLine"
             android:minHeight="48dp"
-            android:textAlignment="viewStart"
+            android:textAlignment="textStart"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="?attr/colorPrimaryVariant"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/addProfilePic"
             app:layout_constraintTop_toTopOf="parent" />
 
