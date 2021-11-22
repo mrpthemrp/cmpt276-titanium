@@ -137,9 +137,13 @@
     <string name="cancel_task">Cancel</string>
     <string name="enter_task_name">Enter Name of Task:</string>
     <string name="task_name_title">Task Name</string>
-    <string name="add_task_button">add task</string>
+    <string name="add_task_button">ADD TASK</string>
+    <string name="edit_task_button">SAVE TASK</string>
 
     <string name="helpAppInfo">App Information</string>
+    <string name="taskListTitle">List of Tasks</string>
+    <string name="taskViewTaskTitle">Manage Task</string>
+    <string name="taskTurnTitle">Child Whose Turn It Is:</string>
     <string name="toast_permission_denied">Permission denied</string>
     <string name="portrait_image_prefix">portrait_</string>
 

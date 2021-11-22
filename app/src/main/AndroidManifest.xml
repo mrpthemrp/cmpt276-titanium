@@ -47,9 +47,11 @@
         <activity
             android:name=".ui.tasks.TasksAddActivity"
             android:configChanges="keyboard|keyboardHidden"
+            android:theme="@style/Theme.Titanium"
             android:exported="true" />
         <activity
             android:name=".ui.tasks.TasksViewActivity"
+            android:theme="@style/Theme.Titanium"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true" />
         <activity
@@ -66,13 +68,14 @@
             android:name=".ui.tasks.TasksActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
+            android:theme="@style/Theme.Titanium"
             android:parentActivityName=".ui.MenuActivity" />
         <activity
             android:name=".ui.tasks.TasksEditActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.tasks.TasksViewActivity"
-            android:theme="@style/Theme.Titanium.Child" />
+            android:theme="@style/Theme.Titanium" />
         <activity
             android:name=".ui.coin_flip.CoinFlipHistoryActivity"
             android:configChanges="keyboard|keyboardHidden"
