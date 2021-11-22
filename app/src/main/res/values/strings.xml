@@ -121,12 +121,15 @@
     <string name="help_subtitle_copyright">Copyright Information</string>
     <string name="help_coinFlip_full_link">Link Address: youtube.com/watch?v=1QxX9ruPUXM</string>
     <string name="help_calm_image_full_link">Link Address: unsplash.com/photos/4N6qT784t3A</string>
+    <string name="help_alarm_full_link">Link Address: youtube.com/watch?v=kcT-i9xzC-8</string>
     <string name="help_sound_title">Sounds</string>
     <string name="help_image_title">Images</string>
+    <string name="help_alarm_title">Notification Alarm</string>
     <string name="help_copyright">SFU Fall 2021 | CMPT 276</string>
     <string name="help_timer_image_title">Timer Background</string>
-    <string name="help_coinFlip_resource"> <a href="https://www.youtube.com/watch?v=1QxX9ruPUXM">Click here to go to YouTube link</a></string>
-    <string name="help_calm_image_resource"> <a href="https://unsplash.com/photos/4N6qT784t3A ">Click here to go to image link</a></string>
+    <string name="help_coinFlip_resource"><a href="https://www.youtube.com/watch?v=1QxX9ruPUXM">Click here to go to YouTube link</a></string>
+    <string name="help_alarm_resource"><a href="https://www.youtube.com/watch?v=kcT-i9xzC-8">Click here to go to YouTube link</a></string>
+    <string name="help_calm_image_resource"><a href="https://unsplash.com/photos/4N6qT784t3A">Click here to go to image link</a></string>
     <string name="no_tasks_to_display_currently">No Tasks To Display Currently</string>
     <string name="helpAppInfo">App Information</string>
 

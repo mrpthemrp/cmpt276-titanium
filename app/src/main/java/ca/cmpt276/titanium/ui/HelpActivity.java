@@ -35,12 +35,14 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     private void setUpHyperLinks() {
-        TextView youtubeLink = findViewById(R.id.helpCoinFlipLink);
-        youtubeLink.setMovementMethod(LinkMovementMethod.getInstance());
-
+        TextView coinLink = findViewById(R.id.helpCoinFlipLink);
+        coinLink.setMovementMethod(LinkMovementMethod.getInstance());
 
         TextView imageLink = findViewById(R.id.helpCalmImageLink);
         imageLink.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView alarmLink = findViewById(R.id.helpAlarmSoundLink);
+        alarmLink.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override

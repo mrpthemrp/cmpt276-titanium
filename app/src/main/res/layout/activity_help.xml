@@ -167,18 +167,60 @@
                 app:layout_constraintTop_toBottomOf="@+id/helpCoinFlipLink" />
 
             <TextView
-                android:id="@+id/helpImagesSubtitle"
+                android:id="@+id/helpAlarmSound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:text="@string/help_alarm_title"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/helpCoinFlipFullLink" />
+
+            <TextView
+                android:id="@+id/helpAlarmSoundLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="3dp"
+                android:text="@string/help_alarm_resource"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/helpAlarmSound" />
+
+            <TextView
+                android:id="@+id/helpAlarmSoundFullLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="3dp"
+                android:gravity="start"
+                android:text="@string/help_alarm_full_link"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/helpAlarmSoundLink" />
+
+            <TextView
+                android:id="@+id/helpImagesSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="25dp"
                 android:text="@string/help_image_title"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpCoinFlipFullLink" />
+                app:layout_constraintTop_toBottomOf="@+id/helpAlarmSoundFullLink" />
 
             <TextView
                 android:id="@+id/helpCalmImage"
