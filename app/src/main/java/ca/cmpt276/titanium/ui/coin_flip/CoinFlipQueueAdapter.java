@@ -32,16 +32,16 @@ public class CoinFlipQueueAdapter extends ArrayAdapter<Child> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_coin_flip_children_queue, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_menu_children_list, parent, false);
         }
 
         Child child = getItem(position);
 
-        ImageView childQueueIcon = convertView.findViewById(R.id.childQueueIcon);
+        ImageView childQueueIcon = convertView.findViewById(R.id.childIcon);
         RoundedBitmapDrawable drawable = child.getPortrait(context.getResources());
         childQueueIcon.setImageDrawable(drawable);
 
-        TextView childQueueNameText = convertView.findViewById(R.id.childQueueNameList);
+        TextView childQueueNameText = convertView.findViewById(R.id.childNameList);
         String childQueueName = child.getName();
         childQueueNameText.setText(childQueueName);
 

@@ -50,7 +50,7 @@ public class ChangeChildActivity extends AppCompatActivity {
         }
 
         ArrayList<Child> childrenQueueCopy = new ArrayList<>(childrenQueue.getChildrenQueue());
-        ListView changeChildListView = (ListView) findViewById(R.id.changeChildList);
+        ListView changeChildListView = findViewById(R.id.changeChildList);
         ChangeChildAdapter adapter = new ChangeChildAdapter(this, childrenQueueCopy);
         changeChildListView.setAdapter(adapter);
         changeChildListView.setClickable(true);

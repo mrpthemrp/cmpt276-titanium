@@ -130,18 +130,16 @@
     <string name="help_x_image_resource"><a href="https://www.nicepng.com/png/full/910-9107823_circle-cross-png.png">Click here to go to image link</a></string>
     <string name="no_tasks_to_display_currently">No Tasks To Display Currently</string>
     <string name="taskName_start_text">Task: %1$s</string>
-    <string name="childName_start_text">Next Child: %1$s</string>
+    <string name="childName_start_text">%1$s\'s turn next</string>
     <string name="complete_task">Complete Task</string>
-    <string name="cancel_task">Cancel</string>
     <string name="enter_task_name">Enter Name of Task:</string>
-    <string name="task_name_title">Task Name</string>
-    <string name="add_task_button">ADD TASK</string>
-    <string name="edit_task_button">SAVE TASK</string>
+    <string name="task_name_title">Task</string>
+    <string name="add_task_button">SAVE TASK</string>
+    <string name="prompt_delete_task_message">Are you sure? This action cannot be reversed.</string>
 
     <string name="helpAppInfo">App Information</string>
     <string name="taskListTitle">List of Tasks</string>
     <string name="taskViewTaskTitle">Manage Task</string>
-    <string name="taskTurnTitle">Child Whose Turn It Is:</string>
     <string name="toast_permission_denied">Permission denied</string>
     <string name="portrait_image_prefix">portrait_</string>
     <string name="title_add_task_name">Edit Name of Task:</string>
@@ -150,6 +148,8 @@
     <string name="toast_title_delete_task">Deleting Task: %1$s</string>
     <string name="toast_task_deleted">Task Deleted</string>
     <string name="toast_task_completed">Task completed</string>
-    <string name="task_no_children_name">Nobody</string>
+    <string name="task_no_children_name">N/A (No children added!)</string>
+    <string name="toast_task_saved">Task saved</string>
+    <string name="view_task_child_name">%1$s\'s turn next</string>
 
 </resources>

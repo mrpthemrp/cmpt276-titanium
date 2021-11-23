@@ -68,7 +68,7 @@ public class MenuActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else if (item.getItemId() == R.id.optionsHelp) {
+        } else if (item.getItemId() == R.id.optionsEdit) {
             return true;
         } else {
             return super.onOptionsItemSelected(item);

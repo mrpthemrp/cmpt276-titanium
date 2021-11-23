@@ -81,7 +81,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
             findViewById(R.id.childrenQueueListText).setVisibility(View.INVISIBLE);
         }
 
-        ListView childrenListView = (ListView) findViewById(R.id.childrenQueueList);
+        ListView childrenListView = findViewById(R.id.childrenQueueList);
         CoinFlipQueueAdapter adapter = new CoinFlipQueueAdapter(this, childrenQueue.getChildrenQueue());
         childrenListView.setAdapter(adapter);
     }

@@ -62,7 +62,7 @@ public class ChildActivity extends AppCompatActivity {
     private ChildrenQueue childrenQueue;
     private Toast toast; // prevents toast stacking
     private ImageView portraitView;
-    private EditText childName;
+    private EditText childNameInput;
 
     private UUID focusedChildUniqueID;
     private boolean changesAccepted = true;
@@ -90,7 +90,7 @@ public class ChildActivity extends AppCompatActivity {
         this.childrenQueue = ChildrenQueue.getInstance(this);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
         this.portraitView = findViewById(R.id.addProfilePic);
-        this.childName = findViewById(R.id.childName);
+        this.childNameInput = findViewById(R.id.childName);
 
         if (intentType.equals(EDIT_CHILD_INTENT) || intentType.equals(VIEW_CHILD_INTENT)) {
             this.focusedChildUniqueID = (UUID) getIntent().getSerializableExtra(CHILD_UNIQUE_ID_KEY);
@@ -103,7 +103,7 @@ public class ChildActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (intentType.equals(VIEW_CHILD_INTENT)) {
-            getMenuInflater().inflate(R.menu.menu_child_view, menu);
+            getMenuInflater().inflate(R.menu.menu_child, menu);
         }
 
         return true;
@@ -115,7 +115,7 @@ public class ChildActivity extends AppCompatActivity {
 
         if (intentType.equals(VIEW_CHILD_INTENT)) {
             portraitView.setImageDrawable(children.getChild(focusedChildUniqueID).getPortrait(getResources()));
-            childName.setText(children.getChild(focusedChildUniqueID).getName());
+            childNameInput.setText(children.getChild(focusedChildUniqueID).getName());
         }
     }
 
@@ -126,7 +126,7 @@ public class ChildActivity extends AppCompatActivity {
                     getString(R.string.prompt_discard_changes_message),
                     getString(R.string.toast_changes_discarded), false);
             return true;
-        } else if (item.getItemId() == R.id.optionsHelp) {
+        } else if (item.getItemId() == R.id.optionsEdit) {
             startActivity(ChildActivity.makeIntent(this, getString(R.string.menuEdit), focusedChildUniqueID));
             return true;
         } else if (item.getItemId() == R.id.optionsRemove) {
@@ -218,13 +218,13 @@ public class ChildActivity extends AppCompatActivity {
         saveButton.setVisibility(View.VISIBLE);
 
         saveButton.setOnClickListener(view -> {
-            if (childName.getText().toString().equals("")) {
+            if (childNameInput.getText().toString().equals("")) {
                 updateToast(getString(R.string.toast_no_name));
             } else {
                 if (intentType.equals(ADD_CHILD_INTENT)) {
-                    children.addChild(childName.getText().toString(), currentPortraitPath);
+                    children.addChild(childNameInput.getText().toString(), currentPortraitPath);
                 } else if (intentType.equals(EDIT_CHILD_INTENT)) {
-                    children.setChildName(focusedChildUniqueID, childName.getText().toString());
+                    children.setChildName(focusedChildUniqueID, childNameInput.getText().toString());
                 }
 
                 updateToast(getString(R.string.toast_child_saved));
@@ -243,7 +243,7 @@ public class ChildActivity extends AppCompatActivity {
             this.currentPortraitPath = null;
         } else {
             portrait = children.getChild(focusedChildUniqueID).getPortrait(getResources());
-            childName.setText(children.getChild(focusedChildUniqueID).getName());
+            childNameInput.setText(children.getChild(focusedChildUniqueID).getName());
         }
 
         portraitView.setImageDrawable(portrait);
@@ -256,22 +256,22 @@ public class ChildActivity extends AppCompatActivity {
     }
 
     private void setupChildName() {
-        childName.setEnabled(true);
-        childName.setCursorVisible(true);
+        childNameInput.setEnabled(true);
+        childNameInput.setCursorVisible(true);
 
-        childName.setOnKeyListener((view, keyCode, keyEvent) -> {
+        childNameInput.setOnKeyListener((view, keyCode, keyEvent) -> {
             if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(childName.getWindowToken(), 0);
+                inputMethodManager.hideSoftInputFromWindow(childNameInput.getWindowToken(), 0);
 
-                childName.clearFocus();
-                childName.setText(childName.getText());
+                childNameInput.clearFocus();
+                childNameInput.setText(childNameInput.getText());
             }
 
             return false;
         });
 
-        childName.addTextChangedListener(new TextWatcher() {
+        childNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -280,9 +280,9 @@ public class ChildActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (intentType.equals(ADD_CHILD_INTENT)) {
-                    changesAccepted = childName.getText().toString().equals("");
+                    changesAccepted = childNameInput.getText().toString().equals("");
                 } else if (intentType.equals(EDIT_CHILD_INTENT)) {
-                    changesAccepted = childName.getText().toString().equals(children.getChild(focusedChildUniqueID).getName());
+                    changesAccepted = childNameInput.getText().toString().equals(children.getChild(focusedChildUniqueID).getName());
                 }
             }
 

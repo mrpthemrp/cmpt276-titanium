@@ -32,16 +32,16 @@ public class ChangeChildAdapter extends ArrayAdapter<Child> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_change_child_list, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_menu_children_list, parent, false);
         }
 
         Child child = getItem(position);
 
-        ImageView changeChildIcon = convertView.findViewById(R.id.changeChildIconList);
+        ImageView changeChildIcon = convertView.findViewById(R.id.childIcon);
         RoundedBitmapDrawable drawable = child.getPortrait(context.getResources());
         changeChildIcon.setImageDrawable(drawable);
 
-        TextView childQueueNameText = convertView.findViewById(R.id.changeChildNameList);
+        TextView childQueueNameText = convertView.findViewById(R.id.childNameList);
         String changeChildName = child.getName();
         childQueueNameText.setText(changeChildName);
 
