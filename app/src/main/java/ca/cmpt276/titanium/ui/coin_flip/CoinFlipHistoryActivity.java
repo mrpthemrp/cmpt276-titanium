@@ -43,7 +43,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
             emptyStateLayout.setVisibility(View.VISIBLE);
 
             ListView listView = findViewById(R.id.coinFlipHistoryList);
-            listView.setVisibility(View.GONE);
+            listView.setVisibility(View.INVISIBLE);
         }
     }
 
