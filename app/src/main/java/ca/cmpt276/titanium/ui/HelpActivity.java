@@ -15,6 +15,9 @@ import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
 
+/**
+ * This class handles the help screen.
+ */
 public class HelpActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context context) {

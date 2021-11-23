@@ -20,11 +20,8 @@ import ca.cmpt276.titanium.model.Child;
  * This is an adapter for the children list.
  */
 public class MenuChildrenListAdapter extends ArrayAdapter<Child> {
-    private final Context context;
-
     public MenuChildrenListAdapter(Context context, List<Child> children) {
         super(context, 0, children);
-        this.context = context;
     }
 
     @NonNull
@@ -37,7 +34,7 @@ public class MenuChildrenListAdapter extends ArrayAdapter<Child> {
         Child child = getItem(position);
 
         ImageView childIcon = convertView.findViewById(R.id.childIcon);
-        childIcon.setImageDrawable(child.getPortrait(context.getResources()));
+        childIcon.setImageDrawable(child.getPortrait(getContext().getResources()));
 
         TextView childTextView = convertView.findViewById(R.id.childNameList);
         String childName = child.getName();

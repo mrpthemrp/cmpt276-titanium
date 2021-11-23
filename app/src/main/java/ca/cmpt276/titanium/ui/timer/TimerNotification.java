@@ -22,6 +22,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Timer;
 
+/**
+ * This class handles timer notifications, including sound and vibration.
+ */
 public class TimerNotification {
     private static final int MILLIS_IN_HOUR = 3600000;
     private static final int MILLIS_IN_MINUTE = 60000;

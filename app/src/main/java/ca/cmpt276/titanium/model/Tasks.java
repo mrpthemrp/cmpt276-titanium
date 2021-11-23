@@ -12,7 +12,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.UUID;
 
-
+/**
+ * This class holds data for all tasks.
+ * Handles loading and saving using JSON and Shared Preferences.
+ */
 public class Tasks {
     private static final Tasks instance = new Tasks();
     private static final String TASK_PREF = "taskPref";

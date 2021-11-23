@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 /**
- * This class represents the children queue.
+ * This class represents the children queue for coin flips.
  */
 public class ChildrenQueue {
     private static final Gson GSON = new Gson();

@@ -19,6 +19,9 @@ import java.util.Objects;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Tasks;
 
+/**
+ * This class displays the details for a single task and allows the user to edit task data.
+ */
 public class TasksEditActivity extends AppCompatActivity {
 
     private static final String INDEX = "EditClicked";

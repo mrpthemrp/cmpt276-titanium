@@ -25,6 +25,9 @@ import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.Tasks;
 
+/**
+ * This class displays all tasks.
+ */
 public class TasksActivity extends AppCompatActivity {
 
     private ArrayList<String> taskList = new ArrayList<>();

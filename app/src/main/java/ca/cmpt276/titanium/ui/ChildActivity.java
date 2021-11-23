@@ -132,11 +132,10 @@ public class ChildActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            onBackPressed();
             return true;
         } else if (item.getItemId() == R.id.optionsHelp) {
-            Intent editChildIntent = ChildActivity.makeIntent(this, getString(R.string.menuEdit), focusedChildUniqueID);
-            startActivity(editChildIntent);
+            startActivity(ChildActivity.makeIntent(this, getString(R.string.menuEdit), focusedChildUniqueID));
             return true;
         } else if (item.getItemId() == R.id.optionsRemove) {
             launchPrompt(getString(R.string.prompt_delete_child_title, children.getChild(focusedChildUniqueID).getName()),
@@ -164,9 +163,9 @@ public class ChildActivity extends AppCompatActivity {
     private void setupActionBar(String intentType) {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle(intentType);
-
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+        setTitle(intentType);
     }
 
     private void setupActivityResults() {

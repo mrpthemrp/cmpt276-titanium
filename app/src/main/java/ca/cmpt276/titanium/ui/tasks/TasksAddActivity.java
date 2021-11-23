@@ -18,6 +18,9 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.Tasks;
 
+/**
+ * This class allows a user to create new tasks.
+ */
 public class TasksAddActivity extends AppCompatActivity {
 
     private Children children;

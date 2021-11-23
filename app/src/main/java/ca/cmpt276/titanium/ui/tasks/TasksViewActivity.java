@@ -23,6 +23,9 @@ import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.Tasks;
 
+/**
+ * This class displays the details for a single task.
+ */
 public class TasksViewActivity extends AppCompatActivity {
 
     private static final String INDEX = "UserClicked";
