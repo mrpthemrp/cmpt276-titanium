@@ -125,14 +125,4 @@ public class CoinFlipHistory {
         CoinFlipHistory.nextPickerUniqueID = nextPickerUniqueID;
         saveData();
     }
-
-    public void sortCoinFlipHistory() {
-        coinFlipHistory.sort((coinFlip1, coinFlip2) -> {
-            if (coinFlip1.getLocalDateTime().isAfter(coinFlip2.getLocalDateTime())) {
-                return -1;
-            } else {
-                return 1;
-            }
-        });
-    }
 }

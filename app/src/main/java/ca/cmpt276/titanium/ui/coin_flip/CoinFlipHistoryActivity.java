@@ -58,9 +58,6 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
     }
 
     private void populateListView() {
-        //coinFlipHistory.sortCoinFlipHistory();
-        //CoinFlipHistoryListAdapter adapter = new CoinFlipHistoryListAdapter(this, coinFlipHistory.getCoinFlipHistory());
-
         ArrayList<CoinFlip> coinFlipHistoryCopy = new ArrayList<>(coinFlipHistory.getCoinFlipHistory());
         Collections.reverse(coinFlipHistoryCopy);
         CoinFlipHistoryListAdapter adapter = new CoinFlipHistoryListAdapter(this, coinFlipHistoryCopy);

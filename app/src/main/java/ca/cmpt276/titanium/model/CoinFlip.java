@@ -42,9 +42,4 @@ public class CoinFlip {
     public Coin getResult() {
         return result;
     }
-
-    public LocalDateTime getLocalDateTime() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy, HH:mm:ss");
-        return LocalDateTime.parse(timeOfFlip, formatter);
-    }
 }
