@@ -136,6 +136,7 @@
     <string name="task_name_title">Task</string>
     <string name="add_task_button">SAVE TASK</string>
     <string name="prompt_delete_task_message">Are you sure? This action cannot be reversed.</string>
+    <string name="edit_task_button">Edit Task</string>
 
     <string name="helpAppInfo">App Information</string>
     <string name="taskListTitle">List of Tasks</string>
@@ -151,5 +152,7 @@
     <string name="task_no_children_name">N/A (No children added!)</string>
     <string name="toast_task_saved">Task saved</string>
     <string name="view_task_child_name">%1$s\'s turn next</string>
+    <string name="cancel_task">Cancel</string>
+    <string name="taskTurnTitle">Child whose turn it is:</string>
 
 </resources>
