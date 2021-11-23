@@ -52,7 +52,7 @@ public class TasksViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tasks_view);
         this.children = Children.getInstance(this);
         taskManager = Tasks.getInstance();
-        imageView = findViewById(R.id.imageView);
+        imageView = findViewById(R.id.childPortrait);
 
         extractIntentData();
         displayData();
@@ -97,7 +97,7 @@ public class TasksViewActivity extends AppCompatActivity {
 
         task = taskManager.getTask(index);
 
-        childName.setText(name);
+        childName.setText(getString(R.string.view_task_child_name, name));
         taskName.setText(task);
 
         if(taskManager.getListOfTasks().size() > 0 && children.getChildren().size() > 0){
@@ -132,9 +132,6 @@ public class TasksViewActivity extends AppCompatActivity {
             }
             finish();
         });
-
-        Button cancel = findViewById(R.id.cancelTaskButton);
-        cancel.setOnClickListener(view -> finish());
     }
 
     @Override

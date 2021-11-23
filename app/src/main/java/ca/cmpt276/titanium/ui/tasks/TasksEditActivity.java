@@ -64,7 +64,7 @@ public class TasksEditActivity extends AppCompatActivity {
 
     private void setUpButton() {
         Button saveTaskButton = findViewById(R.id.saveTask);
-        saveTaskButton.setText(getResources().getString(R.string.edit_task_button));
+        saveTaskButton.setText(getResources().getString(R.string.add_task_button));
         saveTaskButton.setOnClickListener(view -> {
             if (userTaskName.getText().toString().isEmpty()) {
                 Toast.makeText(TasksEditActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();
