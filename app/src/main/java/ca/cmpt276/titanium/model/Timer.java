@@ -14,11 +14,13 @@ public class Timer {
     private static final String RUNNING_KEY = "isRunning";
     private static final String PAUSED_KEY = "isPaused";
     private static final String GUI_ENABLED_KEY = "isGUIEnabled";
+    private static final String TIME_FACTOR_KEY = "timeFactor";
 
     private static final int DEFAULT_MILLISECONDS = 0;
     private static final boolean DEFAULT_RUNNING = false;
     private static final boolean DEFAULT_PAUSED = false;
     private static final boolean DEFAULT_GUI_ENABLED = true;
+    private static final float DEFAULT_TIME_FACTOR = 1.0f;
 
     private static Timer instance;
     private static SharedPreferences prefs;
@@ -85,6 +87,7 @@ public class Timer {
         prefsEditor.putLong(REMAINING_KEY, getDurationMilliseconds());
         prefsEditor.putBoolean(RUNNING_KEY, false);
         prefsEditor.putBoolean(PAUSED_KEY, false);
+        prefsEditor.putFloat(TIME_FACTOR_KEY, DEFAULT_TIME_FACTOR);
         prefsEditor.apply();
     }
 
@@ -94,5 +97,13 @@ public class Timer {
 
     public void setGUIEnabled(boolean isGUIEnabled) {
         prefsEditor.putBoolean(GUI_ENABLED_KEY, isGUIEnabled).apply();
+    }
+
+    public float getTimeFactor() {
+        return prefs.getFloat(TIME_FACTOR_KEY, DEFAULT_TIME_FACTOR);
+    }
+
+    public void setTimeFactor(float timeFactor) {
+        prefsEditor.putFloat(TIME_FACTOR_KEY, timeFactor).apply();
     }
 }

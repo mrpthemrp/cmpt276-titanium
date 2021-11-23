@@ -19,6 +19,7 @@ public class TimerService extends Service {
     private TimerNotification timerNotification;
     private Timer timer;
     private Intent timerUpdateIntent;
+    private float timeFactor;
     private CountDownTimer countDownTimer;
 
     @Override
@@ -32,15 +33,20 @@ public class TimerService extends Service {
         timer.setRunning();
 
         this.timerUpdateIntent = new Intent(TIMER_UPDATE_INTENT);
+        this.timeFactor = timer.getTimeFactor();
 
         this.countDownTimer = new CountDownTimer(timer.getRemainingMilliseconds(), TIMER_COUNTDOWN_INTERVAL) {
             @Override
             public void onTick(long remainingMilliseconds) {
                 if (!timer.isRunning()) {
                     stopSelf();
+                } else if (timer.getRemainingMilliseconds() <= (long) (timeFactor * TIMER_COUNTDOWN_INTERVAL)) {
+                    onFinish(); // TODO: Ensure that onFinish always completes before TimerService is destroyed
                 }
 
-                timer.setRemainingMilliseconds(remainingMilliseconds);
+                // TODO: Ideally, use remainingMilliseconds instead because onTick is not necessarily called every TIMER_COUNTDOWN_INTERVAL
+                // TODO:    However, the line below should always function completely fine, so this is not a necessary change
+                timer.setRemainingMilliseconds(timer.getRemainingMilliseconds() - (long) (timeFactor * TIMER_COUNTDOWN_INTERVAL));
 
                 if (timer.isGUIEnabled()) {
                     sendBroadcast(timerUpdateIntent);
@@ -51,6 +57,7 @@ public class TimerService extends Service {
 
             @Override
             public void onFinish() {
+                stopSelf();
                 timer.setStopped();
 
                 if (timer.isGUIEnabled()) {
@@ -58,7 +65,6 @@ public class TimerService extends Service {
                 }
 
                 timerNotification.launchNotification("Finish");
-                stopSelf();
             }
         }.start();
     }
