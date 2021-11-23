@@ -45,9 +45,6 @@ import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
 import ca.cmpt276.titanium.model.ChildrenQueue;
 
-// TODO: Save cropped versions of photos rather than originals, ?including for gallery photos?
-// TODO: Add ability to manually crop photos in-app
-
 /**
  * This activity represents the viewing, adding, and editing of a single child.
  */
@@ -123,16 +120,11 @@ public class ChildActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        launchPrompt(getString(R.string.prompt_discard_changes_title),
-                getString(R.string.prompt_discard_changes_message),
-                getString(R.string.toast_changes_discarded));
-    }
-
-    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
+            launchPrompt(getString(R.string.prompt_discard_changes_title),
+                    getString(R.string.prompt_discard_changes_message),
+                    getString(R.string.toast_changes_discarded), false);
             return true;
         } else if (item.getItemId() == R.id.optionsHelp) {
             startActivity(ChildActivity.makeIntent(this, getString(R.string.menuEdit), focusedChildUniqueID));
@@ -140,11 +132,18 @@ public class ChildActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.optionsRemove) {
             launchPrompt(getString(R.string.prompt_delete_child_title, children.getChild(focusedChildUniqueID).getName()),
                     getString(R.string.prompt_delete_child_message),
-                    getString(R.string.toast_child_deleted));
+                    getString(R.string.toast_child_deleted), true);
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        launchPrompt(getString(R.string.prompt_discard_changes_title),
+                getString(R.string.prompt_discard_changes_message),
+                getString(R.string.toast_changes_discarded), false);
     }
 
     @Override
@@ -300,14 +299,14 @@ public class ChildActivity extends AppCompatActivity {
         toast.show();
     }
 
-    private void launchPrompt(String title, String message, String positiveToast) {
-        if (!changesAccepted || title.equals(getString(R.string.prompt_delete_child_title, children.getChild(focusedChildUniqueID).getName()))) {
+    private void launchPrompt(String title, String message, String positiveToast, boolean isDeletePrompt) {
+        if (!changesAccepted || isDeletePrompt) {
             new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_baseline_delete_black_24)
                     .setTitle(title)
                     .setMessage(message)
                     .setPositiveButton(R.string.prompt_discard_changes_positive, (dialog, which) -> {
-                        if (title.equals(getString(R.string.prompt_delete_child_title, children.getChild(focusedChildUniqueID).getName()))) {
+                        if (isDeletePrompt) {
                             children.removeChild(children.getChild(focusedChildUniqueID).getUniqueID());
                         }
 
@@ -316,6 +315,8 @@ public class ChildActivity extends AppCompatActivity {
                     })
                     .setNegativeButton(R.string.prompt_discard_changes_negative, null)
                     .show();
+        } else {
+            finish();
         }
     }
 

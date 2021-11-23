@@ -37,7 +37,7 @@ public class Child {
             BitmapFactory.decodeFile(portraitPath, bitmapOptions);
 
             bitmapOptions.inJustDecodeBounds = false;
-            bitmapOptions.inSampleSize = Math.max(1, Math.min(bitmapOptions.outWidth / 500, bitmapOptions.outHeight / 500)); // TODO: Scale according to device pixel density
+            bitmapOptions.inSampleSize = Math.max(1, Math.min(bitmapOptions.outWidth / 500, bitmapOptions.outHeight / 500));
 
             portraitBitmap = BitmapFactory.decodeFile(portraitPath, bitmapOptions);
         }

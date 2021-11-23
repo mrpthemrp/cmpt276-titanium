@@ -39,12 +39,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="15dp"
-        android:ellipsize="none"
-        android:maxLines="5"
-        android:scrollHorizontally="false"
         android:text="@string/default_text"
         android:textColor="?attr/colorSecondaryVariant"
         android:textSize="16sp"
+        android:ellipsize="none"
+        android:maxLines="5"
+        android:scrollHorizontally="false"
         app:layout_constraintStart_toEndOf="@+id/iconForTask"
         app:layout_constraintTop_toBottomOf="@+id/taskNameInList" />
 
