@@ -51,9 +51,9 @@
     <string name="default_text">DEFAULT TEXT</string>
     <string name="menuChildrenText">No children added yet!</string>
     <string name="menuTimerBtn">Timer</string>
-    <string name="menuAfternoon">Good Afternoon,</string>
-    <string name="menuEvening">Good Evening,</string>
-    <string name="menuMorning">Good Morning,</string>
+    <string name="menuAfternoon">Good Afternoon</string>
+    <string name="menuEvening">Good Evening</string>
+    <string name="menuMorning">Good Morning</string>
     <string name="menuDefaultMessage">Hello there!</string>
 
     <!-- View Child Queue Strings -->
@@ -135,10 +135,20 @@
     <string name="cancel_task">Cancel</string>
     <string name="enter_task_name">Enter Name of Task:</string>
     <string name="task_name_title">Task Name</string>
-    <string name="add_task_button">add task</string>
+    <string name="add_task_button">ADD TASK</string>
 
     <string name="helpAppInfo">App Information</string>
+    <string name="taskListTitle">List of Tasks</string>
+    <string name="taskViewTaskTitle">Manage Task</string>
+    <string name="taskTurnTitle">Child Whose Turn It Is:</string>
     <string name="toast_permission_denied">Permission denied</string>
     <string name="portrait_image_prefix">portrait_</string>
+    <string name="title_add_task_name">Edit Name of Task:</string>
+    <string name="title_edit_task">Edit Task</string>
+    <string name="title_add_task">Add Task</string>
+    <string name="toast_title_delete_task">Deleting Task: %1$s</string>
+    <string name="toast_task_deleted">Task Deleted</string>
+    <string name="toast_task_completed">Task completed</string>
+    <string name="task_no_children_name">Nobody</string>
 
 </resources>
