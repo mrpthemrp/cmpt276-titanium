@@ -157,7 +157,7 @@ public class TimerActivity extends AppCompatActivity {
             } else if (timer.isRunning()) {
                 timer.setPaused();
             } else {
-                startTimer();
+                getApplicationContext().startService(new Intent(getApplicationContext(), TimerService.class)); // start timer
             }
         });
 
@@ -233,10 +233,6 @@ public class TimerActivity extends AppCompatActivity {
     private void changeTimerDuration(long minutes) {
         timer.setDurationMilliseconds(minutes * MILLIS_IN_MINUTE);
         resetTimer();
-    }
-
-    private void startTimer() { // makes it clear what startService() is doing
-        getApplicationContext().startService(new Intent(getApplicationContext(), TimerService.class));
     }
 
     private void resetTimer() {
