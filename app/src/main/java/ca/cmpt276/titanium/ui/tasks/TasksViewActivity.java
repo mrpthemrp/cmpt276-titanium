@@ -97,7 +97,9 @@ public class TasksViewActivity extends AppCompatActivity {
         childName.setText(name);
         taskName.setText(task);
 
-        imageView.setImageDrawable(children.getChildren().get(nextIndex).getPortrait(this.getResources()));
+        if(taskManager.getListOfTasks().size() > 0 && children.getChildren().size() > 0){
+            imageView.setImageDrawable(children.getChildren().get(nextIndex).getPortrait(this.getResources()));
+        }
     }
 
     private void setUpButtons() {
