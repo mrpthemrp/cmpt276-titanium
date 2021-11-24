@@ -157,6 +157,8 @@ public class TimerActivity extends AppCompatActivity {
             } else if (timer.isRunning()) {
                 timer.setPaused();
             } else {
+                // TODO: Allow user to input different timeFactor values
+                timer.setTimeFactor(2.0f);
                 getApplicationContext().startService(new Intent(getApplicationContext(), TimerService.class)); // start timer
             }
         });
