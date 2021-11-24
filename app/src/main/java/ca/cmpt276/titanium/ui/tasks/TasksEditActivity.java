@@ -1,11 +1,11 @@
 package ca.cmpt276.titanium.ui.tasks;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,69 +17,42 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.model.Tasks;
+import ca.cmpt276.titanium.model.TaskManager;
 
 /**
  * This class displays the details for a single task and allows the user to edit task data.
  */
 public class TasksEditActivity extends AppCompatActivity {
+    private static final String TASK_INDEX_KEY = "taskIndex";
+    private static final int INVALID_TASK_INDEX = -1;
 
-    private static final String INDEX = "EditClicked";
-    private int index;
-    private TextView userTaskName;
-    private Tasks taskManager;
+    private Toast toast; // prevents toast stacking
+    private int taskIndex;
 
-    public static Intent makeIntent(Context context, int index) {
+    public static Intent makeIntent(Context context, int taskIndex) {
         Intent intent = new Intent(context, TasksEditActivity.class);
-        intent.putExtra(INDEX, index);
+        intent.putExtra(TASK_INDEX_KEY, taskIndex);
         return intent;
     }
 
-    private void extractIntentData() {
-        Intent intent = getIntent();
-        index = intent.getIntExtra(INDEX, 0);
-    }
-
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks_add);
+        setTitle(getString(R.string.title_edit_task));
 
         Toolbar myToolbar = findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
-        setTitle("Edit Task");
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        extractIntentData();
+        this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+        this.taskIndex = getIntent().getIntExtra(TASK_INDEX_KEY, INVALID_TASK_INDEX);
 
-        taskManager = Tasks.getInstance();
-        TextView titleAddText = findViewById(R.id.titleAddText);
-        titleAddText.setText("Edit Name of Task:");
-        userTaskName = findViewById(R.id.userTaskName);
-        userTaskName.setText(taskManager.getTask(index));
-
-        setUpButton();
-    }
-
-    private void setUpButton() {
-        Button saveTaskButton = findViewById(R.id.saveTask);
-        saveTaskButton.setText(getResources().getString(R.string.add_task_button));
-        saveTaskButton.setOnClickListener(view -> {
-            if (userTaskName.getText().toString().isEmpty()) {
-                Toast.makeText(TasksEditActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            String task = userTaskName.getText().toString();
-            taskManager.editTask(index, task);
+        if (taskIndex == INVALID_TASK_INDEX) {
             finish();
-        });
-    }
+        }
 
-
-    @Override
-    public void onBackPressed() {
-        launchDiscardChangesPrompt();
+        setupGUI();
     }
 
     @Override
@@ -87,22 +60,51 @@ public class TasksEditActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             launchDiscardChangesPrompt();
             return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
-    private void launchDiscardChangesPrompt() {
+    @Override
+    public void onBackPressed() {
+        launchDiscardChangesPrompt();
+    }
 
+    private void setupGUI() {
+        TextView titleAddText = findViewById(R.id.titleAddText);
+        titleAddText.setText(R.string.title_add_task_name);
+
+        TaskManager taskManager = TaskManager.getInstance(this);
+        EditText taskNameInput = findViewById(R.id.userTaskName);
+        taskNameInput.setText(taskManager.getTasks().get(taskIndex).getTaskName());
+
+        Button saveTaskButton = findViewById(R.id.saveTask);
+        saveTaskButton.setOnClickListener(view -> {
+            if (taskNameInput.getText().toString().equals("")) {
+                updateToast(getString(R.string.toast_no_name));
+            } else {
+                taskManager.setTaskName(taskIndex, taskNameInput.getText().toString());
+                finish();
+            }
+        });
+    }
+
+    private void updateToast(String toastText) {
+        toast.cancel();
+        toast.setText(toastText);
+        toast.show();
+    }
+
+    private void launchDiscardChangesPrompt() { // TODO: Check for no changes
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_baseline_warning_black_24)
                 .setTitle(R.string.prompt_discard_changes_title)
                 .setMessage(R.string.prompt_discard_changes_message)
                 .setPositiveButton(R.string.prompt_discard_changes_positive, (dialog, which) -> {
-                    Toast.makeText(TasksEditActivity.this, R.string.toast_changes_discarded, Toast.LENGTH_SHORT).show();
+                    updateToast(getString(R.string.toast_changes_discarded));
                     finish();
                 })
                 .setNegativeButton(R.string.prompt_discard_changes_negative, null)
                 .show();
-
     }
 }
