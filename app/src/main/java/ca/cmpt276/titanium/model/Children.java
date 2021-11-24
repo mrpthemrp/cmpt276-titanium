@@ -19,11 +19,13 @@ import java.util.UUID;
 public class Children {
     private static final Gson GSON = new Gson();
     private static final String CHILDREN_JSON_KEY = "childrenJson";
-    private static final Tasks taskManager = Tasks.getInstance();
+
     private static Children instance;
     private static SharedPreferences prefs;
     private static CoinFlipHistory coinFlipHistory;
     private static ChildrenQueue childrenQueue;
+    private static TaskManager taskManager;
+
     private static ArrayList<Child> children = new ArrayList<>();
 
     private Children(Context context) {
@@ -35,6 +37,7 @@ public class Children {
             Children.instance = new Children(context);
             Children.coinFlipHistory = CoinFlipHistory.getInstance(context);
             Children.childrenQueue = ChildrenQueue.getInstance(context);
+            Children.taskManager = TaskManager.getInstance(context);
         }
 
         loadSavedData();
@@ -71,11 +74,18 @@ public class Children {
 
     public void addChild(String name, String portraitPath) {
         Child newChild = new Child(name, portraitPath);
+
         Children.children.add(newChild);
+        saveData();
+
         coinFlipHistory.updateCoinFlipHistory(true, newChild.getUniqueID());
+
         childrenQueue.getChildrenQueue().add(newChild);
         childrenQueue.saveData();
-        saveData();
+
+        if (children.size() == 1) {
+            taskManager.addToAllTasks(children.get(0).getUniqueID());
+        }
     }
 
     public void removeChild(UUID uniqueID) {
@@ -87,14 +97,10 @@ public class Children {
                     childrenQueue.getChildrenQueue().remove(childrenQueue.getChildQueueIndex(uniqueID));
                     childrenQueue.saveData();
 
-                    int nextChild = i;
-                    nextChild += 1;
+                    UUID nextUniqueID = children.get((children.indexOf(getChild(uniqueID)) + 1) % children.size()).getUniqueID();
+                    nextUniqueID = (children.size() != 1) ? nextUniqueID : null;
+                    taskManager.updateTasksBeforeRemovingChild(uniqueID, nextUniqueID);
 
-                    if (nextChild >= children.size()) {
-                        nextChild = 0;
-                    }
-                    Child child = children.get(nextChild);
-                    taskManager.updateChild(uniqueID, child, children.size());
                     Children.children.remove(i);
                     saveData();
                     break;
@@ -109,8 +115,9 @@ public class Children {
 
         if (child != null) {
             child.setName(name);
-            childInQueue.setName(name);
             saveData();
+
+            childInQueue.setName(name);
             childrenQueue.saveData();
         }
     }

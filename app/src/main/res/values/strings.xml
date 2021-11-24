@@ -146,7 +146,7 @@
     <string name="title_add_task_name">Edit Name of Task:</string>
     <string name="title_edit_task">Edit Task</string>
     <string name="title_add_task">Add Task</string>
-    <string name="toast_title_delete_task">Deleting Task: %1$s</string>
+    <string name="toast_title_delete_task">Delete Task</string>
     <string name="toast_task_deleted">Task Deleted</string>
     <string name="toast_task_completed">Task completed</string>
     <string name="task_no_children_name">N/A (No children added!)</string>

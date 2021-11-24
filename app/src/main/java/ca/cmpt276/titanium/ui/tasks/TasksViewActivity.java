@@ -19,55 +19,47 @@ import java.util.Objects;
 import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.Children;
-import ca.cmpt276.titanium.model.Tasks;
+import ca.cmpt276.titanium.model.Task;
+import ca.cmpt276.titanium.model.TaskManager;
 
 /**
  * This class displays the details for a single task.
  */
 public class TasksViewActivity extends AppCompatActivity {
+    private static final String TASK_INDEX_KEY = "taskIndex";
+    private static final int INVALID_TASK_INDEX = -1;
 
-    private static final String INDEX = "UserClicked";
-    private int index;
-    private String task;
+    private TaskManager taskManager;
     private Children children;
-    private Tasks taskManager;
-    private ImageView imageView;
+    private Toast toast; // prevents toast stacking
+    private int taskIndex;
 
-    public static Intent makeIntent(Context context, int index) {
+    public static Intent makeIntent(Context context, int taskIndex) {
         Intent intent = new Intent(context, TasksViewActivity.class);
-        intent.putExtra(INDEX, index);
+        intent.putExtra(TASK_INDEX_KEY, taskIndex);
         return intent;
-    }
-
-    private void extractIntentData() {
-        Intent intent = getIntent();
-        index = intent.getIntExtra(INDEX, 0);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks_view);
-        this.children = Children.getInstance(this);
-        taskManager = Tasks.getInstance();
-        imageView = findViewById(R.id.imageView);
 
-        extractIntentData();
-        displayData();
-        setUpButtons();
-
-        Toolbar myToolbar = findViewById(R.id.customToolBar);
-        setSupportActionBar(myToolbar);
+        Toolbar toolbar = findViewById(R.id.customToolBar);
+        setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-    }
 
-    @Override
-    protected void onStart() {
-        displayData();
-        setUpButtons();
-        super.onStart();
+        this.taskManager = TaskManager.getInstance(this);
+        this.children = Children.getInstance(this);
+        this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+        this.taskIndex = getIntent().getIntExtra(TASK_INDEX_KEY, INVALID_TASK_INDEX);
+
+        if (taskIndex == INVALID_TASK_INDEX) {
+            finish();
+        }
+
+        setupButtons();
     }
 
     @Override
@@ -76,65 +68,10 @@ public class TasksViewActivity extends AppCompatActivity {
         return true;
     }
 
-    private void displayData() {
-        TextView childName = findViewById(R.id.childNameText);
-        TextView taskName = findViewById(R.id.taskNameText);
-        int nextIndex = 0;
-
-        String name;
-
-        if (children.getChildren().size() > 0 && taskManager.getListOfChildren().size() > 0) {
-            UUID childID = taskManager.getChildID(index);
-            for (int i = 0; i < children.getChildren().size(); i++) {
-                if (children.getChildren().get(i).getUniqueID().equals(childID)) {
-                    nextIndex = i;
-                }
-            }
-            name = children.getChildren().get(nextIndex).getName();
-        } else {
-            name = "Nobody";
-        }
-
-        task = taskManager.getTask(index);
-
-        childName.setText(name);
-        taskName.setText(task);
-
-        if(taskManager.getListOfTasks().size() > 0 && children.getChildren().size() > 0){
-            imageView.setImageDrawable(children.getChildren().get(nextIndex).getPortrait(this.getResources()));
-        }
-    }
-
-    private void setUpButtons() {
-        Button completeTask = findViewById(R.id.completeTaskButton);
-        completeTask.setOnClickListener(view -> {
-
-            if (children.getChildren().size() > 0 && taskManager.getListOfChildren().size() > 0) {
-                // first get index of selected child
-                UUID childID = taskManager.getChildID(index);
-
-                // get child to the next index in the array of children
-                int nextIndex = 0;
-                for (int i = 0; i < children.getChildren().size(); i++) {
-                    if (children.getChildren().get(i).getUniqueID().equals(childID)) {
-                        nextIndex = i;
-                    }
-                }
-                nextIndex++;
-                if (nextIndex >= children.getChildren().size()) {
-                    nextIndex = 0;
-                }
-
-                Child nextChild = children.getChildren().get(nextIndex);
-
-                // update the array of selected children
-                taskManager.editChild(index, nextChild);
-            }
-            finish();
-        });
-
-        Button cancel = findViewById(R.id.cancelTaskButton);
-        cancel.setOnClickListener(view -> finish());
+    @Override
+    protected void onResume() {
+        super.onResume();
+        displayTaskData();
     }
 
     @Override
@@ -142,26 +79,71 @@ public class TasksViewActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
+        } else if (item.getItemId() == R.id.taskEdit) {
+            startActivity(TasksEditActivity.makeIntent(this, taskIndex));
+            return true;
         } else if (item.getItemId() == R.id.taskRemove) {
             launchDeleteTaskPrompt();
             return true;
-        } else if (item.getItemId() == R.id.taskEdit) {
-            Intent intent = TasksEditActivity.makeIntent(TasksViewActivity.this, index);
-            startActivity(intent);
-            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+    }
+
+    private void displayTaskData() {
+        Task task = taskManager.getTasks().get(taskIndex);
+
+        String taskName = task.getTaskName();
+        String childName =
+                task.getChildUniqueID() == null
+                        ? getString(R.string.task_no_children_name)
+                        : children.getChild(task.getChildUniqueID()).getName();
+
+        TextView taskNameText = findViewById(R.id.taskNameText);
+        taskNameText.setText(taskName);
+
+        TextView childNameText = findViewById(R.id.childNameText);
+        childNameText.setText(getString(R.string.view_task_child_name, childName));
+
+        ImageView childPortraitView = findViewById(R.id.childPortrait);
+
+        if (task.getChildUniqueID() == null) {
+            childPortraitView.setImageResource(R.drawable.ic_default_portrait_green);
+        } else {
+            childPortraitView.setImageDrawable(children.getChild(task.getChildUniqueID()).getPortrait(getResources()));
+        }
+    }
+
+    private void setupButtons() {
+        Button completeTaskButton = findViewById(R.id.completeTaskButton);
+        completeTaskButton.setOnClickListener(view -> {
+            UUID currentChildUniqueID = taskManager.getTasks().get(taskIndex).getChildUniqueID();
+
+            if (currentChildUniqueID != null) {
+                int nextChildIndex = (children.getChildren().indexOf(children.getChild(currentChildUniqueID)) + 1) % children.getChildren().size();
+                UUID nextChildUniqueID = children.getChildren().get(nextChildIndex).getUniqueID();
+                taskManager.setChildUniqueID(taskIndex, nextChildUniqueID);
+            }
+
+            updateToast(getString(R.string.toast_task_completed));
+            finish();
+        });
+    }
+
+    private void updateToast(String toastText) {
+        toast.cancel();
+        toast.setText(toastText);
+        toast.show();
     }
 
     private void launchDeleteTaskPrompt() {
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_baseline_delete_black_24)
-                .setTitle("Deleting Task: " + taskManager.getTask(index))
-                .setMessage("Are you sure? This action cannot be reversed.")
+                .setTitle(getString(R.string.toast_title_delete_task))
+                .setMessage(getString(R.string.prompt_delete_task_message))
                 .setPositiveButton(R.string.prompt_discard_changes_positive, (dialog, which) -> {
-                    taskManager.removeTask(index);
-                    taskManager.removeChild(index);
-                    Toast.makeText(TasksViewActivity.this, "Task Deleted", Toast.LENGTH_SHORT).show();
+                    taskManager.removeTask(taskIndex);
+                    updateToast(getString(R.string.toast_task_deleted));
                     finish();
                 })
                 .setNegativeButton(R.string.prompt_discard_changes_negative, null)

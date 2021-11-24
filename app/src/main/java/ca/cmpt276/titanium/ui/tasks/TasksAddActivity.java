@@ -9,23 +9,24 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Children;
-import ca.cmpt276.titanium.model.Tasks;
+import ca.cmpt276.titanium.model.TaskManager;
+
+// TODO: Combine TaskAddActivity, TaskEditActivity, and TaskViewActivity (like with ChildActivity)
 
 /**
  * This class allows a user to create new tasks.
  */
 public class TasksAddActivity extends AppCompatActivity {
-
-    private Children children;
-    private EditText userTaskInput;
-    private Tasks taskManager;
+    private Toast toast; // prevents toast stacking
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, TasksAddActivity.class);
@@ -35,41 +36,72 @@ public class TasksAddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks_add);
-        taskManager = Tasks.getInstance();
+        setTitle(getString(R.string.title_add_task));
 
-        this.children = Children.getInstance(this);
-        userTaskInput = findViewById(R.id.userTaskName);
-        setUpButton();
-
-        Toolbar myToolbar = findViewById(R.id.customToolBar);
-        setSupportActionBar(myToolbar);
-        setTitle("Add Task");
+        Toolbar toolbar = findViewById(R.id.customToolBar);
+        setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-    }
 
-    private void setUpButton() {
-        Button saveTaskButton = findViewById(R.id.saveTask);
-        saveTaskButton.setOnClickListener(view -> {
-            if (userTaskInput.getText().toString().isEmpty()) {
-                Toast.makeText(TasksAddActivity.this, "Cannot leave task name blank", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            String task = userTaskInput.getText().toString();
-            taskManager.addTask(task);
-            if (children.getChildren().size() > 0) {
-                taskManager.addChild(children.getChildren().get(0));
-            }
+        this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
 
-            finish();
-        });
+        setupSaveButton();
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            launchDiscardChangesPrompt();
             return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        launchDiscardChangesPrompt();
+    }
+
+    private void setupSaveButton() {
+        Button saveTaskButton = findViewById(R.id.saveTask);
+        saveTaskButton.setOnClickListener(view -> {
+            EditText taskNameInput = findViewById(R.id.userTaskName);
+
+            if (taskNameInput.getText().toString().equals("")) {
+                updateToast(getString(R.string.toast_no_name));
+            } else {
+                TaskManager taskManager = TaskManager.getInstance(this);
+                Children children = Children.getInstance(this);
+
+                UUID childUniqueID =
+                        children.getChildren().size() > 0
+                                ? children.getChildren().get(0).getUniqueID()
+                                : null;
+
+                taskManager.addTask(taskNameInput.getText().toString(), childUniqueID);
+
+                updateToast(getString(R.string.toast_task_saved));
+                finish();
+            }
+        });
+    }
+
+    private void updateToast(String toastText) {
+        toast.cancel();
+        toast.setText(toastText);
+        toast.show();
+    }
+
+    private void launchDiscardChangesPrompt() { // TODO: Check for no changes
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_baseline_warning_black_24)
+                .setTitle(R.string.prompt_discard_changes_title)
+                .setMessage(R.string.prompt_discard_changes_message)
+                .setPositiveButton(R.string.prompt_discard_changes_positive, (dialog, which) -> {
+                    updateToast(getString(R.string.toast_changes_discarded));
+                    finish();
+                })
+                .setNegativeButton(R.string.prompt_discard_changes_negative, null)
+                .show();
     }
 }
