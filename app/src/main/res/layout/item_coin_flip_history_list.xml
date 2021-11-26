@@ -36,7 +36,7 @@
             android:ellipsize="none"
             android:maxLines="5"
             android:scrollHorizontally="false"
-            android:text="@string/flipCoinHistChildName"
+            android:text="@string/empty_state_no_coin_flip_history_message"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginTop="4dp"
-            android:text="@string/flipCoinHistDate"
+            android:text="@string/DEFAULT_TEXT"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/childNameList" />
 
@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginTop="4dp"
-            android:text="@string/flipCoinHistDummy"
+            android:text="@string/DEFAULT_TEXT"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/coinFlipDate" />
 

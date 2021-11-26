@@ -68,7 +68,7 @@ public class TasksAddActivity extends AppCompatActivity {
             EditText taskNameInput = findViewById(R.id.userTaskName);
 
             if (taskNameInput.getText().toString().equals("")) {
-                updateToast(getString(R.string.toast_no_name));
+                updateToast(getString(R.string.toast_name_field_empty));
             } else {
                 TaskManager taskManager = TaskManager.getInstance(this);
                 Children children = Children.getInstance(this);
@@ -95,13 +95,13 @@ public class TasksAddActivity extends AppCompatActivity {
     private void launchDiscardChangesPrompt() { // TODO: Check for no changes
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_baseline_warning_black_24)
-                .setTitle(R.string.prompt_discard_changes_title)
-                .setMessage(R.string.prompt_discard_changes_message)
-                .setPositiveButton(R.string.prompt_discard_changes_positive, (dialog, which) -> {
+                .setTitle(R.string.prompt_title_discard_changes)
+                .setMessage(R.string.prompt_message_discard_changes)
+                .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
                     updateToast(getString(R.string.toast_changes_discarded));
                     finish();
                 })
-                .setNegativeButton(R.string.prompt_discard_changes_negative, null)
+                .setNegativeButton(R.string.prompt_negative, null)
                 .show();
     }
 }

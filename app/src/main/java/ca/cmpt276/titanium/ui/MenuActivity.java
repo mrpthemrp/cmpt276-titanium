@@ -38,7 +38,7 @@ public class MenuActivity extends AppCompatActivity {
         this.children = Children.getInstance(this);
 
         Button addChildButton = findViewById(R.id.menuGoToAddChild);
-        addChildButton.setOnClickListener(view -> startActivity(ChildActivity.makeIntent(this, getString(R.string.title_child_add), null)));
+        addChildButton.setOnClickListener(view -> startActivity(ChildActivity.makeIntent(this, getString(R.string.title_add_child), null)));
 
         Button coinFlipButton = findViewById(R.id.menuGoToFlipCoin);
         coinFlipButton.setOnClickListener(view -> startActivity(CoinFlipActivity.makeIntent(this)));
@@ -89,7 +89,7 @@ public class MenuActivity extends AppCompatActivity {
 
         childrenListView.setOnItemClickListener((parent, view, position, id) -> {
             UUID childUUID = children.getChildren().get(position).getUniqueID();
-            Intent viewChildIntent = ChildActivity.makeIntent(this, getString(R.string.title_child_view), childUUID);
+            Intent viewChildIntent = ChildActivity.makeIntent(this, getString(R.string.title_view_child), childUUID);
 
             startActivity(viewChildIntent);
         });
@@ -102,11 +102,11 @@ public class MenuActivity extends AppCompatActivity {
         int currentHour = currentCalendar.get(Calendar.HOUR_OF_DAY);
 
         if (currentHour < 12) {
-            welcomeMessage.setText(getString(R.string.menuMorning));
+            welcomeMessage.setText(getString(R.string.subtitle_menu_morning));
         } else if (currentHour < 16) {
-            welcomeMessage.setText(getString(R.string.menuAfternoon));
+            welcomeMessage.setText(getString(R.string.subtitle_menu_afternoon));
         } else if (currentHour >= 17) {
-            welcomeMessage.setText(getString(R.string.menuEvening));
+            welcomeMessage.setText(getString(R.string.subtitle_menu_evening));
         }
     }
 }

@@ -50,7 +50,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip);
-        setTitle(R.string.menuFlipCoinBtn);
+        setTitle(R.string.title_flip_coin);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
@@ -114,8 +114,8 @@ public class CoinFlipActivity extends AppCompatActivity {
             Children children = Children.getInstance(this);
             RoundedBitmapDrawable drawable = children.getChild(nextPickerUniqueID).getPortrait(getResources());
             childIconDisplay.setImageDrawable(drawable);
-            childNameDisplay.setText(getString(R.string.childTurn, children.getChild(nextPickerUniqueID).getName()));
-            sideChosenDisplay.setText(getString(R.string.coinSideChosen, coinChosen.toString()));
+            childNameDisplay.setText(getString(R.string.coin_flip_child_name, children.getChild(nextPickerUniqueID).getName()));
+            sideChosenDisplay.setText(getString(R.string.coin_flip_side_chosen, coinChosen.toString()));
             this.coinChosen = coinChosen;
         } else {
             childNameDisplay.setVisibility(View.GONE);
@@ -141,10 +141,10 @@ public class CoinFlipActivity extends AppCompatActivity {
         Coin coinResult = CoinFlip.flipCoin();
 
         if (coinResult.equals(Coin.HEADS)) {
-            coinResultMessage.setText(R.string.heads_text);
+            coinResultMessage.setText(R.string.coin_flip_result_heads);
             coin.postDelayed(() -> coin.setImageResource(R.drawable.ic_coin_heads_yellow_200), COIN_FLIP_DELAY);
         } else {
-            coinResultMessage.setText(R.string.tails_text);
+            coinResultMessage.setText(R.string.coin_flip_result_tails);
             coin.postDelayed(() -> coin.setImageResource(R.drawable.ic_coin_tails_yellow_200), COIN_FLIP_DELAY);
         }
 

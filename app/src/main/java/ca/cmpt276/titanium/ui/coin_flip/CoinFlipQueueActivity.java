@@ -34,7 +34,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip_queue);
-        setTitle(R.string.viewQueue);
+        setTitle(R.string.toolbar_coin_flip_history_view_queue);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
@@ -96,7 +96,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
             RoundedBitmapDrawable drawable = children.getChild(coinFlipHistory.getNextPickerUniqueID()).getPortrait(getResources());
             currentChildIcon.setImageDrawable(drawable);
         } else {
-            currentChildTurnName.setText(R.string.currentChildName);
+            currentChildTurnName.setText(R.string.empty_state_no_children);
             currentChildIcon.setImageResource(R.drawable.ic_default_portrait_green);
         }
     }

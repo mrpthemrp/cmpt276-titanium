@@ -57,7 +57,7 @@ public class TimerActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
 
-        setTitle(R.string.timerTitle);
+        setTitle(R.string.title_timer);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.timerNotification = TimerNotification.getInstance(this);
@@ -105,9 +105,9 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         if (timer.isRunning()) {
-            timerNotification.launchNotification(getString(R.string.timer_notification_pause_button));
+            timerNotification.launchNotification(getString(R.string.button_timer_notification_pause));
         } else if (timer.isPaused()) {
-            timerNotification.launchNotification(getString(R.string.timer_notification_resume_button));
+            timerNotification.launchNotification(getString(R.string.button_timer_notification_resume));
         }
 
         timer.setGUIEnabled(false);
@@ -153,7 +153,7 @@ public class TimerActivity extends AppCompatActivity {
         ImageView playPause = findViewById(R.id.timerPlayPauseBtn);
         playPause.setOnClickListener(view -> {
             if (timer.getDurationMilliseconds() == 0) {
-                updateToast(getString(R.string.timer_zero_toast));
+                updateToast(getString(R.string.toast_timer_zero_minutes));
             } else if (timer.isRunning()) {
                 timer.setPaused();
             } else {
@@ -171,7 +171,7 @@ public class TimerActivity extends AppCompatActivity {
     private void updateCustomTime(EditText customTime) {
         if (customTime.getText().toString().isEmpty()) {
             updateGUI();
-            updateToast(getString(R.string.custom_time_toast));
+            updateToast(getString(R.string.toast_timer_enter_time));
         } else {
             changeTimerDuration(Long.parseLong(customTime.getText().toString()));
         }

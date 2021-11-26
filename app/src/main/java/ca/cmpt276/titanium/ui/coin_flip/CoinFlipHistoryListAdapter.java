@@ -48,7 +48,7 @@ public class CoinFlipHistoryListAdapter extends ArrayAdapter<CoinFlip> {
         childIcon.setImageDrawable(drawable);
 
         String childChoice = children.getChild(coinFlip.getPickerUniqueID()).getName() +
-                getContext().getString(R.string.coin_flip_child_choice_text) + coinFlip.getChosenSide();
+                getContext().getString(R.string.coin_flip_history_child_choice) + coinFlip.getChosenSide();
         childTextView.setText(childChoice);
 
         if (coinFlip.getResult() == coinFlip.getChosenSide()) {
@@ -63,7 +63,7 @@ public class CoinFlipHistoryListAdapter extends ArrayAdapter<CoinFlip> {
         coinFlipDate.setText(coinFlip.getTimeOfFlip());
 
         TextView resultTextView = convertView.findViewById(R.id.coinFlipResult2);
-        String coinFlipResult = getContext().getString(R.string.coin_flip_result_initial_text) + coinFlip.getResult().toString();
+        String coinFlipResult = getContext().getString(R.string.coin_flip_history_result) + coinFlip.getResult().toString();
         resultTextView.setText(coinFlipResult);
 
         return convertView;

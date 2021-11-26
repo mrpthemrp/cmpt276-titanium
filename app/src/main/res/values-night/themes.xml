@@ -28,7 +28,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
     </style>
 
-    <!-- View, Add, Edit, Remove Child Theme -->
+    <!-- Child Theme -->
     <style name="Theme.Titanium.Child" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green_300</item>

@@ -17,7 +17,7 @@
         android:ellipsize="none"
         android:maxLines="5"
         android:scrollHorizontally="false"
-        android:text="@string/default_text"
+        android:text="@string/DEFAULT_TEXT"
         android:textColor="?attr/colorOnPrimary"
         android:textSize="18sp"
         android:textStyle="bold"

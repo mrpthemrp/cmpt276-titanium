@@ -72,7 +72,7 @@ public class TasksEditActivity extends AppCompatActivity {
 
     private void setupGUI() {
         TextView titleAddText = findViewById(R.id.titleAddText);
-        titleAddText.setText(R.string.title_add_task_name);
+        titleAddText.setText(R.string.subtitle_task_name);
 
         TaskManager taskManager = TaskManager.getInstance(this);
         EditText taskNameInput = findViewById(R.id.userTaskName);
@@ -81,7 +81,7 @@ public class TasksEditActivity extends AppCompatActivity {
         Button saveTaskButton = findViewById(R.id.saveTask);
         saveTaskButton.setOnClickListener(view -> {
             if (taskNameInput.getText().toString().equals("")) {
-                updateToast(getString(R.string.toast_no_name));
+                updateToast(getString(R.string.toast_name_field_empty));
             } else {
                 taskManager.setTaskName(taskIndex, taskNameInput.getText().toString());
                 finish();
@@ -98,13 +98,13 @@ public class TasksEditActivity extends AppCompatActivity {
     private void launchDiscardChangesPrompt() { // TODO: Check for no changes
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_baseline_warning_black_24)
-                .setTitle(R.string.prompt_discard_changes_title)
-                .setMessage(R.string.prompt_discard_changes_message)
-                .setPositiveButton(R.string.prompt_discard_changes_positive, (dialog, which) -> {
+                .setTitle(R.string.prompt_title_discard_changes)
+                .setMessage(R.string.prompt_message_discard_changes)
+                .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
                     updateToast(getString(R.string.toast_changes_discarded));
                     finish();
                 })
-                .setNegativeButton(R.string.prompt_discard_changes_negative, null)
+                .setNegativeButton(R.string.prompt_negative, null)
                 .show();
     }
 }

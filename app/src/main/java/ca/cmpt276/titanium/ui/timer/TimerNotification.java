@@ -52,7 +52,7 @@ public class TimerNotification {
     private TimerNotification(Context context) {
         NotificationChannel channel = new NotificationChannel(
                 "practicalParentTimer",
-                context.getString(R.string.timer_channel_name),
+                context.getString(R.string.timer_notification_channel_name),
                 NotificationManager.IMPORTANCE_HIGH);
 
         this.context = context.getApplicationContext();
@@ -101,11 +101,11 @@ public class TimerNotification {
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         this.finishNotificationBuilder = new NotificationCompat.Builder(context, basicNotificationBuilder.build())
-                .setContentTitle(context.getString(R.string.timer_finish_notification_title))
-                .addAction(R.drawable.ic_baseline_cancel_white_24, context.getString(R.string.timer_notification_dismiss_button), dismissPendingIntent);
+                .setContentTitle(context.getString(R.string.title_timer_notification_finish))
+                .addAction(R.drawable.ic_baseline_cancel_white_24, context.getString(R.string.button_timer_notification_dismiss), dismissPendingIntent);
 
         this.interactiveNotificationBuilder = new NotificationCompat.Builder(context, basicNotificationBuilder.build())
-                .setContentTitle(context.getString(R.string.timer_interactive_notification_title))
+                .setContentTitle(context.getString(R.string.title_timer_notification_interactive))
                 .setOnlyAlertOnce(true);
     }
 
@@ -140,12 +140,12 @@ public class TimerNotification {
             interactiveNotificationBuilder.clearActions();
 
             if (notificationType.equals("Pause")) {
-                interactiveNotificationBuilder.addAction(R.drawable.ic_baseline_pause_white_24, context.getString(R.string.timer_notification_pause_button), pauseTimerPendingIntent);
+                interactiveNotificationBuilder.addAction(R.drawable.ic_baseline_pause_white_24, context.getString(R.string.button_timer_notification_pause), pauseTimerPendingIntent);
             } else {
-                interactiveNotificationBuilder.addAction(R.drawable.ic_baseline_play_arrow_white_24, context.getString(R.string.timer_notification_resume_button), resumeTimerPendingIntent);
+                interactiveNotificationBuilder.addAction(R.drawable.ic_baseline_play_arrow_white_24, context.getString(R.string.button_timer_notification_resume), resumeTimerPendingIntent);
             }
 
-            interactiveNotificationBuilder.addAction(R.drawable.ic_baseline_cancel_white_24, context.getString(R.string.timer_notification_cancel_button), cancelPendingIntent);
+            interactiveNotificationBuilder.addAction(R.drawable.ic_baseline_cancel_white_24, context.getString(R.string.button_timer_notification_cancel), cancelPendingIntent);
             notificationManager.notify(TIMER_NOTIFICATION_TAG, TIMER_INTERACTIVE_NOTIFICATION_ID, interactiveNotificationBuilder.build());
         }
     }

@@ -96,14 +96,14 @@ public class TasksViewActivity extends AppCompatActivity {
         String taskName = task.getTaskName();
         String childName =
                 task.getChildUniqueID() == null
-                        ? getString(R.string.task_no_children_name)
+                        ? getString(R.string.default_name_no_children)
                         : children.getChild(task.getChildUniqueID()).getName();
 
         TextView taskNameText = findViewById(R.id.taskNameText);
         taskNameText.setText(taskName);
 
         TextView childNameText = findViewById(R.id.childNameText);
-        childNameText.setText(getString(R.string.view_task_child_name, childName));
+        childNameText.setText(getString(R.string.tasks_next_child_name, childName));
 
         ImageView childPortraitView = findViewById(R.id.childPortrait);
 
@@ -139,14 +139,14 @@ public class TasksViewActivity extends AppCompatActivity {
     private void launchDeleteTaskPrompt() {
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_baseline_delete_black_24)
-                .setTitle(getString(R.string.toast_title_delete_task))
+                .setTitle(getString(R.string.prompt_title_delete_task))
                 .setMessage(getString(R.string.prompt_delete_task_message))
-                .setPositiveButton(R.string.prompt_discard_changes_positive, (dialog, which) -> {
+                .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
                     taskManager.removeTask(taskIndex);
                     updateToast(getString(R.string.toast_task_deleted));
                     finish();
                 })
-                .setNegativeButton(R.string.prompt_discard_changes_negative, null)
+                .setNegativeButton(R.string.prompt_negative, null)
                 .show();
     }
 }

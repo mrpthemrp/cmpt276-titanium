@@ -122,16 +122,16 @@ public class ChildActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            launchPrompt(getString(R.string.prompt_discard_changes_title),
-                    getString(R.string.prompt_discard_changes_message),
+            launchPrompt(getString(R.string.prompt_title_discard_changes),
+                    getString(R.string.prompt_message_discard_changes),
                     getString(R.string.toast_changes_discarded), false);
             return true;
         } else if (item.getItemId() == R.id.optionsEdit) {
-            startActivity(ChildActivity.makeIntent(this, getString(R.string.menuEdit), focusedChildUniqueID));
+            startActivity(ChildActivity.makeIntent(this, getString(R.string.title_edit_child), focusedChildUniqueID));
             return true;
         } else if (item.getItemId() == R.id.optionsRemove) {
-            launchPrompt(getString(R.string.prompt_delete_child_title, children.getChild(focusedChildUniqueID).getName()),
-                    getString(R.string.prompt_delete_child_message),
+            launchPrompt(getString(R.string.prompt_title_delete_child, children.getChild(focusedChildUniqueID).getName()),
+                    getString(R.string.prompt_message_delete_child),
                     getString(R.string.toast_child_deleted), true);
             return true;
         } else {
@@ -141,8 +141,8 @@ public class ChildActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        launchPrompt(getString(R.string.prompt_discard_changes_title),
-                getString(R.string.prompt_discard_changes_message),
+        launchPrompt(getString(R.string.prompt_title_discard_changes),
+                getString(R.string.prompt_message_discard_changes),
                 getString(R.string.toast_changes_discarded), false);
     }
 
@@ -219,7 +219,7 @@ public class ChildActivity extends AppCompatActivity {
 
         saveButton.setOnClickListener(view -> {
             if (childNameInput.getText().toString().equals("")) {
-                updateToast(getString(R.string.toast_no_name));
+                updateToast(getString(R.string.toast_name_field_empty));
             } else {
                 if (intentType.equals(ADD_CHILD_INTENT)) {
                     children.addChild(childNameInput.getText().toString(), currentPortraitPath);
@@ -305,7 +305,7 @@ public class ChildActivity extends AppCompatActivity {
                     .setIcon(R.drawable.ic_baseline_delete_black_24)
                     .setTitle(title)
                     .setMessage(message)
-                    .setPositiveButton(R.string.prompt_discard_changes_positive, (dialog, which) -> {
+                    .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
                         if (isDeletePrompt) {
                             children.removeChild(children.getChild(focusedChildUniqueID).getUniqueID());
                         }
@@ -313,7 +313,7 @@ public class ChildActivity extends AppCompatActivity {
                         updateToast(positiveToast);
                         finish();
                     })
-                    .setNegativeButton(R.string.prompt_discard_changes_negative, null)
+                    .setNegativeButton(R.string.prompt_negative, null)
                     .show();
         } else {
             finish();
@@ -321,17 +321,17 @@ public class ChildActivity extends AppCompatActivity {
     }
 
     private void selectImage() {
-        final String[] dialogOptions = {getString(R.string.prompt_select_image_option1), getString(R.string.prompt_select_image_option2), getString(R.string.prompt_select_image_option3)};
+        final String[] dialogOptions = {getString(R.string.prompt_option1_select_image), getString(R.string.prompt_option2_select_image), getString(R.string.prompt_option3_select_image)};
 
         new android.app.AlertDialog.Builder(this)
-                .setTitle(R.string.prompt_select_image_title)
+                .setTitle(R.string.prompt_title_select_image)
                 .setItems(dialogOptions, (dialog, item) -> {
                     switch (dialogOptions[item]) {
                         case "Take Photo":
                             File portraitFile = null;
 
                             try {
-                                portraitFile = File.createTempFile(getString(R.string.portrait_image_prefix), ".jpg", getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+                                portraitFile = File.createTempFile("portrait_", ".jpg", getExternalFilesDir(Environment.DIRECTORY_PICTURES));
                                 this.currentPortraitPath = portraitFile.getAbsolutePath();
                             } catch (IOException e) {
                                 e.getStackTrace();

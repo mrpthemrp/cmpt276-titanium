@@ -4,6 +4,6 @@
 
     <item
         android:id="@+id/changeChildButton"
-        android:title="@string/changeChild"
+        android:title="@string/toolbar_button_change_child"
         app:showAsAction="ifRoom" />
 </menu>

@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="@string/changeChildTitle"
+        app:title="@string/title_change_child"
         app:titleTextColor="?attr/colorOnSecondary" />
 
     <ListView
@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/childrenQueueList"
+        android:text="@string/empty_state_no_children"
         android:textColor="?attr/colorPrimaryVariant"
         android:textStyle="bold"
         android:visibility="invisible"

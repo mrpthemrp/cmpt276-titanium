@@ -33,7 +33,7 @@ public class ChangeChildActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
 
-        setTitle(R.string.changeChildTitle);
+        setTitle(R.string.title_change_child);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.children = Children.getInstance(this);

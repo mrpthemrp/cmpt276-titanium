@@ -36,14 +36,14 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         String taskName = task.getTaskName();
         String childName =
                 task.getChildUniqueID() == null
-                        ? getContext().getString(R.string.task_no_children_name)
+                        ? getContext().getString(R.string.default_name_no_children)
                         : children.getChild(task.getChildUniqueID()).getName();
 
         TextView taskNameText = convertView.findViewById(R.id.taskNameInList);
-        taskNameText.setText(getContext().getString(R.string.taskName_start_text, taskName));
+        taskNameText.setText(getContext().getString(R.string.tasks_task_name, taskName));
 
         TextView childNameText = convertView.findViewById(R.id.childNameForTaskInList);
-        childNameText.setText(getContext().getString(R.string.childName_start_text, childName));
+        childNameText.setText(getContext().getString(R.string.tasks_next_child_name, childName));
 
         return convertView;
     }
