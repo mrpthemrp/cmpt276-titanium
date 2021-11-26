@@ -28,7 +28,7 @@ public class MenuChildrenListAdapter extends ArrayAdapter<Child> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_menu_children_list, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_menu_children, parent, false);
         }
 
         Child child = getItem(position);

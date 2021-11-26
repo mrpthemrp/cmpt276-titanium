@@ -29,7 +29,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
     </style>
 
-    <!-- View, Add, Edit, Remove Child Theme -->
+    <!-- Child Theme -->
     <style name="Theme.Titanium.Child" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green_200</item>
@@ -41,7 +41,6 @@
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
-
         <item name="backgroundColor">@color/white</item>
     </style>
 

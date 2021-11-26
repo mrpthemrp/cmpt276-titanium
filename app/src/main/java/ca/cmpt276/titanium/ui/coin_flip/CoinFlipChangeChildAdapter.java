@@ -20,10 +20,10 @@ import ca.cmpt276.titanium.model.Child;
 /**
  * This is an adapter for the children list.
  */
-public class ChangeChildAdapter extends ArrayAdapter<Child> {
+public class CoinFlipChangeChildAdapter extends ArrayAdapter<Child> {
     private final Context context;
 
-    public ChangeChildAdapter(Context context, List<Child> children) {
+    public CoinFlipChangeChildAdapter(Context context, List<Child> children) {
         super(context, 0, children);
         this.context = context;
     }
@@ -32,7 +32,7 @@ public class ChangeChildAdapter extends ArrayAdapter<Child> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_menu_children_list, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_menu_children, parent, false);
         }
 
         Child child = getItem(position);

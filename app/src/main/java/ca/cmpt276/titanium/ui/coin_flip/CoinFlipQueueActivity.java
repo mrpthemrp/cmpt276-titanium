@@ -67,7 +67,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
             finish();
             return true;
         } else if (item.getItemId() == R.id.changeChildButton) {
-            startActivity(new Intent(this, ChangeChildActivity.class));
+            startActivity(new Intent(this, CoinFlipChangeChildActivity.class));
             return true;
         } else {
             return super.onOptionsItemSelected(item);

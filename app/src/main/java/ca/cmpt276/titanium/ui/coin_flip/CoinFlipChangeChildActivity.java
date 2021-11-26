@@ -21,14 +21,14 @@ import ca.cmpt276.titanium.model.CoinFlipHistory;
  * This activity represents the children list.
  * Allows the user to change the current child turn.
  */
-public class ChangeChildActivity extends AppCompatActivity {
+public class CoinFlipChangeChildActivity extends AppCompatActivity {
     private Children children;
     private ChildrenQueue childrenQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_child);
+        setContentView(R.layout.activity_coin_flip_change_child);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
         setSupportActionBar(myToolbar);
@@ -51,7 +51,7 @@ public class ChangeChildActivity extends AppCompatActivity {
 
         ArrayList<Child> childrenQueueCopy = new ArrayList<>(childrenQueue.getChildrenQueue());
         ListView changeChildListView = findViewById(R.id.changeChildList);
-        ChangeChildAdapter adapter = new ChangeChildAdapter(this, childrenQueueCopy);
+        CoinFlipChangeChildAdapter adapter = new CoinFlipChangeChildAdapter(this, childrenQueueCopy);
         changeChildListView.setAdapter(adapter);
         changeChildListView.setClickable(true);
 

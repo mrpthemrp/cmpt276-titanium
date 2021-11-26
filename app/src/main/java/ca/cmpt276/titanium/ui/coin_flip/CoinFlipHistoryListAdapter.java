@@ -35,7 +35,7 @@ public class CoinFlipHistoryListAdapter extends ArrayAdapter<CoinFlip> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_coin_flip_history_list, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_coin_flip_history, parent, false);
         }
 
         CoinFlip coinFlip = getItem(position);
