@@ -5,10 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
-    tools:context=".ui.coin_flip.CoinFlipHistoryListAdapter">
+    tools:context=".ui.coin_flip.CoinFlipHistoryAdapter">
 
     <ImageView
-        android:id="@+id/coinFlipHistoryChildIcon"
+        android:id="@+id/ImageView_item_coin_flip_result"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/CONTENT_DESCRIPTION" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ConstraintLayout_item_coin_flip_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ImageView_item_coin_flip_result"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/TextView_item_coin_flip_child_name"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:maxLines="5"
+            android:scrollHorizontally="false"
+            android:text="@string/coin_flip_empty_state_message_no_coin_flips"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/TextView_item_coin_flip_date"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/DEFAULT_TEXT"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TextView_item_coin_flip_child_name" />
+
+        <TextView
+            android:id="@+id/TextView_item_coin_flip_result"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/DEFAULT_TEXT"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TextView_item_coin_flip_date" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/ImageView_item_coin_flip_portrait"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginEnd="16dp"
@@ -17,57 +68,6 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/CONTENT_DESCRIPTION" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/childIcon"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/childNameList"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="none"
-            android:maxLines="5"
-            android:scrollHorizontally="false"
-            android:text="@string/empty_state_no_coin_flip_history_message"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <TextView
-            android:id="@+id/coinFlipDate"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginTop="4dp"
-            android:text="@string/DEFAULT_TEXT"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/childNameList" />
-
-        <TextView
-            android:id="@+id/coinFlipResult2"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginTop="4dp"
-            android:text="@string/DEFAULT_TEXT"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/coinFlipDate" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageView
-        android:id="@+id/childIcon"
-        android:layout_width="68dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/CONTENT_DESCRIPTION" />
 

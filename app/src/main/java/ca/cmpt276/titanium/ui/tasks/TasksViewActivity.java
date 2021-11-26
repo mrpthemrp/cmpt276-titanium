@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.model.Children;
+import ca.cmpt276.titanium.model.ChildManager;
 import ca.cmpt276.titanium.model.Task;
 import ca.cmpt276.titanium.model.TaskManager;
 
@@ -31,7 +31,7 @@ public class TasksViewActivity extends AppCompatActivity {
     private static final int INVALID_TASK_INDEX = -1;
 
     private TaskManager taskManager;
-    private Children children;
+    private ChildManager childManager;
     private Toast toast; // prevents toast stacking
     private int taskIndex;
 
@@ -46,12 +46,12 @@ public class TasksViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks_view);
 
-        Toolbar toolbar = findViewById(R.id.customToolBar);
+        Toolbar toolbar = findViewById(R.id.ToolBar_tasks_view);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.taskManager = TaskManager.getInstance(this);
-        this.children = Children.getInstance(this);
+        this.childManager = ChildManager.getInstance(this);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
         this.taskIndex = getIntent().getIntExtra(TASK_INDEX_KEY, INVALID_TASK_INDEX);
 
@@ -79,10 +79,10 @@ public class TasksViewActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else if (item.getItemId() == R.id.toolbar_button_edit_task) {
+        } else if (item.getItemId() == R.id.menu_item_tasks_view_edit_task) {
             startActivity(TasksEditActivity.makeIntent(this, taskIndex));
             return true;
-        } else if (item.getItemId() == R.id.toolbar_button_delete_task) {
+        } else if (item.getItemId() == R.id.menu_item_tasks_view_delete_task) {
             launchDeleteTaskPrompt();
             return true;
         } else {
@@ -97,31 +97,31 @@ public class TasksViewActivity extends AppCompatActivity {
         String childName =
                 task.getChildUniqueID() == null
                         ? getString(R.string.default_name_no_children)
-                        : children.getChild(task.getChildUniqueID()).getName();
+                        : childManager.getChild(task.getChildUniqueID()).getName();
 
-        TextView taskNameText = findViewById(R.id.taskNameText);
+        TextView taskNameText = findViewById(R.id.TextView_tasks_view_task_name);
         taskNameText.setText(taskName);
 
-        TextView childNameText = findViewById(R.id.childNameText);
+        TextView childNameText = findViewById(R.id.TextView_tasks_view_child_name);
         childNameText.setText(getString(R.string.tasks_next_child_name, childName));
 
-        ImageView childPortraitView = findViewById(R.id.childPortrait);
+        ImageView childPortraitView = findViewById(R.id.ImageView_tasks_view_child_portrait);
 
         if (task.getChildUniqueID() == null) {
             childPortraitView.setImageResource(R.drawable.ic_default_portrait_green);
         } else {
-            childPortraitView.setImageDrawable(children.getChild(task.getChildUniqueID()).getPortrait(getResources()));
+            childPortraitView.setImageDrawable(childManager.getChild(task.getChildUniqueID()).getPortrait(getResources()));
         }
     }
 
     private void setupButtons() {
-        Button completeTaskButton = findViewById(R.id.completeTaskButton);
+        Button completeTaskButton = findViewById(R.id.Button_tasks_view_complete_task);
         completeTaskButton.setOnClickListener(view -> {
             UUID currentChildUniqueID = taskManager.getTasks().get(taskIndex).getChildUniqueID();
 
             if (currentChildUniqueID != null) {
-                int nextChildIndex = (children.getChildren().indexOf(children.getChild(currentChildUniqueID)) + 1) % children.getChildren().size();
-                UUID nextChildUniqueID = children.getChildren().get(nextChildIndex).getUniqueID();
+                int nextChildIndex = (childManager.getChildren().indexOf(childManager.getChild(currentChildUniqueID)) + 1) % childManager.getChildren().size();
+                UUID nextChildUniqueID = childManager.getChildren().get(nextChildIndex).getUniqueID();
                 taskManager.setChildUniqueID(taskIndex, nextChildUniqueID);
             }
 

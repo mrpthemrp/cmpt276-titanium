@@ -7,7 +7,7 @@
     tools:context=".ui.coin_flip.CoinFlipHistoryActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/customToolBar"
+        android:id="@+id/ToolBar_coin_flip_history"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/style_rounded_toolbar"
@@ -22,7 +22,7 @@
         app:titleTextColor="?attr/colorOnSecondary" />
 
     <ListView
-        android:id="@+id/coinFlipHistoryList"
+        android:id="@+id/ListView_coin_flip_history"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
@@ -30,30 +30,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customToolBar" />
+        app:layout_constraintTop_toBottomOf="@+id/ToolBar_coin_flip_history" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/emptyStateLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="56dp"
+    <TextView
+        android:id="@+id/TextView_coin_flip_history_empty_state_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/coin_flip_empty_state_message_no_coin_flips"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customToolBar">
-
-        <TextView
-            android:id="@+id/emptyMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/empty_state_no_coin_flip_history_message"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@+id/ToolBar_coin_flip_history" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

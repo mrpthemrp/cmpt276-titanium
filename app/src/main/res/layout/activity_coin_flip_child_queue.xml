@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.coin_flip.CoinFlipQueueActivity">
+    tools:context=".ui.coin_flip.CoinFlipChildQueueActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/customToolBar"
+        android:id="@+id/ToolBar_coin_flip_child_queue"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/style_rounded_toolbar"
@@ -22,7 +22,7 @@
         app:titleTextColor="?attr/colorOnSecondary" />
 
     <ImageView
-        android:id="@+id/currentChildTurnIcon"
+        android:id="@+id/ImageView_coin_flip_child_queue_current_child_portrait"
         android:layout_width="92dp"
         android:layout_height="92dp"
         android:layout_marginTop="30dp"
@@ -31,10 +31,24 @@
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customToolBar" />
+        app:layout_constraintTop_toBottomOf="@+id/ToolBar_coin_flip_child_queue" />
 
     <TextView
-        android:id="@+id/currentChildTurnText"
+        android:id="@+id/TextView_coin_flip_child_queue_current_child_name_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/subtitle_coin_flip_current_child"
+        android:textColor="?attr/colorSecondary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ImageView_coin_flip_child_queue_current_child_portrait"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/TextView_coin_flip_child_queue_current_child_name"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -45,25 +59,11 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentChildTitleText"
+        app:layout_constraintTop_toBottomOf="@+id/TextView_coin_flip_child_queue_current_child_name_subtitle"
         tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/currentChildTitleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/subtitle_coin_flip_current_child"
-        android:textColor="?attr/colorSecondary"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentChildTurnIcon"
-        tools:ignore="TextContrastCheck" />
-
-    <TextView
-        android:id="@+id/queueTitleText"
+        android:id="@+id/TextView_coin_flip_child_queue_queue_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -74,11 +74,11 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/currentChildTurnText"
+        app:layout_constraintTop_toBottomOf="@id/TextView_coin_flip_child_queue_current_child_name"
         tools:ignore="TextContrastCheck" />
 
     <ListView
-        android:id="@+id/childrenQueueList"
+        android:id="@+id/ListView_coin_flip_child_queue"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_margin="20dp"
@@ -88,19 +88,19 @@
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/queueTitleText" />
+        app:layout_constraintTop_toBottomOf="@+id/TextView_coin_flip_child_queue_queue_subtitle" />
 
     <TextView
-        android:id="@+id/childrenQueueListText"
+        android:id="@+id/TextView_coin_flip_child_queue_empty_state_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/empty_state_no_children"
+        android:text="@string/coin_flip_empty_state_message_no_children"
         android:textColor="?attr/colorSecondaryVariant"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/childrenQueueList"
-        app:layout_constraintEnd_toEndOf="@+id/childrenQueueList"
-        app:layout_constraintStart_toStartOf="@+id/childrenQueueList"
-        app:layout_constraintTop_toTopOf="@+id/childrenQueueList" />
+        app:layout_constraintBottom_toBottomOf="@+id/ListView_coin_flip_child_queue"
+        app:layout_constraintEnd_toEndOf="@+id/ListView_coin_flip_child_queue"
+        app:layout_constraintStart_toStartOf="@+id/ListView_coin_flip_child_queue"
+        app:layout_constraintTop_toTopOf="@+id/ListView_coin_flip_child_queue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,8 +24,8 @@ public class CoinFlipHistory {
     private static CoinFlipHistory instance;
     private static SharedPreferences prefs;
     private static SharedPreferences.Editor prefsEditor;
-    private static Children children;
-    private static ChildrenQueue childrenQueue;
+    private static ChildManager childManager;
+    private static CoinFlipChildQueue coinFlipChildQueue;
 
     private static ArrayList<CoinFlip> coinFlipHistory = new ArrayList<>();
     private static UUID nextPickerUniqueID;
@@ -38,8 +38,8 @@ public class CoinFlipHistory {
     public static CoinFlipHistory getInstance(Context context) {
         if (instance == null) {
             CoinFlipHistory.instance = new CoinFlipHistory(context);
-            CoinFlipHistory.children = Children.getInstance(context);
-            CoinFlipHistory.childrenQueue = ChildrenQueue.getInstance(context);
+            CoinFlipHistory.childManager = ChildManager.getInstance(context);
+            CoinFlipHistory.coinFlipChildQueue = CoinFlipChildQueue.getInstance(context);
         }
 
         loadSavedData();
@@ -79,9 +79,9 @@ public class CoinFlipHistory {
 
     public void updateCoinFlipHistory(boolean isChildBeingAdded, UUID childUniqueID) {
         if (isChildBeingAdded) {
-            if (children.getChildren().size() == 1) {
+            if (childManager.getChildren().size() == 1) {
                 CoinFlipHistory.nextPickerUniqueID = childUniqueID;
-            } else if (children.getChildren().size() == 2 && coinFlipHistory.size() > 0) {
+            } else if (childManager.getChildren().size() == 2 && coinFlipHistory.size() > 0) {
                 incrementNextPickerUniqueID(); // TODO: Don't enter here unless the last history entry was done by child that used to be only child! Maybe it was done by other child that was already removed
             }
         } else { // child with childUniqueID will be removed after this function returns
@@ -93,7 +93,7 @@ public class CoinFlipHistory {
                 }
             }
 
-            if (children.getChildren().size() == 1) {
+            if (childManager.getChildren().size() == 1) {
                 CoinFlipHistory.nextPickerUniqueID = null;
             } else if (childUniqueID.equals(nextPickerUniqueID)) {
                 incrementNextPickerUniqueID();
@@ -104,10 +104,10 @@ public class CoinFlipHistory {
     }
 
     private void incrementNextPickerUniqueID() {
-        for (int i = 0; i < children.getChildren().size(); i++) {
-            if (nextPickerUniqueID.equals(childrenQueue.getChildrenQueue().get(i).getUniqueID())) {
-                CoinFlipHistory.nextPickerUniqueID = childrenQueue.getChildrenQueue().get((i + 1) %
-                        childrenQueue.getChildrenQueue().size()).getUniqueID();
+        for (int i = 0; i < childManager.getChildren().size(); i++) {
+            if (nextPickerUniqueID.equals(coinFlipChildQueue.getChildrenQueue().get(i).getUniqueID())) {
+                CoinFlipHistory.nextPickerUniqueID = coinFlipChildQueue.getChildrenQueue().get((i + 1) %
+                        coinFlipChildQueue.getChildrenQueue().size()).getUniqueID();
                 break;
             }
         }

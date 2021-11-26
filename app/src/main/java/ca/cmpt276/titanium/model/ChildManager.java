@@ -16,28 +16,28 @@ import java.util.UUID;
  * This class represents a group of children.
  * Handles loading and saving from JSON. Generates a unique ID for a child.
  */
-public class Children {
+public class ChildManager {
     private static final Gson GSON = new Gson();
     private static final String CHILDREN_JSON_KEY = "childrenJson";
 
-    private static Children instance;
+    private static ChildManager instance;
     private static SharedPreferences prefs;
     private static CoinFlipHistory coinFlipHistory;
-    private static ChildrenQueue childrenQueue;
+    private static CoinFlipChildQueue coinFlipChildQueue;
     private static TaskManager taskManager;
 
     private static ArrayList<Child> children = new ArrayList<>();
 
-    private Children(Context context) {
-        Children.prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    private ChildManager(Context context) {
+        ChildManager.prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public static Children getInstance(Context context) {
+    public static ChildManager getInstance(Context context) {
         if (instance == null) {
-            Children.instance = new Children(context);
-            Children.coinFlipHistory = CoinFlipHistory.getInstance(context);
-            Children.childrenQueue = ChildrenQueue.getInstance(context);
-            Children.taskManager = TaskManager.getInstance(context);
+            ChildManager.instance = new ChildManager(context);
+            ChildManager.coinFlipHistory = CoinFlipHistory.getInstance(context);
+            ChildManager.coinFlipChildQueue = CoinFlipChildQueue.getInstance(context);
+            ChildManager.taskManager = TaskManager.getInstance(context);
         }
 
         loadSavedData();
@@ -51,7 +51,7 @@ public class Children {
             Type childrenType = new TypeToken<ArrayList<Child>>() {
             }.getType();
 
-            Children.children = GSON.fromJson(childrenJson, childrenType);
+            ChildManager.children = GSON.fromJson(childrenJson, childrenType);
         }
     }
 
@@ -75,13 +75,13 @@ public class Children {
     public void addChild(String name, String portraitPath) {
         Child newChild = new Child(name, portraitPath);
 
-        Children.children.add(newChild);
+        ChildManager.children.add(newChild);
         saveData();
 
         coinFlipHistory.updateCoinFlipHistory(true, newChild.getUniqueID());
 
-        childrenQueue.getChildrenQueue().add(newChild);
-        childrenQueue.saveData();
+        coinFlipChildQueue.getChildrenQueue().add(newChild);
+        coinFlipChildQueue.saveData();
 
         if (children.size() == 1) {
             taskManager.addToAllTasks(children.get(0).getUniqueID());
@@ -94,14 +94,14 @@ public class Children {
                 if (uniqueID.equals(children.get(i).getUniqueID())) {
                     coinFlipHistory.updateCoinFlipHistory(false, uniqueID);
 
-                    childrenQueue.getChildrenQueue().remove(childrenQueue.getChildQueueIndex(uniqueID));
-                    childrenQueue.saveData();
+                    coinFlipChildQueue.getChildrenQueue().remove(coinFlipChildQueue.getChildQueueIndex(uniqueID));
+                    coinFlipChildQueue.saveData();
 
                     UUID nextUniqueID = children.get((children.indexOf(getChild(uniqueID)) + 1) % children.size()).getUniqueID();
                     nextUniqueID = (children.size() != 1) ? nextUniqueID : null;
                     taskManager.updateTasksBeforeRemovingChild(uniqueID, nextUniqueID);
 
-                    Children.children.remove(i);
+                    ChildManager.children.remove(i);
                     saveData();
                     break;
                 }
@@ -111,14 +111,14 @@ public class Children {
 
     public void setChildName(UUID uniqueID, String name) {
         Child child = getChild(uniqueID);
-        Child childInQueue = childrenQueue.getChild(uniqueID);
+        Child childInQueue = coinFlipChildQueue.getChild(uniqueID);
 
         if (child != null) {
             child.setName(name);
             saveData();
 
             childInQueue.setName(name);
-            childrenQueue.saveData();
+            coinFlipChildQueue.saveData();
         }
     }
 

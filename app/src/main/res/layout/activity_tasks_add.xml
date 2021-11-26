@@ -10,7 +10,7 @@
     tools:context=".ui.tasks.TasksAddActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/customToolBar"
+        android:id="@+id/ToolBar_tasks_add"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/style_rounded_toolbar"
@@ -23,8 +23,22 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
         app:titleTextColor="?attr/colorOnSecondary" />
 
+    <TextView
+        android:id="@+id/TextView_tasks_add_task_name_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="177dp"
+        android:text="@string/subtitle_task_name"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ToolBar_tasks_add"
+        tools:ignore="TextContrastCheck" />
+
     <EditText
-        android:id="@+id/userTaskName"
+        android:id="@+id/EditText_tasks_add_task_name"
         android:layout_width="253dp"
         android:layout_height="48dp"
         android:layout_marginTop="28dp"
@@ -39,25 +53,11 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleAddText"
-        tools:ignore="TextContrastCheck" />
-
-    <TextView
-        android:id="@+id/titleAddText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="177dp"
-        android:text="@string/subtitle_task_name"
-        android:textColor="?attr/colorPrimary"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customToolBar"
+        app:layout_constraintTop_toBottomOf="@+id/TextView_tasks_add_task_name_subtitle"
         tools:ignore="TextContrastCheck" />
 
     <Button
-        android:id="@+id/saveTask"
+        android:id="@+id/Button_tasks_add_save"
         android:layout_width="120dp"
         android:layout_height="48dp"
         android:layout_marginTop="39dp"
@@ -67,7 +67,7 @@
         android:textColor="?attr/colorOnSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userTaskName"
+        app:layout_constraintTop_toBottomOf="@+id/EditText_tasks_add_task_name"
         tools:ignore="TextContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

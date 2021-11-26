@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/iconForTask"
+        android:id="@+id/ImageView_item_task_checkmark"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginStart="16dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/taskNameInList"
+        android:id="@+id/TextView_item_task_task_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -31,13 +31,13 @@
         android:textAlignment="viewStart"
         android:textColor="?attr/colorPrimary"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/childNameForTaskInList"
-        app:layout_constraintStart_toEndOf="@+id/iconForTask"
+        app:layout_constraintBottom_toTopOf="@+id/TextView_item_task_child_name"
+        app:layout_constraintStart_toEndOf="@+id/ImageView_item_task_checkmark"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/childNameForTaskInList"
+        android:id="@+id/TextView_item_task_child_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -48,8 +48,8 @@
         android:textColor="?attr/colorSecondaryVariant"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iconForTask"
-        app:layout_constraintTop_toBottomOf="@+id/taskNameInList"
+        app:layout_constraintStart_toEndOf="@+id/ImageView_item_task_checkmark"
+        app:layout_constraintTop_toBottomOf="@+id/TextView_item_task_task_name"
         tools:ignore="TextContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

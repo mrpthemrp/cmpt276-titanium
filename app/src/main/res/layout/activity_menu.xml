@@ -2,14 +2,38 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/menuLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MenuActivity">
 
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/MaterialButton_menu_help"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@android:color/transparent"
+        app:icon="@drawable/ic_baseline_help_outline_white_24"
+        app:iconTint="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/TextView_menu_welcome_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/subtitle_default_menu"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
     <GridLayout
-        android:id="@+id/gridLayout"
+        android:id="@+id/GridLayout_menu_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -18,10 +42,10 @@
         android:useDefaultMargins="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainMenuWelcomeMessage">
+        app:layout_constraintTop_toBottomOf="@+id/TextView_menu_welcome_message">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/menuGoToTimer"
+            android:id="@+id/MaterialButton_menu_timer"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="125dp"
             android:layout_height="125dp"
@@ -41,7 +65,7 @@
             tools:ignore="TextContrastCheck" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/menuGoToFlipCoin"
+            android:id="@+id/MaterialButton_menu_coin_flip"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="125dp"
             android:layout_height="125dp"
@@ -61,7 +85,7 @@
             tools:ignore="TextContrastCheck" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/menuGoToAddChild"
+            android:id="@+id/MaterialButton_menu_add_child"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="125dp"
             android:layout_height="125dp"
@@ -81,7 +105,7 @@
             tools:ignore="TextContrastCheck" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/menuWhoseTurn"
+            android:id="@+id/MaterialButton_menu_tasks"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="125dp"
             android:layout_height="125dp"
@@ -102,7 +126,7 @@
     </GridLayout>
 
     <ListView
-        android:id="@+id/childrenList"
+        android:id="@+id/ListView_menu_children"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="10dp"
@@ -117,43 +141,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/GridLayout_menu_buttons" />
 
     <TextView
-        android:id="@+id/menuTextChildrenList"
+        android:id="@+id/TextView_menu_empty_state_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/empty_state_no_children_message"
+        android:text="@string/menu_empty_state_message"
         android:textColor="?attr/colorPrimary"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/childrenList" />
-
-    <TextView
-        android:id="@+id/mainMenuWelcomeMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/subtitle_default_menu"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/helpButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@android:color/transparent"
-        app:icon="@drawable/ic_baseline_help_outline_white_24"
-        app:iconTint="?attr/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toTopOf="@+id/ListView_menu_children" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

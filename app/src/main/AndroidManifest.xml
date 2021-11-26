@@ -18,9 +18,9 @@
     <application
         android:allowBackup="true"
         android:fullBackupOnly="true"
-        android:icon="@mipmap/ic_launcher_custom"
+        android:icon="@mipmap/ic_launcher_practical_parent"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_custom_round"
+        android:roundIcon="@mipmap/ic_launcher_practical_parent_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Titanium">
 
@@ -58,9 +58,9 @@
             android:name=".ui.coin_flip.CoinFlipChangeChildActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="false"
-            android:parentActivityName=".ui.coin_flip.CoinFlipQueueActivity" />
+            android:parentActivityName=".ui.coin_flip.CoinFlipChildQueueActivity" />
         <activity
-            android:name=".ui.coin_flip.CoinFlipQueueActivity"
+            android:name=".ui.coin_flip.CoinFlipChildQueueActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.coin_flip.CoinFlipActivity" />

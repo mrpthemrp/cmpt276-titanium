@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/toolbar_button_add_task"
+        android:id="@+id/menu_item_tasks_add_task"
         android:icon="@drawable/ic_baseline_add_white_24"
         android:title="@string/toolbar_button_add_task"
         app:showAsAction="ifRoom" />
-
 </menu>

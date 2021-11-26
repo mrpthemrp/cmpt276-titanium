@@ -24,10 +24,10 @@ import java.util.Objects;
 import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.model.Children;
-import ca.cmpt276.titanium.model.ChildrenQueue;
+import ca.cmpt276.titanium.model.ChildManager;
 import ca.cmpt276.titanium.model.Coin;
 import ca.cmpt276.titanium.model.CoinFlip;
+import ca.cmpt276.titanium.model.CoinFlipChildQueue;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
 
 /**
@@ -40,7 +40,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private Coin coinChosen;
     private CoinFlipHistory coinFlipHistory;
-    private ChildrenQueue childrenQueue;
+    private CoinFlipChildQueue coinFlipChildQueue;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, CoinFlipActivity.class);
@@ -52,12 +52,12 @@ public class CoinFlipActivity extends AppCompatActivity {
         setContentView(R.layout.activity_coin_flip);
         setTitle(R.string.title_flip_coin);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.ToolBar_coin_flip);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         coinFlipHistory = CoinFlipHistory.getInstance(this);
-        childrenQueue = ChildrenQueue.getInstance(this);
+        coinFlipChildQueue = CoinFlipChildQueue.getInstance(this);
 
         setupButtons();
         updateGUI(DEFAULT_COIN);
@@ -80,11 +80,11 @@ public class CoinFlipActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else if (item.getItemId() == R.id.toolbar_button_coin_flip_history) {
+        } else if (item.getItemId() == R.id.menu_item_coin_flip_coin_flip_history) {
             startActivity(new Intent(this, CoinFlipHistoryActivity.class));
             return true;
-        } else if (item.getItemId() == R.id.toolbar_button_coin_flip_queue) {
-            startActivity(new Intent(this, CoinFlipQueueActivity.class));
+        } else if (item.getItemId() == R.id.menu_item_coin_flip_coin_flip_child_queue) {
+            startActivity(new Intent(this, CoinFlipChildQueueActivity.class));
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -92,9 +92,9 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void setupButtons() {
-        Button headsButton = findViewById(R.id.headsButton);
-        Button tailsButton = findViewById(R.id.tailsButton);
-        Button flipButton = findViewById(R.id.flipButton);
+        Button headsButton = findViewById(R.id.Button_coin_flip_choose_heads);
+        Button tailsButton = findViewById(R.id.Button_coin_flip_choose_tails);
+        Button flipButton = findViewById(R.id.Button_coin_flip_flip);
 
         headsButton.setOnClickListener((View view) -> updateGUI(Coin.HEADS));
         tailsButton.setOnClickListener((View view) -> updateGUI(Coin.TAILS));
@@ -102,19 +102,19 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void updateGUI(Coin coinChosen) {
-        ImageView childIconDisplay = findViewById(R.id.coinFlipChildIcon);
-        TextView childNameDisplay = findViewById(R.id.childTurnText);
-        TextView sideChosenDisplay = findViewById(R.id.sideChosenText);
-        Button headsButton = findViewById(R.id.headsButton);
-        Button tailsButton = findViewById(R.id.tailsButton);
+        ImageView childIconDisplay = findViewById(R.id.ImageView_coin_flip_child_portrait);
+        TextView childNameDisplay = findViewById(R.id.TextView_coin_flip_child_name);
+        TextView sideChosenDisplay = findViewById(R.id.TextView_coin_flip_coin_side_chosen);
+        Button headsButton = findViewById(R.id.Button_coin_flip_choose_heads);
+        Button tailsButton = findViewById(R.id.Button_coin_flip_choose_tails);
 
         UUID nextPickerUniqueID = coinFlipHistory.getNextPickerUniqueID();
 
         if (nextPickerUniqueID != null) {
-            Children children = Children.getInstance(this);
-            RoundedBitmapDrawable drawable = children.getChild(nextPickerUniqueID).getPortrait(getResources());
+            ChildManager childManager = ChildManager.getInstance(this);
+            RoundedBitmapDrawable drawable = childManager.getChild(nextPickerUniqueID).getPortrait(getResources());
             childIconDisplay.setImageDrawable(drawable);
-            childNameDisplay.setText(getString(R.string.coin_flip_child_name, children.getChild(nextPickerUniqueID).getName()));
+            childNameDisplay.setText(getString(R.string.coin_flip_child_name, childManager.getChild(nextPickerUniqueID).getName()));
             sideChosenDisplay.setText(getString(R.string.coin_flip_side_chosen, coinChosen.toString()));
             this.coinChosen = coinChosen;
         } else {
@@ -126,10 +126,10 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void animateCoinFlip() {
-        ImageView coin = findViewById(R.id.coinBlank);
+        ImageView coin = findViewById(R.id.ImageView_coin_flip_coin);
         coin.setImageResource(R.drawable.ic_coin_blank_yellow_200);
 
-        TextView coinResultMessage = findViewById(R.id.coinFlipResult);
+        TextView coinResultMessage = findViewById(R.id.TextView_coin_flip_result);
         coinResultMessage.setVisibility(View.INVISIBLE);
 
         Animation coinFlipAnimation = AnimationUtils.loadAnimation(CoinFlipActivity.this, R.anim.coin_flip);
@@ -151,7 +151,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         coinResultMessage.postDelayed(() -> coinResultMessage.setVisibility(View.VISIBLE), COIN_FLIP_DELAY);
 
         if (coinFlipHistory.getNextPickerUniqueID() != null) {
-            childrenQueue.moveChildPositionToBack(coinFlipHistory.getNextPickerUniqueID());
+            coinFlipChildQueue.moveChildPositionToBack(coinFlipHistory.getNextPickerUniqueID());
             coinFlipHistory.addCoinFlip(coinChosen, coinResult);
             new Handler(Looper.getMainLooper()).postDelayed(() -> updateGUI(coinChosen), COIN_FLIP_DELAY);
         }

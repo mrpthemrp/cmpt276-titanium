@@ -17,7 +17,7 @@ import java.util.Calendar;
 import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
-import ca.cmpt276.titanium.model.Children;
+import ca.cmpt276.titanium.model.ChildManager;
 import ca.cmpt276.titanium.ui.coin_flip.CoinFlipActivity;
 import ca.cmpt276.titanium.ui.tasks.TasksActivity;
 import ca.cmpt276.titanium.ui.timer.TimerActivity;
@@ -27,7 +27,7 @@ import ca.cmpt276.titanium.ui.timer.TimerActivity;
  * Shows children and buttons to the timer and coin flip.
  */
 public class MenuActivity extends AppCompatActivity {
-    private Children children;
+    private ChildManager childManager;
     private TextView welcomeMessage;
 
     @Override
@@ -35,24 +35,24 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        this.children = Children.getInstance(this);
+        this.childManager = ChildManager.getInstance(this);
 
-        Button addChildButton = findViewById(R.id.menuGoToAddChild);
+        Button addChildButton = findViewById(R.id.MaterialButton_menu_add_child);
         addChildButton.setOnClickListener(view -> startActivity(ChildActivity.makeIntent(this, getString(R.string.title_add_child), null)));
 
-        Button coinFlipButton = findViewById(R.id.menuGoToFlipCoin);
+        Button coinFlipButton = findViewById(R.id.MaterialButton_menu_coin_flip);
         coinFlipButton.setOnClickListener(view -> startActivity(CoinFlipActivity.makeIntent(this)));
 
-        Button timerButton = findViewById(R.id.menuGoToTimer);
+        Button timerButton = findViewById(R.id.MaterialButton_menu_timer);
         timerButton.setOnClickListener(view -> startActivity(TimerActivity.makeIntent(this)));
 
-        Button whoseTurnButton = findViewById(R.id.menuWhoseTurn);
+        Button whoseTurnButton = findViewById(R.id.MaterialButton_menu_tasks);
         whoseTurnButton.setOnClickListener(view -> startActivity(TasksActivity.makeIntent(this)));
 
-        MaterialButton helpScreen = findViewById(R.id.helpButton);
+        MaterialButton helpScreen = findViewById(R.id.MaterialButton_menu_help);
         helpScreen.setOnClickListener(view -> startActivity(HelpActivity.makeIntent(this)));
 
-        welcomeMessage = findViewById(R.id.mainMenuWelcomeMessage);
+        welcomeMessage = findViewById(R.id.TextView_menu_welcome_message);
         setMessage();
     }
 
@@ -68,7 +68,7 @@ public class MenuActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else if (item.getItemId() == R.id.toolbar_button_edit_child) {
+        } else if (item.getItemId() == R.id.menu_item_child_edit_child) {
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -76,19 +76,19 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void displayChildren() {
-        if (children.getChildren().size() == 0) {
-            findViewById(R.id.menuTextChildrenList).setVisibility(View.VISIBLE);
+        if (childManager.getChildren().size() == 0) {
+            findViewById(R.id.TextView_menu_empty_state_message).setVisibility(View.VISIBLE);
         } else {
-            findViewById(R.id.menuTextChildrenList).setVisibility(View.INVISIBLE);
+            findViewById(R.id.TextView_menu_empty_state_message).setVisibility(View.INVISIBLE);
         }
 
-        ListView childrenListView = (ListView) findViewById(R.id.childrenList);
-        MenuChildrenListAdapter adapter = new MenuChildrenListAdapter(this, children.getChildren());
+        ListView childrenListView = (ListView) findViewById(R.id.ListView_menu_children);
+        MenuChildAdapter adapter = new MenuChildAdapter(this, childManager.getChildren());
         childrenListView.setAdapter(adapter);
         childrenListView.setClickable(true);
 
         childrenListView.setOnItemClickListener((parent, view, position, id) -> {
-            UUID childUUID = children.getChildren().get(position).getUniqueID();
+            UUID childUUID = childManager.getChildren().get(position).getUniqueID();
             Intent viewChildIntent = ChildActivity.makeIntent(this, getString(R.string.title_view_child), childUUID);
 
             startActivity(viewChildIntent);

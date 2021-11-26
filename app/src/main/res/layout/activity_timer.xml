@@ -9,7 +9,7 @@
     tools:context=".ui.timer.TimerActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/customToolBar"
+        android:id="@+id/ToolBar_timer"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/style_rounded_toolbar"
@@ -22,28 +22,16 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
         app:titleTextColor="?attr/colorOnSecondary" />
 
-    <ImageView
-        android:id="@+id/calmBackground"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_timer"
-        android:contentDescription="@string/CONTENT_DESCRIPTION"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ImageContrastCheck" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/inputsConstraintLayout"
+        android:id="@+id/ConstraintLayout_timer_inputs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customToolBar">
+        app:layout_constraintTop_toBottomOf="@+id/ToolBar_timer">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/presetInputConstraintLayout"
+            android:id="@+id/ConstraintLayout_timer_preset_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +39,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/presetTextView"
+                android:id="@+id/TextView_timer_minutes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -62,12 +50,12 @@
                 android:textColor="#634408"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/oneMin"
+                app:layout_constraintEnd_toStartOf="@+id/Button_timer_1_minute"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/oneMin"
+                android:id="@+id/Button_timer_1_minute"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
@@ -80,12 +68,12 @@
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/twoMin"
+                app:layout_constraintEnd_toStartOf="@+id/Button_timer_2_minutes"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="TextContrastCheck" />
 
             <Button
-                android:id="@+id/twoMin"
+                android:id="@+id/Button_timer_2_minutes"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
@@ -98,12 +86,12 @@
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/threeMin"
+                app:layout_constraintEnd_toStartOf="@+id/Button_timer_3_minutes"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="TextContrastCheck" />
 
             <Button
-                android:id="@+id/threeMin"
+                android:id="@+id/Button_timer_3_minutes"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
@@ -116,12 +104,12 @@
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fiveMin"
+                app:layout_constraintEnd_toStartOf="@+id/Button_timer_5_minutes"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="TextContrastCheck" />
 
             <Button
-                android:id="@+id/fiveMin"
+                android:id="@+id/Button_timer_5_minutes"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
@@ -134,12 +122,12 @@
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tenMin"
+                app:layout_constraintEnd_toStartOf="@+id/Button_timer_10_minutes"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="TextContrastCheck" />
 
             <Button
-                android:id="@+id/tenMin"
+                android:id="@+id/Button_timer_10_minutes"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
@@ -159,15 +147,15 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/customInputConstraintLayout"
+            android:id="@+id/ConstraintLayout_timer_custom_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/presetInputConstraintLayout">
+            app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_timer_preset_input">
 
             <EditText
-                android:id="@+id/customMinutes"
+                android:id="@+id/EditText_timer_enter_custom_input"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginStart="30dp"
@@ -187,7 +175,7 @@
                 tools:ignore="TextContrastCheck" />
 
             <Button
-                android:id="@+id/setCustomTimeButton"
+                android:id="@+id/Button_timer_set_custom_input"
                 android:layout_width="76dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="30dp"
@@ -200,7 +188,7 @@
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/customMinutes"
+                app:layout_constraintStart_toEndOf="@+id/EditText_timer_enter_custom_input"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
                 tools:ignore="TextContrastCheck" />
@@ -210,16 +198,16 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/timerConstraintLayout"
+        android:id="@+id/ConstraintLayout_timer_control"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputsConstraintLayout">
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_timer_inputs">
 
         <ImageView
-            android:id="@+id/timerCircle"
+            android:id="@+id/ImageView_timer_progress_notches"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_marginTop="15dp"
@@ -227,10 +215,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_timer_increments_white_200" />
+            app:srcCompat="@drawable/ic_timer_progress_notches_white_200" />
 
         <ProgressBar
-            android:id="@+id/circularProgressBar"
+            android:id="@+id/ProgressBar_timer"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="300dp"
             android:layout_height="300dp"
@@ -243,7 +231,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/timer"
+            android:id="@+id/TextView_timer_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_timer_time"
@@ -252,27 +240,27 @@
             android:textColorHint="#FFFFFF"
             android:textColorLink="#FFFFFF"
             android:textSize="60sp"
-            app:layout_constraintBottom_toBottomOf="@+id/timerCircle"
-            app:layout_constraintEnd_toEndOf="@+id/timerCircle"
-            app:layout_constraintStart_toStartOf="@+id/timerCircle"
-            app:layout_constraintTop_toTopOf="@+id/timerCircle" />
+            app:layout_constraintBottom_toBottomOf="@+id/ImageView_timer_progress_notches"
+            app:layout_constraintEnd_toEndOf="@+id/ImageView_timer_progress_notches"
+            app:layout_constraintStart_toStartOf="@+id/ImageView_timer_progress_notches"
+            app:layout_constraintTop_toTopOf="@+id/ImageView_timer_progress_notches" />
 
         <ImageView
-            android:id="@+id/timerPlayPauseBtn"
+            android:id="@+id/ImageView_timer_control"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="5dp"
             android:contentDescription="@string/CONTENT_DESCRIPTION"
-            app:layout_constraintBottom_toTopOf="@+id/resetButton"
+            app:layout_constraintBottom_toTopOf="@+id/Button_timer_reset"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timerCircle"
+            app:layout_constraintTop_toBottomOf="@+id/ImageView_timer_progress_notches"
             app:srcCompat="@drawable/ic_baseline_play_arrow_white_24"
             tools:ignore="ImageContrastCheck" />
 
         <Button
-            android:id="@+id/resetButton"
+            android:id="@+id/Button_timer_reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -286,7 +274,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timerPlayPauseBtn"
+            app:layout_constraintTop_toBottomOf="@+id/ImageView_timer_control"
             tools:ignore="TextContrastCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

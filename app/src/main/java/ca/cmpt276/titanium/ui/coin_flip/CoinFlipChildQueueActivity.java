@@ -18,30 +18,30 @@ import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
-import ca.cmpt276.titanium.model.Children;
-import ca.cmpt276.titanium.model.ChildrenQueue;
+import ca.cmpt276.titanium.model.ChildManager;
+import ca.cmpt276.titanium.model.CoinFlipChildQueue;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
 
 /**
  * This activity represents the coin flip queue.
  */
-public class CoinFlipQueueActivity extends AppCompatActivity {
-    private Children children;
-    private ChildrenQueue childrenQueue;
+public class CoinFlipChildQueueActivity extends AppCompatActivity {
+    private ChildManager childManager;
+    private CoinFlipChildQueue coinFlipChildQueue;
     private CoinFlipHistory coinFlipHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_coin_flip_queue);
+        setContentView(R.layout.activity_coin_flip_child_queue);
         setTitle(R.string.toolbar_coin_flip_history_view_queue);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.ToolBar_coin_flip_child_queue);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        children = Children.getInstance(this);
-        childrenQueue = ChildrenQueue.getInstance(this);
+        childManager = ChildManager.getInstance(this);
+        coinFlipChildQueue = CoinFlipChildQueue.getInstance(this);
         coinFlipHistory = CoinFlipHistory.getInstance(this);
 
         displayQueue();
@@ -50,7 +50,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_coin_flip_queue, menu);
+        getMenuInflater().inflate(R.menu.menu_coin_flip_child_queue, menu);
         return true;
     }
 
@@ -66,7 +66,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else if (item.getItemId() == R.id.toolbar_button_coin_flip_change_child) {
+        } else if (item.getItemId() == R.id.menu_item_coin_flip_child_queue_coin_flip_change_child) {
             startActivity(new Intent(this, CoinFlipChangeChildActivity.class));
             return true;
         } else {
@@ -75,28 +75,28 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
     }
 
     private void displayQueue() {
-        if (children.getChildren().size() == 0) {
-            findViewById(R.id.childrenQueueListText).setVisibility(View.VISIBLE);
+        if (childManager.getChildren().size() == 0) {
+            findViewById(R.id.TextView_coin_flip_child_queue_empty_state_message).setVisibility(View.VISIBLE);
         } else {
-            findViewById(R.id.childrenQueueListText).setVisibility(View.INVISIBLE);
+            findViewById(R.id.TextView_coin_flip_child_queue_empty_state_message).setVisibility(View.INVISIBLE);
         }
 
-        ListView childrenListView = findViewById(R.id.childrenQueueList);
-        CoinFlipQueueAdapter adapter = new CoinFlipQueueAdapter(this, childrenQueue.getChildrenQueue());
+        ListView childrenListView = findViewById(R.id.ListView_coin_flip_child_queue);
+        CoinFlipChildQueueAdapter adapter = new CoinFlipChildQueueAdapter(this, coinFlipChildQueue.getChildrenQueue());
         childrenListView.setAdapter(adapter);
     }
 
     private void updateGUI() {
-        ImageView currentChildIcon = findViewById(R.id.currentChildTurnIcon);
-        TextView currentChildTurnName = findViewById(R.id.currentChildTurnText);
+        ImageView currentChildIcon = findViewById(R.id.ImageView_coin_flip_child_queue_current_child_portrait);
+        TextView currentChildTurnName = findViewById(R.id.TextView_coin_flip_child_queue_current_child_name);
 
-        Child currentChildTurn = childrenQueue.getChild(coinFlipHistory.getNextPickerUniqueID());
+        Child currentChildTurn = coinFlipChildQueue.getChild(coinFlipHistory.getNextPickerUniqueID());
         if (currentChildTurn != null) {
             currentChildTurnName.setText(currentChildTurn.getName());
-            RoundedBitmapDrawable drawable = children.getChild(coinFlipHistory.getNextPickerUniqueID()).getPortrait(getResources());
+            RoundedBitmapDrawable drawable = childManager.getChild(coinFlipHistory.getNextPickerUniqueID()).getPortrait(getResources());
             currentChildIcon.setImageDrawable(drawable);
         } else {
-            currentChildTurnName.setText(R.string.empty_state_no_children);
+            currentChildTurnName.setText(R.string.coin_flip_empty_state_message_no_children);
             currentChildIcon.setImageResource(R.drawable.ic_default_portrait_green);
         }
     }

@@ -16,23 +16,23 @@ import java.util.UUID;
 /**
  * This class represents the children queue for coin flips.
  */
-public class ChildrenQueue {
+public class CoinFlipChildQueue {
     private static final Gson GSON = new Gson();
     private static final String CHILDREN_QUEUE_JSON_KEY = "childrenQueueJson";
     private static final int FIRST_INDEX = 0;
 
-    private static ChildrenQueue instance;
+    private static CoinFlipChildQueue instance;
     private static SharedPreferences prefs;
 
     private static ArrayList<Child> childrenQueue = new ArrayList<>();
 
-    private ChildrenQueue(Context context) {
-        ChildrenQueue.prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    private CoinFlipChildQueue(Context context) {
+        CoinFlipChildQueue.prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public static ChildrenQueue getInstance(Context context) {
+    public static CoinFlipChildQueue getInstance(Context context) {
         if (instance == null) {
-            ChildrenQueue.instance = new ChildrenQueue(context);
+            CoinFlipChildQueue.instance = new CoinFlipChildQueue(context);
         }
 
         loadSavedData();
@@ -46,7 +46,7 @@ public class ChildrenQueue {
             Type childrenType = new TypeToken<ArrayList<Child>>() {
             }.getType();
 
-            ChildrenQueue.childrenQueue = GSON.fromJson(childrenQueueJson, childrenType);
+            CoinFlipChildQueue.childrenQueue = GSON.fromJson(childrenQueueJson, childrenType);
         }
     }
 

@@ -32,7 +32,7 @@ public class TasksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tasks);
         setTitle(R.string.title_view_all_tasks);
 
-        Toolbar toolbar = findViewById(R.id.customToolBar);
+        Toolbar toolbar = findViewById(R.id.ToolBar_tasks);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
@@ -54,7 +54,7 @@ public class TasksActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else if (item.getItemId() == R.id.toolbar_button_add_task) {
+        } else if (item.getItemId() == R.id.menu_item_tasks_add_task) {
             startActivity(TasksAddActivity.makeIntent(this));
             return true;
         } else {
@@ -64,13 +64,13 @@ public class TasksActivity extends AppCompatActivity {
 
     private void populateTaskList() {
         TaskManager taskManager = TaskManager.getInstance(this);
-        TaskListAdapter taskListAdapter = new TaskListAdapter(this, taskManager.getTasks());
+        TasksAdapter tasksAdapter = new TasksAdapter(this, taskManager.getTasks());
 
-        ListView taskListView = findViewById(R.id.taskListView);
-        taskListView.setAdapter(taskListAdapter);
+        ListView taskListView = findViewById(R.id.ListView_tasks);
+        taskListView.setAdapter(tasksAdapter);
         taskListView.setOnItemClickListener((adapterView, view, i, l) -> startActivity(TasksViewActivity.makeIntent(this, i)));
 
-        TextView noTasksMessage = findViewById(R.id.noTasksText);
+        TextView noTasksMessage = findViewById(R.id.TextView_tasks_empty_state_message);
         noTasksMessage.setVisibility(taskManager.getTasks().size() == 0 ? View.VISIBLE : View.INVISIBLE);
     }
 }

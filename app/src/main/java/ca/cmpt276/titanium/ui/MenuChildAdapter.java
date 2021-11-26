@@ -19,8 +19,8 @@ import ca.cmpt276.titanium.model.Child;
 /**
  * This is an adapter for the children list.
  */
-public class MenuChildrenListAdapter extends ArrayAdapter<Child> {
-    public MenuChildrenListAdapter(Context context, List<Child> children) {
+public class MenuChildAdapter extends ArrayAdapter<Child> {
+    public MenuChildAdapter(Context context, List<Child> children) {
         super(context, 0, children);
     }
 
@@ -28,15 +28,15 @@ public class MenuChildrenListAdapter extends ArrayAdapter<Child> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_menu_children, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_child, parent, false);
         }
 
         Child child = getItem(position);
 
-        ImageView childIcon = convertView.findViewById(R.id.childIcon);
+        ImageView childIcon = convertView.findViewById(R.id.ImageView_item_child_portrait);
         childIcon.setImageDrawable(child.getPortrait(getContext().getResources()));
 
-        TextView childTextView = convertView.findViewById(R.id.childNameList);
+        TextView childTextView = convertView.findViewById(R.id.TextView_item_child_name);
         String childName = child.getName();
         childTextView.setText(childName);
 

@@ -54,7 +54,7 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.ToolBar_timer);
         setSupportActionBar(myToolbar);
 
         setTitle(R.string.title_timer);
@@ -116,18 +116,18 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void setupCircularProgressBar() { // rotates progress bar so that it starts at top
-        ProgressBar circularProgressBar = findViewById(R.id.circularProgressBar);
+        ProgressBar circularProgressBar = findViewById(R.id.ProgressBar_timer);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.timer_progress_bar);
         circularProgressBar.startAnimation(animation);
     }
 
     private void setupButtons() {
         // preset input
-        Button oneMinute = findViewById(R.id.oneMin);
-        Button twoMinutes = findViewById(R.id.twoMin);
-        Button threeMinutes = findViewById(R.id.threeMin);
-        Button fiveMinutes = findViewById(R.id.fiveMin);
-        Button tenMinutes = findViewById(R.id.tenMin);
+        Button oneMinute = findViewById(R.id.Button_timer_1_minute);
+        Button twoMinutes = findViewById(R.id.Button_timer_2_minutes);
+        Button threeMinutes = findViewById(R.id.Button_timer_3_minutes);
+        Button fiveMinutes = findViewById(R.id.Button_timer_5_minutes);
+        Button tenMinutes = findViewById(R.id.Button_timer_10_minutes);
 
         oneMinute.setOnClickListener(view -> changeTimerDuration(1));
         twoMinutes.setOnClickListener(view -> changeTimerDuration(2));
@@ -136,8 +136,8 @@ public class TimerActivity extends AppCompatActivity {
         tenMinutes.setOnClickListener(view -> changeTimerDuration(10));
 
         // custom input
-        Button setCustomTime = findViewById(R.id.setCustomTimeButton);
-        EditText customTime = findViewById(R.id.customMinutes);
+        Button setCustomTime = findViewById(R.id.Button_timer_set_custom_input);
+        EditText customTime = findViewById(R.id.EditText_timer_enter_custom_input);
 
         setCustomTime.setOnClickListener(view -> updateCustomTime(customTime));
 
@@ -150,7 +150,7 @@ public class TimerActivity extends AppCompatActivity {
         });
 
         // play/pause
-        ImageView playPause = findViewById(R.id.timerPlayPauseBtn);
+        ImageView playPause = findViewById(R.id.ImageView_timer_control);
         playPause.setOnClickListener(view -> {
             if (timer.getDurationMilliseconds() == 0) {
                 updateToast(getString(R.string.toast_timer_zero_minutes));
@@ -164,7 +164,7 @@ public class TimerActivity extends AppCompatActivity {
         });
 
         // reset
-        Button resetButton = findViewById(R.id.resetButton);
+        Button resetButton = findViewById(R.id.Button_timer_reset);
         resetButton.setOnClickListener(view -> resetTimer());
     }
 
@@ -184,7 +184,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void updateGUI() {
-        ProgressBar circularProgressBar = findViewById(R.id.circularProgressBar);
+        ProgressBar circularProgressBar = findViewById(R.id.ProgressBar_timer);
         int progress;
 
         if (timer.getDurationMilliseconds() == 0) {
@@ -195,8 +195,8 @@ public class TimerActivity extends AppCompatActivity {
 
         circularProgressBar.setProgress(progress);
 
-        ConstraintLayout inputComponents = findViewById(R.id.inputsConstraintLayout);
-        ImageView playPause = findViewById(R.id.timerPlayPauseBtn);
+        ConstraintLayout inputComponents = findViewById(R.id.ConstraintLayout_timer_inputs);
+        ImageView playPause = findViewById(R.id.ImageView_timer_control);
 
         if (!timer.isRunning()) {
             inputComponents.setVisibility(View.VISIBLE);
@@ -217,17 +217,17 @@ public class TimerActivity extends AppCompatActivity {
         long seconds = (milliseconds % MILLIS_IN_MINUTE) / MILLIS_IN_SECOND;
         String formattedTime = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
 
-        TextView timerOutput = findViewById(R.id.timer);
+        TextView timerOutput = findViewById(R.id.TextView_timer_time);
         timerOutput.setText(formattedTime);
     }
 
     private void resetCustomTime() {
         // minimize keyboard
-        Button setCustomTime = findViewById(R.id.setCustomTimeButton);
+        Button setCustomTime = findViewById(R.id.Button_timer_set_custom_input);
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(setCustomTime.getWindowToken(), 0);
 
-        EditText customTime = findViewById(R.id.customMinutes);
+        EditText customTime = findViewById(R.id.EditText_timer_enter_custom_input);
         customTime.setText("");
         customTime.clearFocus();
     }

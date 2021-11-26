@@ -7,7 +7,7 @@
     tools:context=".ui.ChildActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/ToolBar_child"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/style_rounded_toolbar"
@@ -19,16 +19,17 @@
         app:titleTextColor="?attr/colorOnSecondary" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ConstraintLayout_child_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/ToolBar_child">
 
         <ImageView
-            android:id="@+id/addProfilePic"
+            android:id="@+id/ImageView_child_portrait"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginStart="24dp"
@@ -43,8 +44,20 @@
             app:srcCompat="@drawable/ic_default_portrait_green"
             tools:ignore="ImageContrastCheck" />
 
+        <ImageView
+            android:id="@+id/ImageView_child_portrait_edit_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/CONTENT_DESCRIPTION"
+            android:src="@drawable/ic_baseline_edit_white_24_border"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/ImageView_child_portrait"
+            app:layout_constraintEnd_toEndOf="@+id/ImageView_child_portrait"
+            app:layout_constraintStart_toStartOf="@+id/ImageView_child_portrait"
+            app:layout_constraintTop_toTopOf="@+id/ImageView_child_portrait" />
+
         <EditText
-            android:id="@+id/childName"
+            android:id="@+id/EditText_child_name"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -62,25 +75,13 @@
             android:textAlignment="textStart"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="?attr/colorPrimaryVariant"
-            app:layout_constraintStart_toEndOf="@+id/addProfilePic"
+            app:layout_constraintStart_toEndOf="@+id/ImageView_child_portrait"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/editIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:contentDescription="@string/CONTENT_DESCRIPTION"
-            android:src="@drawable/ic_baseline_edit_white_24_border"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/addProfilePic"
-            app:layout_constraintEnd_toEndOf="@+id/addProfilePic"
-            app:layout_constraintStart_toStartOf="@+id/addProfilePic"
-            app:layout_constraintTop_toTopOf="@+id/addProfilePic" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/viewFunctionBtn"
+        android:id="@+id/Button_child_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="45dp"

@@ -7,7 +7,7 @@
     tools:context=".ui.HelpActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_help"
+        android:id="@+id/ToolBar_help"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -19,7 +19,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
 
     <ScrollView
-        android:id="@+id/helpScroll"
+        android:id="@+id/ScrollView_help"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="55dp"
@@ -30,10 +30,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_help">
+        app:layout_constraintTop_toBottomOf="@id/ToolBar_help">
 
         <LinearLayout
-            android:id="@+id/helpLinearLayout"
+            android:id="@+id/LinearLayout_help"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/help_SectionTitle"
+                android:id="@+id/TextView_help_app_info_subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -53,25 +53,25 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/helpLinearLayout" />
+                app:layout_constraintTop_toTopOf="@+id/LinearLayout_help" />
 
             <TextView
-                android:id="@+id/developerTitle"
+                android:id="@+id/TextView_help_developers_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/subtitle_help_developer_names"
+                android:text="@string/subtitle_help_developers"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/help_SectionTitle"
+                app:layout_constraintTop_toTopOf="@+id/TextView_help_app_info_subtitle"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/helpTeamName"
+                android:id="@+id/TextView_help_team_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -82,10 +82,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/developerTitle" />
+                app:layout_constraintTop_toTopOf="@+id/TextView_help_developers_subtitle" />
 
             <TextView
-                android:id="@+id/helpDeveloperNames"
+                android:id="@+id/TextView_help_developer_names"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -95,10 +95,10 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpTeamName" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_team_name" />
 
             <TextView
-                android:id="@+id/helpCopyrightTitle"
+                android:id="@+id/TextView_help_copyright_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -109,10 +109,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpDeveloperNames" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_developer_names" />
 
             <TextView
-                android:id="@+id/helpSoundSubtitle"
+                android:id="@+id/TextView_help_sounds_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -123,25 +123,25 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpCopyrightTitle"
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_copyright_subtitle"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/helpCoinFlip"
+                android:id="@+id/TextView_help_coin_flip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/subtitle_help_flip_coin"
+                android:text="@string/help_coin_flip"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpSoundSubtitle" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_sounds_subtitle" />
 
             <TextView
-                android:id="@+id/helpCoinFlipLink"
+                android:id="@+id/TextView_help_coin_flip_sound_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -152,11 +152,11 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpCoinFlip"
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/helpCoinFlipFullLink"
+                android:id="@+id/TextView_help_coin_flip_sound_link_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -167,53 +167,53 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpCoinFlipLink" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_sound_link" />
 
             <TextView
-                android:id="@+id/helpAlarmSound"
+                android:id="@+id/TextView_help_timer_alarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/subtitle_help_timer"
+                android:text="@string/help_timer_alarm"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpCoinFlipFullLink" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_sound_link_text" />
 
             <TextView
-                android:id="@+id/helpAlarmSoundLink"
+                android:id="@+id/TextView_help_timer_alarm_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="3dp"
-                android:text="@string/link_alarm_sound"
+                android:text="@string/link_timer_alarm"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpAlarmSound"
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_alarm"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/helpAlarmSoundFullLink"
+                android:id="@+id/TextView_help_timer_alarm_link_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="3dp"
                 android:gravity="start"
-                android:text="@string/link_text_alarm_sound"
+                android:text="@string/link_text_timer_alarm"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpAlarmSoundLink" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_alarm_link" />
 
             <TextView
-                android:id="@+id/helpImagesSubtitle"
+                android:id="@+id/TextView_help_images_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -224,25 +224,25 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpAlarmSoundFullLink"
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_alarm_link_text"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/helpCalmImage"
+                android:id="@+id/TextView_help_timer_background"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/subtitle_help_timer_background"
+                android:text="@string/help_timer_background"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpImagesSubtitle" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_images_subtitle" />
 
             <TextView
-                android:id="@+id/helpCalmImageLink"
+                android:id="@+id/TextView_help_timer_background_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -254,10 +254,11 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpCalmImage" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_background"
+                tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/helpCalmImageFullLink"
+                android:id="@+id/TextView_help_timer_background_link_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -267,24 +268,24 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpCalmImageLink" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_background_link" />
 
             <TextView
-                android:id="@+id/helpCheckMark"
+                android:id="@+id/TextView_help_task_checkmark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/subtitle_help_task_checkmark"
+                android:text="@string/help_task_checkmark"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpCalmImageFullLink" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_background_link_text" />
 
             <TextView
-                android:id="@+id/helpCheckMarkLink"
+                android:id="@+id/TextView_help_task_checkmark_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -296,10 +297,11 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpCheckMark" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_task_checkmark"
+                tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/helpCheckMarkFullLink"
+                android:id="@+id/TextView_help_task_checkmark_link_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -309,24 +311,24 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpCheckMarkLink" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_task_checkmark_link" />
 
             <TextView
-                android:id="@+id/helpXMark"
+                android:id="@+id/TextView_help_coin_flip_history_x_mark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/subtitle_coin_flip_history_x_mark"
+                android:text="@string/help_coin_flip_history_x_mark"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpCheckMarkFullLink" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_task_checkmark_link_text" />
 
             <TextView
-                android:id="@+id/helpXLink"
+                android:id="@+id/TextView_help_coin_flip_history_x_mark_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -338,10 +340,11 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpXMark" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_history_x_mark"
+                tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/helpXFullLink"
+                android:id="@+id/TextView_help_coin_flip_history_x_mark_link_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -351,20 +354,21 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpXLink" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_history_x_mark_link" />
 
             <TextView
-                android:id="@+id/helpCopyrightSFU"
+                android:id="@+id/TextView_help_sfu_copyright_footer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="50dp"
-                android:text="@string/footer_help_copyright"
+                android:text="@string/footer_help_sfu_copyright"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/helpXFullLink" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_history_x_mark_link_text"
+                tools:ignore="TextContrastCheck" />
         </LinearLayout>
     </ScrollView>
 

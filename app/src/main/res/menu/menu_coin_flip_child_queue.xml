@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/toolbar_button_coin_flip_change_child"
+        android:id="@+id/menu_item_coin_flip_child_queue_coin_flip_change_child"
         android:title="@string/toolbar_button_change_child"
         app:showAsAction="ifRoom" />
 </menu>

@@ -7,7 +7,7 @@
     tools:context=".ui.tasks.TasksViewActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/customToolBar"
+        android:id="@+id/ToolBar_tasks_view"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/style_rounded_toolbar"
@@ -22,7 +22,7 @@
         app:titleTextColor="?attr/colorOnSecondary" />
 
     <ImageView
-        android:id="@+id/childPortrait"
+        android:id="@+id/ImageView_tasks_view_child_portrait"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="16dp"
@@ -31,10 +31,10 @@
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customToolBar" />
+        app:layout_constraintTop_toBottomOf="@+id/ToolBar_tasks_view" />
 
     <TextView
-        android:id="@+id/childNameText"
+        android:id="@+id/TextView_tasks_view_child_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -47,11 +47,39 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/childPortrait"
+        app:layout_constraintTop_toBottomOf="@+id/ImageView_tasks_view_child_portrait"
         tools:ignore="TextContrastCheck" />
 
+    <TextView
+        android:id="@+id/TextView_tasks_view_task_name_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/DEFAULT_TEXT"
+        android:textColor="?attr/colorPrimaryVariant"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextView_tasks_view_child_name" />
+
+    <TextView
+        android:id="@+id/TextView_tasks_view_task_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="none"
+        android:maxLines="5"
+        android:scrollHorizontally="false"
+        android:text="@string/DEFAULT_TEXT"
+        android:textColor="?attr/colorPrimaryVariant"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextView_tasks_view_task_name_subtitle" />
+
     <Button
-        android:id="@+id/completeTaskButton"
+        android:id="@+id/Button_tasks_view_complete_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -64,33 +92,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="TextContrastCheck" />
-
-    <TextView
-        android:id="@+id/taskTitleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/DEFAULT_TEXT"
-        android:textColor="?attr/colorPrimaryVariant"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/childNameText" />
-
-    <TextView
-        android:id="@+id/taskNameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ellipsize="none"
-        android:maxLines="5"
-        android:scrollHorizontally="false"
-        android:text="@string/DEFAULT_TEXT"
-        android:textColor="?attr/colorPrimaryVariant"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskTitleText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

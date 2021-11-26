@@ -13,8 +13,8 @@ import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
-import ca.cmpt276.titanium.model.Children;
-import ca.cmpt276.titanium.model.ChildrenQueue;
+import ca.cmpt276.titanium.model.ChildManager;
+import ca.cmpt276.titanium.model.CoinFlipChildQueue;
 import ca.cmpt276.titanium.model.CoinFlipHistory;
 
 /**
@@ -22,42 +22,42 @@ import ca.cmpt276.titanium.model.CoinFlipHistory;
  * Allows the user to change the current child turn.
  */
 public class CoinFlipChangeChildActivity extends AppCompatActivity {
-    private Children children;
-    private ChildrenQueue childrenQueue;
+    private ChildManager childManager;
+    private CoinFlipChildQueue coinFlipChildQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip_change_child);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.ToolBar_coin_flip_change_child);
         setSupportActionBar(myToolbar);
 
         setTitle(R.string.title_change_child);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        this.children = Children.getInstance(this);
-        this.childrenQueue = ChildrenQueue.getInstance(this);
+        this.childManager = ChildManager.getInstance(this);
+        this.coinFlipChildQueue = CoinFlipChildQueue.getInstance(this);
 
         displayChildrenList();
     }
 
     private void displayChildrenList() {
-        if (children.getChildren().size() == 0) {
-            findViewById(R.id.changeChildText).setVisibility(View.VISIBLE);
+        if (childManager.getChildren().size() == 0) {
+            findViewById(R.id.TextView_coin_flip_change_child_empty_state_message).setVisibility(View.VISIBLE);
         } else {
-            findViewById(R.id.changeChildText).setVisibility(View.INVISIBLE);
+            findViewById(R.id.TextView_coin_flip_change_child_empty_state_message).setVisibility(View.INVISIBLE);
         }
 
-        ArrayList<Child> childrenQueueCopy = new ArrayList<>(childrenQueue.getChildrenQueue());
-        ListView changeChildListView = findViewById(R.id.changeChildList);
+        ArrayList<Child> childrenQueueCopy = new ArrayList<>(coinFlipChildQueue.getChildrenQueue());
+        ListView changeChildListView = findViewById(R.id.ListView_coin_flip_change_child);
         CoinFlipChangeChildAdapter adapter = new CoinFlipChangeChildAdapter(this, childrenQueueCopy);
         changeChildListView.setAdapter(adapter);
         changeChildListView.setClickable(true);
 
         changeChildListView.setOnItemClickListener((parent, view, position, id) -> {
             UUID childUUID = childrenQueueCopy.get(position).getUniqueID();
-            childrenQueue.moveChildPositionToFront(childUUID);
+            coinFlipChildQueue.moveChildPositionToFront(childUUID);
             CoinFlipHistory.setNextPickerUniqueID(childUUID);
             finish();
         });

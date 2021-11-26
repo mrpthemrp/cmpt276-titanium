@@ -15,6 +15,8 @@ import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
 
+// TODO: Add green checkmark (we use two kinds of checkmark)
+
 /**
  * This class handles the help screen.
  */
@@ -30,7 +32,7 @@ public class HelpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_help);
         setTitle(getString(R.string.title_help));
 
-        Toolbar myToolbar = findViewById(R.id.toolbar_help);
+        Toolbar myToolbar = findViewById(R.id.ToolBar_help);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
@@ -38,19 +40,19 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     private void setUpHyperLinks() {
-        TextView coinLink = findViewById(R.id.helpCoinFlipLink);
+        TextView coinLink = findViewById(R.id.TextView_help_coin_flip_sound_link);
         coinLink.setMovementMethod(LinkMovementMethod.getInstance());
 
-        TextView calmImageLink = findViewById(R.id.helpCalmImageLink);
+        TextView calmImageLink = findViewById(R.id.TextView_help_timer_background_link);
         calmImageLink.setMovementMethod(LinkMovementMethod.getInstance());
 
-        TextView alarmLink = findViewById(R.id.helpAlarmSoundLink);
+        TextView alarmLink = findViewById(R.id.TextView_help_timer_alarm_link);
         alarmLink.setMovementMethod(LinkMovementMethod.getInstance());
 
-        TextView checkmarkImageLink = findViewById(R.id.helpCheckMarkLink);
+        TextView checkmarkImageLink = findViewById(R.id.TextView_help_task_checkmark_link);
         checkmarkImageLink.setMovementMethod(LinkMovementMethod.getInstance());
 
-        TextView xMarkImageLink = findViewById(R.id.helpXLink);
+        TextView xMarkImageLink = findViewById(R.id.TextView_help_coin_flip_history_x_mark_link);
         xMarkImageLink.setMovementMethod(LinkMovementMethod.getInstance());
     }
 

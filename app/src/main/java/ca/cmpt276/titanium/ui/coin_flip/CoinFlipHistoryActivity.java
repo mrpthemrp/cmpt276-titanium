@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +31,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_coin_flip_history);
         setTitle(R.string.title_coin_flip_history);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.customToolBar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.ToolBar_coin_flip_history);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
@@ -39,10 +39,10 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
         populateListView();
 
         if (coinFlipHistory.getCoinFlipHistory().size() == 0) {
-            ConstraintLayout emptyStateLayout = findViewById(R.id.emptyStateLayout);
-            emptyStateLayout.setVisibility(View.VISIBLE);
+            TextView emptyStateMessage = findViewById(R.id.TextView_coin_flip_history_empty_state_message);
+            emptyStateMessage.setVisibility(View.VISIBLE);
 
-            ListView listView = findViewById(R.id.coinFlipHistoryList);
+            ListView listView = findViewById(R.id.ListView_coin_flip_history);
             listView.setVisibility(View.INVISIBLE);
         }
     }
@@ -60,9 +60,9 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
     private void populateListView() {
         ArrayList<CoinFlip> coinFlipHistoryCopy = new ArrayList<>(coinFlipHistory.getCoinFlipHistory());
         Collections.reverse(coinFlipHistoryCopy);
-        CoinFlipHistoryListAdapter adapter = new CoinFlipHistoryListAdapter(this, coinFlipHistoryCopy);
+        CoinFlipHistoryAdapter adapter = new CoinFlipHistoryAdapter(this, coinFlipHistoryCopy);
 
-        ListView list = findViewById(R.id.coinFlipHistoryList);
+        ListView list = findViewById(R.id.ListView_coin_flip_history);
         list.setAdapter(adapter);
     }
 }

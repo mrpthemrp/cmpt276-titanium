@@ -20,10 +20,10 @@ import ca.cmpt276.titanium.model.Child;
 /**
  * This is an adapter for the coin flip queue list.
  */
-public class CoinFlipQueueAdapter extends ArrayAdapter<Child> {
+public class CoinFlipChildQueueAdapter extends ArrayAdapter<Child> {
     private final Context context;
 
-    public CoinFlipQueueAdapter(Context context, List<Child> children) {
+    public CoinFlipChildQueueAdapter(Context context, List<Child> children) {
         super(context, 0, children);
         this.context = context;
     }
@@ -32,16 +32,16 @@ public class CoinFlipQueueAdapter extends ArrayAdapter<Child> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_menu_children, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_child, parent, false);
         }
 
         Child child = getItem(position);
 
-        ImageView childQueueIcon = convertView.findViewById(R.id.childIcon);
+        ImageView childQueueIcon = convertView.findViewById(R.id.ImageView_item_child_portrait);
         RoundedBitmapDrawable drawable = child.getPortrait(context.getResources());
         childQueueIcon.setImageDrawable(drawable);
 
-        TextView childQueueNameText = convertView.findViewById(R.id.childNameList);
+        TextView childQueueNameText = convertView.findViewById(R.id.TextView_item_child_name);
         String childQueueName = child.getName();
         childQueueNameText.setText(childQueueName);
 

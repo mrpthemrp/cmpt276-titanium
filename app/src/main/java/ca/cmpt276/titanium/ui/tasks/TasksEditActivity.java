@@ -41,7 +41,7 @@ public class TasksEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tasks_add);
         setTitle(getString(R.string.title_edit_task));
 
-        Toolbar myToolbar = findViewById(R.id.customToolBar);
+        Toolbar myToolbar = findViewById(R.id.ToolBar_tasks_add);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
@@ -71,14 +71,14 @@ public class TasksEditActivity extends AppCompatActivity {
     }
 
     private void setupGUI() {
-        TextView titleAddText = findViewById(R.id.titleAddText);
+        TextView titleAddText = findViewById(R.id.TextView_tasks_add_task_name_subtitle);
         titleAddText.setText(R.string.subtitle_task_name);
 
         TaskManager taskManager = TaskManager.getInstance(this);
-        EditText taskNameInput = findViewById(R.id.userTaskName);
+        EditText taskNameInput = findViewById(R.id.EditText_tasks_add_task_name);
         taskNameInput.setText(taskManager.getTasks().get(taskIndex).getTaskName());
 
-        Button saveTaskButton = findViewById(R.id.saveTask);
+        Button saveTaskButton = findViewById(R.id.Button_tasks_add_save);
         saveTaskButton.setOnClickListener(view -> {
             if (taskNameInput.getText().toString().equals("")) {
                 updateToast(getString(R.string.toast_name_field_empty));

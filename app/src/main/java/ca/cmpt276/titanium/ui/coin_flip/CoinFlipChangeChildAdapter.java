@@ -32,16 +32,16 @@ public class CoinFlipChangeChildAdapter extends ArrayAdapter<Child> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_menu_children, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_child, parent, false);
         }
 
         Child child = getItem(position);
 
-        ImageView changeChildIcon = convertView.findViewById(R.id.childIcon);
+        ImageView changeChildIcon = convertView.findViewById(R.id.ImageView_item_child_portrait);
         RoundedBitmapDrawable drawable = child.getPortrait(context.getResources());
         changeChildIcon.setImageDrawable(drawable);
 
-        TextView childQueueNameText = convertView.findViewById(R.id.childNameList);
+        TextView childQueueNameText = convertView.findViewById(R.id.TextView_item_child_name);
         String changeChildName = child.getName();
         childQueueNameText.setText(changeChildName);
 
