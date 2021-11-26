@@ -126,10 +126,10 @@ public class ChildActivity extends AppCompatActivity {
                     getString(R.string.prompt_message_discard_changes),
                     getString(R.string.toast_changes_discarded), false);
             return true;
-        } else if (item.getItemId() == R.id.optionsEdit) {
+        } else if (item.getItemId() == R.id.toolbar_button_edit_child) {
             startActivity(ChildActivity.makeIntent(this, getString(R.string.title_edit_child), focusedChildUniqueID));
             return true;
-        } else if (item.getItemId() == R.id.optionsRemove) {
+        } else if (item.getItemId() == R.id.toolbar_button_delete_child) {
             launchPrompt(getString(R.string.prompt_title_delete_child, children.getChild(focusedChildUniqueID).getName()),
                     getString(R.string.prompt_message_delete_child),
                     getString(R.string.toast_child_deleted), true);

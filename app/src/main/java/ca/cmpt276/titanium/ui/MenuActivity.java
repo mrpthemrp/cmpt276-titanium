@@ -68,7 +68,7 @@ public class MenuActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else if (item.getItemId() == R.id.optionsEdit) {
+        } else if (item.getItemId() == R.id.toolbar_button_edit_child) {
             return true;
         } else {
             return super.onOptionsItemSelected(item);

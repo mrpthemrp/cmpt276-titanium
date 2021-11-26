@@ -47,7 +47,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/childPortrait" />
+        app:layout_constraintTop_toBottomOf="@+id/childPortrait"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/completeTaskButton"
@@ -61,7 +62,8 @@
         android:textColor="?attr/colorOnSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/taskTitleText"

@@ -80,10 +80,10 @@ public class CoinFlipActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else if (item.getItemId() == R.id.viewHistoryButton) {
+        } else if (item.getItemId() == R.id.toolbar_button_coin_flip_history) {
             startActivity(new Intent(this, CoinFlipHistoryActivity.class));
             return true;
-        } else if (item.getItemId() == R.id.viewQueueButton) {
+        } else if (item.getItemId() == R.id.toolbar_button_coin_flip_queue) {
             startActivity(new Intent(this, CoinFlipQueueActivity.class));
             return true;
         } else {

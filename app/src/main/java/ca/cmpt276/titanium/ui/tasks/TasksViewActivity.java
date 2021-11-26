@@ -79,10 +79,10 @@ public class TasksViewActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else if (item.getItemId() == R.id.taskEdit) {
+        } else if (item.getItemId() == R.id.toolbar_button_edit_task) {
             startActivity(TasksEditActivity.makeIntent(this, taskIndex));
             return true;
-        } else if (item.getItemId() == R.id.taskRemove) {
+        } else if (item.getItemId() == R.id.toolbar_button_delete_task) {
             launchDeleteTaskPrompt();
             return true;
         } else {

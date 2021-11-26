@@ -54,7 +54,7 @@ public class TasksActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else if (item.getItemId() == R.id.taskAdd) {
+        } else if (item.getItemId() == R.id.toolbar_button_add_task) {
             startActivity(TasksAddActivity.makeIntent(this));
             return true;
         } else {

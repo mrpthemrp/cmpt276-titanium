@@ -45,7 +45,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentChildTitleText" />
+        app:layout_constraintTop_toBottomOf="@+id/currentChildTitleText"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/currentChildTitleText"
@@ -58,7 +59,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentChildTurnIcon" />
+        app:layout_constraintTop_toBottomOf="@+id/currentChildTurnIcon"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/queueTitleText"
@@ -72,7 +74,8 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/currentChildTurnText" />
+        app:layout_constraintTop_toBottomOf="@id/currentChildTurnText"
+        tools:ignore="TextContrastCheck" />
 
     <ListView
         android:id="@+id/childrenQueueList"
@@ -85,8 +88,7 @@
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/queueTitleText"
-        tools:ignore="TouchTargetSizeCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/queueTitleText" />
 
     <TextView
         android:id="@+id/childrenQueueListText"

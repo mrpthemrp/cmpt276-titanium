@@ -50,7 +50,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_coinflipqueue, menu);
+        getMenuInflater().inflate(R.menu.menu_coin_flip_queue, menu);
         return true;
     }
 
@@ -66,7 +66,7 @@ public class CoinFlipQueueActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else if (item.getItemId() == R.id.changeChildButton) {
+        } else if (item.getItemId() == R.id.toolbar_button_coin_flip_change_child) {
             startActivity(new Intent(this, CoinFlipChangeChildActivity.class));
             return true;
         } else {

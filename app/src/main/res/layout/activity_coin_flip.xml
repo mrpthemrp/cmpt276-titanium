@@ -58,7 +58,8 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/sideChosenText"
             app:layout_constraintStart_toEndOf="@+id/coinFlipChildIcon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextContrastCheck" />
 
         <TextView
             android:id="@+id/sideChosenText"
@@ -72,7 +73,8 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/coinFlipChildIcon"
-            app:layout_constraintTop_toBottomOf="@+id/childTurnText" />
+            app:layout_constraintTop_toBottomOf="@+id/childTurnText"
+            tools:ignore="TextContrastCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -123,6 +125,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginBottom="16dp"
+        android:contentDescription="@string/CONTENT_DESCRIPTION"
         app:layout_constraintBottom_toTopOf="@+id/coinFlipResult"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -130,7 +133,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_coin_blank_yellow_200"
-        tools:ignore="ContentDescription,ImageContrastCheck" />
+        tools:ignore="ImageContrastCheck" />
 
     <TextView
         android:id="@+id/coinFlipResult"
