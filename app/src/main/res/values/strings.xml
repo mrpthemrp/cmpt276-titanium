@@ -84,6 +84,8 @@
     <string name="button_menu_flip_coin">Flip Coin</string>
     <string name="button_menu_tasks">Tasks</string>
     <string name="button_menu_timer">Timer</string>
+    <string name="button_menu_breath">Breathe</string>
+    <string name="button_menu_help">App Info</string>
     <string name="menu_empty_state_message">No childManager added yet!</string>
     <string name="subtitle_default_menu">Hello there!</string>
     <string name="subtitle_menu_afternoon">Good Afternoon</string>
