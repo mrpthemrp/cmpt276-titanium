@@ -23,9 +23,6 @@
         android:roundIcon="@mipmap/ic_launcher_practical_parent_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Titanium">
-        <activity
-            android:name=".ui.TakeBreathActivity"
-            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -41,6 +38,12 @@
 
         <service android:name=".ui.timer.TimerService" />
 
+        <activity
+            android:name=".ui.TakeBreathActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:exported="true"
+            android:parentActivityName=".ui.MenuActivity"
+            android:theme="@style/Theme.Titanium" />
         <activity
             android:name=".ui.HelpActivity"
             android:configChanges="keyboard|keyboardHidden"
