@@ -138,7 +138,7 @@
 
     <!-- Take Breath -->
     <string name="breath_start">Begin</string>
-    <string name="breath_message">Let\'\s take $1%d breaths together</string>
+    <string name="breath_message">Let\'\s take ______ breaths together</string>
     <string name="breath_num_breaths_title">Number of Breaths: </string>
     <string name="breath_num_breaths_btn_text">Set Breath Number</string>
     <string name="breath_in">In</string>
