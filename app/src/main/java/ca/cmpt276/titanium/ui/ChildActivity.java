@@ -54,7 +54,7 @@ public class ChildActivity extends AppCompatActivity {
   private static final String CHILD_UNIQUE_ID_KEY = "childUniqueID";
   private static final String ADD_CHILD_INTENT = "Add Child";
   private static final String EDIT_CHILD_INTENT = "Edit Child";
-  private static final String VIEW_CHILD_INTENT = "View Child";
+  private static final String VIEW_CHILD_INTENT = "Manage Child";
 
   private String intentType;
   private ChildManager childManager;
@@ -73,7 +73,6 @@ public class ChildActivity extends AppCompatActivity {
     Intent intent = new Intent(context, ChildActivity.class);
     intent.putExtra(INTENT_TYPE_KEY, intentType);
     intent.putExtra(CHILD_UNIQUE_ID_KEY, childUniqueID);
-
     return intent;
   }
 
@@ -229,9 +228,8 @@ public class ChildActivity extends AppCompatActivity {
     Button saveButton = findViewById(R.id.Button_child_save);
     saveButton.setVisibility(View.VISIBLE);
 
-    String childName = childNameInput.getText().toString();
-
     saveButton.setOnClickListener(view -> {
+      String childName = childNameInput.getText().toString();
       if (childName.equals("")) {
         updateToast(getString(R.string.toast_name_field_empty));
       } else {
@@ -288,15 +286,14 @@ public class ChildActivity extends AppCompatActivity {
       return false;
     });
 
-    String childName = childNameInput.getText().toString();
-
     childNameInput.addTextChangedListener(new TextWatcher() {
       @Override
-      public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-      }
+      public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
       @Override
       public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        String childName = childNameInput.getText().toString();
+
         if (intentType.equals(ADD_CHILD_INTENT)) {
           changesAccepted = childName.equals("");
         } else if (intentType.equals(EDIT_CHILD_INTENT)) {
@@ -305,8 +302,7 @@ public class ChildActivity extends AppCompatActivity {
       }
 
       @Override
-      public void afterTextChanged(Editable editable) {
-      }
+      public void afterTextChanged(Editable editable) {}
     });
   }
 

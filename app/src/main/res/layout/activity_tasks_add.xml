@@ -7,7 +7,7 @@
     android:backgroundTint="?attr/colorPrimary"
     android:backgroundTintMode="src_in"
     android:theme="@style/Theme.Titanium"
-    tools:context=".ui.tasks.TasksAddActivity">
+    tools:context=".ui.tasks.TasksEditActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/ToolBar_tasks_add"

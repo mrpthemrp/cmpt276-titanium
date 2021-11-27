@@ -90,7 +90,8 @@ public class TasksViewActivity extends AppCompatActivity {
       finish();
       return true;
     } else if (item.getItemId() == R.id.menu_item_tasks_view_edit_task) {
-      startActivity(TasksEditActivity.makeIntent(this, taskIndex));
+      startActivity(TasksEditActivity.makeIntent(
+          this, getString(R.string.intent_edit_task), taskIndex));
       return true;
     } else if (item.getItemId() == R.id.menu_item_tasks_view_delete_task) {
       launchDeleteTaskPrompt();
@@ -101,17 +102,16 @@ public class TasksViewActivity extends AppCompatActivity {
   }
 
   private void displayTaskData() {
-    String taskName = task.getTaskName();
-    String childName =
-        task.getChildUniqueID() == null
-            ? getString(R.string.default_name_no_children)
-            : child.getName();
-
     TextView taskNameText = findViewById(R.id.TextView_tasks_view_task_name);
-    taskNameText.setText(taskName);
+    taskNameText.setText(taskManager.getTasks().get(taskIndex).getTaskName());
 
     TextView childNameText = findViewById(R.id.TextView_tasks_view_child_name);
-    childNameText.setText(getString(R.string.tasks_next_child_name, childName));
+
+    if (task.getChildUniqueID() == null) {
+      childNameText.setText(getString(R.string.default_name_no_children));
+    } else {
+      childNameText.setText(getString(R.string.tasks_next_child_name, child.getName()));
+    }
 
     ImageView childPortraitView = findViewById(R.id.ImageView_tasks_view_child_portrait);
 

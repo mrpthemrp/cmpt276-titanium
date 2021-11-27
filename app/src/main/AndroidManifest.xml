@@ -23,9 +23,6 @@
         android:roundIcon="@mipmap/ic_launcher_practical_parent_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Titanium">
-        <activity
-            android:name=".ui.TakeBreathActivity"
-            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -42,13 +39,18 @@
         <service android:name=".ui.timer.TimerService" />
 
         <activity
+            android:name=".ui.TakeBreathActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:exported="true"
+            android:parentActivityName=".ui.MenuActivity" />
+        <activity
             android:name=".ui.HelpActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"
             android:theme="@style/Theme.Titanium.Help" />
         <activity
-            android:name=".ui.tasks.TasksAddActivity"
+            android:name=".ui.tasks.TasksEditActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:theme="@style/Theme.Titanium" />
@@ -60,7 +62,7 @@
         <activity
             android:name=".ui.coinflip.ChangeChildActivity"
             android:configChanges="keyboard|keyboardHidden"
-            android:exported="false"
+            android:exported="true"
             android:parentActivityName=".ui.coinflip.ChildQueueActivity" />
         <activity
             android:name=".ui.coinflip.ChildQueueActivity"
@@ -72,12 +74,6 @@
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".ui.MenuActivity"
-            android:theme="@style/Theme.Titanium" />
-        <activity
-            android:name=".ui.tasks.TasksEditActivity"
-            android:configChanges="keyboard|keyboardHidden"
-            android:exported="true"
-            android:parentActivityName=".ui.tasks.TasksViewActivity"
             android:theme="@style/Theme.Titanium" />
         <activity
             android:name=".ui.coinflip.CoinFlipHistoryActivity"
