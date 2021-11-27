@@ -51,7 +51,7 @@ public class TasksEditActivity extends AppCompatActivity {
     this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
     this.taskIndex = getIntent().getIntExtra(TASK_INDEX_KEY, INVALID_TASK_INDEX);
 
-    if (intentType.equals(getString(R.string.intent_edit_task))
+    if (intentType.equals(getString(R.string.title_edit_task))
         && taskIndex == INVALID_TASK_INDEX) {
       finish();
     }
@@ -83,7 +83,7 @@ public class TasksEditActivity extends AppCompatActivity {
   }
 
   private void setupGUI() {
-    if (intentType.equals(getString(R.string.intent_edit_task))) {
+    if (intentType.equals(getString(R.string.title_edit_task))) {
       TextView titleAddText = findViewById(R.id.TextView_tasks_add_task_name_subtitle);
       titleAddText.setText(R.string.subtitle_task_name);
 

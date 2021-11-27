@@ -91,7 +91,7 @@ public class TasksViewActivity extends AppCompatActivity {
       return true;
     } else if (item.getItemId() == R.id.menu_item_tasks_view_edit_task) {
       startActivity(TasksEditActivity.makeIntent(
-          this, getString(R.string.intent_edit_task), taskIndex));
+          this, getString(R.string.title_edit_task), taskIndex));
       return true;
     } else if (item.getItemId() == R.id.menu_item_tasks_view_delete_task) {
       launchDeleteTaskPrompt();

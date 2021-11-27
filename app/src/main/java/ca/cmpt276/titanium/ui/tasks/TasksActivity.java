@@ -55,7 +55,7 @@ public class TasksActivity extends AppCompatActivity {
       finish();
       return true;
     } else if (item.getItemId() == R.id.menu_item_tasks_add_task) {
-      startActivity(TasksEditActivity.makeIntent(this, getString(R.string.intent_add_task), -1));
+      startActivity(TasksEditActivity.makeIntent(this, getString(R.string.title_add_task), -1));
       return true;
     } else {
       return super.onOptionsItemSelected(item);

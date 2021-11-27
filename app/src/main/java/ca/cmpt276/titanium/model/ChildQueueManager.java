@@ -17,7 +17,7 @@ import java.util.UUID;
  */
 public class ChildQueueManager {
   private static final Gson GSON = new Gson();
-  private static final String CHILD_QUEUE_JSON_KEY = "childrenQueueJson";
+  private static final String CHILD_QUEUE_JSON_KEY = "childQueueJson";
 
   private static ChildQueueManager instance;
   private static SharedPreferences prefs;

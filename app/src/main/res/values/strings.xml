@@ -56,20 +56,20 @@
     <!-- Help -->
     <string name="footer_help_sfu_copyright">SFU Fall 2021 | CMPT 276</string>
     <string name="help_coin_flip">Coin Flip</string>
+    <string name="help_coin_flip_history_checkmark">Coin Flip History Checkmark</string>
     <string name="help_coin_flip_history_x_mark">Coin Flip History X-Mark</string>
     <string name="help_developer_names">• Haris Ahmad\n• Christopher Torunski\n• Michelle Vong\n• Deborah Wang</string>
-    <string name="help_task_checkmark">Task Checkmark</string>
     <string name="help_team_name">Team Titanium</string>
     <string name="help_timer_alarm">Timer Alarm</string>
     <string name="help_timer_background">Timer Background</string>
+    <string name="link_coin_flip_history_checkmark"><a href="https://www.vhv.rs/dpng/f/406-4067045_checkmark-png.png">Click here to go to image link</a></string>
     <string name="link_coin_flip_history_x_mark"><a href="https://www.nicepng.com/png/full/910-9107823_circle-cross-png.png">Click here to go to image link</a></string>
     <string name="link_coin_flip_sound"><a href="https://www.youtube.com/watch?v=1QxX9ruPUXM">Click here to go to YouTube link</a></string>
-    <string name="link_task_checkmark"><a href="https://www.vhv.rs/dpng/f/406-4067045_checkmark-png.png">Click here to go to image link</a></string>
-    <string name="link_text_coin_flip_history_x_mark">Link Address: www.nicepng.com/png/full/910–9107823_circle-cross-png.png</string>
-    <string name="link_text_coin_flip_sound">Link Address: youtube.com/watch?v=1QxX9ruPUXM</string>
-    <string name="link_text_task_checkmark">Link Address: www.vhv.rs/dpng/f/406–4067045_checkmark-png.png</string>
-    <string name="link_text_timer_alarm">Link Address: youtube.com/watch?v=kcT-i9xzC-8</string>
-    <string name="link_text_timer_background">Link Address: unsplash.com/photos/4N6qT784t3A</string>
+    <string name="link_text_coin_flip_history_x_mark">Link Address: https://www.nicepng.com/png/full/910–9107823_circle-cross-png.png</string>
+    <string name="link_text_coin_flip_sound">Link Address: https://www.youtube.com/watch?v=1QxX9ruPUXM</string>
+    <string name="link_text_task_checkmark">Link Address: https://www.vhv.rs/dpng/f/406–4067045_checkmark-png.png</string>
+    <string name="link_text_timer_alarm">Link Address: https://www.youtube.com/watch?v=kcT-i9xzC-8</string>
+    <string name="link_text_timer_background">Link Address: https://unsplash.com/photos/4N6qT784t3A</string>
     <string name="link_timer_alarm"><a href="https://www.youtube.com/watch?v=kcT-i9xzC-8">Click here to go to YouTube link</a></string>
     <string name="link_timer_background"><a href="https://unsplash.com/photos/4N6qT784t3A">Click here to go to image link</a></string>
     <string name="subtitle_help_app_info">App Information</string>
@@ -136,7 +136,5 @@
 
     <!-- New -->
     <string name="NEW_STRINGS_BELOW">NEW_STRINGS_BELOW</string>
-    <string name="intent_edit_task">Edit Task</string>
-    <string name="intent_add_task">Add Task</string>
 
 </resources>
