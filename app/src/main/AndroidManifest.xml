@@ -23,6 +23,9 @@
         android:roundIcon="@mipmap/ic_launcher_practical_parent_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Titanium">
+        <activity
+            android:name=".ui.TakeBreathActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -47,13 +50,13 @@
         <activity
             android:name=".ui.tasks.TasksAddActivity"
             android:configChanges="keyboard|keyboardHidden"
-            android:theme="@style/Theme.Titanium"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.Titanium" />
         <activity
             android:name=".ui.tasks.TasksViewActivity"
-            android:theme="@style/Theme.Titanium"
             android:configChanges="keyboard|keyboardHidden"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.Titanium" />
         <activity
             android:name=".ui.coin_flip.CoinFlipChangeChildActivity"
             android:configChanges="keyboard|keyboardHidden"
@@ -68,8 +71,8 @@
             android:name=".ui.tasks.TasksActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
-            android:theme="@style/Theme.Titanium"
-            android:parentActivityName=".ui.MenuActivity" />
+            android:parentActivityName=".ui.MenuActivity"
+            android:theme="@style/Theme.Titanium" />
         <activity
             android:name=".ui.tasks.TasksEditActivity"
             android:configChanges="keyboard|keyboardHidden"
