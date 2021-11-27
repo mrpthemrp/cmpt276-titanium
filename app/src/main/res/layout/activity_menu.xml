@@ -117,7 +117,7 @@
             tools:ignore="TextContrastCheck" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/MaterialButton_menu_Breath"
+            android:id="@+id/MaterialButton_menu_breath"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="100dp"
             android:layout_height="100dp"
