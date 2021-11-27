@@ -12,6 +12,9 @@ import com.google.android.material.button.MaterialButton;
 import ca.cmpt276.titanium.R;
 
 public class TakeBreathActivity extends AppCompatActivity {
+  public static final int START_SCREEN =0;
+  public static final int IN_PROGRESS =1;
+  public static final int END_SCREEN =2;
 
   public static Intent makeIntent(Context context) {
     return new Intent(context, TakeBreathActivity.class);
