@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.coin_flip.CoinFlipChangeChildActivity">
+    tools:context=".ui.coinflip.ChangeChildActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/ToolBar_coin_flip_change_child"
+        android:id="@+id/ToolBar_change_child"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/style_rounded_toolbar"
@@ -22,7 +22,7 @@
         app:titleTextColor="?attr/colorOnSecondary" />
 
     <ListView
-        android:id="@+id/ListView_coin_flip_change_child"
+        android:id="@+id/ListView_change_child"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="20dp"
@@ -34,10 +34,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ToolBar_coin_flip_change_child" />
+        app:layout_constraintTop_toBottomOf="@+id/ToolBar_change_child" />
 
     <TextView
-        android:id="@+id/TextView_coin_flip_change_child_empty_state_message"
+        android:id="@+id/TextView_change_child_empty_state_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -49,6 +49,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ToolBar_coin_flip_change_child"
+        app:layout_constraintTop_toBottomOf="@+id/ToolBar_change_child"
         app:layout_constraintVertical_bias="0.472" />
 </androidx.constraintlayout.widget.ConstraintLayout>

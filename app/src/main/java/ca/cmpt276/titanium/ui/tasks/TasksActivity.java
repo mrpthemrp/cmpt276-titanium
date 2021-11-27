@@ -22,55 +22,59 @@ import ca.cmpt276.titanium.model.TaskManager;
  * This class displays all tasks.
  */
 public class TasksActivity extends AppCompatActivity {
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, TasksActivity.class);
+  public static Intent makeIntent(Context context) {
+    return new Intent(context, TasksActivity.class);
+  }
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_tasks);
+    setTitle(R.string.title_view_all_tasks);
+
+    Toolbar toolbar = findViewById(R.id.ToolBar_tasks);
+    setSupportActionBar(toolbar);
+    Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_tasks, menu);
+    return true;
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    populateTaskList();
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    if (item.getItemId() == android.R.id.home) {
+      finish();
+      return true;
+    } else if (item.getItemId() == R.id.menu_item_tasks_add_task) {
+      startActivity(TasksAddActivity.makeIntent(this));
+      return true;
+    } else {
+      return super.onOptionsItemSelected(item);
     }
+  }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tasks);
-        setTitle(R.string.title_view_all_tasks);
+  private void populateTaskList() {
+    TaskManager taskManager = TaskManager.getInstance(this);
+    TaskAdapter taskAdapter = new TaskAdapter(this, taskManager.getTasks());
 
-        Toolbar toolbar = findViewById(R.id.ToolBar_tasks);
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-    }
+    ListView taskListView = findViewById(R.id.ListView_tasks);
+    taskListView.setAdapter(taskAdapter);
+    taskListView.setOnItemClickListener((adapterView, view, i, l) ->
+        startActivity(TasksViewActivity.makeIntent(this, i)));
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_tasks, menu);
-        return true;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        populateTaskList();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        } else if (item.getItemId() == R.id.menu_item_tasks_add_task) {
-            startActivity(TasksAddActivity.makeIntent(this));
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void populateTaskList() {
-        TaskManager taskManager = TaskManager.getInstance(this);
-        TasksAdapter tasksAdapter = new TasksAdapter(this, taskManager.getTasks());
-
-        ListView taskListView = findViewById(R.id.ListView_tasks);
-        taskListView.setAdapter(tasksAdapter);
-        taskListView.setOnItemClickListener((adapterView, view, i, l) -> startActivity(TasksViewActivity.makeIntent(this, i)));
-
-        TextView noTasksMessage = findViewById(R.id.TextView_tasks_empty_state_message);
-        noTasksMessage.setVisibility(taskManager.getTasks().size() == 0 ? View.VISIBLE : View.INVISIBLE);
-    }
+    TextView noTasksMessage = findViewById(R.id.TextView_tasks_empty_state_message);
+    noTasksMessage.setVisibility(
+        taskManager.getTasks().size() == 0
+            ? View.VISIBLE
+            : View.INVISIBLE);
+  }
 }

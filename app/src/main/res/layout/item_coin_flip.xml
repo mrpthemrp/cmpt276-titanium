@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
-    tools:context=".ui.coin_flip.CoinFlipHistoryAdapter">
+    tools:context=".ui.coinflip.CoinFlipAdapter">
 
     <ImageView
         android:id="@+id/ImageView_item_coin_flip_result"
         android:layout_width="68dp"
         android:layout_height="68dp"
         android:layout_marginStart="16dp"
+        android:contentDescription="@string/CONTENT_DESCRIPTION"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/CONTENT_DESCRIPTION" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstraintLayout_item_coin_flip_text"
@@ -64,11 +64,11 @@
         android:layout_height="60dp"
         android:layout_marginEnd="16dp"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/CONTENT_DESCRIPTION"
         android:cropToPadding="true"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/CONTENT_DESCRIPTION" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
