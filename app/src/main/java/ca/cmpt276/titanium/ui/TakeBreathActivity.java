@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
+import com.google.android.material.button.MaterialButton;
 
 import ca.cmpt276.titanium.R;
 
@@ -18,5 +21,8 @@ public class TakeBreathActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_take_breath);
+
+    MaterialButton goHome = findViewById(R.id.breathGoHomeBtn);
+    goHome.setOnClickListener(view -> finish()); //TODO update with proper method
   }
 }

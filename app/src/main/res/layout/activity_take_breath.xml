@@ -6,4 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.TakeBreathActivity">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/breathGoHomeBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/ic_baseline_home_24"
+        android:backgroundTint="?attr/colorSecondary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>
