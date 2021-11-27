@@ -7,7 +7,7 @@
     android:background="@drawable/style_rounded_button_60"
     android:backgroundTint="?attr/colorSecondary"
     android:padding="8dp"
-    tools:context=".ui.coin_flip.CoinFlipHistoryAdapter">
+    tools:context=".ui.coinflip.CoinFlipAdapter">
 
     <ImageView
         android:id="@+id/ImageView_item_child_portrait"

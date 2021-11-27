@@ -9,37 +9,38 @@ import java.util.UUID;
  * This class represents a single coin flip.
  */
 public class CoinFlip {
-    private final UUID pickerUniqueID;
-    private final Coin chosenSide;
-    private final String timeOfFlip;
-    private final Coin result;
+  private final UUID pickerUniqueID;
+  private final Coin chosenSide;
+  private final String timeOfFlip;
+  private final Coin result;
 
-    public CoinFlip(UUID pickerUniqueID, Coin chosenSide, Coin result) {
-        this.pickerUniqueID = pickerUniqueID;
-        this.chosenSide = chosenSide;
-        this.timeOfFlip = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MMM-yyyy, HH:mm:ss"));
-        this.result = result;
-    }
+  public CoinFlip(UUID pickerUniqueID, Coin chosenSide, Coin result) {
+    this.pickerUniqueID = pickerUniqueID;
+    this.chosenSide = chosenSide;
+    this.timeOfFlip =
+        LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MMM-yyyy, " + "HH:mm:ss"));
+    this.result = result;
+  }
 
-    public static Coin flipCoin() {
-        Coin[] coins = Coin.values();
-        Random random = new Random();
-        return coins[random.nextInt(coins.length)];
-    }
+  public static Coin flipCoin() {
+    Coin[] coins = Coin.values();
+    Random random = new Random();
+    return coins[random.nextInt(coins.length)];
+  }
 
-    public UUID getPickerUniqueID() {
-        return pickerUniqueID;
-    }
+  public UUID getPickerUniqueID() {
+    return pickerUniqueID;
+  }
 
-    public Coin getChosenSide() {
-        return chosenSide;
-    }
+  public Coin getChosenSide() {
+    return chosenSide;
+  }
 
-    public String getTimeOfFlip() {
-        return timeOfFlip;
-    }
+  public String getTimeOfFlip() {
+    return timeOfFlip;
+  }
 
-    public Coin getResult() {
-        return result;
-    }
+  public Coin getResult() {
+    return result;
+  }
 }

@@ -17,112 +17,107 @@ import java.util.UUID;
  * Handles loading and saving from JSON. Generates a unique ID for a child.
  */
 public class ChildManager {
-    private static final Gson GSON = new Gson();
-    private static final String CHILDREN_JSON_KEY = "childrenJson";
+  private static final Gson GSON = new Gson();
+  private static final String CHILDREN_JSON_KEY = "childrenJson";
 
-    private static ChildManager instance;
-    private static SharedPreferences prefs;
-    private static CoinFlipHistory coinFlipHistory;
-    private static CoinFlipChildQueue coinFlipChildQueue;
-    private static TaskManager taskManager;
+  private static ChildManager instance;
+  private static SharedPreferences prefs;
+  private static CoinFlipManager coinFlipManager;
+  private static ChildQueueManager childQueueManager;
+  private static TaskManager taskManager;
 
-    private static ArrayList<Child> children = new ArrayList<>();
+  private static ArrayList<Child> children = new ArrayList<>();
 
-    private ChildManager(Context context) {
-        ChildManager.prefs = PreferenceManager.getDefaultSharedPreferences(context);
+  private ChildManager(Context context) {
+    ChildManager.prefs = PreferenceManager.getDefaultSharedPreferences(context);
+  }
+
+  public static ChildManager getInstance(Context context) {
+    if (instance == null) {
+      ChildManager.instance = new ChildManager(context);
+      ChildManager.coinFlipManager = CoinFlipManager.getInstance(context);
+      ChildManager.childQueueManager = ChildQueueManager.getInstance(context);
+      ChildManager.taskManager = TaskManager.getInstance(context);
     }
 
-    public static ChildManager getInstance(Context context) {
-        if (instance == null) {
-            ChildManager.instance = new ChildManager(context);
-            ChildManager.coinFlipHistory = CoinFlipHistory.getInstance(context);
-            ChildManager.coinFlipChildQueue = CoinFlipChildQueue.getInstance(context);
-            ChildManager.taskManager = TaskManager.getInstance(context);
+    loadSavedData();
+    return instance;
+  }
+
+  private static void loadSavedData() {
+    String childrenJson = prefs.getString(CHILDREN_JSON_KEY, null);
+
+    if (childrenJson != null) {
+      Type childrenType = new TypeToken<ArrayList<Child>>() {
+      }.getType();
+
+      ChildManager.children = GSON.fromJson(childrenJson, childrenType);
+    }
+  }
+
+  private void saveData() {
+    String childrenJson = GSON.toJson(children);
+    prefs.edit().putString(CHILDREN_JSON_KEY, childrenJson).apply();
+  }
+
+  public Child getChild(UUID uniqueID) {
+    if (uniqueID != null) {
+      for (int i = 0; i < children.size(); i++) {
+        if (uniqueID.equals(children.get(i).getUniqueID())) {
+          return children.get(i);
         }
-
-        loadSavedData();
-        return instance;
+      }
     }
 
-    private static void loadSavedData() {
-        String childrenJson = prefs.getString(CHILDREN_JSON_KEY, null);
+    return null;
+  }
 
-        if (childrenJson != null) {
-            Type childrenType = new TypeToken<ArrayList<Child>>() {
-            }.getType();
+  public void addChild(String name, String portraitPath) {
+    Child newChild = new Child(name, portraitPath);
 
-            ChildManager.children = GSON.fromJson(childrenJson, childrenType);
+    ChildManager.children.add(newChild);
+    saveData();
+
+    coinFlipManager.updateCoinFlipHistory(true, newChild.getUniqueID());
+
+    childQueueManager.addChild(newChild.getUniqueID());
+
+    if (children.size() == 1) {
+      taskManager.addToAllTasks(children.get(0).getUniqueID());
+    }
+  }
+
+  public void removeChild(UUID uniqueID) {
+    if (uniqueID != null) {
+      for (int i = 0; i < children.size(); i++) {
+        if (uniqueID.equals(children.get(i).getUniqueID())) {
+          coinFlipManager.updateCoinFlipHistory(false, uniqueID);
+
+          childQueueManager.removeChild(uniqueID);
+
+          int childrenIndex = children.indexOf(getChild(uniqueID)) + 1;
+          UUID nextUniqueID = children.get(childrenIndex % children.size()).getUniqueID();
+          nextUniqueID = (children.size() != 1) ? nextUniqueID : null;
+          taskManager.updateTasksBeforeRemovingChild(uniqueID, nextUniqueID);
+
+          ChildManager.children.remove(i);
+          saveData();
+          break;
         }
+      }
     }
+  }
 
-    private void saveData() {
-        String childrenJson = GSON.toJson(children);
-        prefs.edit().putString(CHILDREN_JSON_KEY, childrenJson).apply();
+  public void setChildName(UUID uniqueID, String name) {
+    Child child = getChild(uniqueID);
+
+    if (child != null) {
+      child.setName(name);
+      saveData();
     }
+  }
 
-    public Child getChild(UUID uniqueID) {
-        if (uniqueID != null) {
-            for (int i = 0; i < children.size(); i++) {
-                if (uniqueID.equals(children.get(i).getUniqueID())) {
-                    return children.get(i);
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public void addChild(String name, String portraitPath) {
-        Child newChild = new Child(name, portraitPath);
-
-        ChildManager.children.add(newChild);
-        saveData();
-
-        coinFlipHistory.updateCoinFlipHistory(true, newChild.getUniqueID());
-
-        coinFlipChildQueue.getChildrenQueue().add(newChild);
-        coinFlipChildQueue.saveData();
-
-        if (children.size() == 1) {
-            taskManager.addToAllTasks(children.get(0).getUniqueID());
-        }
-    }
-
-    public void removeChild(UUID uniqueID) {
-        if (uniqueID != null) {
-            for (int i = 0; i < children.size(); i++) {
-                if (uniqueID.equals(children.get(i).getUniqueID())) {
-                    coinFlipHistory.updateCoinFlipHistory(false, uniqueID);
-
-                    coinFlipChildQueue.getChildrenQueue().remove(coinFlipChildQueue.getChildQueueIndex(uniqueID));
-                    coinFlipChildQueue.saveData();
-
-                    UUID nextUniqueID = children.get((children.indexOf(getChild(uniqueID)) + 1) % children.size()).getUniqueID();
-                    nextUniqueID = (children.size() != 1) ? nextUniqueID : null;
-                    taskManager.updateTasksBeforeRemovingChild(uniqueID, nextUniqueID);
-
-                    ChildManager.children.remove(i);
-                    saveData();
-                    break;
-                }
-            }
-        }
-    }
-
-    public void setChildName(UUID uniqueID, String name) {
-        Child child = getChild(uniqueID);
-        Child childInQueue = coinFlipChildQueue.getChild(uniqueID);
-
-        if (child != null) {
-            child.setName(name);
-            saveData();
-
-            childInQueue.setName(name);
-            coinFlipChildQueue.saveData();
-        }
-    }
-
-    public ArrayList<Child> getChildren() {
-        return children;
-    }
+  public ArrayList<Child> getChildren() {
+    return children;
+  }
 }
