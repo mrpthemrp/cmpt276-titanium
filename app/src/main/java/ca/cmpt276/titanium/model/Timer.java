@@ -9,17 +9,17 @@ import androidx.preference.PreferenceManager;
  * This class stores the timer information.
  */
 public class Timer {
-  private static final String DURATION_KEY = "durationMilliseconds";
-  private static final String REMAINING_KEY = "remainingMilliseconds";
-  private static final String RUNNING_KEY = "isRunning";
-  private static final String PAUSED_KEY = "isPaused";
-  private static final String GUI_ENABLED_KEY = "isGUIEnabled";
+  private static final String DURATION_MILLISECONDS_KEY = "durationMilliseconds";
+  private static final String REMAINING_MILLISECONDS_KEY = "remainingMilliseconds";
+  private static final String IS_RUNNING_KEY = "isRunning";
+  private static final String IS_PAUSED_KEY = "isPaused";
+  private static final String IS_GUI_ENABLED_KEY = "isGUIEnabled";
   private static final String TIME_FACTOR_KEY = "timeFactor";
 
   private static final int DEFAULT_MILLISECONDS = 0;
-  private static final boolean DEFAULT_RUNNING = false;
-  private static final boolean DEFAULT_PAUSED = false;
-  private static final boolean DEFAULT_GUI_ENABLED = true;
+  private static final boolean DEFAULT_IS_RUNNING = false;
+  private static final boolean DEFAULT_IS_PAUSED = false;
+  private static final boolean DEFAULT_IS_GUI_ENABLED = true;
   private static final float DEFAULT_TIME_FACTOR = 1.0f;
 
   private static Timer instance;
@@ -40,7 +40,7 @@ public class Timer {
   }
 
   public long getDurationMilliseconds() {
-    return prefs.getLong(DURATION_KEY, DEFAULT_MILLISECONDS);
+    return prefs.getLong(DURATION_MILLISECONDS_KEY, DEFAULT_MILLISECONDS);
   }
 
   public void setDurationMilliseconds(long durationMilliseconds) {
@@ -48,11 +48,11 @@ public class Timer {
       throw new IllegalArgumentException("durationMilliseconds must be >= 0");
     }
 
-    prefsEditor.putLong(DURATION_KEY, durationMilliseconds).apply();
+    prefsEditor.putLong(DURATION_MILLISECONDS_KEY, durationMilliseconds).apply();
   }
 
   public long getRemainingMilliseconds() {
-    return prefs.getLong(REMAINING_KEY, DEFAULT_MILLISECONDS);
+    return prefs.getLong(REMAINING_MILLISECONDS_KEY, DEFAULT_MILLISECONDS);
   }
 
   public void setRemainingMilliseconds(long remainingMilliseconds) {
@@ -60,43 +60,44 @@ public class Timer {
       throw new IllegalArgumentException("remainingMilliseconds must be >= 0");
     }
 
-    prefsEditor.putLong(REMAINING_KEY, remainingMilliseconds).apply();
+    prefsEditor.putLong(REMAINING_MILLISECONDS_KEY, remainingMilliseconds).apply();
   }
 
   public boolean isRunning() {
-    return prefs.getBoolean(RUNNING_KEY, DEFAULT_RUNNING);
+    return prefs.getBoolean(IS_RUNNING_KEY, DEFAULT_IS_RUNNING);
   }
 
   public void setRunning() {
-    prefsEditor.putBoolean(RUNNING_KEY, true);
-    prefsEditor.putBoolean(PAUSED_KEY, false);
+    prefsEditor.putBoolean(IS_RUNNING_KEY, true);
+    prefsEditor.putBoolean(IS_PAUSED_KEY, false);
     prefsEditor.apply();
   }
 
   public boolean isPaused() {
-    return prefs.getBoolean(PAUSED_KEY, DEFAULT_PAUSED);
+    return prefs.getBoolean(IS_PAUSED_KEY, DEFAULT_IS_PAUSED);
   }
 
   public void setPaused() {
-    prefsEditor.putBoolean(RUNNING_KEY, false);
-    prefsEditor.putBoolean(PAUSED_KEY, true);
+    prefsEditor.putBoolean(IS_RUNNING_KEY, false);
+    prefsEditor.putBoolean(IS_PAUSED_KEY, true);
     prefsEditor.apply();
   }
 
   public void setStopped() {
-    prefsEditor.putLong(REMAINING_KEY, getDurationMilliseconds());
-    prefsEditor.putBoolean(RUNNING_KEY, false);
-    prefsEditor.putBoolean(PAUSED_KEY, false);
+    prefsEditor.putLong(REMAINING_MILLISECONDS_KEY, getDurationMilliseconds());
+    prefsEditor.putBoolean(IS_RUNNING_KEY, DEFAULT_IS_RUNNING);
+    prefsEditor.putBoolean(IS_PAUSED_KEY, DEFAULT_IS_PAUSED);
+    prefsEditor.putBoolean(IS_GUI_ENABLED_KEY, DEFAULT_IS_GUI_ENABLED);
     prefsEditor.putFloat(TIME_FACTOR_KEY, DEFAULT_TIME_FACTOR);
     prefsEditor.apply();
   }
 
   public boolean isGUIEnabled() {
-    return prefs.getBoolean(GUI_ENABLED_KEY, DEFAULT_GUI_ENABLED);
+    return prefs.getBoolean(IS_GUI_ENABLED_KEY, DEFAULT_IS_GUI_ENABLED);
   }
 
   public void setGUIEnabled(boolean isGUIEnabled) {
-    prefsEditor.putBoolean(GUI_ENABLED_KEY, isGUIEnabled).apply();
+    prefsEditor.putBoolean(IS_GUI_ENABLED_KEY, isGUIEnabled).apply();
   }
 
   public float getTimeFactor() {

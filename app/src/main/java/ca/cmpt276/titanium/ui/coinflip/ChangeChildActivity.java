@@ -15,8 +15,6 @@ import java.util.UUID;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.ChildManager;
-import ca.cmpt276.titanium.model.ChildQueueManager;
-import ca.cmpt276.titanium.model.CoinFlipManager;
 import ca.cmpt276.titanium.ui.ChildAdapter;
 
 /**
@@ -25,7 +23,6 @@ import ca.cmpt276.titanium.ui.ChildAdapter;
  */
 public class ChangeChildActivity extends AppCompatActivity {
   private ChildManager childManager;
-  private ChildQueueManager childQueueManager;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +35,6 @@ public class ChangeChildActivity extends AppCompatActivity {
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
     this.childManager = ChildManager.getInstance(this);
-    this.childQueueManager = ChildQueueManager.getInstance(this);
 
     displayChildrenList();
   }
@@ -52,19 +48,17 @@ public class ChangeChildActivity extends AppCompatActivity {
             ? View.VISIBLE
             : View.INVISIBLE);
 
-    ArrayList<UUID> childQueue = new ArrayList<>(childQueueManager.getChildQueue());
-    ArrayList<Child> childQueueChildren = new ArrayList<>();
-    childQueue.forEach(uniqueID -> childQueueChildren.add(childManager.getChild(uniqueID)));
-    ChildAdapter childAdapter = new ChildAdapter(this, childQueueChildren);
+    ArrayList<UUID> coinFlipQueue = new ArrayList<>(childManager.getCoinFlipQueue());
+    ArrayList<Child> coinFlipQueueChildren = new ArrayList<>();
+    coinFlipQueue.forEach(uniqueID -> coinFlipQueueChildren.add(childManager.getChild(uniqueID)));
+    ChildAdapter childAdapter = new ChildAdapter(this, coinFlipQueueChildren);
 
     ListView changeChildListView = findViewById(R.id.ListView_change_child);
     changeChildListView.setAdapter(childAdapter);
     changeChildListView.setClickable(true);
 
     changeChildListView.setOnItemClickListener((parent, view, position, id) -> {
-      UUID childUUID = childQueue.get(position);
-      childQueueManager.moveToFront(childUUID);
-      CoinFlipManager.setNextPickerUniqueID(childUUID);
+      childManager.moveToFrontOfQueue(coinFlipQueue.get(position));
       finish();
     });
   }
