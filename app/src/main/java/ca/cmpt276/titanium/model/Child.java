@@ -21,33 +21,24 @@ public class Child {
 
   public Child(String name, String portraitPath) {
     this.uniqueID = UUID.randomUUID();
-    setName(name);
+    this.name = name;
     this.portraitPath = portraitPath;
   }
 
-  public static RoundedBitmapDrawable getSpecifiedPortrait(Resources resources,
-                                                           String portraitPath) {
-    Bitmap portraitBitmap;
-
-    if (portraitPath == null) {
-      portraitBitmap =
-          BitmapFactory.decodeResource(resources, R.drawable.ic_default_portrait_green);
-    } else {
-      BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-      bitmapOptions.inJustDecodeBounds = true;
-      BitmapFactory.decodeFile(portraitPath, bitmapOptions);
-      bitmapOptions.inJustDecodeBounds = false;
-
-      bitmapOptions.inSampleSize =
-          Math.max(1, Math.min(bitmapOptions.outWidth / 500, bitmapOptions.outHeight / 500));
-
-      portraitBitmap = BitmapFactory.decodeFile(portraitPath, bitmapOptions);
-    }
+  public static RoundedBitmapDrawable getThisPortrait(Resources resources, String portraitPath) {
+    Bitmap portraitBitmap =
+        portraitPath == null
+            ? BitmapFactory.decodeResource(resources, R.drawable.ic_default_portrait_green)
+            : BitmapFactory.decodeFile(portraitPath);
 
     RoundedBitmapDrawable portrait = RoundedBitmapDrawableFactory.create(resources, portraitBitmap);
     portrait.setCircular(true);
 
     return portrait;
+  }
+
+  public RoundedBitmapDrawable getPortrait(Resources resources) {
+    return getThisPortrait(resources, portraitPath);
   }
 
   public UUID getUniqueID() {
@@ -60,10 +51,6 @@ public class Child {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public RoundedBitmapDrawable getPortrait(Resources resources) {
-    return getSpecifiedPortrait(resources, portraitPath);
   }
 
   public void setPortraitPath(String portraitPath) {
