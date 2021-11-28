@@ -101,27 +101,17 @@ public class ChildManager {
   }
 
   public void removeChild(UUID uniqueID) {
-    if (uniqueID != null) {
-      for (Child child : children) {
-        if (uniqueID.equals(child.getUniqueID())) {
-          int nextChildIndex = children.indexOf(getChild(uniqueID)) + 1;
-          UUID nextUniqueID = children.get(nextChildIndex % children.size()).getUniqueID();
-          nextUniqueID = (children.size() != 1) ? nextUniqueID : null;
-          taskManager.updateTaskQueues(uniqueID, nextUniqueID);
+    Child child = getChild(uniqueID);
 
-          children.remove(child);
-          coinFlipQueue.remove(child.getUniqueID());
-          saveData();
+    UUID nextUniqueID = children.get((children.indexOf(child) + 1) % children.size()).getUniqueID();
+    nextUniqueID = (children.size() != 1) ? nextUniqueID : null;
+    taskManager.updateTaskQueues(uniqueID, nextUniqueID);
 
-          coinFlipManager.removeCoinFlips(uniqueID);
-          return;
-        }
-      }
+    children.remove(child);
+    coinFlipQueue.remove(child.getUniqueID());
+    saveData();
 
-      throw new NoSuchElementException("No child with provided uniqueID");
-    } else {
-      throw new IllegalArgumentException("uniqueID cannot be null");
-    }
+    coinFlipManager.removeCoinFlips(uniqueID);
   }
 
   public void setName(UUID uniqueID, String name) {
