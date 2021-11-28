@@ -59,8 +59,7 @@ public class TimerActivity extends AppCompatActivity {
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
     this.timerNotification = TimerNotification.getInstance(this);
-    boolean isClicked =
-        getIntent().getBooleanExtra("isNotificationClicked", IS_CLICKED_DEFAULT);
+    boolean isClicked = getIntent().getBooleanExtra("isClicked", IS_CLICKED_DEFAULT);
 
     if (isClicked) {
       timerNotification.dismissNotification(false);
@@ -157,16 +156,18 @@ public class TimerActivity extends AppCompatActivity {
       } else if (timer.isRunning()) {
         timer.setPaused();
       } else {
-        // TODO: Allow user to input different timeFactor values
-        timer.setTimeFactor(2.0f);
-        getApplicationContext().startService(
-            new Intent(getApplicationContext(), TimerService.class)); // start timer
+        Intent timerServiceIntent = new Intent(getApplicationContext(), TimerService.class);
+        getApplicationContext().startService(timerServiceIntent); // start timer
       }
     });
 
     // reset
     Button resetButton = findViewById(R.id.Button_timer_reset);
     resetButton.setOnClickListener(view -> resetTimer());
+
+    // time factor
+    Button timeFactorButton = findViewById(R.id.Button_timer_time_factor);
+    timeFactorButton.setOnClickListener(view -> selectTimeFactor());
   }
 
   private void updateCustomTime(EditText customTime) {
@@ -184,6 +185,30 @@ public class TimerActivity extends AppCompatActivity {
     toast.show();
   }
 
+  private void selectTimeFactor() {
+    final String[] dialogOptions = {
+        getString(R.string.prompt_option1_select_time_factor),
+        getString(R.string.prompt_option2_select_time_factor),
+        getString(R.string.prompt_option3_select_time_factor),
+        getString(R.string.prompt_option4_select_time_factor),
+        getString(R.string.prompt_option5_select_time_factor),
+        getString(R.string.prompt_option6_select_time_factor),
+        getString(R.string.prompt_option7_select_time_factor),
+        getString(R.string.prompt_option8_select_time_factor)
+    };
+
+    new android.app.AlertDialog.Builder(this)
+        .setTitle(R.string.prompt_title_select_time_factor)
+        .setItems(dialogOptions, (dialog, item) -> {
+          if (!dialogOptions[item].equals("Cancel")) {
+            float timeFactor =
+                Float.parseFloat(dialogOptions[item].substring(0, dialogOptions[item].length() - 1));
+            timer.setTimeFactor(Math.round(timeFactor) / 100f);
+            updateGUI();
+          }
+        }).show();
+  }
+
   private void updateGUI() {
     ProgressBar circularProgressBar = findViewById(R.id.ProgressBar_timer);
     int progress;
@@ -191,9 +216,14 @@ public class TimerActivity extends AppCompatActivity {
     if (timer.getDurationMilliseconds() == 0) {
       progress = 0;
     } else {
-      progress = (int) ((timer.getDurationMilliseconds() - timer.getRemainingMilliseconds())
+      long durationMilliseconds =
+          timer.isRunning()
+              ? (long) (timer.getDurationMilliseconds() / timer.getTimeFactor())
+              : timer.getDurationMilliseconds();
+
+      progress = (int) ((durationMilliseconds - timer.getRemainingMilliseconds())
           * circularProgressBar.getMax()
-          / timer.getDurationMilliseconds());
+          / durationMilliseconds);
     }
 
     circularProgressBar.setProgress(progress);
@@ -209,12 +239,21 @@ public class TimerActivity extends AppCompatActivity {
       playPause.setImageResource(R.drawable.ic_baseline_pause_white_24);
     }
 
+    Button timeFactorButton = findViewById(R.id.Button_timer_time_factor);
+    String timeFactor = String.format(Locale.getDefault(), "%1.2fx", timer.getTimeFactor());
+    timeFactorButton.setText(timeFactor);
+    timeFactorButton.setEnabled(!timer.isRunning() && !timer.isPaused());
+
     displayTime();
     resetCustomTime();
   }
 
   private void displayTime() {
-    long milliseconds = timer.getRemainingMilliseconds();
+    long milliseconds =
+        timer.isRunning()
+            ? (long) (timer.getRemainingMilliseconds() * timer.getTimeFactor())
+            : timer.getRemainingMilliseconds();
+
     long hours = milliseconds / MILLIS_IN_HOUR;
     long minutes = (milliseconds % MILLIS_IN_HOUR) / MILLIS_IN_MINUTE;
     long seconds = (milliseconds % MILLIS_IN_MINUTE) / MILLIS_IN_SECOND;

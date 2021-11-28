@@ -70,7 +70,7 @@ public class TimerNotification {
     AtomicInteger atomicInteger = new AtomicInteger();
 
     Intent clickIntent = new Intent(this.context, TimerActivity.class);
-    clickIntent.putExtra("isNotificationClicked", true);
+    clickIntent.putExtra("isClicked", true);
     clickIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
     PendingIntent clickPendingIntent = PendingIntent.getActivity(
         context,
