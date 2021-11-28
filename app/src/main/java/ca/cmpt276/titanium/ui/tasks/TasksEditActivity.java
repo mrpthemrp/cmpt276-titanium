@@ -136,11 +136,11 @@ public class TasksEditActivity extends AppCompatActivity {
         .setIcon(R.drawable.ic_baseline_warning_black_24)
         .setTitle(R.string.prompt_title_discard_changes)
         .setMessage(R.string.prompt_message_discard_changes)
-        .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
+        .setPositiveButton(R.string.prompt_positive_child, (dialog, which) -> {
           updateToast(getString(R.string.toast_changes_discarded));
           finish();
         })
-        .setNegativeButton(R.string.prompt_negative, null)
+        .setNegativeButton(R.string.prompt_negative_child, null)
         .show();
   }
 }

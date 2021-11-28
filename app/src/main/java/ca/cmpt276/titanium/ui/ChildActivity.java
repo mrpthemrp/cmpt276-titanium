@@ -323,7 +323,7 @@ public class ChildActivity extends AppCompatActivity {
           .setIcon(R.drawable.ic_baseline_delete_black_24)
           .setTitle(title)
           .setMessage(message)
-          .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
+          .setPositiveButton(R.string.prompt_positive_child, (dialog, which) -> {
             if (isDeletePrompt) {
               childManager.removeChild(focusedChildUniqueID);
             }
@@ -331,7 +331,7 @@ public class ChildActivity extends AppCompatActivity {
             updateToast(positiveToast);
             finish();
           })
-          .setNegativeButton(R.string.prompt_negative, null)
+          .setNegativeButton(R.string.prompt_negative_child, null)
           .show();
     } else {
       finish();

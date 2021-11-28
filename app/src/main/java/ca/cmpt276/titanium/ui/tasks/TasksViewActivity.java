@@ -149,12 +149,12 @@ public class TasksViewActivity extends AppCompatActivity {
         .setIcon(R.drawable.ic_baseline_delete_black_24)
         .setTitle(getString(R.string.prompt_title_delete_task))
         .setMessage(getString(R.string.prompt_delete_task_message))
-        .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
+        .setPositiveButton(R.string.prompt_positive_child, (dialog, which) -> {
           taskManager.removeTask(taskIndex);
           updateToast(getString(R.string.toast_task_deleted));
           finish();
         })
-        .setNegativeButton(R.string.prompt_negative, null)
+        .setNegativeButton(R.string.prompt_negative_child, null)
         .show();
   }
 }
