@@ -41,21 +41,21 @@ public class CoinFlipAdapter extends ArrayAdapter<CoinFlip> {
     TextView childTextView = convertView.findViewById(R.id.TextView_item_coin_flip_child_name);
 
     ChildManager childManager = ChildManager.getInstance(getContext());
-    Child child = childManager.getChild(coinFlip.getPickerUniqueID());
+    Child child = childManager.getChild(coinFlip.getChildUniqueID());
     childIcon.setImageDrawable(child.getPortrait(getContext().getResources()));
 
     String childChoice = child.getName()
         + getContext().getString(R.string.coin_flip_history_child_choice)
-        + coinFlip.getChosenSide();
+        + coinFlip.getChildChosenSide();
     childTextView.setText(childChoice);
 
     resultImageView.setImageResource(
-        coinFlip.getResult() == coinFlip.getChosenSide()
+        coinFlip.getResult() == coinFlip.getChildChosenSide()
             ? R.drawable.ic_checkmark_green
             : R.drawable.ic_xmark_red);
 
     TextView coinFlipDate = convertView.findViewById(R.id.TextView_item_coin_flip_date);
-    coinFlipDate.setText(coinFlip.getTimeOfFlip());
+    coinFlipDate.setText(coinFlip.getDate());
 
     TextView resultTextView = convertView.findViewById(R.id.TextView_item_coin_flip_result);
     String coinFlipResult =

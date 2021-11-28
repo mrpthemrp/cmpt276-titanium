@@ -60,17 +60,17 @@ public class TaskManager {
   }
 
   public void addToAllTasks(UUID childUniqueID) {
-    for (int i = 0; i < tasks.size(); i++) {
-      tasks.get(i).setChildUniqueID(childUniqueID);
+    for (Task task : tasks) {
+      task.setChildUniqueID(childUniqueID);
     }
 
     saveData();
   }
 
-  public void updateTasksBeforeRemovingChild(UUID childUniqueID, UUID nextChildUniqueID) {
-    for (int i = 0; i < tasks.size(); i++) {
-      if (childUniqueID.equals(tasks.get(i).getChildUniqueID())) {
-        tasks.get(i).setChildUniqueID(nextChildUniqueID);
+  public void updateTaskQueues(UUID childUniqueID, UUID nextChildUniqueID) {
+    for (Task task : tasks) {
+      if (childUniqueID.equals(task.getChildUniqueID())) {
+        task.setChildUniqueID(nextChildUniqueID);
       }
     }
 

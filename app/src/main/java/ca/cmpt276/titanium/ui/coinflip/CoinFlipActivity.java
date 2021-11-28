@@ -19,12 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
-import java.util.UUID;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.ChildManager;
-import ca.cmpt276.titanium.model.ChildQueueManager;
 import ca.cmpt276.titanium.model.Coin;
 import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipManager;
@@ -39,7 +37,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
   private Coin coinChosen;
   private CoinFlipManager coinFlipManager;
-  private ChildQueueManager childQueueManager;
+  private ChildManager childManager;
 
   public static Intent makeIntent(Context context) {
     return new Intent(context, CoinFlipActivity.class);
@@ -56,7 +54,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
     coinFlipManager = CoinFlipManager.getInstance(this);
-    childQueueManager = ChildQueueManager.getInstance(this);
+    childManager = ChildManager.getInstance(this);
 
     setupButtons();
     updateGUI(DEFAULT_COIN);
@@ -107,11 +105,8 @@ public class CoinFlipActivity extends AppCompatActivity {
     Button headsButton = findViewById(R.id.Button_coin_flip_choose_heads);
     Button tailsButton = findViewById(R.id.Button_coin_flip_choose_tails);
 
-    UUID nextPickerUniqueID = coinFlipManager.getNextPickerUniqueID();
-
-    if (nextPickerUniqueID != null) {
-      ChildManager childManager = ChildManager.getInstance(this);
-      Child nextChild = childManager.getChild(nextPickerUniqueID);
+    if (childManager.getCoinFlipQueue().size() > 0) {
+      Child nextChild = childManager.getChoosingChild();
       childIconDisplay.setImageDrawable(nextChild.getPortrait(getResources()));
       childNameDisplay.setText(getString(R.string.coin_flip_child_name, nextChild.getName()));
       sideChosenDisplay.setText(getString(R.string.coin_flip_side_chosen, coinChosen.toString()));
@@ -149,8 +144,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     coinResultMessage.postDelayed(() ->
         coinResultMessage.setVisibility(View.VISIBLE), COIN_FLIP_DELAY);
 
-    if (coinFlipManager.getNextPickerUniqueID() != null) {
-      childQueueManager.moveToBack(coinFlipManager.getNextPickerUniqueID());
+    if (childManager.getCoinFlipQueue().size() > 0) {
       coinFlipManager.addCoinFlip(coinChosen, coinResult);
       new Handler(Looper.getMainLooper()).postDelayed(() -> updateGUI(coinChosen), COIN_FLIP_DELAY);
     }

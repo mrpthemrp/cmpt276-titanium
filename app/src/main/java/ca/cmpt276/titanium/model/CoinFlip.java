@@ -9,38 +9,37 @@ import java.util.UUID;
  * This class represents a single coin flip.
  */
 public class CoinFlip {
-  private final UUID pickerUniqueID;
-  private final Coin chosenSide;
-  private final String timeOfFlip;
+  private final Coin childChosenSide;
+  private final String date;
   private final Coin result;
+  private final UUID childUniqueID;
 
-  public CoinFlip(UUID pickerUniqueID, Coin chosenSide, Coin result) {
-    this.pickerUniqueID = pickerUniqueID;
-    this.chosenSide = chosenSide;
-    this.timeOfFlip =
-        LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MMM-yyyy, " + "HH:mm:ss"));
+  public CoinFlip(Coin childChosenSide, Coin result, UUID childUniqueID) {
+    this.childChosenSide = childChosenSide;
+    this.date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MMM-dd, HH:mm:ss"));
     this.result = result;
+    this.childUniqueID = childUniqueID;
   }
 
   public static Coin flipCoin() {
-    Coin[] coins = Coin.values();
+    Coin[] coinSides = Coin.values();
     Random random = new Random();
-    return coins[random.nextInt(coins.length)];
+    return coinSides[random.nextInt(coinSides.length)];
   }
 
-  public UUID getPickerUniqueID() {
-    return pickerUniqueID;
+  public Coin getChildChosenSide() {
+    return childChosenSide;
   }
 
-  public Coin getChosenSide() {
-    return chosenSide;
-  }
-
-  public String getTimeOfFlip() {
-    return timeOfFlip;
+  public String getDate() {
+    return date;
   }
 
   public Coin getResult() {
     return result;
+  }
+
+  public UUID getChildUniqueID() {
+    return childUniqueID;
   }
 }

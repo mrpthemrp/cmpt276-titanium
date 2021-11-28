@@ -20,8 +20,6 @@ import java.util.UUID;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.ChildManager;
-import ca.cmpt276.titanium.model.ChildQueueManager;
-import ca.cmpt276.titanium.model.CoinFlipManager;
 import ca.cmpt276.titanium.ui.ChildAdapter;
 
 /**
@@ -29,8 +27,6 @@ import ca.cmpt276.titanium.ui.ChildAdapter;
  */
 public class ChildQueueActivity extends AppCompatActivity {
   private ChildManager childManager;
-  private ChildQueueManager childQueueManager;
-  private CoinFlipManager coinFlipManager;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +39,6 @@ public class ChildQueueActivity extends AppCompatActivity {
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
     childManager = ChildManager.getInstance(this);
-    childQueueManager = ChildQueueManager.getInstance(this);
-    coinFlipManager = CoinFlipManager.getInstance(this);
 
     displayQueue();
     updateGUI();
@@ -83,10 +77,10 @@ public class ChildQueueActivity extends AppCompatActivity {
       findViewById(R.id.TextView_child_queue_empty_state_message).setVisibility(View.INVISIBLE);
     }
 
-    ArrayList<Child> childQueueChildren = new ArrayList<>();
-    childQueueManager.getChildQueue().forEach(uniqueID ->
-        childQueueChildren.add(childManager.getChild(uniqueID)));
-    ChildAdapter childAdapter = new ChildAdapter(this, childQueueChildren);
+    ArrayList<UUID> coinFlipQueue = new ArrayList<>(childManager.getCoinFlipQueue());
+    ArrayList<Child> coinFlipQueueChildren = new ArrayList<>();
+    coinFlipQueue.forEach(uniqueID -> coinFlipQueueChildren.add(childManager.getChild(uniqueID)));
+    ChildAdapter childAdapter = new ChildAdapter(this, coinFlipQueueChildren);
 
     ListView childrenListView = findViewById(R.id.ListView_child_queue);
     childrenListView.setAdapter(childAdapter);
@@ -96,10 +90,8 @@ public class ChildQueueActivity extends AppCompatActivity {
     ImageView currentChildIcon = findViewById(R.id.ImageView_child_queue_current_child_portrait);
     TextView currentChildTurnName = findViewById(R.id.TextView_child_queue_current_child_name);
 
-    UUID nextPickerUniqueID = coinFlipManager.getNextPickerUniqueID();
-    Child currentChild = childManager.getChild(nextPickerUniqueID);
-
-    if (currentChild != null) {
+    if (childManager.getCoinFlipQueue().size() > 0) {
+      Child currentChild = childManager.getChoosingChild();
       currentChildTurnName.setText(currentChild.getName());
       currentChildIcon.setImageDrawable(currentChild.getPortrait(getResources()));
     } else {

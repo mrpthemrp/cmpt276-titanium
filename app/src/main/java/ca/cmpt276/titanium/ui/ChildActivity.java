@@ -67,7 +67,7 @@ public class ChildActivity extends AppCompatActivity {
   private boolean changesAccepted = true;
   private ActivityResultLauncher<Intent> takePhoto;
   private ActivityResultLauncher<Intent> selectFromGallery;
-  private String currentPortraitPath;
+  private String portraitPath;
 
   public static Intent makeIntent(Context context, String intentType, UUID childUniqueID) {
     Intent intent = new Intent(context, ChildActivity.class);
@@ -112,6 +112,7 @@ public class ChildActivity extends AppCompatActivity {
     super.onResume();
 
     if (intentType.equals(VIEW_CHILD_INTENT)) {
+      this.focusedChild = childManager.getChild(focusedChildUniqueID);
       portraitView.setImageDrawable(focusedChild.getPortrait(getResources()));
       childNameInput.setText(focusedChild.getName());
     }
@@ -133,6 +134,7 @@ public class ChildActivity extends AppCompatActivity {
           focusedChildUniqueID));
       return true;
     } else if (item.getItemId() == R.id.menu_item_child_delete_child) {
+      this.focusedChild = childManager.getChild(focusedChildUniqueID);
       launchPrompt(
           getString(R.string.prompt_title_delete_child, focusedChild.getName()),
           getString(R.string.prompt_message_delete_child),
@@ -182,11 +184,10 @@ public class ChildActivity extends AppCompatActivity {
         new ActivityResultContracts.StartActivityForResult(),
         result -> {
           if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
-            portraitView.setImageDrawable(
-                Child.getSpecifiedPortrait(getResources(), currentPortraitPath));
+            portraitView.setImageDrawable(Child.getThisPortrait(getResources(), portraitPath));
 
             if (intentType.equals(EDIT_CHILD_INTENT)) {
-              focusedChild.setPortraitPath(currentPortraitPath);
+              childManager.setPortraitPath(focusedChildUniqueID, portraitPath);
             }
           }
         });
@@ -197,21 +198,19 @@ public class ChildActivity extends AppCompatActivity {
           if (result.getResultCode() == AppCompatActivity.RESULT_OK) {
             Uri selectedImage = Objects.requireNonNull(result.getData()).getData();
             String[] projection = {MediaStore.Images.Media.DATA};
-            Cursor cursor =
-                getContentResolver().query(selectedImage, projection, null, null, null);
+            Cursor cursor = getContentResolver().query(selectedImage, projection, null, null, null);
 
             if (cursor.moveToFirst()) {
               int columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
-              this.currentPortraitPath = cursor.getString(columnIndex);
+              this.portraitPath = cursor.getString(columnIndex);
             }
 
             cursor.close();
 
-            portraitView.setImageDrawable(
-                Child.getSpecifiedPortrait(getResources(), currentPortraitPath));
+            portraitView.setImageDrawable(Child.getThisPortrait(getResources(), portraitPath));
 
             if (intentType.equals(EDIT_CHILD_INTENT)) {
-              focusedChild.setPortraitPath(currentPortraitPath);
+              childManager.setPortraitPath(focusedChildUniqueID, portraitPath);
             }
           }
         });
@@ -234,9 +233,9 @@ public class ChildActivity extends AppCompatActivity {
         updateToast(getString(R.string.toast_name_field_empty));
       } else {
         if (intentType.equals(ADD_CHILD_INTENT)) {
-          childManager.addChild(childName, currentPortraitPath);
+          childManager.addChild(childName, portraitPath);
         } else if (intentType.equals(EDIT_CHILD_INTENT)) {
-          childManager.setChildName(focusedChildUniqueID, childName);
+          childManager.setName(focusedChildUniqueID, childName);
         }
 
         updateToast(getString(R.string.toast_child_saved));
@@ -254,8 +253,9 @@ public class ChildActivity extends AppCompatActivity {
           BitmapFactory.decodeResource(getResources(), R.drawable.ic_default_portrait_green));
       portrait.setCircular(true);
 
-      this.currentPortraitPath = null;
+      this.portraitPath = null;
     } else {
+      this.focusedChild = childManager.getChild(focusedChildUniqueID);
       portrait = focusedChild.getPortrait(getResources());
       childNameInput.setText(focusedChild.getName());
     }
@@ -288,7 +288,8 @@ public class ChildActivity extends AppCompatActivity {
 
     childNameInput.addTextChangedListener(new TextWatcher() {
       @Override
-      public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+      public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+      }
 
       @Override
       public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -297,12 +298,13 @@ public class ChildActivity extends AppCompatActivity {
         if (intentType.equals(ADD_CHILD_INTENT)) {
           changesAccepted = childName.equals("");
         } else if (intentType.equals(EDIT_CHILD_INTENT)) {
-          changesAccepted = childName.equals(focusedChild.getName());
+          changesAccepted = childName.equals(childManager.getChild(focusedChildUniqueID).getName());
         }
       }
 
       @Override
-      public void afterTextChanged(Editable editable) {}
+      public void afterTextChanged(Editable editable) {
+      }
     });
   }
 
@@ -355,7 +357,7 @@ public class ChildActivity extends AppCompatActivity {
                     "portrait_",
                     ".jpg",
                     getExternalFilesDir(Environment.DIRECTORY_PICTURES));
-                this.currentPortraitPath = portraitFile.getAbsolutePath();
+                this.portraitPath = portraitFile.getAbsolutePath();
               } catch (IOException e) {
                 e.getStackTrace();
               }
