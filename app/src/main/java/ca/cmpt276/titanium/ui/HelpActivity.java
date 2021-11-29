@@ -15,8 +15,6 @@ import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
 
-// TODO: Add green checkmark (we use two kinds of checkmark)
-
 /**
  * This class handles the help screen.
  */

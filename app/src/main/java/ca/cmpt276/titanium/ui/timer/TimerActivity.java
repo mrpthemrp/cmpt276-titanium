@@ -201,8 +201,8 @@ public class TimerActivity extends AppCompatActivity {
         .setTitle(R.string.prompt_title_timer_select_time_factor)
         .setItems(dialogOptions, (dialog, item) -> {
           if (!dialogOptions[item].equals("Cancel")) {
-            float timeFactor =
-                Float.parseFloat(dialogOptions[item].substring(0, dialogOptions[item].length() - 1));
+            float timeFactor = Float.parseFloat(
+                dialogOptions[item].substring(0, dialogOptions[item].length() - 1));
             timer.setTimeFactor(Math.round(timeFactor) / 100f);
             updateGUI();
           }

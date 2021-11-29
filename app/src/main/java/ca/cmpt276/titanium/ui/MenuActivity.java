@@ -34,8 +34,10 @@ public class MenuActivity extends AppCompatActivity {
     this.childManager = ChildManager.getInstance(this);
 
     MaterialButton addChild = findViewById(R.id.MaterialButton_menu_add_child);
-    addChild.setOnClickListener(view ->
-        startActivity(ChildActivity.makeIntent(this, getString(R.string.title_menu_child_add), null)));
+    addChild.setOnClickListener(view -> startActivity(ChildActivity.makeIntent(
+        this,
+        getString(R.string.title_menu_child_add),
+        null)));
 
     MaterialButton coinFlip = findViewById(R.id.MaterialButton_menu_coin_flip);
     coinFlip.setOnClickListener(view -> startActivity(CoinFlipActivity.makeIntent(this)));

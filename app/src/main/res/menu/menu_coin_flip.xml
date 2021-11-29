@@ -11,5 +11,5 @@
         android:id="@+id/menu_item_coin_flip_child_queue"
         android:title="@string/menu_item_coin_fip_child_queue"
         app:showAsAction="ifRoom" />
-    
+
 </menu>

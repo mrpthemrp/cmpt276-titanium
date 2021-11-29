@@ -13,5 +13,5 @@
         android:icon="@drawable/ic_baseline_delete_white_24"
         android:title="@string/menu_item_child_delete"
         app:showAsAction="ifRoom" />
-    
+
 </menu>
