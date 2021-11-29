@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.tasks.TasksViewActivity">
+    tools:context=".ui.tasks.TaskManageActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/ToolBar_tasks_view"
+        android:id="@+id/ToolBar_task_manage"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/style_rounded_toolbar"
@@ -18,11 +18,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="@string/title_view_task"
+        app:title="@string/title_task_manage"
         app:titleTextColor="?attr/colorOnSecondary" />
 
     <ImageView
-        android:id="@+id/ImageView_tasks_view_child_portrait"
+        android:id="@+id/ImageView_task_manage_child_portrait"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="16dp"
@@ -31,10 +31,10 @@
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ToolBar_tasks_view" />
+        app:layout_constraintTop_toBottomOf="@+id/ToolBar_task_manage" />
 
     <TextView
-        android:id="@+id/TextView_tasks_view_child_name"
+        android:id="@+id/TextView_task_manage_child_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -47,24 +47,24 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ImageView_tasks_view_child_portrait"
+        app:layout_constraintTop_toBottomOf="@+id/ImageView_task_manage_child_portrait"
         tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/TextView_tasks_view_task_name_subtitle"
+        android:id="@+id/TextView_task_manage_task_name_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/subtitle_task_name"
+        android:text="@string/subtitle_tasks_task_name"
         android:textColor="?attr/colorPrimaryVariant"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextView_tasks_view_child_name" />
+        app:layout_constraintTop_toBottomOf="@+id/TextView_task_manage_child_name" />
 
     <TextView
-        android:id="@+id/TextView_tasks_view_task_name"
+        android:id="@+id/TextView_task_manage_task_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="none"
@@ -76,17 +76,17 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextView_tasks_view_task_name_subtitle" />
+        app:layout_constraintTop_toBottomOf="@+id/TextView_task_manage_task_name_subtitle" />
 
     <Button
-        android:id="@+id/Button_tasks_view_complete_task"
+        android:id="@+id/Button_task_manage_complete_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:background="@drawable/style_rounded_button_20"
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:backgroundTintMode="src_in"
-        android:text="@string/button_complete_task"
+        android:text="@string/button_task_manage_complete_task"
         android:textColor="?attr/colorOnSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

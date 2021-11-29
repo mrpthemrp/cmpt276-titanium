@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Base application theme. -->
     <style name="Theme.Titanium" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -28,7 +29,7 @@
         <item name="android:windowBackground">@drawable/background_timer</item>
     </style>
 
-    <!-- Child Theme. -->
+    <!-- Child theme. -->
     <style name="Theme.Titanium.Child" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green_300</item>

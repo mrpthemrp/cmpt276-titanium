@@ -45,7 +45,7 @@ public class CoinFlipAdapter extends ArrayAdapter<CoinFlip> {
     childIcon.setImageDrawable(child.getPortrait(getContext().getResources()));
 
     String childChoice = child.getName()
-        + getContext().getString(R.string.coin_flip_history_child_choice)
+        + getContext().getString(R.string.item_coin_flip_child_choice)
         + coinFlip.getChildChosenSide();
     childTextView.setText(childChoice);
 
@@ -59,7 +59,7 @@ public class CoinFlipAdapter extends ArrayAdapter<CoinFlip> {
 
     TextView resultTextView = convertView.findViewById(R.id.TextView_item_coin_flip_result);
     String coinFlipResult =
-        getContext().getString(R.string.coin_flip_history_result) + coinFlip.getResult().toString();
+        getContext().getString(R.string.item_coin_flip_result) + coinFlip.getResult().toString();
     resultTextView.setText(coinFlipResult);
 
     return convertView;

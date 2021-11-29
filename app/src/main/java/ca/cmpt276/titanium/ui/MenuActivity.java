@@ -35,7 +35,7 @@ public class MenuActivity extends AppCompatActivity {
 
     MaterialButton addChild = findViewById(R.id.MaterialButton_menu_add_child);
     addChild.setOnClickListener(view ->
-        startActivity(ChildActivity.makeIntent(this, getString(R.string.title_add_child), null)));
+        startActivity(ChildActivity.makeIntent(this, getString(R.string.title_menu_child_add), null)));
 
     MaterialButton coinFlip = findViewById(R.id.MaterialButton_menu_coin_flip);
     coinFlip.setOnClickListener(view -> startActivity(CoinFlipActivity.makeIntent(this)));
@@ -62,7 +62,7 @@ public class MenuActivity extends AppCompatActivity {
     if (item.getItemId() == android.R.id.home) {
       finish();
       return true;
-    } else if (item.getItemId() == R.id.menu_item_child_edit_child) {
+    } else if (item.getItemId() == R.id.menu_item_child_edit) {
       return true;
     } else {
       return super.onOptionsItemSelected(item);
@@ -75,12 +75,12 @@ public class MenuActivity extends AppCompatActivity {
     Calendar calendar = Calendar.getInstance();
     int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
 
-    if (currentHour < 12) {
-      welcomeMessage.setText(getString(R.string.subtitle_menu_morning));
-    } else if (currentHour < 16) {
-      welcomeMessage.setText(getString(R.string.subtitle_menu_afternoon));
-    } else if (currentHour >= 17) {
-      welcomeMessage.setText(getString(R.string.subtitle_menu_evening));
+    if (currentHour <= 12) {
+      welcomeMessage.setText(getString(R.string.subtitle_menu_welcome_morning));
+    } else if (currentHour <= 16) {
+      welcomeMessage.setText(getString(R.string.subtitle_menu_welcome_afternoon));
+    } else {
+      welcomeMessage.setText(getString(R.string.subtitle_menu_welcome_evening));
     }
   }
 
@@ -100,7 +100,7 @@ public class MenuActivity extends AppCompatActivity {
     childrenListView.setOnItemClickListener((parent, view, position, id) ->
         startActivity(ChildActivity.makeIntent(
             this,
-            getString(R.string.title_view_child),
+            getString(R.string.title_menu_child_manage),
             childManager.getChildren().get(position).getUniqueID())));
   }
 }

@@ -112,7 +112,7 @@ public class TimerNotification {
 
     NotificationCompat.Builder basicNotificationBuilder =
         new NotificationCompat.Builder(this.context, "practicalParentTimer")
-            .setSmallIcon(R.drawable.ic_outline_timer_white_24)
+            .setSmallIcon(R.drawable.ic_baseline_timer_white_24)
             .setColor(Color.GREEN)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setContentIntent(clickPendingIntent)

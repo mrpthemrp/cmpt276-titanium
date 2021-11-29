@@ -47,7 +47,6 @@ public class CoinFlipActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_coin_flip);
-    setTitle(R.string.title_flip_coin);
 
     Toolbar myToolbar = (Toolbar) findViewById(R.id.ToolBar_coin_flip);
     setSupportActionBar(myToolbar);
@@ -80,7 +79,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     } else if (item.getItemId() == R.id.menu_item_coin_flip_coin_flip_history) {
       startActivity(new Intent(this, CoinFlipHistoryActivity.class));
       return true;
-    } else if (item.getItemId() == R.id.menu_item_coin_flip_coin_flip_child_queue) {
+    } else if (item.getItemId() == R.id.menu_item_coin_flip_child_queue) {
       startActivity(new Intent(this, ChildQueueActivity.class));
       return true;
     } else {
@@ -89,9 +88,9 @@ public class CoinFlipActivity extends AppCompatActivity {
   }
 
   private void setupButtons() {
-    Button headsButton = findViewById(R.id.Button_coin_flip_choose_heads);
-    Button tailsButton = findViewById(R.id.Button_coin_flip_choose_tails);
-    Button flipButton = findViewById(R.id.Button_coin_flip_flip);
+    Button headsButton = findViewById(R.id.Button_coin_flip_select_heads);
+    Button tailsButton = findViewById(R.id.Button_coin_flip_select_tails);
+    Button flipButton = findViewById(R.id.Button_coin_flip);
 
     headsButton.setOnClickListener((View view) -> updateGUI(Coin.HEADS));
     tailsButton.setOnClickListener((View view) -> updateGUI(Coin.TAILS));
@@ -102,8 +101,8 @@ public class CoinFlipActivity extends AppCompatActivity {
     ImageView childIconDisplay = findViewById(R.id.ImageView_coin_flip_child_portrait);
     TextView childNameDisplay = findViewById(R.id.TextView_coin_flip_child_name);
     TextView sideChosenDisplay = findViewById(R.id.TextView_coin_flip_coin_side_chosen);
-    Button headsButton = findViewById(R.id.Button_coin_flip_choose_heads);
-    Button tailsButton = findViewById(R.id.Button_coin_flip_choose_tails);
+    Button headsButton = findViewById(R.id.Button_coin_flip_select_heads);
+    Button tailsButton = findViewById(R.id.Button_coin_flip_select_tails);
 
     if (childManager.getCoinFlipQueue().size() > 0) {
       Child nextChild = childManager.getChoosingChild();

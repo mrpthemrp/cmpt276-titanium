@@ -36,12 +36,12 @@ public class TaskAdapter extends ArrayAdapter<Task> {
     Task task = getItem(position);
 
     TextView taskNameText = convertView.findViewById(R.id.TextView_item_task_task_name);
-    taskNameText.setText(getContext().getString(R.string.tasks_task_name, task.getTaskName()));
+    taskNameText.setText(getContext().getString(R.string.item_task_task_name, task.getTaskName()));
 
     TextView childNameText = convertView.findViewById(R.id.TextView_item_task_child_name);
 
     if (task.getChildUniqueID() == null) {
-      childNameText.setText(getContext().getString(R.string.default_name_no_children));
+      childNameText.setText(getContext().getString(R.string.empty_state_tasks_no_children));
     } else {
       childNameText.setText(getContext().getString(
           R.string.tasks_next_child_name,

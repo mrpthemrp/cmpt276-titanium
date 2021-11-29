@@ -24,7 +24,7 @@ import ca.cmpt276.titanium.model.TaskManager;
 /**
  * This class allows a user to create new tasks and edit existing tasks.
  */
-public class TasksEditActivity extends AppCompatActivity {
+public class TaskEditActivity extends AppCompatActivity {
   private static final String INTENT_TYPE_KEY = "intentType";
   private static final String TASK_INDEX_KEY = "taskIndex";
   private static final int INVALID_TASK_INDEX = -1;
@@ -34,7 +34,7 @@ public class TasksEditActivity extends AppCompatActivity {
   private int taskIndex;
 
   public static Intent makeIntent(Context context, String intentType, int taskIndex) {
-    Intent intent = new Intent(context, TasksEditActivity.class);
+    Intent intent = new Intent(context, TaskEditActivity.class);
     intent.putExtra(INTENT_TYPE_KEY, intentType);
     intent.putExtra(TASK_INDEX_KEY, taskIndex);
     return intent;
@@ -43,7 +43,7 @@ public class TasksEditActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_tasks_add);
+    setContentView(R.layout.activity_task_edit);
 
     this.intentType = getIntent().getStringExtra(INTENT_TYPE_KEY);
     setupActionBar(intentType);
@@ -51,7 +51,7 @@ public class TasksEditActivity extends AppCompatActivity {
     this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
     this.taskIndex = getIntent().getIntExtra(TASK_INDEX_KEY, INVALID_TASK_INDEX);
 
-    if (intentType.equals(getString(R.string.title_edit_task))
+    if (intentType.equals(getString(R.string.title_task_edit))
         && taskIndex == INVALID_TASK_INDEX) {
       finish();
     }
@@ -75,7 +75,7 @@ public class TasksEditActivity extends AppCompatActivity {
   }
 
   private void setupActionBar(String intentType) {
-    Toolbar toolbar = findViewById(R.id.ToolBar_tasks_add);
+    Toolbar toolbar = findViewById(R.id.ToolBar_task_edit);
     setSupportActionBar(toolbar);
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
@@ -83,30 +83,30 @@ public class TasksEditActivity extends AppCompatActivity {
   }
 
   private void setupGUI() {
-    if (intentType.equals(getString(R.string.title_edit_task))) {
-      TextView titleAddText = findViewById(R.id.TextView_tasks_add_task_name_subtitle);
-      titleAddText.setText(R.string.subtitle_task_name);
+    if (intentType.equals(getString(R.string.title_task_edit))) {
+      TextView titleAddText = findViewById(R.id.TextView_task_edit_task_name_subtitle);
+      titleAddText.setText(R.string.subtitle_tasks_task_name);
 
       TaskManager taskManager = TaskManager.getInstance(this);
-      EditText taskNameInput = findViewById(R.id.EditText_tasks_add_task_name);
+      EditText taskNameInput = findViewById(R.id.EditText_task_edit_task_name);
       taskNameInput.setText(taskManager.getTasks().get(taskIndex).getTaskName());
 
-      Button saveTaskButton = findViewById(R.id.Button_tasks_add_save);
+      Button saveTaskButton = findViewById(R.id.Button_task_edit_save_task);
       saveTaskButton.setOnClickListener(view -> {
         if (taskNameInput.getText().toString().equals("")) {
-          updateToast(getString(R.string.toast_name_field_empty));
+          updateToast(getString(R.string.toast_task_edit_name_field_empty));
         } else {
           taskManager.setTaskName(taskIndex, taskNameInput.getText().toString());
           finish();
         }
       });
     } else {
-      Button saveTaskButton = findViewById(R.id.Button_tasks_add_save);
+      Button saveTaskButton = findViewById(R.id.Button_task_edit_save_task);
       saveTaskButton.setOnClickListener(view -> {
-        EditText taskNameInput = findViewById(R.id.EditText_tasks_add_task_name);
+        EditText taskNameInput = findViewById(R.id.EditText_task_edit_task_name);
 
         if (taskNameInput.getText().toString().equals("")) {
-          updateToast(getString(R.string.toast_name_field_empty));
+          updateToast(getString(R.string.toast_task_edit_name_field_empty));
         } else {
           TaskManager taskManager = TaskManager.getInstance(this);
           ChildManager childManager = ChildManager.getInstance(this);
@@ -118,7 +118,7 @@ public class TasksEditActivity extends AppCompatActivity {
 
           taskManager.addTask(taskNameInput.getText().toString(), childUniqueID);
 
-          updateToast(getString(R.string.toast_task_saved));
+          updateToast(getString(R.string.toast_task_edit_saved));
           finish();
         }
       });
@@ -134,13 +134,13 @@ public class TasksEditActivity extends AppCompatActivity {
   private void launchDiscardChangesPrompt() { // TODO: Check for no changes
     new AlertDialog.Builder(this)
         .setIcon(R.drawable.ic_baseline_warning_black_24)
-        .setTitle(R.string.prompt_title_discard_changes)
-        .setMessage(R.string.prompt_message_discard_changes)
-        .setPositiveButton(R.string.prompt_positive_child, (dialog, which) -> {
-          updateToast(getString(R.string.toast_changes_discarded));
+        .setTitle(R.string.prompt_title_task_edit_discard_changes)
+        .setMessage(R.string.prompt_message_task_edit_discard_changes)
+        .setPositiveButton(R.string.prompt_positive_tasks, (dialog, which) -> {
+          updateToast(getString(R.string.toast_task_edit_changes_discarded));
           finish();
         })
-        .setNegativeButton(R.string.prompt_negative_child, null)
+        .setNegativeButton(R.string.prompt_negative_tasks, null)
         .show();
   }
 }

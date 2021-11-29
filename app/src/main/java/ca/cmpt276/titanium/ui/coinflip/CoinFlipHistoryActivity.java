@@ -29,7 +29,6 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_coin_flip_history);
-    setTitle(R.string.title_coin_flip_history);
 
     Toolbar toolbar = findViewById(R.id.ToolBar_coin_flip_history);
     setSupportActionBar(toolbar);

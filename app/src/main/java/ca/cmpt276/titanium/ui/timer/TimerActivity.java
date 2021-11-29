@@ -187,18 +187,18 @@ public class TimerActivity extends AppCompatActivity {
 
   private void selectTimeFactor() {
     final String[] dialogOptions = {
-        getString(R.string.prompt_option1_select_time_factor),
-        getString(R.string.prompt_option2_select_time_factor),
-        getString(R.string.prompt_option3_select_time_factor),
-        getString(R.string.prompt_option4_select_time_factor),
-        getString(R.string.prompt_option5_select_time_factor),
-        getString(R.string.prompt_option6_select_time_factor),
-        getString(R.string.prompt_option7_select_time_factor),
-        getString(R.string.prompt_option8_select_time_factor)
+        getString(R.string.prompt_option1_timer_select_time_factor),
+        getString(R.string.prompt_option2_timer_select_time_factor),
+        getString(R.string.prompt_option3_timer_select_time_factor),
+        getString(R.string.prompt_option4_timer_select_time_factor),
+        getString(R.string.prompt_option5_timer_select_time_factor),
+        getString(R.string.prompt_option6_timer_select_time_factor),
+        getString(R.string.prompt_option7_timer_select_time_factor),
+        getString(R.string.prompt_option8_timer_select_time_factor)
     };
 
     new android.app.AlertDialog.Builder(this)
-        .setTitle(R.string.prompt_title_select_time_factor)
+        .setTitle(R.string.prompt_title_timer_select_time_factor)
         .setItems(dialogOptions, (dialog, item) -> {
           if (!dialogOptions[item].equals("Cancel")) {
             float timeFactor =

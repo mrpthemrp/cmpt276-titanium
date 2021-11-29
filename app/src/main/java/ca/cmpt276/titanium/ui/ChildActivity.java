@@ -122,22 +122,22 @@ public class ChildActivity extends AppCompatActivity {
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
     if (item.getItemId() == android.R.id.home) {
       launchPrompt(
-          getString(R.string.prompt_title_discard_changes),
-          getString(R.string.prompt_message_discard_changes),
-          getString(R.string.toast_changes_discarded),
+          getString(R.string.prompt_title_child_discard_changes),
+          getString(R.string.prompt_message_child_discard_changes),
+          getString(R.string.toast_child_changes_discarded),
           false);
       return true;
-    } else if (item.getItemId() == R.id.menu_item_child_edit_child) {
+    } else if (item.getItemId() == R.id.menu_item_child_edit) {
       startActivity(ChildActivity.makeIntent(
           this,
-          getString(R.string.title_edit_child),
+          getString(R.string.title_child_edit),
           focusedChildUniqueID));
       return true;
-    } else if (item.getItemId() == R.id.menu_item_child_delete_child) {
+    } else if (item.getItemId() == R.id.menu_item_child_delete) {
       this.focusedChild = childManager.getChild(focusedChildUniqueID);
       launchPrompt(
-          getString(R.string.prompt_title_delete_child, focusedChild.getName()),
-          getString(R.string.prompt_message_delete_child),
+          getString(R.string.prompt_title_child_delete, focusedChild.getName()),
+          getString(R.string.prompt_message_child_delete),
           getString(R.string.toast_child_deleted),
           true);
       return true;
@@ -149,9 +149,9 @@ public class ChildActivity extends AppCompatActivity {
   @Override
   public void onBackPressed() {
     launchPrompt(
-        getString(R.string.prompt_title_discard_changes),
-        getString(R.string.prompt_message_discard_changes),
-        getString(R.string.toast_changes_discarded),
+        getString(R.string.prompt_title_child_discard_changes),
+        getString(R.string.prompt_message_child_discard_changes),
+        getString(R.string.toast_child_changes_discarded),
         false);
   }
 
@@ -166,7 +166,7 @@ public class ChildActivity extends AppCompatActivity {
         selectFromGallery.launch(
             new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
       } else {
-        updateToast(getString(R.string.toast_permission_denied));
+        updateToast(getString(R.string.toast_child_permission_denied));
       }
     }
   }
@@ -230,7 +230,7 @@ public class ChildActivity extends AppCompatActivity {
     saveButton.setOnClickListener(view -> {
       String childName = childNameInput.getText().toString();
       if (childName.equals("")) {
-        updateToast(getString(R.string.toast_name_field_empty));
+        updateToast(getString(R.string.toast_child_name_field_empty));
       } else {
         if (intentType.equals(ADD_CHILD_INTENT)) {
           childManager.addChild(childName, portraitPath);
@@ -340,13 +340,13 @@ public class ChildActivity extends AppCompatActivity {
 
   private void selectImage() {
     final String[] dialogOptions = {
-        getString(R.string.prompt_option1_select_image),
-        getString(R.string.prompt_option2_select_image),
-        getString(R.string.prompt_option3_select_image)
+        getString(R.string.prompt_option1_child_select_image),
+        getString(R.string.prompt_option2_child_select_image),
+        getString(R.string.prompt_option3_child_select_image)
     };
 
     new android.app.AlertDialog.Builder(this)
-        .setTitle(R.string.prompt_title_select_image)
+        .setTitle(R.string.prompt_title_child_select_image)
         .setItems(dialogOptions, (dialog, item) -> {
           switch (dialogOptions[item]) {
             case "Take Photo":

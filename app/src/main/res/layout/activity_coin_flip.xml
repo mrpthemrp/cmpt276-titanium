@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="@string/title_flip_coin"
+        app:title="@string/title_coin_flip"
         app:titleTextColor="?attr/colorOnSecondary" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,7 +51,7 @@
             android:ellipsize="none"
             android:maxLines="5"
             android:scrollHorizontally="false"
-            android:text="@string/default_no_children"
+            android:text="@string/DEFAULT_TEXT"
             android:textAlignment="textStart"
             android:textColor="?attr/colorSecondaryVariant"
             android:textSize="16sp"
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:gravity="center"
-            android:text="@string/coin_flip_side_chosen"
+            android:text="@string/DEFAULT_TEXT"
             android:textColor="?attr/colorSecondaryVariant"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -86,7 +86,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_coin_flip_child_data">
 
         <Button
-            android:id="@+id/Button_coin_flip_choose_heads"
+            android:id="@+id/Button_coin_flip_select_heads"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,16 +94,16 @@
             android:background="@drawable/style_rounded_button_20"
             android:backgroundTint="?attr/colorPrimary"
             android:backgroundTintMode="src_in"
-            android:text="@string/button_select_heads"
+            android:text="@string/button_coin_flip_select_heads"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/Button_coin_flip_choose_tails"
+            app:layout_constraintEnd_toStartOf="@+id/Button_coin_flip_select_tails"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="TextContrastCheck" />
 
         <Button
-            android:id="@+id/Button_coin_flip_choose_tails"
+            android:id="@+id/Button_coin_flip_select_tails"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
@@ -111,11 +111,11 @@
             android:background="@drawable/style_rounded_button_20"
             android:backgroundTint="?attr/colorPrimary"
             android:backgroundTintMode="src_in"
-            android:text="@string/button_select_tails"
+            android:text="@string/button_coin_flip_select_tails"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/Button_coin_flip_choose_heads"
+            app:layout_constraintStart_toEndOf="@+id/Button_coin_flip_select_heads"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="TextContrastCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -142,13 +142,13 @@
         android:layout_marginBottom="16dp"
         android:textColor="?attr/colorPrimaryVariant"
         android:textSize="48sp"
-        app:layout_constraintBottom_toTopOf="@+id/Button_coin_flip_flip"
+        app:layout_constraintBottom_toTopOf="@+id/Button_coin_flip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/Button_coin_flip_flip"
+        android:id="@+id/Button_coin_flip"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
         android:background="@drawable/style_rounded_button_20"
         android:backgroundTint="?attr/colorPrimary"
         android:backgroundTintMode="src_in"
-        android:text="@string/button_flip"
+        android:text="@string/button_coin_flip"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

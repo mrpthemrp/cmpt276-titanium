@@ -32,7 +32,6 @@ public class ChildQueueActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_coin_flip_child_queue);
-    setTitle(R.string.toolbar_coin_flip_history_view_queue);
 
     Toolbar myToolbar = (Toolbar) findViewById(R.id.ToolBar_child_queue);
     setSupportActionBar(myToolbar);
@@ -46,7 +45,7 @@ public class ChildQueueActivity extends AppCompatActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.menu_child_queue, menu);
+    getMenuInflater().inflate(R.menu.menu_coin_flip_child_queue, menu);
     return true;
   }
 
@@ -95,7 +94,7 @@ public class ChildQueueActivity extends AppCompatActivity {
       currentChildTurnName.setText(currentChild.getName());
       currentChildIcon.setImageDrawable(currentChild.getPortrait(getResources()));
     } else {
-      currentChildTurnName.setText(R.string.coin_flip_empty_state_message_no_children);
+      currentChildTurnName.setText(R.string.empty_state_coin_flip_no_children);
       currentChildIcon.setImageResource(R.drawable.ic_default_portrait_green);
     }
   }

@@ -12,7 +12,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/ic_baseline_task_alt_24"
+        android:background="@drawable/ic_baseline_add_task_alt_green_24"
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:contentDescription="@string/CONTENT_DESCRIPTION"
         app:layout_constraintBottom_toBottomOf="parent"

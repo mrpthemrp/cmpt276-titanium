@@ -30,7 +30,6 @@ public class TasksActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_tasks);
-    setTitle(R.string.title_view_all_tasks);
 
     Toolbar toolbar = findViewById(R.id.ToolBar_tasks);
     setSupportActionBar(toolbar);
@@ -54,8 +53,8 @@ public class TasksActivity extends AppCompatActivity {
     if (item.getItemId() == android.R.id.home) {
       finish();
       return true;
-    } else if (item.getItemId() == R.id.menu_item_tasks_add_task) {
-      startActivity(TasksEditActivity.makeIntent(this, getString(R.string.title_add_task), -1));
+    } else if (item.getItemId() == R.id.menu_item_tasks_add) {
+      startActivity(TaskEditActivity.makeIntent(this, getString(R.string.title_task_add), -1));
       return true;
     } else {
       return super.onOptionsItemSelected(item);
@@ -69,7 +68,7 @@ public class TasksActivity extends AppCompatActivity {
     ListView taskListView = findViewById(R.id.ListView_tasks);
     taskListView.setAdapter(taskAdapter);
     taskListView.setOnItemClickListener((adapterView, view, i, l) ->
-        startActivity(TasksViewActivity.makeIntent(this, i)));
+        startActivity(TaskManageActivity.makeIntent(this, i)));
 
     TextView noTasksMessage = findViewById(R.id.TextView_tasks_empty_state_message);
     noTasksMessage.setVisibility(

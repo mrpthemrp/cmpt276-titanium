@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/coin_flip_empty_state_message_no_coin_flips"
+        android:text="@string/empty_state_coin_flip_no_coin_flips"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

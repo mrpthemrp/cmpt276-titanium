@@ -50,12 +50,12 @@
             android:parentActivityName=".ui.MenuActivity"
             android:theme="@style/Theme.Titanium.Help" />
         <activity
-            android:name=".ui.tasks.TasksEditActivity"
+            android:name=".ui.tasks.TaskEditActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:theme="@style/Theme.Titanium" />
         <activity
-            android:name=".ui.tasks.TasksViewActivity"
+            android:name=".ui.tasks.TaskManageActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:theme="@style/Theme.Titanium" />

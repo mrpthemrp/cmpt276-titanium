@@ -28,7 +28,6 @@ public class ChangeChildActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_coin_flip_change_child);
-    setTitle(R.string.title_change_child);
 
     Toolbar toolbar = findViewById(R.id.ToolBar_change_child);
     setSupportActionBar(toolbar);
