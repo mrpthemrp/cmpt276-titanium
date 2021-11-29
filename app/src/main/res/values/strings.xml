@@ -151,5 +151,6 @@
 
     <!-- New -->
     <string name="NEW_STRINGS_BELOW">NEW_STRINGS_BELOW</string>
+    <string name="button_task_manage_history">History</string>
 
 </resources>
