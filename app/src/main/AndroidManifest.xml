@@ -17,6 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_practical_parent_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Titanium">
+        <activity
+            android:name=".ui.tasks.TaskHistory"
+            android:exported="true" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
