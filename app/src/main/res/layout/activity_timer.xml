@@ -20,6 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        app:title="@string/title_timer"
         app:titleTextColor="?attr/colorOnSecondary" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -26,7 +25,9 @@ import ca.cmpt276.titanium.model.Task;
 import ca.cmpt276.titanium.model.TaskManager;
 
 /**
- * This class displays the details for a single task.
+ * Allows a user to view a Task object's data.
+ *
+ * @author Titanium
  */
 public class TaskManageActivity extends AppCompatActivity {
   private static final String TASK_INDEX_KEY = "taskIndex";
@@ -51,8 +52,7 @@ public class TaskManageActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_task_manage);
 
-    Toolbar toolbar = findViewById(R.id.ToolBar_task_manage);
-    setSupportActionBar(toolbar);
+    setSupportActionBar(findViewById(R.id.ToolBar_task_manage));
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
     this.taskManager = TaskManager.getInstance(this);
@@ -149,6 +149,25 @@ public class TaskManageActivity extends AppCompatActivity {
     toast.cancel();
     toast.setText(toastText);
     toast.show();
+  }
+
+  private void displayTaskData() {
+    TextView taskName = findViewById(R.id.TextView_task_manage_task_name);
+    taskName.setText(task.getTaskName());
+
+    TextView childName = findViewById(R.id.TextView_task_manage_child_name);
+    childName.setText(
+        task.getChildUniqueID() == null
+            ? getString(R.string.empty_state_tasks_no_children)
+            : getString(R.string.tasks_next_child_name, child.getName()));
+
+    ImageView childPortrait = findViewById(R.id.ImageView_task_manage_child_portrait);
+
+    if (task.getChildUniqueID() == null) {
+      childPortrait.setImageResource(R.drawable.ic_default_portrait_green);
+    } else {
+      childPortrait.setImageDrawable(child.getPortrait(getResources()));
+    }
   }
 
   private void launchDeleteTaskPrompt() {

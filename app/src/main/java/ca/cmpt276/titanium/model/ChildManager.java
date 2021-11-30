@@ -14,8 +14,9 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 /**
- * This class represents a group of children.
- * Handles loading and saving from JSON. Generates a unique ID for a child.
+ * Loads, saves, and interacts with groups of Child objects.
+ *
+ * @author Titanium
  */
 public class ChildManager {
   private static final Gson GSON = new Gson();

@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -23,7 +22,9 @@ import ca.cmpt276.titanium.model.ChildManager;
 import ca.cmpt276.titanium.ui.ChildAdapter;
 
 /**
- * This activity represents the coin flip queue.
+ * Displays the children in the coin flip queue.
+ *
+ * @author Titanium
  */
 public class ChildQueueActivity extends AppCompatActivity {
   private ChildManager childManager;
@@ -33,14 +34,10 @@ public class ChildQueueActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_coin_flip_child_queue);
 
-    Toolbar myToolbar = (Toolbar) findViewById(R.id.ToolBar_child_queue);
-    setSupportActionBar(myToolbar);
+    setSupportActionBar(findViewById(R.id.ToolBar_child_queue));
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-    childManager = ChildManager.getInstance(this);
-
-    displayQueue();
-    updateGUI();
+    this.childManager = ChildManager.getInstance(this);
   }
 
   @Override
@@ -52,8 +49,8 @@ public class ChildQueueActivity extends AppCompatActivity {
   @Override
   protected void onResume() {
     super.onResume();
+    displayCurrentChild();
     displayQueue();
-    updateGUI();
   }
 
   @Override
@@ -69,12 +66,27 @@ public class ChildQueueActivity extends AppCompatActivity {
     }
   }
 
-  private void displayQueue() {
-    if (childManager.getChildren().size() == 0) {
-      findViewById(R.id.TextView_child_queue_empty_state_message).setVisibility(View.VISIBLE);
+  private void displayCurrentChild() {
+    ImageView currentChildPortrait =
+        findViewById(R.id.ImageView_child_queue_current_child_portrait);
+    TextView currentChildName = findViewById(R.id.TextView_child_queue_current_child_name);
+
+    if (childManager.getCoinFlipQueue().size() > 0) {
+      Child currentChild = childManager.getChoosingChild();
+      currentChildPortrait.setImageDrawable(currentChild.getPortrait(getResources()));
+      currentChildName.setText(currentChild.getName());
     } else {
-      findViewById(R.id.TextView_child_queue_empty_state_message).setVisibility(View.INVISIBLE);
+      currentChildPortrait.setImageResource(R.drawable.ic_default_portrait_green);
+      currentChildName.setText(R.string.empty_state_coin_flip_no_children);
     }
+  }
+
+  private void displayQueue() {
+    TextView emptyStateMessage = findViewById(R.id.TextView_child_queue_empty_state);
+    emptyStateMessage.setVisibility(
+        childManager.getChildren().size() == 0
+            ? View.VISIBLE
+            : View.INVISIBLE);
 
     ArrayList<UUID> coinFlipQueue = new ArrayList<>(childManager.getCoinFlipQueue());
     ArrayList<Child> coinFlipQueueChildren = new ArrayList<>();
@@ -83,19 +95,5 @@ public class ChildQueueActivity extends AppCompatActivity {
 
     ListView childrenListView = findViewById(R.id.ListView_child_queue);
     childrenListView.setAdapter(childAdapter);
-  }
-
-  private void updateGUI() {
-    ImageView currentChildIcon = findViewById(R.id.ImageView_child_queue_current_child_portrait);
-    TextView currentChildTurnName = findViewById(R.id.TextView_child_queue_current_child_name);
-
-    if (childManager.getCoinFlipQueue().size() > 0) {
-      Child currentChild = childManager.getChoosingChild();
-      currentChildTurnName.setText(currentChild.getName());
-      currentChildIcon.setImageDrawable(currentChild.getPortrait(getResources()));
-    } else {
-      currentChildTurnName.setText(R.string.empty_state_coin_flip_no_children);
-      currentChildIcon.setImageResource(R.drawable.ic_default_portrait_green);
-    }
   }
 }

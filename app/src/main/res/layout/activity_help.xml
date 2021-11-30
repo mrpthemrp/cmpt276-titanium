@@ -17,7 +17,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        app:title="@string/title_help" />
 
     <ScrollView
         android:id="@+id/ScrollView_help"
@@ -124,7 +125,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_alarm_link_text"
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_alarm_link"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
@@ -139,7 +140,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_background_link_text" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_background_link" />
 
             <TextView
                 android:id="@+id/TextView_help_task_checkmark_link"
@@ -147,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="3dp"
-                android:gravity="start"
+                android:autoLink="web"
                 android:text="@string/link_help_coin_flip_history_checkmark"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="15sp"
@@ -155,20 +156,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/TextView_help_task_checkmark"
-                tools:ignore="TextContrastCheck" />
-
-            <TextView
-                android:id="@+id/TextView_help_task_checkmark_link_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:text="@string/link_text_help_coin_flip_history_checkmark"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_task_checkmark_link" />
+                tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/TextView_help_coin_flip_history_x_mark"
@@ -182,7 +170,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_task_checkmark_link_text" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_task_checkmark_link" />
 
             <TextView
                 android:id="@+id/TextView_help_coin_flip_history_x_mark_link"
@@ -190,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="3dp"
-                android:gravity="start"
+                android:autoLink="web"
                 android:text="@string/link_help_coin_flip_history_x_mark"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="15sp"
@@ -198,20 +186,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_history_x_mark"
-                tools:ignore="TextContrastCheck" />
-
-            <TextView
-                android:id="@+id/TextView_help_coin_flip_history_x_mark_link_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:text="@string/link_text_help_coin_flip_history_x_mark"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_history_x_mark_link" />
+                tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/TextView_help_timer_background"
@@ -233,7 +208,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="3dp"
-                android:gravity="start"
+                android:autoLink="web"
                 android:text="@string/link_help_timer_background"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="15sp"
@@ -241,20 +216,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_background"
-                tools:ignore="TextContrastCheck" />
-
-            <TextView
-                android:id="@+id/TextView_help_timer_background_link_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:text="@string/link_text_help_timer_background"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_background_link" />
+                tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
             <TextView
                 android:id="@+id/TextView_help_sounds_subtitle"
@@ -291,6 +253,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="3dp"
+                android:autoLink="web"
+                android:gravity="start"
                 android:text="@string/link_help_coin_flip_sound"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="15sp"
@@ -298,21 +262,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip"
-                tools:ignore="TextContrastCheck" />
-
-            <TextView
-                android:id="@+id/TextView_help_coin_flip_sound_link_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:gravity="start"
-                android:text="@string/link_text_help_coin_flip_sound"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_sound_link" />
+                tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
             <TextView
                 android:id="@+id/TextView_help_timer_alarm"
@@ -326,7 +276,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_sound_link_text" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_sound_link" />
 
             <TextView
                 android:id="@+id/TextView_help_timer_alarm_link"
@@ -334,6 +284,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="3dp"
+                android:autoLink="web"
+                android:gravity="start"
                 android:text="@string/link_help_timer_alarm"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="15sp"
@@ -341,21 +293,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_alarm"
-                tools:ignore="TextContrastCheck" />
-
-            <TextView
-                android:id="@+id/TextView_help_timer_alarm_link_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:gravity="start"
-                android:text="@string/link_text_help_timer_alarm"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_alarm_link" />
+                tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
             <TextView
                 android:id="@+id/TextView_help_sfu_copyright_footer"
@@ -368,7 +306,7 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_history_x_mark_link_text"
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_history_x_mark_link"
                 tools:ignore="TextContrastCheck" />
         </LinearLayout>
     </ScrollView>

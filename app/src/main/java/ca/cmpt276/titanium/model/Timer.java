@@ -6,7 +6,9 @@ import android.content.SharedPreferences;
 import androidx.preference.PreferenceManager;
 
 /**
- * This class stores the timer information.
+ * Loads and saves timer fields.
+ *
+ * @author Titanium
  */
 public class Timer {
   private static final String DURATION_MILLISECONDS_KEY = "durationMilliseconds";

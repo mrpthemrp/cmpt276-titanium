@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 /**
- * This class represents a single task and its data.
+ * Represents a task.
+ *
+ * @author Titanium
  */
 public class Task {
   private String taskName;

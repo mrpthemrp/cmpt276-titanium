@@ -1,7 +1,9 @@
 package ca.cmpt276.titanium.model;
 
 /**
- * This represents the two sides of a coin.
+ * Represents the two sides of a coin.
+ *
+ * @author Titanium
  */
 public enum Coin {
   HEADS,

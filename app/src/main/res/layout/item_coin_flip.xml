@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/TextView_item_coin_flip_child_name"
+            android:id="@+id/TextView_item_coin_flip_child_choice"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:ellipsize="none"
@@ -45,7 +45,7 @@
             android:layout_marginTop="4dp"
             android:text="@string/DEFAULT_TEXT"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TextView_item_coin_flip_child_name" />
+            app:layout_constraintTop_toBottomOf="@+id/TextView_item_coin_flip_child_choice" />
 
         <TextView
             android:id="@+id/TextView_item_coin_flip_result"

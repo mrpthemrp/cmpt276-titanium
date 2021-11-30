@@ -19,7 +19,9 @@ import ca.cmpt276.titanium.model.ChildManager;
 import ca.cmpt276.titanium.model.CoinFlip;
 
 /**
- * This is an adapter for the coin flip history.
+ * Displays each CoinFlip object from a list of CoinFlip objects.
+ *
+ * @author Titanium
  */
 public class CoinFlipAdapter extends ArrayAdapter<CoinFlip> {
   public CoinFlipAdapter(Context context, ArrayList<CoinFlip> coinFlipHistory) {
@@ -36,31 +38,31 @@ public class CoinFlipAdapter extends ArrayAdapter<CoinFlip> {
 
     CoinFlip coinFlip = getItem(position);
 
-    ImageView childIcon = convertView.findViewById(R.id.ImageView_item_coin_flip_portrait);
-    ImageView resultImageView = convertView.findViewById(R.id.ImageView_item_coin_flip_result);
-    TextView childTextView = convertView.findViewById(R.id.TextView_item_coin_flip_child_name);
-
-    ChildManager childManager = ChildManager.getInstance(getContext());
-    Child child = childManager.getChild(coinFlip.getChildUniqueID());
-    childIcon.setImageDrawable(child.getPortrait(getContext().getResources()));
-
-    String childChoice = child.getName()
-        + getContext().getString(R.string.item_coin_flip_child_choice)
-        + coinFlip.getChildChosenSide();
-    childTextView.setText(childChoice);
-
-    resultImageView.setImageResource(
+    ImageView resultIcon = convertView.findViewById(R.id.ImageView_item_coin_flip_result);
+    resultIcon.setImageResource(
         coinFlip.getResult() == coinFlip.getChildChosenSide()
             ? R.drawable.ic_checkmark_green
             : R.drawable.ic_xmark_red);
 
+    ChildManager childManager = ChildManager.getInstance(getContext());
+    Child child = childManager.getChild(coinFlip.getChildUniqueID());
+
+    TextView childChoice = convertView.findViewById(R.id.TextView_item_coin_flip_child_choice);
+    String childChoiceMessage = child.getName()
+        + getContext().getString(R.string.item_coin_flip_child_choice)
+        + coinFlip.getChildChosenSide();
+    childChoice.setText(childChoiceMessage);
+
     TextView coinFlipDate = convertView.findViewById(R.id.TextView_item_coin_flip_date);
     coinFlipDate.setText(coinFlip.getDate());
 
-    TextView resultTextView = convertView.findViewById(R.id.TextView_item_coin_flip_result);
-    String coinFlipResult =
+    TextView coinFlipResult = convertView.findViewById(R.id.TextView_item_coin_flip_result);
+    String coinFlipResultMessage =
         getContext().getString(R.string.item_coin_flip_result) + coinFlip.getResult().toString();
-    resultTextView.setText(coinFlipResult);
+    coinFlipResult.setText(coinFlipResultMessage);
+
+    ImageView childPortrait = convertView.findViewById(R.id.ImageView_item_coin_flip_portrait);
+    childPortrait.setImageDrawable(child.getPortrait(getContext().getResources()));
 
     return convertView;
   }

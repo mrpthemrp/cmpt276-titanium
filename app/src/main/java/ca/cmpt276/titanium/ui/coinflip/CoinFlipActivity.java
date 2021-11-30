@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
 
@@ -28,16 +27,17 @@ import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipManager;
 
 /**
- * This activity represents the coin flip activity.
- * Allows the user to choose heads or tails, and shows the results of the flip.
+ * Allows a user to simulate flipping a coin.
+ *
+ * @author Titanium
  */
 public class CoinFlipActivity extends AppCompatActivity {
-  private static final int COIN_FLIP_DELAY = 1600;
   private static final Coin DEFAULT_COIN = Coin.HEADS;
+  private static final int COIN_FLIP_DELAY = 1600;
 
-  private Coin coinChosen;
-  private CoinFlipManager coinFlipManager;
   private ChildManager childManager;
+  private CoinFlipManager coinFlipManager;
+  private Coin coinChosen;
 
   public static Intent makeIntent(Context context) {
     return new Intent(context, CoinFlipActivity.class);
@@ -48,12 +48,11 @@ public class CoinFlipActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_coin_flip);
 
-    Toolbar myToolbar = (Toolbar) findViewById(R.id.ToolBar_coin_flip);
-    setSupportActionBar(myToolbar);
+    setSupportActionBar(findViewById(R.id.ToolBar_coin_flip));
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-    coinFlipManager = CoinFlipManager.getInstance(this);
     childManager = ChildManager.getInstance(this);
+    coinFlipManager = CoinFlipManager.getInstance(this);
 
     setupButtons();
     updateGUI(DEFAULT_COIN);
@@ -98,21 +97,23 @@ public class CoinFlipActivity extends AppCompatActivity {
   }
 
   private void updateGUI(Coin coinChosen) {
-    ImageView childIconDisplay = findViewById(R.id.ImageView_coin_flip_child_portrait);
-    TextView childNameDisplay = findViewById(R.id.TextView_coin_flip_child_name);
-    TextView sideChosenDisplay = findViewById(R.id.TextView_coin_flip_coin_side_chosen);
+    this.coinChosen = coinChosen;
+
+    ImageView childPortrait = findViewById(R.id.ImageView_coin_flip_child_portrait);
+    TextView childName = findViewById(R.id.TextView_coin_flip_child_name);
+    TextView sideChosen = findViewById(R.id.TextView_coin_flip_coin_side_chosen);
     Button headsButton = findViewById(R.id.Button_coin_flip_select_heads);
     Button tailsButton = findViewById(R.id.Button_coin_flip_select_tails);
 
     if (childManager.getCoinFlipQueue().size() > 0) {
       Child nextChild = childManager.getChoosingChild();
-      childIconDisplay.setImageDrawable(nextChild.getPortrait(getResources()));
-      childNameDisplay.setText(getString(R.string.coin_flip_child_name, nextChild.getName()));
-      sideChosenDisplay.setText(getString(R.string.coin_flip_side_chosen, coinChosen.toString()));
-      this.coinChosen = coinChosen;
+      childPortrait.setImageDrawable(nextChild.getPortrait(getResources()));
+      childName.setText(getString(R.string.coin_flip_child_name, nextChild.getName()));
+      sideChosen.setText(getString(R.string.coin_flip_side_chosen, coinChosen.toString()));
     } else {
-      childNameDisplay.setVisibility(View.INVISIBLE);
-      sideChosenDisplay.setVisibility(View.INVISIBLE);
+      childPortrait.setVisibility(View.INVISIBLE);
+      childName.setVisibility(View.INVISIBLE);
+      sideChosen.setVisibility(View.INVISIBLE);
       headsButton.setVisibility(View.INVISIBLE);
       tailsButton.setVisibility(View.INVISIBLE);
     }
