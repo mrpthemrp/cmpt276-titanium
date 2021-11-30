@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class TaskHistory {
 
-    private final String historyTaskName;
+    private String historyTaskName;
     private final UUID childUniqueID;
     private final String date;
 
@@ -28,4 +28,7 @@ public class TaskHistory {
         return date;
     }
 
+    public void setHistoryTaskName(String historyTaskName) {
+        this.historyTaskName = historyTaskName;
+    }
 }

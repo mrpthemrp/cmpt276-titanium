@@ -15,7 +15,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
@@ -24,7 +23,6 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.ChildManager;
 import ca.cmpt276.titanium.model.Task;
-import ca.cmpt276.titanium.model.TaskHistory;
 import ca.cmpt276.titanium.model.TaskManager;
 
 /**
@@ -41,7 +39,6 @@ public class TaskManageActivity extends AppCompatActivity {
   private Task task;
   private Child child;
   TextView taskNameText;
-  static LocalDate date;
 
   public static Intent makeIntent(Context context, int taskIndex) {
     Intent intent = new Intent(context, TaskManageActivity.class);
@@ -145,9 +142,7 @@ public class TaskManageActivity extends AppCompatActivity {
     });
 
     Button historyTaskButton = findViewById(R.id.Button_task_manage_history);
-    historyTaskButton.setOnClickListener(view -> {
-      startActivity(TaskHistoryActivity.makeIntent(TaskManageActivity.this, taskIndex));
-    });
+    historyTaskButton.setOnClickListener(view -> startActivity(TaskHistoryActivity.makeIntent(TaskManageActivity.this, taskIndex)));
   }
 
   private void updateToast(String toastText) {
@@ -162,6 +157,7 @@ public class TaskManageActivity extends AppCompatActivity {
         .setTitle(getString(R.string.prompt_title_task_manage_delete))
         .setMessage(getString(R.string.prompt_message_task_manage_delete))
         .setPositiveButton(R.string.prompt_positive_tasks, (dialog, which) -> {
+          taskManager.taskDeletedFromHistory(task.getTaskName());
           taskManager.removeTask(taskIndex);
           updateToast(getString(R.string.toast_task_manage_deleted));
           finish();

@@ -14,8 +14,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -92,13 +90,14 @@ public class TaskEditActivity extends AppCompatActivity {
       TaskManager taskManager = TaskManager.getInstance(this);
       EditText taskNameInput = findViewById(R.id.EditText_task_edit_task_name);
       taskNameInput.setText(taskManager.getTasks().get(taskIndex).getTaskName());
-
+      String oldTask = taskManager.getTasks().get(taskIndex).getTaskName();
       Button saveTaskButton = findViewById(R.id.Button_task_edit_save_task);
       saveTaskButton.setOnClickListener(view -> {
         if (taskNameInput.getText().toString().equals("")) {
           updateToast(getString(R.string.toast_task_edit_name_field_empty));
         } else {
           taskManager.setTaskName(taskIndex, taskNameInput.getText().toString());
+          taskManager.editTaskFromHistory(oldTask, taskNameInput.getText().toString());
           finish();
         }
       });
