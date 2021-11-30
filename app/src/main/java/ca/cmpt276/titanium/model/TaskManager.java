@@ -8,7 +8,10 @@ import androidx.preference.PreferenceManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -19,11 +22,13 @@ import java.util.UUID;
 public class TaskManager {
   private static final Gson GSON = new Gson();
   private static final String TASKS_JSON_KEY = "tasksJson";
+  private static final String HISTORY_TASKS_JSON_KEY = "tasksHistoryJson";
 
   private static TaskManager instance;
   private static SharedPreferences prefs;
 
   private static ArrayList<Task> tasks = new ArrayList<>();
+  private static ArrayList<Task> taskHistory = new ArrayList<>();
 
   private TaskManager(Context context) {
     TaskManager.prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -40,6 +45,7 @@ public class TaskManager {
 
   private static void loadSavedData() {
     String tasksJson = prefs.getString(TASKS_JSON_KEY, null);
+    String tasksHistoryJson = prefs.getString(HISTORY_TASKS_JSON_KEY, null);
 
     if (tasksJson != null) {
       Type tasksType = new TypeToken<ArrayList<Task>>() {
@@ -47,15 +53,30 @@ public class TaskManager {
 
       TaskManager.tasks = GSON.fromJson(tasksJson, tasksType);
     }
+
+    if(tasksHistoryJson != null){
+      Type tasksType = new TypeToken<ArrayList<Task>>() {
+      }.getType();
+
+      TaskManager.taskHistory = GSON.fromJson(tasksJson, tasksType);
+    }
   }
 
   private void saveData() {
     String tasksJson = GSON.toJson(tasks);
+    String tasksHistoryJson = GSON.toJson(taskHistory);
     prefs.edit().putString(TASKS_JSON_KEY, tasksJson).apply();
+    prefs.edit().putString(HISTORY_TASKS_JSON_KEY, tasksHistoryJson).apply();
   }
 
   public void addTask(String taskName, UUID childUniqueID) {
     tasks.add(new Task(taskName, childUniqueID));
+    saveData();
+  }
+
+  public void addHistoryTask(String taskName, UUID childUniqueID, LocalDate date){
+    Task task = new Task(taskName, childUniqueID, date);
+    taskHistory.add(task);
     saveData();
   }
 
@@ -94,5 +115,9 @@ public class TaskManager {
 
   public ArrayList<Task> getTasks() {
     return tasks;
+  }
+
+  public ArrayList<Task> getTaskHistory() {
+    return taskHistory;
   }
 }

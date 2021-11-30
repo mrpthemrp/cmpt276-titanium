@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
@@ -39,6 +40,8 @@ public class TaskManageActivity extends AppCompatActivity {
   private int taskIndex;
   private Task task;
   private Child child;
+  TextView taskNameText;
+  static LocalDate date;
 
   public static Intent makeIntent(Context context, int taskIndex) {
     Intent intent = new Intent(context, TaskManageActivity.class);
@@ -103,7 +106,7 @@ public class TaskManageActivity extends AppCompatActivity {
   }
 
   private void displayTaskData() {
-    TextView taskNameText = findViewById(R.id.TextView_task_manage_task_name);
+    taskNameText = findViewById(R.id.TextView_task_manage_task_name);
     taskNameText.setText(taskManager.getTasks().get(taskIndex).getTaskName());
 
     TextView childNameText = findViewById(R.id.TextView_task_manage_child_name);
@@ -129,17 +132,22 @@ public class TaskManageActivity extends AppCompatActivity {
       ArrayList<Child> children = childManager.getChildren();
 
       if (task.getChildUniqueID() != null) {
+        String taskName = taskNameText.getText().toString();
+        date = LocalDate.now();
+        taskManager.addHistoryTask(taskName, task.getChildUniqueID(), date);
+
         int nextChildIndex = (children.indexOf(child) + 1) % children.size();
         UUID nextChildUniqueID = children.get(nextChildIndex).getUniqueID();
         taskManager.setChildUniqueID(taskIndex, nextChildUniqueID);
       }
-
       updateToast(getString(R.string.toast_task_manage_completed));
       finish();
     });
 
     Button historyTaskButton = findViewById(R.id.Button_task_manage_history);
-    historyTaskButton.setOnClickListener(view -> Toast.makeText(TaskManageActivity.this, "Launching task history", Toast.LENGTH_SHORT).show());
+    historyTaskButton.setOnClickListener(view -> {
+      startActivity(TaskHistory.makeIntent(TaskManageActivity.this, taskIndex));
+    });
   }
 
   private void updateToast(String toastText) {
