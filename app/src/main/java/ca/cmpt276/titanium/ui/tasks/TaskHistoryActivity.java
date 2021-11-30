@@ -106,13 +106,10 @@ public class TaskHistoryActivity extends AppCompatActivity {
 
             TextView taskDate = convertView.findViewById(R.id.TextView_item_task_date);
             taskDate.setText(getContext().getString(R.string.item_task_date,task.getDate()));
-            /*
-            Activity itemView = null;
-            ImageView iconItem = itemView.findViewById(R.id.ImageView_item_history_child_image);
+
+            ImageView iconItem = convertView.findViewById(R.id.ImageView_item_history_child_image);
             Child child = childManager.getChild(task.getChildUniqueID());
             iconItem.setImageDrawable(child.getPortrait(getContext().getResources()));
-
-             */
 
             return convertView;
         }
