@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -113,6 +114,9 @@ public class TaskManageActivity extends AppCompatActivity {
       updateToast(getString(R.string.toast_task_manage_completed));
       finish();
     });
+
+    Button historyTaskButton = findViewById(R.id.Button_task_manage_history);
+    historyTaskButton.setOnClickListener(view -> Toast.makeText(TaskManageActivity.this, "Launching task history", Toast.LENGTH_SHORT).show());
   }
 
   private void updateToast(String toastText) {
