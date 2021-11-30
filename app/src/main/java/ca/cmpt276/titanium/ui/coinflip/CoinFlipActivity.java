@@ -27,8 +27,9 @@ import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipManager;
 
 /**
- * This activity represents the coin flip activity.
- * Allows the user to choose heads or tails, and shows the results of the flip.
+ * Allows a user to simulate flipping a coin.
+ *
+ * @author Titanium
  */
 public class CoinFlipActivity extends AppCompatActivity {
   private static final Coin DEFAULT_COIN = Coin.HEADS;

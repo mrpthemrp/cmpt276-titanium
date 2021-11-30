@@ -17,7 +17,9 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 
 /**
- * This is an adapter for the children list.
+ * Displays each Child object from a list of Child objects.
+ *
+ * @author Titanium
  */
 public class ChildAdapter extends ArrayAdapter<Child> {
   public ChildAdapter(Context context, ArrayList<Child> children) {

@@ -26,8 +26,10 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Timer;
 
 /**
- * This activity represents the timer activity.
- * Shows times that can be set, and buttons that start and cancel the countdown.
+ * Displays timer information.
+ * Allows a user to start and interact with a timer.
+ *
+ * @author Titanium
  */
 public class TimerActivity extends AppCompatActivity {
   private static final boolean IS_CLICKED_DEFAULT = false;

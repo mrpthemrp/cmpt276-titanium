@@ -20,8 +20,10 @@ import ca.cmpt276.titanium.ui.tasks.TasksActivity;
 import ca.cmpt276.titanium.ui.timer.TimerActivity;
 
 /**
- * This activity represents the main menu.
- * Shows children and buttons to the timer and coin flip.
+ * Displays the main menu and a list of Child objects.
+ * Allows a user to navigate to other activities.
+ *
+ * @author Titanium
  */
 public class MenuActivity extends AppCompatActivity {
   @Override

@@ -17,7 +17,9 @@ import ca.cmpt276.titanium.model.ChildManager;
 import ca.cmpt276.titanium.model.Task;
 
 /**
- * This is an adapter for the task list.
+ * Displays each Task object from a list of Task objects.
+ *
+ * @author Titanium
  */
 public class TaskAdapter extends ArrayAdapter<Task> {
   public TaskAdapter(Context context, ArrayList<Task> tasks) {

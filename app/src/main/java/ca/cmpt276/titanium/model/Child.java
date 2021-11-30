@@ -12,7 +12,9 @@ import java.util.UUID;
 import ca.cmpt276.titanium.R;
 
 /**
- * This class is used to get and set the attributes of a single child.
+ * Represents a child.
+ *
+ * @author Titanium
  */
 public class Child {
   private final UUID uniqueID;

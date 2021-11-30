@@ -10,7 +10,9 @@ import androidx.annotation.Nullable;
 import ca.cmpt276.titanium.model.Timer;
 
 /**
- * This class handles the operation of a timer in the background.
+ * Handles the operation of a timer in the background.
+ *
+ * @author Titanium
  */
 public class TimerService extends Service {
   public static final String TIMER_UPDATE_INTENT = "timerUpdateIntent";

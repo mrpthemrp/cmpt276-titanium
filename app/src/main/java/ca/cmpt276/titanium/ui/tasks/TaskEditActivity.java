@@ -21,7 +21,9 @@ import ca.cmpt276.titanium.model.ChildManager;
 import ca.cmpt276.titanium.model.TaskManager;
 
 /**
- * This class allows a user to create new tasks and edit existing tasks.
+ * Allows a user to add and edit a Task object.
+ *
+ * @author Titanium
  */
 public class TaskEditActivity extends AppCompatActivity {
   private static final String INTENT_TYPE_KEY = "intentType";

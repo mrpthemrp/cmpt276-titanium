@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,7 +25,9 @@ import ca.cmpt276.titanium.model.Task;
 import ca.cmpt276.titanium.model.TaskManager;
 
 /**
- * This class displays the details for a single task.
+ * Allows a user to view a Task object's data.
+ *
+ * @author Titanium
  */
 public class TaskManageActivity extends AppCompatActivity {
   private static final String TASK_INDEX_KEY = "taskIndex";
@@ -116,7 +117,8 @@ public class TaskManageActivity extends AppCompatActivity {
     });
 
     Button historyTaskButton = findViewById(R.id.Button_task_manage_history);
-    historyTaskButton.setOnClickListener(view -> Toast.makeText(TaskManageActivity.this, "Launching task history", Toast.LENGTH_SHORT).show());
+    historyTaskButton.setOnClickListener(view -> Toast.makeText(TaskManageActivity.this,
+        "Launching task history", Toast.LENGTH_SHORT).show());
   }
 
   private void updateToast(String toastText) {

@@ -22,7 +22,9 @@ import ca.cmpt276.titanium.model.ChildManager;
 import ca.cmpt276.titanium.ui.ChildAdapter;
 
 /**
- * This activity represents the coin flip queue.
+ * Displays the children in the coin flip queue.
+ *
+ * @author Titanium
  */
 public class ChildQueueActivity extends AppCompatActivity {
   private ChildManager childManager;

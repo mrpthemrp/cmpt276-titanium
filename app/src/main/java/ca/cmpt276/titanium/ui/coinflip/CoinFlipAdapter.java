@@ -19,7 +19,9 @@ import ca.cmpt276.titanium.model.ChildManager;
 import ca.cmpt276.titanium.model.CoinFlip;
 
 /**
- * This is an adapter for the coin flip history.
+ * Displays each CoinFlip object from a list of CoinFlip objects.
+ *
+ * @author Titanium
  */
 public class CoinFlipAdapter extends ArrayAdapter<CoinFlip> {
   public CoinFlipAdapter(Context context, ArrayList<CoinFlip> coinFlipHistory) {

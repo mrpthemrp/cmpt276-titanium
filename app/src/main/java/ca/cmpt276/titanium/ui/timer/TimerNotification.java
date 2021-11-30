@@ -23,7 +23,10 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Timer;
 
 /**
- * This class handles timer notifications, including sound and vibration.
+ * Displays timer information while away from TimerActivity.
+ * Notifies a user when a timer has finished.
+ *
+ * @author Titanium
  */
 public class TimerNotification {
   private static final String TIMER_NOTIFICATION_TAG = "practicalParent";

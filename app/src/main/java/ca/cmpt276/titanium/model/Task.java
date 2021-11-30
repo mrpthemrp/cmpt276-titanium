@@ -3,7 +3,9 @@ package ca.cmpt276.titanium.model;
 import java.util.UUID;
 
 /**
- * This class represents a single task and its data.
+ * Represents a task.
+ *
+ * @author Titanium
  */
 public class Task {
   private String taskName;

@@ -17,8 +17,10 @@ import ca.cmpt276.titanium.model.ChildManager;
 import ca.cmpt276.titanium.ui.ChildAdapter;
 
 /**
- * This activity represents the children list.
- * Allows the user to change the current child turn.
+ * Displays the children in the coin flip queue.
+ * Allows a user to change the order of the children.
+ *
+ * @author Titanium
  */
 public class ChangeChildActivity extends AppCompatActivity {
   @Override

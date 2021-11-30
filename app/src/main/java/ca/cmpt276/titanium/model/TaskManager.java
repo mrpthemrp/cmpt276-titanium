@@ -13,8 +13,9 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * This class holds data for all tasks.
- * Handles loading and saving using JSON and Shared Preferences.
+ * Loads, saves, and interacts with a group of Task objects.
+ *
+ * @author Titanium
  */
 public class TaskManager {
   private static final Gson GSON = new Gson();

@@ -16,8 +16,9 @@ import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipManager;
 
 /**
- * This represents the coin flip history activity.
- * Shows a list of the history from latest to oldest.
+ * Displays coin flip history from newest to oldest.
+ *
+ * @author Titanium
  */
 public class CoinFlipHistoryActivity extends AppCompatActivity {
   @Override

@@ -18,7 +18,9 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.TaskManager;
 
 /**
- * This class displays all tasks.
+ * Displays a list of Task objects.
+ *
+ * @author Titanium
  */
 public class TasksActivity extends AppCompatActivity {
   public static Intent makeIntent(Context context) {

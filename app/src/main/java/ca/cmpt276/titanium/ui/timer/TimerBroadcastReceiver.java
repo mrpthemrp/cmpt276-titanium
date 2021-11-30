@@ -8,7 +8,9 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Timer;
 
 /**
- * NotificationReceiver is called when the user interacts with timer notification actions.
+ * Allows a user to interact with a timer while away from TimerActivity.
+ *
+ * @author Titanium
  */
 public class TimerBroadcastReceiver extends BroadcastReceiver {
   @Override

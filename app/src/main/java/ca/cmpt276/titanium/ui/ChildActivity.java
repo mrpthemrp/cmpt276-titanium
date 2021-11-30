@@ -42,7 +42,9 @@ import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.ChildManager;
 
 /**
- * This activity represents the viewing, adding, and editing of a single child.
+ * Allows a user to view, add, and edit a Child object's data.
+ *
+ * @author Titanium
  */
 public class ChildActivity extends AppCompatActivity {
   private static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 0;
