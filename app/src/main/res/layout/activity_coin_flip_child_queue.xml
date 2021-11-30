@@ -91,7 +91,7 @@
         app:layout_constraintTop_toBottomOf="@+id/TextView_child_queue_subtitle" />
 
     <TextView
-        android:id="@+id/TextView_child_queue_empty_state_message"
+        android:id="@+id/TextView_child_queue_empty_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"

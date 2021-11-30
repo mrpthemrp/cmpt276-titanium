@@ -6,7 +6,9 @@ import java.util.Random;
 import java.util.UUID;
 
 /**
- * This class represents a single coin flip.
+ * Represents a coin flip.
+ *
+ * @author Titanium
  */
 public class CoinFlip {
   private final Coin childChosenSide;

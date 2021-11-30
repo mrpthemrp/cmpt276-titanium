@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -27,12 +26,10 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +42,9 @@ import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.ChildManager;
 
 /**
- * This activity represents the viewing, adding, and editing of a single child.
+ * Allows a user to view, add, and edit a Child object's data.
+ *
+ * @author Titanium
  */
 public class ChildActivity extends AppCompatActivity {
   private static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 0;
@@ -121,22 +120,18 @@ public class ChildActivity extends AppCompatActivity {
   @Override
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
     if (item.getItemId() == android.R.id.home) {
-      launchPrompt(
-          getString(R.string.prompt_title_child_discard_changes),
+      launchPrompt(getString(R.string.prompt_title_child_discard_changes),
           getString(R.string.prompt_message_child_discard_changes),
           getString(R.string.toast_child_changes_discarded),
           false);
       return true;
     } else if (item.getItemId() == R.id.menu_item_child_edit) {
       startActivity(ChildActivity.makeIntent(
-          this,
-          getString(R.string.title_child_edit),
-          focusedChildUniqueID));
+          this, getString(R.string.title_child_edit), focusedChildUniqueID));
       return true;
     } else if (item.getItemId() == R.id.menu_item_child_delete) {
       this.focusedChild = childManager.getChild(focusedChildUniqueID);
-      launchPrompt(
-          getString(R.string.prompt_title_child_delete, focusedChild.getName()),
+      launchPrompt(getString(R.string.prompt_title_child_delete, focusedChild.getName()),
           getString(R.string.prompt_message_child_delete),
           getString(R.string.toast_child_deleted),
           true);
@@ -148,17 +143,15 @@ public class ChildActivity extends AppCompatActivity {
 
   @Override
   public void onBackPressed() {
-    launchPrompt(
-        getString(R.string.prompt_title_child_discard_changes),
+    launchPrompt(getString(R.string.prompt_title_child_discard_changes),
         getString(R.string.prompt_message_child_discard_changes),
         getString(R.string.toast_child_changes_discarded),
         false);
   }
 
   @Override
-  public void onRequestPermissionsResult(int requestCode,
-                                         @NonNull String[] permissions,
-                                         @NonNull int[] grantResults) {
+  public void onRequestPermissionsResult(
+      int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
     if (requestCode == READ_EXTERNAL_STORAGE_REQUEST_CODE) {
@@ -172,8 +165,7 @@ public class ChildActivity extends AppCompatActivity {
   }
 
   private void setupActionBar(String intentType) {
-    Toolbar toolbar = findViewById(R.id.ToolBar_child);
-    setSupportActionBar(toolbar);
+    setSupportActionBar(findViewById(R.id.ToolBar_child));
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
     setTitle(intentType);
@@ -206,7 +198,6 @@ public class ChildActivity extends AppCompatActivity {
             }
 
             cursor.close();
-
             portraitView.setImageDrawable(Child.getThisPortrait(getResources(), portraitPath));
 
             if (intentType.equals(EDIT_CHILD_INTENT)) {
@@ -248,16 +239,10 @@ public class ChildActivity extends AppCompatActivity {
     RoundedBitmapDrawable portrait;
 
     if (intentType.equals(ADD_CHILD_INTENT)) {
-      portrait = RoundedBitmapDrawableFactory.create(
-          getResources(),
-          BitmapFactory.decodeResource(getResources(), R.drawable.ic_default_portrait_green));
-      portrait.setCircular(true);
-
-      this.portraitPath = null;
+      portrait = Child.getThisPortrait(getResources(), null);
     } else {
-      this.focusedChild = childManager.getChild(focusedChildUniqueID);
-      portrait = focusedChild.getPortrait(getResources());
-      childNameInput.setText(focusedChild.getName());
+      portrait = childManager.getChild(focusedChildUniqueID).getPortrait(getResources());
+      childNameInput.setText(childManager.getChild(focusedChildUniqueID).getName());
     }
 
     portraitView.setImageDrawable(portrait);
@@ -314,10 +299,55 @@ public class ChildActivity extends AppCompatActivity {
     toast.show();
   }
 
-  private void launchPrompt(String title,
-                            String message,
-                            String positiveToast,
-                            boolean isDeletePrompt) {
+  private void selectImage() {
+    final String[] dialogOptions = {
+        getString(R.string.prompt_option1_child_select_image),
+        getString(R.string.prompt_option2_child_select_image),
+        getString(R.string.prompt_option3_child_select_image)
+    };
+
+    new android.app.AlertDialog.Builder(this)
+        .setTitle(R.string.prompt_title_child_select_image)
+        .setItems(dialogOptions, (dialog, item) -> {
+          switch (dialogOptions[item]) {
+            case "Take Photo":
+              File portraitFile = null;
+
+              try {
+                portraitFile = File.createTempFile(
+                    "portrait_", ".jpg", getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+                this.portraitPath = portraitFile.getAbsolutePath();
+              } catch (IOException e) {
+                e.getStackTrace();
+              }
+
+              if (portraitFile != null) {
+                Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                photoIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this,
+                    BuildConfig.APPLICATION_ID + ".provider",
+                    portraitFile));
+                takePhoto.launch(photoIntent);
+              }
+              break;
+            case "Select from Gallery":
+              if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                  != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+              } else {
+                selectFromGallery.launch(
+                    new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
+              }
+              break;
+            case "Cancel":
+              dialog.dismiss();
+              break;
+          }
+        }).show();
+  }
+
+  private void launchPrompt(
+      String title, String message, String positiveToast, boolean isDeletePrompt) {
     if (!changesAccepted || isDeletePrompt) {
       new AlertDialog.Builder(this)
           .setIcon(R.drawable.ic_baseline_delete_black_24)
@@ -336,59 +366,5 @@ public class ChildActivity extends AppCompatActivity {
     } else {
       finish();
     }
-  }
-
-  private void selectImage() {
-    final String[] dialogOptions = {
-        getString(R.string.prompt_option1_child_select_image),
-        getString(R.string.prompt_option2_child_select_image),
-        getString(R.string.prompt_option3_child_select_image)
-    };
-
-    new android.app.AlertDialog.Builder(this)
-        .setTitle(R.string.prompt_title_child_select_image)
-        .setItems(dialogOptions, (dialog, item) -> {
-          switch (dialogOptions[item]) {
-            case "Take Photo":
-              File portraitFile = null;
-
-              try {
-                portraitFile = File.createTempFile(
-                    "portrait_",
-                    ".jpg",
-                    getExternalFilesDir(Environment.DIRECTORY_PICTURES));
-                this.portraitPath = portraitFile.getAbsolutePath();
-              } catch (IOException e) {
-                e.getStackTrace();
-              }
-
-              if (portraitFile != null) {
-                Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                photoIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(
-                    this,
-                    BuildConfig.APPLICATION_ID + ".provider",
-                    portraitFile));
-                takePhoto.launch(photoIntent);
-              }
-
-              break;
-            case "Select from Gallery":
-              if (ContextCompat.checkSelfPermission(
-                  this,
-                  Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    READ_EXTERNAL_STORAGE_REQUEST_CODE);
-              } else {
-                selectFromGallery.launch(
-                    new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
-              }
-              break;
-            case "Cancel":
-              dialog.dismiss();
-              break;
-          }
-        }).show();
   }
 }

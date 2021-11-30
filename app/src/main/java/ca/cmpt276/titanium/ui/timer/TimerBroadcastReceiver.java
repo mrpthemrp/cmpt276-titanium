@@ -8,7 +8,9 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Timer;
 
 /**
- * NotificationReceiver is called when the user interacts with timer notification actions.
+ * Allows a user to interact with a timer while away from TimerActivity.
+ *
+ * @author Titanium
  */
 public class TimerBroadcastReceiver extends BroadcastReceiver {
   @Override
@@ -25,12 +27,14 @@ public class TimerBroadcastReceiver extends BroadcastReceiver {
         break;
       case "Pause":
         timer.setPaused();
-        timerNotification.launchNotification(context.getString(R.string.button_timer_notification_resume));
+        timerNotification.launchNotification(
+            context.getString(R.string.button_timer_notification_resume));
         break;
       case "Resume":
-        context.getApplicationContext().startService(
-            new Intent(context.getApplicationContext(), TimerService.class));
-        timerNotification.launchNotification(context.getString(R.string.button_timer_notification_pause));
+        Intent timerServiceIntent = new Intent(context.getApplicationContext(), TimerService.class);
+        context.getApplicationContext().startService(timerServiceIntent);
+        timerNotification.launchNotification(
+            context.getString(R.string.button_timer_notification_pause));
         break;
       case "Cancel":
         timer.setStopped();

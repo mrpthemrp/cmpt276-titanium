@@ -62,16 +62,11 @@
     <string name="help_team_name">Team Titanium</string>
     <string name="help_timer_alarm">Timer Alarm</string>
     <string name="help_timer_background">Timer Background</string>
-    <string name="link_help_coin_flip_history_checkmark"><a href="https://www.vhv.rs/dpng/f/406-4067045_checkmark-png.png">Click here to go to image</a></string>
-    <string name="link_help_coin_flip_history_x_mark"><a href="https://www.nicepng.com/png/full/910-9107823_circle-cross-png.png">Click here to go to image</a></string>
-    <string name="link_help_coin_flip_sound"><a href="https://www.youtube.com/watch?v=1QxX9ruPUXM">Click here to go to YouTube video</a></string>
-    <string name="link_help_timer_alarm"><a href="https://www.youtube.com/watch?v=kcT-i9xzC-8">Click here to go to YouTube video</a></string>
-    <string name="link_help_timer_background"><a href="https://unsplash.com/photos/4N6qT784t3A">Click here to go to image</a></string>
-    <string name="link_text_help_coin_flip_history_checkmark">Link: https://www.vhv.rs/dpng/f/406–4067045_checkmark-png.png</string>
-    <string name="link_text_help_coin_flip_history_x_mark">Link: https://www.nicepng.com/png/full/910–9107823_circle-cross-png.png</string>
-    <string name="link_text_help_coin_flip_sound">Link: https://www.youtube.com/watch?v=1QxX9ruPUXM</string>
-    <string name="link_text_help_timer_alarm">Link: https://www.youtube.com/watch?v=kcT-i9xzC-8</string>
-    <string name="link_text_help_timer_background">Link: https://unsplash.com/photos/4N6qT784t3A</string>
+    <string name="link_help_coin_flip_history_checkmark">Link: <a href="https://www.vhv.rs/dpng/f/406-4067045_checkmark-png.png">https://www.vhv.rs/dpng/f/406–4067045_checkmark-png.png</a></string>
+    <string name="link_help_coin_flip_history_x_mark">Link: <a href="https://www.nicepng.com/png/full/910-9107823_circle-cross-png.png">https://www.nicepng.com/png/full/910–9107823_circle-cross-png.png</a></string>
+    <string name="link_help_coin_flip_sound">Link: <a href="https://www.youtube.com/watch?v=1QxX9ruPUXM">https://www.youtube.com/watch?v=1QxX9ruPUXM</a></string>
+    <string name="link_help_timer_alarm">Link: <a href="https://www.youtube.com/watch?v=kcT-i9xzC-8">https://www.youtube.com/watch?v=kcT-i9xzC-8</a></string>
+    <string name="link_help_timer_background">Link: <a href="https://unsplash.com/photos/4N6qT784t3A">https://unsplash.com/photos/4N6qT784t3A</a></string>
     <string name="subtitle_help_app_info">App Information</string>
     <string name="subtitle_help_copyright">Copyright Information</string>
     <string name="subtitle_help_developers">Developers</string>

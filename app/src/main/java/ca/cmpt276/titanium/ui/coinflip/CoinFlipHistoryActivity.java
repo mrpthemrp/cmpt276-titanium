@@ -1,14 +1,11 @@
 package ca.cmpt276.titanium.ui.coinflip;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,54 +16,35 @@ import ca.cmpt276.titanium.model.CoinFlip;
 import ca.cmpt276.titanium.model.CoinFlipManager;
 
 /**
- * This represents the coin flip history activity.
- * Shows a list of the history from latest to oldest.
+ * Displays coin flip history from newest to oldest.
+ *
+ * @author Titanium
  */
 public class CoinFlipHistoryActivity extends AppCompatActivity {
-  private CoinFlipManager coinFlipManager;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_coin_flip_history);
 
-    Toolbar toolbar = findViewById(R.id.ToolBar_coin_flip_history);
-    setSupportActionBar(toolbar);
+    setSupportActionBar(findViewById(R.id.ToolBar_coin_flip_history));
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-    this.coinFlipManager = CoinFlipManager.getInstance(this);
     populateListView();
-
-    if (coinFlipManager.getCoinFlipHistory().size() == 0) {
-      TextView emptyStateMessage =
-          findViewById(R.id.TextView_coin_flip_history_empty_state_message);
-      emptyStateMessage.setVisibility(View.VISIBLE);
-    }
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-    if (item.getItemId() == android.R.id.home) {
-      finish();
-      return true;
-    } else {
-      return super.onOptionsItemSelected(item);
-    }
   }
 
   private void populateListView() {
-    ArrayList<CoinFlip> coinFlipHistory = coinFlipManager.getCoinFlipHistory();
+    CoinFlipManager coinFlipManager = CoinFlipManager.getInstance(this);
 
-    System.out.println("while populating:");
-    for (CoinFlip coinFlip : coinFlipHistory) {
-      System.out.println(coinFlip.getDate());
+    if (coinFlipManager.getCoinFlipHistory().size() == 0) {
+      TextView emptyStateMessage = findViewById(R.id.TextView_coin_flip_history_empty_state);
+      emptyStateMessage.setVisibility(View.VISIBLE);
     }
 
-    ArrayList<CoinFlip> coinFlipHistoryCopy = new ArrayList<>(coinFlipHistory);
+    ArrayList<CoinFlip> coinFlipHistoryCopy = new ArrayList<>(coinFlipManager.getCoinFlipHistory());
     Collections.reverse(coinFlipHistoryCopy);
     CoinFlipAdapter coinFlipAdapter = new CoinFlipAdapter(this, coinFlipHistoryCopy);
 
-    ListView list = findViewById(R.id.ListView_coin_flip_history);
-    list.setAdapter(coinFlipAdapter);
+    ListView coinFlipHistoryListView = findViewById(R.id.ListView_coin_flip_history);
+    coinFlipHistoryListView.setAdapter(coinFlipAdapter);
   }
 }

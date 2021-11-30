@@ -13,8 +13,9 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * This class represents the coin flip history.
- * Handles loading and saving from JSON.
+ * Loads, saves, and interacts with a group of CoinFlip objects.
+ *
+ * @author Titanium
  */
 public class CoinFlipManager {
   private static final Gson GSON = new Gson();
