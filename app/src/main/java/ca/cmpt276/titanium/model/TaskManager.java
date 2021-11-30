@@ -19,125 +19,134 @@ import java.util.UUID;
  * This class holds data for all tasks.
  * Handles loading and saving using JSON and Shared Preferences.
  */
+
+/**
+ * TODO: Remove child, remove from history
+ *       Remove task, remove from history
+ */
 public class TaskManager {
-  private static final Gson GSON = new Gson();
-  private static final String TASKS_JSON_KEY = "tasksJson";
-  private static final String HISTORY_TASKS_JSON_KEY = "tasksHistoryJson";
+    private static final Gson GSON = new Gson();
+    private static final String TASKS_JSON_KEY = "tasksJson";
+    private static final String HISTORY_TASKS_JSON_KEY = "tasksHistoryJson";
 
-  private static TaskManager instance;
-  private static SharedPreferences prefs;
+    private static TaskManager instance;
+    private static SharedPreferences prefs;
 
-  private static ArrayList<Task> tasks = new ArrayList<>();
-  private static ArrayList<TaskHistory> taskHistory = new ArrayList<>();
+    private static ArrayList<Task> tasks = new ArrayList<>();
+    private static ArrayList<TaskHistory> taskHistory = new ArrayList<>();
 
-  private TaskManager(Context context) {
-    TaskManager.prefs = PreferenceManager.getDefaultSharedPreferences(context);
-  }
-
-  public static TaskManager getInstance(Context context) {
-    if (instance == null) {
-      TaskManager.instance = new TaskManager(context);
+    private TaskManager(Context context) {
+        TaskManager.prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    loadSavedData();
-    return instance;
-  }
-
-  private static void loadSavedData() {
-    String tasksJson = prefs.getString(TASKS_JSON_KEY, null);
-    String taskHistoryJson = prefs.getString(HISTORY_TASKS_JSON_KEY, null);
-
-    if (tasksJson != null) {
-      Type tasksType = new TypeToken<ArrayList<Task>>() {
-      }.getType();
-
-      TaskManager.tasks = GSON.fromJson(tasksJson, tasksType);
-    }
-
-    if(taskHistoryJson != null){
-      Type taskHistoryType = new TypeToken<ArrayList<TaskHistory>>() {
-      }.getType();
-
-      TaskManager.taskHistory = GSON.fromJson(taskHistoryJson, taskHistoryType);
-    }
-  }
-
-  private void saveData() {
-    String tasksJson = GSON.toJson(tasks);
-    prefs.edit().putString(TASKS_JSON_KEY, tasksJson).apply();
-  }
-
-  private void saveHistoryData() {
-    String taskHistoryJson = GSON.toJson(taskHistory);
-    prefs.edit().putString(HISTORY_TASKS_JSON_KEY, taskHistoryJson).apply();
-  }
-
-  public void addTask(String taskName, UUID childUniqueID) {
-    tasks.add(new Task(taskName, childUniqueID));
-    saveData();
-  }
-
-  public void addHistoryTask(String historyTaskName, UUID childUniqueID){
-    taskHistory.add(new TaskHistory(historyTaskName, childUniqueID));
-    saveHistoryData();
-  }
-
-  public void addToAllTasks(UUID childUniqueID) {
-    for (Task task : tasks) {
-      task.setChildUniqueID(childUniqueID);
-    }
-
-    saveData();
-  }
-
-  public void updateTaskQueues(UUID childUniqueID, UUID nextChildUniqueID) {
-    for (Task task : tasks) {
-      if (childUniqueID.equals(task.getChildUniqueID())) {
-        task.setChildUniqueID(nextChildUniqueID);
-      }
-    }
-
-    saveData();
-  }
-
-  public void updateHistory(UUID childUniqueID){
-    taskHistory.removeIf(task -> childUniqueID.equals(task.getChildUniqueID()));
-  }
-
-  public void removeTask(int taskIndex) {
-    tasks.remove(taskIndex);
-    saveData();
-  }
-
-  public void setTaskName(int taskIndex, String taskName) {
-    tasks.get(taskIndex).setTaskName(taskName);
-    saveData();
-  }
-
-  public void setChildUniqueID(int taskIndex, UUID childUniqueID) {
-    tasks.get(taskIndex).setChildUniqueID(childUniqueID);
-    saveData();
-  }
-
-  public ArrayList<Task> getTasks() {
-    return tasks;
-  }
-
-  public ArrayList<TaskHistory> getTaskHistory() {
-    return taskHistory;
-  }
-
-  public ArrayList<TaskHistory> createListForSpecificTask(String taskName){
-    System.out.println(taskName);
-    ArrayList<TaskHistory> dataHistoryOfTask = new ArrayList<>();
-
-    if(taskHistory.size() != 0){
-      for(TaskHistory task : taskHistory){
-        if(task.getHistoryTaskName().equals(taskName)){
-          dataHistoryOfTask.add(task);
+    public static TaskManager getInstance(Context context) {
+        if (instance == null) {
+            TaskManager.instance = new TaskManager(context);
         }
-      }
+
+        loadSavedData();
+        return instance;
     }
-    return dataHistoryOfTask;
-  }
+
+    private static void loadSavedData() {
+        String tasksJson = prefs.getString(TASKS_JSON_KEY, null);
+        String taskHistoryJson = prefs.getString(HISTORY_TASKS_JSON_KEY, null);
+
+        if (tasksJson != null) {
+            Type tasksType = new TypeToken<ArrayList<Task>>() {
+            }.getType();
+
+            TaskManager.tasks = GSON.fromJson(tasksJson, tasksType);
+        }
+
+        if (taskHistoryJson != null) {
+            Type taskHistoryType = new TypeToken<ArrayList<TaskHistory>>() {
+            }.getType();
+
+            TaskManager.taskHistory = GSON.fromJson(taskHistoryJson, taskHistoryType);
+        }
+    }
+
+    private void saveData() {
+        String tasksJson = GSON.toJson(tasks);
+        prefs.edit().putString(TASKS_JSON_KEY, tasksJson).apply();
+    }
+
+    private void saveHistoryData() {
+        String taskHistoryJson = GSON.toJson(taskHistory);
+        prefs.edit().putString(HISTORY_TASKS_JSON_KEY, taskHistoryJson).apply();
+    }
+
+    public void addTask(String taskName, UUID childUniqueID) {
+        tasks.add(new Task(taskName, childUniqueID));
+        saveData();
+    }
+
+    public void addHistoryTask(String historyTaskName, UUID childUniqueID) {
+        taskHistory.add(new TaskHistory(historyTaskName, childUniqueID));
+        saveHistoryData();
+    }
+
+    public void addToAllTasks(UUID childUniqueID) {
+        for (Task task : tasks) {
+            task.setChildUniqueID(childUniqueID);
+        }
+
+        saveData();
+    }
+
+    public void updateTaskQueues(UUID childUniqueID, UUID nextChildUniqueID) {
+        for (Task task : tasks) {
+            if (childUniqueID.equals(task.getChildUniqueID())) {
+                task.setChildUniqueID(nextChildUniqueID);
+            }
+        }
+
+        saveData();
+    }
+
+    public void updateHistory(UUID childUniqueID) {
+        for (TaskHistory task : taskHistory) {
+            if (task.getChildUniqueID().equals(childUniqueID)) {
+                taskHistory.remove(task);
+            }
+        }
+    }
+
+    public void removeTask(int taskIndex) {
+        tasks.remove(taskIndex);
+        saveData();
+    }
+
+    public void setTaskName(int taskIndex, String taskName) {
+        tasks.get(taskIndex).setTaskName(taskName);
+        saveData();
+    }
+
+    public void setChildUniqueID(int taskIndex, UUID childUniqueID) {
+        tasks.get(taskIndex).setChildUniqueID(childUniqueID);
+        saveData();
+    }
+
+    public ArrayList<Task> getTasks() {
+        return tasks;
+    }
+
+    public ArrayList<TaskHistory> getTaskHistory() {
+        return taskHistory;
+    }
+
+    public ArrayList<TaskHistory> createListForSpecificTask(String taskName) {
+        System.out.println(taskName);
+        ArrayList<TaskHistory> dataHistoryOfTask = new ArrayList<>();
+
+        if (taskHistory.size() != 0) {
+            for (TaskHistory task : taskHistory) {
+                if (task.getHistoryTaskName().equals(taskName)) {
+                    dataHistoryOfTask.add(task);
+                }
+            }
+        }
+        return dataHistoryOfTask;
+    }
 }
