@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ImageView_item_history_child_image"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/ic_baseline_add_task_alt_green_24"
+        android:backgroundTint="?attr/colorPrimaryVariant"
+        android:contentDescription="@string/CONTENT_DESCRIPTION"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/TextView_item_task_child"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ellipsize="none"
+        android:maxLines="5"
+        android:scrollHorizontally="false"
+        android:text="@string/DEFAULT_TEXT"
+        android:textAlignment="viewStart"
+        android:textColor="?attr/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/TextView_item_task_date"
+        app:layout_constraintStart_toEndOf="@+id/ImageView_item_history_child_image"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/TextView_item_task_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ellipsize="none"
+        android:maxLines="5"
+        android:scrollHorizontally="false"
+        android:text="@string/DEFAULT_TEXT"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ImageView_item_history_child_image"
+        app:layout_constraintTop_toBottomOf="@+id/TextView_item_task_child"
+        tools:ignore="TextContrastCheck" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

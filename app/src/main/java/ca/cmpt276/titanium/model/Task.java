@@ -1,5 +1,6 @@
 package ca.cmpt276.titanium.model;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 /**

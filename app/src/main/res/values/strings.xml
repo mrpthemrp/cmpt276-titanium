@@ -93,6 +93,7 @@
     <string name="empty_state_tasks_no_tasks">No tasks to display</string>
     <string name="hint_task_edit_task_name">Task name</string>
     <string name="item_task_task_name">Task: %1$s</string>
+    <string name="item_task_date">Date: %1$s</string>
     <string name="menu_item_task_manage_delete">Delete Task</string>
     <string name="menu_item_task_manage_edit">Edit Task</string>
     <string name="menu_item_tasks_add">Add Task</string>
@@ -147,5 +148,6 @@
     <!-- New -->
     <string name="NEW_STRINGS_BELOW">NEW_STRINGS_BELOW</string>
     <string name="button_task_manage_history">History</string>
+    <string name="item_task_child_name">"Child: %1$s"</string>
 
 </resources>

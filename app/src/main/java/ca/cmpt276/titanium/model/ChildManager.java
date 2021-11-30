@@ -106,6 +106,7 @@ public class ChildManager {
 
     UUID nextUniqueID = children.get((children.indexOf(child) + 1) % children.size()).getUniqueID();
     nextUniqueID = (children.size() != 1) ? nextUniqueID : null;
+    taskManager.childDeletedFromHistory(uniqueID);
     taskManager.updateTaskQueues(uniqueID, nextUniqueID);
 
     children.remove(child);
