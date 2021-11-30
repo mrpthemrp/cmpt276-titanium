@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +24,7 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.ChildManager;
 import ca.cmpt276.titanium.model.Task;
+import ca.cmpt276.titanium.model.TaskHistory;
 import ca.cmpt276.titanium.model.TaskManager;
 
 /**
@@ -133,8 +133,8 @@ public class TaskManageActivity extends AppCompatActivity {
 
       if (task.getChildUniqueID() != null) {
         String taskName = taskNameText.getText().toString();
-        date = LocalDate.now();
-        taskManager.addHistoryTask(taskName, task.getChildUniqueID(), date);
+        UUID childID = task.getChildUniqueID();
+        taskManager.addHistoryTask(taskName, childID);
 
         int nextChildIndex = (children.indexOf(child) + 1) % children.size();
         UUID nextChildUniqueID = children.get(nextChildIndex).getUniqueID();
@@ -146,7 +146,7 @@ public class TaskManageActivity extends AppCompatActivity {
 
     Button historyTaskButton = findViewById(R.id.Button_task_manage_history);
     historyTaskButton.setOnClickListener(view -> {
-      startActivity(TaskHistory.makeIntent(TaskManageActivity.this, taskIndex));
+      startActivity(TaskHistoryActivity.makeIntent(TaskManageActivity.this, taskIndex));
     });
   }
 

@@ -1,5 +1,6 @@
 package ca.cmpt276.titanium.ui.tasks;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,20 +22,19 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.ChildManager;
-import ca.cmpt276.titanium.model.Task;
+import ca.cmpt276.titanium.model.TaskHistory;
 import ca.cmpt276.titanium.model.TaskManager;
 
-public class TaskHistory extends AppCompatActivity {
+public class TaskHistoryActivity extends AppCompatActivity {
 
     private static final String TASK_INDEX_KEY = "indexTask";
     private static final int INVALID_TASK_INDEX = -1;
-    private TaskManager taskManager;
-    private int taskIndex;
-    private ArrayList<Task> historyForTaskList = new ArrayList<>();
+    private ArrayList<TaskHistory> historyForTaskList = new ArrayList<>();
 
     public static Intent makeIntent(Context context, int taskIndex) {
-        Intent intent = new Intent(context, TaskHistory.class);
+        Intent intent = new Intent(context, TaskHistoryActivity.class);
         intent.putExtra(TASK_INDEX_KEY, taskIndex);
         return intent;
     }
@@ -43,28 +44,20 @@ public class TaskHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_history);
 
+
         Toolbar toolbar = findViewById(R.id.ToolBar_task_history_manage);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        this.taskManager = TaskManager.getInstance(TaskHistory.this);
-        this.taskIndex = getIntent().getIntExtra(TASK_INDEX_KEY, INVALID_TASK_INDEX);
-        ChildManager childManager = ChildManager.getInstance(this);
+        TaskManager taskManager = TaskManager.getInstance(this);
+        int taskIndex = getIntent().getIntExtra(TASK_INDEX_KEY, INVALID_TASK_INDEX);
 
         if (taskIndex == INVALID_TASK_INDEX) {
             finish();
         }
 
-        for(Task task : taskManager.getTaskHistory()){
-            System.out.println(task.getTaskName());
-            System.out.println(task.getDate().toString());
-            System.out.println(childManager.getChild(task.getChildUniqueID()).getName());
-            System.out.println("\n");
-        }
-
-        historyForTaskList = findTaskHistory(taskManager.getTasks().get(taskIndex).getTaskName());
+        historyForTaskList = taskManager.createListForSpecificTask(taskManager.getTasks().get(taskIndex).getTaskName());
         populateTaskList();
-
     }
 
     @Override
@@ -77,19 +70,8 @@ public class TaskHistory extends AppCompatActivity {
         }
     }
 
-    public ArrayList<Task> findTaskHistory(String taskName){
-        ArrayList<Task> dataHistoryOfTask = new ArrayList<>();
-
-        for(Task task : taskManager.getTaskHistory()){
-            if(task.getTaskName().equals(taskName)){
-                dataHistoryOfTask.add(task);
-            }
-        }
-        return dataHistoryOfTask;
-    }
 
     private void populateTaskList() {
-        TaskManager taskManager = TaskManager.getInstance(this);
         adapter taskAdapter = new adapter(this, historyForTaskList);
 
         ListView taskListView = findViewById(R.id.ListView_tasks_history);
@@ -97,13 +79,13 @@ public class TaskHistory extends AppCompatActivity {
 
         TextView noTasksMessage = findViewById(R.id.TextView_history_empty_state_message);
         noTasksMessage.setVisibility(
-                taskManager.getTaskHistory().size() == 0
+                historyForTaskList.size() == 0
                         ? View.VISIBLE
                         : View.INVISIBLE);
     }
 
-    public static class adapter extends ArrayAdapter<Task> {
-        public adapter(Context context, ArrayList<Task> tasks) {
+    public class adapter extends ArrayAdapter<TaskHistory> {
+        public adapter(Context context, ArrayList<TaskHistory> tasks) {
             super(context, 0, tasks);
         }
 
@@ -116,14 +98,21 @@ public class TaskHistory extends AppCompatActivity {
 
             ChildManager childManager = ChildManager.getInstance(getContext());
 
-            Task task = getItem(position);
+            TaskHistory task = getItem(position);
 
             TextView childName = convertView.findViewById(R.id.TextView_item_task_child);
             childName.setText(getContext().getString(R.string.item_task_child_name,
                     childManager.getChild(task.getChildUniqueID()).getName()));
 
             TextView taskDate = convertView.findViewById(R.id.TextView_item_task_date);
-            taskDate.setText(getContext().getString(R.string.item_task_date,task.getDate().toString()));
+            taskDate.setText(getContext().getString(R.string.item_task_date,task.getDate()));
+            /*
+            Activity itemView = null;
+            ImageView iconItem = itemView.findViewById(R.id.ImageView_item_history_child_image);
+            Child child = childManager.getChild(task.getChildUniqueID());
+            iconItem.setImageDrawable(child.getPortrait(getContext().getResources()));
+
+             */
 
             return convertView;
         }
