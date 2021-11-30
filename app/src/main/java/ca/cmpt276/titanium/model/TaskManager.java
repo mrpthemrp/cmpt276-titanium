@@ -83,7 +83,6 @@ public class TaskManager {
         for (Task task : tasks) {
             task.setChildUniqueID(childUniqueID);
         }
-
         saveData();
     }
 
@@ -93,7 +92,6 @@ public class TaskManager {
                 task.setChildUniqueID(nextChildUniqueID);
             }
         }
-
         saveData();
     }
 
