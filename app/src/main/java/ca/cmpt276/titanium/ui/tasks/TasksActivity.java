@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
 
@@ -31,8 +30,7 @@ public class TasksActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_tasks);
 
-    Toolbar toolbar = findViewById(R.id.ToolBar_tasks);
-    setSupportActionBar(toolbar);
+    setSupportActionBar(findViewById(R.id.ToolBar_tasks));
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
   }
 
@@ -70,8 +68,8 @@ public class TasksActivity extends AppCompatActivity {
     taskListView.setOnItemClickListener((adapterView, view, i, l) ->
         startActivity(TaskManageActivity.makeIntent(this, i)));
 
-    TextView noTasksMessage = findViewById(R.id.TextView_tasks_empty_state_message);
-    noTasksMessage.setVisibility(
+    TextView emptyStateMessage = findViewById(R.id.TextView_tasks_empty_state);
+    emptyStateMessage.setVisibility(
         taskManager.getTasks().size() == 0
             ? View.VISIBLE
             : View.INVISIBLE);

@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -18,9 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.Locale;
@@ -40,8 +36,8 @@ public class TimerActivity extends AppCompatActivity {
   private static final int MILLIS_IN_HOUR = 3600000;
 
   private TimerNotification timerNotification;
-  private Toast toast; // prevents toast stacking
   private Timer timer;
+  private Toast toast; // prevents toast stacking
   private BroadcastReceiver timerReceiver;
 
   public static Intent makeIntent(Context context) {
@@ -52,22 +48,18 @@ public class TimerActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_timer);
-    setTitle(R.string.title_timer);
 
-    Toolbar myToolbar = (Toolbar) findViewById(R.id.ToolBar_timer);
-    setSupportActionBar(myToolbar);
+    setSupportActionBar(findViewById(R.id.ToolBar_timer));
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
     this.timerNotification = TimerNotification.getInstance(this);
-    boolean isClicked = getIntent().getBooleanExtra("isClicked", IS_CLICKED_DEFAULT);
 
-    if (isClicked) {
+    if (getIntent().getBooleanExtra("isClicked", IS_CLICKED_DEFAULT)) {
       timerNotification.dismissNotification(false);
     }
 
-    this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
     this.timer = Timer.getInstance(this);
-
+    this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
     this.timerReceiver = new BroadcastReceiver() {
       @Override
       public void onReceive(Context context, Intent intent) {
@@ -75,26 +67,16 @@ public class TimerActivity extends AppCompatActivity {
       }
     };
 
-    setupCircularProgressBar();
+    setupTimerProgressBar();
     setupButtons();
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-    if (item.getItemId() == android.R.id.home) {
-      finish();
-      return true;
-    } else {
-      return super.onOptionsItemSelected(item);
-    }
   }
 
   @Override
   protected void onStart() {
     super.onStart();
     timerNotification.dismissNotification(true);
-    timer.setGUIEnabled(true);
     registerReceiver(timerReceiver, new IntentFilter(TimerService.TIMER_UPDATE_INTENT));
+    timer.setGUIEnabled(true);
 
     if (!timer.isRunning()) {
       updateGUI();
@@ -114,10 +96,9 @@ public class TimerActivity extends AppCompatActivity {
     super.onStop();
   }
 
-  private void setupCircularProgressBar() { // rotates progress bar so that it starts at top
-    ProgressBar circularProgressBar = findViewById(R.id.ProgressBar_timer);
-    Animation animation = AnimationUtils.loadAnimation(this, R.anim.timer_progress_bar);
-    circularProgressBar.startAnimation(animation);
+  private void setupTimerProgressBar() { // rotates progress bar so that it starts at top
+    ProgressBar timerProgressBar = findViewById(R.id.ProgressBar_timer);
+    timerProgressBar.startAnimation(AnimationUtils.loadAnimation(this, R.anim.timer_progress_bar));
   }
 
   private void setupButtons() {
@@ -170,6 +151,11 @@ public class TimerActivity extends AppCompatActivity {
     timeFactorButton.setOnClickListener(view -> selectTimeFactor());
   }
 
+  private void changeTimerDuration(long minutes) {
+    timer.setDurationMilliseconds(minutes * MILLIS_IN_MINUTE);
+    resetTimer();
+  }
+
   private void updateCustomTime(EditText customTime) {
     if (customTime.getText().toString().isEmpty()) {
       updateGUI();
@@ -183,6 +169,15 @@ public class TimerActivity extends AppCompatActivity {
     toast.cancel();
     toast.setText(toastText);
     toast.show();
+  }
+
+  private void resetTimer() {
+    timerNotification.dismissNotification(false);
+    timer.setStopped();
+
+    if (!timer.isRunning()) {
+      updateGUI();
+    }
   }
 
   private void selectTimeFactor() {
@@ -272,19 +267,5 @@ public class TimerActivity extends AppCompatActivity {
     EditText customTime = findViewById(R.id.EditText_timer_enter_custom_input);
     customTime.setText("");
     customTime.clearFocus();
-  }
-
-  private void changeTimerDuration(long minutes) {
-    timer.setDurationMilliseconds(minutes * MILLIS_IN_MINUTE);
-    resetTimer();
-  }
-
-  private void resetTimer() {
-    timerNotification.dismissNotification(false);
-    timer.setStopped();
-
-    if (!timer.isRunning()) {
-      updateGUI();
-    }
   }
 }

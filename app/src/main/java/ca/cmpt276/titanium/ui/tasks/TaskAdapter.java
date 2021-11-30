@@ -24,29 +24,26 @@ public class TaskAdapter extends ArrayAdapter<Task> {
     super(context, 0, tasks);
   }
 
+  @NonNull
   @Override
   public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
     if (convertView == null) {
-      convertView =
-          LayoutInflater.from(getContext()).inflate(R.layout.item_task, parent, false);
+      convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_task, parent, false);
     }
-
-    ChildManager childManager = ChildManager.getInstance(getContext());
 
     Task task = getItem(position);
 
-    TextView taskNameText = convertView.findViewById(R.id.TextView_item_task_task_name);
-    taskNameText.setText(getContext().getString(R.string.item_task_task_name, task.getTaskName()));
+    TextView taskName = convertView.findViewById(R.id.TextView_item_task_task_name);
+    taskName.setText(getContext().getString(R.string.item_task_task_name, task.getTaskName()));
 
-    TextView childNameText = convertView.findViewById(R.id.TextView_item_task_child_name);
+    ChildManager childManager = ChildManager.getInstance(getContext());
 
-    if (task.getChildUniqueID() == null) {
-      childNameText.setText(getContext().getString(R.string.empty_state_tasks_no_children));
-    } else {
-      childNameText.setText(getContext().getString(
-          R.string.tasks_next_child_name,
-          childManager.getChild(task.getChildUniqueID()).getName()));
-    }
+    TextView childName = convertView.findViewById(R.id.TextView_item_task_child_name);
+    childName.setText(
+        task.getChildUniqueID() == null
+            ? getContext().getString(R.string.empty_state_tasks_no_children)
+            : getContext().getString(R.string.tasks_next_child_name,
+            childManager.getChild(task.getChildUniqueID()).getName()));
 
     return convertView;
   }

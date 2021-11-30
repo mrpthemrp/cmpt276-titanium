@@ -12,7 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -51,8 +50,7 @@ public class TaskEditActivity extends AppCompatActivity {
     this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
     this.taskIndex = getIntent().getIntExtra(TASK_INDEX_KEY, INVALID_TASK_INDEX);
 
-    if (intentType.equals(getString(R.string.title_task_edit))
-        && taskIndex == INVALID_TASK_INDEX) {
+    if (intentType.equals(getString(R.string.title_task_edit)) && taskIndex == INVALID_TASK_INDEX) {
       finish();
     }
 
@@ -75,8 +73,7 @@ public class TaskEditActivity extends AppCompatActivity {
   }
 
   private void setupActionBar(String intentType) {
-    Toolbar toolbar = findViewById(R.id.ToolBar_task_edit);
-    setSupportActionBar(toolbar);
+    setSupportActionBar(findViewById(R.id.ToolBar_task_edit));
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
     setTitle(intentType);

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
@@ -20,7 +20,7 @@ import ca.cmpt276.titanium.model.Child;
  * This is an adapter for the children list.
  */
 public class ChildAdapter extends ArrayAdapter<Child> {
-  public ChildAdapter(Context context, List<Child> children) {
+  public ChildAdapter(Context context, ArrayList<Child> children) {
     super(context, 0, children);
   }
 
@@ -33,11 +33,11 @@ public class ChildAdapter extends ArrayAdapter<Child> {
 
     Child child = getItem(position);
 
-    ImageView childIcon = convertView.findViewById(R.id.ImageView_item_child_portrait);
-    childIcon.setImageDrawable(child.getPortrait(getContext().getResources()));
+    ImageView childPortrait = convertView.findViewById(R.id.ImageView_item_child_portrait);
+    childPortrait.setImageDrawable(child.getPortrait(getContext().getResources()));
 
-    TextView childTextView = convertView.findViewById(R.id.TextView_item_child_name);
-    childTextView.setText(child.getName());
+    TextView childName = convertView.findViewById(R.id.TextView_item_child_name);
+    childName.setText(child.getName());
 
     return convertView;
   }

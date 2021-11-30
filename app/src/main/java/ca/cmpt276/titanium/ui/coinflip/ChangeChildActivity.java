@@ -6,7 +6,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -22,26 +21,21 @@ import ca.cmpt276.titanium.ui.ChildAdapter;
  * Allows the user to change the current child turn.
  */
 public class ChangeChildActivity extends AppCompatActivity {
-  private ChildManager childManager;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_coin_flip_change_child);
 
-    Toolbar toolbar = findViewById(R.id.ToolBar_change_child);
-    setSupportActionBar(toolbar);
+    setSupportActionBar(findViewById(R.id.ToolBar_change_child));
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-    this.childManager = ChildManager.getInstance(this);
-
-    displayChildrenList();
+    displayChildren();
   }
 
-  private void displayChildrenList() {
-    TextView emptyStateMessage =
-        findViewById(R.id.TextView_change_child_empty_state_message);
+  private void displayChildren() {
+    ChildManager childManager = ChildManager.getInstance(this);
 
+    TextView emptyStateMessage = findViewById(R.id.TextView_change_child_empty_state);
     emptyStateMessage.setVisibility(
         childManager.getChildren().size() == 0
             ? View.VISIBLE
@@ -54,8 +48,6 @@ public class ChangeChildActivity extends AppCompatActivity {
 
     ListView changeChildListView = findViewById(R.id.ListView_change_child);
     changeChildListView.setAdapter(childAdapter);
-    changeChildListView.setClickable(true);
-
     changeChildListView.setOnItemClickListener((parent, view, position, id) -> {
       childManager.moveToFrontOfQueue(coinFlipQueue.get(position));
       finish();

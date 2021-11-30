@@ -25,12 +25,14 @@ public class TimerBroadcastReceiver extends BroadcastReceiver {
         break;
       case "Pause":
         timer.setPaused();
-        timerNotification.launchNotification(context.getString(R.string.button_timer_notification_resume));
+        timerNotification.launchNotification(
+            context.getString(R.string.button_timer_notification_resume));
         break;
       case "Resume":
-        context.getApplicationContext().startService(
-            new Intent(context.getApplicationContext(), TimerService.class));
-        timerNotification.launchNotification(context.getString(R.string.button_timer_notification_pause));
+        Intent timerServiceIntent = new Intent(context.getApplicationContext(), TimerService.class);
+        context.getApplicationContext().startService(timerServiceIntent);
+        timerNotification.launchNotification(
+            context.getString(R.string.button_timer_notification_pause));
         break;
       case "Cancel":
         timer.setStopped();

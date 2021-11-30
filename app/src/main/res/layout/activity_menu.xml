@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.MenuActivity">
 
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/MaterialButton_menu_help"
         android:layout_width="60dp"
@@ -143,7 +142,7 @@
         app:layout_constraintTop_toBottomOf="@+id/GridLayout_menu_buttons" />
 
     <TextView
-        android:id="@+id/TextView_menu_empty_state_message"
+        android:id="@+id/TextView_menu_empty_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/empty_state_menu_no_children"
