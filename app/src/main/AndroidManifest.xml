@@ -103,12 +103,6 @@
             android:parentActivityName=".ui.MenuActivity"
             android:theme="@style/Theme.Titanium.Help" />
         <activity
-            android:name=".ui.TakeBreathActivity"
-            android:configChanges="keyboard|keyboardHidden"
-            android:exported="true"
-            android:parentActivityName=".ui.MenuActivity"
-            android:theme="@style/Theme.Titanium" />
-        <activity
             android:name=".ui.MenuActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true">
