@@ -79,6 +79,13 @@
     <string name="button_menu_coin_flip">Coin Flip</string>
     <string name="button_menu_tasks">Tasks</string>
     <string name="button_menu_timer">Timer</string>
+    <string name="button_menu_breath">Breathe</string>
+    <string name="button_menu_help">App Info</string>
+    <string name="menu_empty_state_message">No childManager added yet!</string>
+    <string name="subtitle_default_menu">Hello there!</string>
+    <string name="subtitle_menu_afternoon">Good Afternoon</string>
+    <string name="subtitle_menu_evening">Good Evening</string>
+    <string name="subtitle_menu_morning">Good Morning</string>
     <string name="empty_state_menu_no_children">No children to display</string>
     <string name="subtitle_menu_welcome_afternoon">Good Afternoon</string>
     <string name="subtitle_menu_welcome_evening">Good Evening</string>
@@ -144,6 +151,17 @@
     <string name="title_timer_notification_interactive">Timer</string>
     <string name="toast_timer_enter_time">Enter time first</string>
     <string name="toast_timer_zero_minutes">Set non-zero time</string>
+
+    <!-- Take Breath -->
+    <string name="breath_start">Begin</string>
+    <string name="breath_message">Let\'\s take ______ breaths together</string>
+    <string name="breath_num_breaths_title">Number of Breaths: </string>
+    <string name="breath_num_breaths_btn_text">Set Breath Number</string>
+    <string name="breath_in">In</string>
+    <string name="breath_out">Out</string>
+    <string name="breath_help_in">Hold button and breath in</string>
+    <string name="breath_help_out_10">Release button and breath out</string>
+    <string name="breath_done">Good Job</string>
 
     <!-- New -->
     <string name="NEW_STRINGS_BELOW">NEW_STRINGS_BELOW</string>

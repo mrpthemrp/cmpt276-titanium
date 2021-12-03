@@ -46,6 +46,10 @@ public class MenuActivity extends AppCompatActivity {
 
     MaterialButton tasks = findViewById(R.id.MaterialButton_menu_tasks);
     tasks.setOnClickListener(view -> startActivity(TasksActivity.makeIntent(this)));
+
+    MaterialButton breathe = findViewById(R.id.MaterialButton_menu_breath);
+    breathe.setOnClickListener(view -> startActivity(TakeBreathActivity.makeIntent(this)));
+
   }
 
   @Override
