@@ -10,7 +10,9 @@ import androidx.annotation.Nullable;
 import ca.cmpt276.titanium.model.Timer;
 
 /**
- * This class handles the operation of a timer in the background.
+ * Handles the operation of a timer in the background.
+ *
+ * @author Titanium
  */
 public class TimerService extends Service {
   public static final String TIMER_UPDATE_INTENT = "timerUpdateIntent";
@@ -19,7 +21,6 @@ public class TimerService extends Service {
   private TimerNotification timerNotification;
   private Timer timer;
   private Intent timerUpdateIntent;
-  private float timeFactor;
   private CountDownTimer countDownTimer;
 
   @Override
@@ -33,27 +34,18 @@ public class TimerService extends Service {
     timer.setRunning();
 
     this.timerUpdateIntent = new Intent(TIMER_UPDATE_INTENT);
-    this.timeFactor = timer.getTimeFactor();
 
-    this.countDownTimer = new CountDownTimer(timer.getRemainingMilliseconds(),
-        TIMER_COUNTDOWN_INTERVAL) {
+    float timeFactor = timer.getTimeFactor();
+    long timerRemainingMilliseconds = (long) (timer.getRemainingMilliseconds() / timeFactor);
+
+    this.countDownTimer = new CountDownTimer(timerRemainingMilliseconds, TIMER_COUNTDOWN_INTERVAL) {
       @Override
       public void onTick(long remainingMilliseconds) {
-        long timeIncrement = (long) timeFactor * TIMER_COUNTDOWN_INTERVAL;
-
         if (!timer.isRunning()) {
           stopSelf();
-        } else if (timer.getRemainingMilliseconds() <= timeIncrement) {
-          onFinish();
-          // TODO: Ensure that onFinish always completes before
-          //  TimerService is destroyed
+        } else {
+          timer.setRemainingMilliseconds(remainingMilliseconds);
         }
-
-        // TODO: Ideally, use remainingMilliseconds instead because onTick is not
-        //  necessarily called every TIMER_COUNTDOWN_INTERVAL
-        // TODO: However, the line below should always function completely fine, so
-        //  this is not a necessary change
-        timer.setRemainingMilliseconds(timer.getRemainingMilliseconds() - timeIncrement);
 
         if (timer.isGUIEnabled()) {
           sendBroadcast(timerUpdateIntent);
@@ -83,6 +75,9 @@ public class TimerService extends Service {
     // in case onTick updated remainingMilliseconds after setStopped() initially called
     if (!timer.isPaused()) {
       timer.setStopped();
+    } else {
+      float timeFactor = timer.getTimeFactor();
+      timer.setRemainingMilliseconds((long) (timer.getRemainingMilliseconds() * timeFactor));
     }
 
     super.onDestroy();

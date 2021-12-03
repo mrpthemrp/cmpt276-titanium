@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="@string/toolbar_coin_flip_history_view_queue"
+        app:title="@string/title_child_queue"
         app:titleTextColor="?attr/colorOnSecondary" />
 
     <ImageView
@@ -34,11 +34,11 @@
         app:layout_constraintTop_toBottomOf="@+id/ToolBar_child_queue" />
 
     <TextView
-        android:id="@+id/TextView_child_queue_current_child_name_subtitle"
+        android:id="@+id/TextView_child_queue_current_child_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/subtitle_coin_flip_current_child"
+        android:text="@string/subtitle_child_queue_current_child"
         android:textColor="?attr/colorSecondary"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -59,16 +59,16 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextView_child_queue_current_child_name_subtitle"
+        app:layout_constraintTop_toBottomOf="@+id/TextView_child_queue_current_child_subtitle"
         tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/TextView_child_queue_queue_subtitle"
+        android:id="@+id/TextView_child_queue_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
-        android:text="@string/title_view_queue"
+        android:text="@string/subtitle_child_queue"
         android:textAllCaps="true"
         android:textColor="?attr/colorSecondaryVariant"
         android:textSize="16sp"
@@ -88,14 +88,14 @@
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextView_child_queue_queue_subtitle" />
+        app:layout_constraintTop_toBottomOf="@+id/TextView_child_queue_subtitle" />
 
     <TextView
-        android:id="@+id/TextView_child_queue_empty_state_message"
+        android:id="@+id/TextView_child_queue_empty_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/coin_flip_empty_state_message_no_children"
+        android:text="@string/empty_state_coin_flip_no_children"
         android:textColor="?attr/colorSecondaryVariant"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/ListView_child_queue"

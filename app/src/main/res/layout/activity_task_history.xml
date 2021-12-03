@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.coinflip.ChangeChildActivity">
+    tools:context=".ui.tasks.TaskHistoryActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/ToolBar_change_child"
+        android:id="@+id/ToolBar_task_history_manage"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/style_rounded_toolbar"
@@ -18,37 +18,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="@string/title_change_child"
+        app:title="Task History"
         app:titleTextColor="?attr/colorOnSecondary" />
 
     <ListView
-        android:id="@+id/ListView_change_child"
+        android:id="@+id/ListView_tasks_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="20dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="10dp"
-        android:padding="10dp"
+        android:layout_marginTop="56dp"
+        android:ellipsize="none"
+        android:maxLines="5"
+        android:scrollHorizontally="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ToolBar_change_child" />
+        app:layout_constraintTop_toBottomOf="@+id/ToolBar_task_history_manage" />
 
     <TextView
-        android:id="@+id/TextView_change_child_empty_state"
+        android:id="@+id/TextView_history_empty_state_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/empty_state_coin_flip_no_children"
+        android:text="@string/empty_state_tasks_no_tasks"
         android:textColor="?attr/colorPrimaryVariant"
+        android:textSize="15sp"
         android:textStyle="bold"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ToolBar_change_child"
-        app:layout_constraintVertical_bias="0.472" />
+        app:layout_constraintTop_toBottomOf="@+id/ToolBar_task_history_manage" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

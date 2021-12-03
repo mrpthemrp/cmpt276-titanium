@@ -20,6 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        app:title="@string/title_timer"
         app:titleTextColor="?attr/colorOnSecondary" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -161,11 +162,11 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
-                android:autofillHints="@string/hint_timer_input_minutes"
+                android:autofillHints="@string/AUTOFILL_HINTS"
                 android:cursorVisible="false"
                 android:ems="10"
                 android:focusedByDefault="false"
-                android:hint="@string/hint_timer_input_minutes"
+                android:hint="@string/hint_timer_enter_minutes"
                 android:inputType="number"
                 android:minHeight="48dp"
                 android:textAlignment="center"
@@ -176,7 +177,7 @@
 
             <Button
                 android:id="@+id/Button_timer_set_custom_input"
-                android:layout_width="76dp"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="15dp"
@@ -203,8 +204,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_timer_inputs">
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_timer_inputs"
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
             android:id="@+id/ImageView_timer_progress_notches"
@@ -234,7 +237,7 @@
             android:id="@+id/TextView_timer_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/default_timer_time"
+            android:text="@string/DEFAULT_TEXT"
             android:textColor="#FFFFFF"
             android:textColorHighlight="#FFFFFF"
             android:textColorHint="#FFFFFF"
@@ -250,7 +253,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="15dp"
             android:contentDescription="@string/CONTENT_DESCRIPTION"
             app:layout_constraintBottom_toTopOf="@+id/Button_timer_reset"
             app:layout_constraintEnd_toEndOf="parent"
@@ -262,8 +265,7 @@
         <Button
             android:id="@+id/Button_timer_reset"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/style_rounded_button_20"
             android:backgroundTint="?attr/colorPrimary"
@@ -274,7 +276,23 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ImageView_timer_control"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/Button_timer_time_factor"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/style_rounded_button_20"
+            android:backgroundTint="?attr/colorPrimary"
+            android:backgroundTintMode="src_in"
+            android:enabled="false"
+            android:text="@string/DEFAULT_TEXT"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="TextContrastCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

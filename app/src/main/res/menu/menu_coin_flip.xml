@@ -4,11 +4,12 @@
 
     <item
         android:id="@+id/menu_item_coin_flip_coin_flip_history"
-        android:title="@string/toolbar_button_coin_flip_history"
+        android:title="@string/menu_item_coin_flip_coin_flip_history"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_item_coin_flip_coin_flip_child_queue"
-        android:title="@string/toolbar_coin_flip_history_view_queue"
+        android:id="@+id/menu_item_coin_flip_child_queue"
+        android:title="@string/menu_item_coin_fip_child_queue"
         app:showAsAction="ifRoom" />
+
 </menu>

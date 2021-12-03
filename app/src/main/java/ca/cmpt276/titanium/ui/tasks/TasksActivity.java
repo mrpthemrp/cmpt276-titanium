@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
 
@@ -19,7 +18,9 @@ import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.TaskManager;
 
 /**
- * This class displays all tasks.
+ * Displays a list of Task objects.
+ *
+ * @author Titanium
  */
 public class TasksActivity extends AppCompatActivity {
   public static Intent makeIntent(Context context) {
@@ -30,10 +31,8 @@ public class TasksActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_tasks);
-    setTitle(R.string.title_view_all_tasks);
 
-    Toolbar toolbar = findViewById(R.id.ToolBar_tasks);
-    setSupportActionBar(toolbar);
+    setSupportActionBar(findViewById(R.id.ToolBar_tasks));
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
   }
 
@@ -54,8 +53,8 @@ public class TasksActivity extends AppCompatActivity {
     if (item.getItemId() == android.R.id.home) {
       finish();
       return true;
-    } else if (item.getItemId() == R.id.menu_item_tasks_add_task) {
-      startActivity(TasksAddActivity.makeIntent(this));
+    } else if (item.getItemId() == R.id.menu_item_tasks_add) {
+      startActivity(TaskEditActivity.makeIntent(this, getString(R.string.title_task_add), -1));
       return true;
     } else {
       return super.onOptionsItemSelected(item);
@@ -69,10 +68,10 @@ public class TasksActivity extends AppCompatActivity {
     ListView taskListView = findViewById(R.id.ListView_tasks);
     taskListView.setAdapter(taskAdapter);
     taskListView.setOnItemClickListener((adapterView, view, i, l) ->
-        startActivity(TasksViewActivity.makeIntent(this, i)));
+        startActivity(TaskManageActivity.makeIntent(this, i)));
 
-    TextView noTasksMessage = findViewById(R.id.TextView_tasks_empty_state_message);
-    noTasksMessage.setVisibility(
+    TextView emptyStateMessage = findViewById(R.id.TextView_tasks_empty_state);
+    emptyStateMessage.setVisibility(
         taskManager.getTasks().size() == 0
             ? View.VISIBLE
             : View.INVISIBLE);

@@ -10,13 +10,15 @@
         android:id="@+id/ToolBar_help"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@drawable/style_rounded_toolbar"
+        android:backgroundTint="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        app:title="@string/title_help" />
 
     <ScrollView
         android:id="@+id/ScrollView_help"
@@ -112,107 +114,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/TextView_help_developer_names" />
 
             <TextView
-                android:id="@+id/TextView_help_sounds_subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/subtitle_help_sounds"
-                android:textColor="?attr/colorPrimary"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_copyright_subtitle"
-                tools:ignore="TextContrastCheck" />
-
-            <TextView
-                android:id="@+id/TextView_help_coin_flip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/help_coin_flip"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_sounds_subtitle" />
-
-            <TextView
-                android:id="@+id/TextView_help_coin_flip_sound_link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:text="@string/link_coin_flip_sound"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip"
-                tools:ignore="TextContrastCheck" />
-
-            <TextView
-                android:id="@+id/TextView_help_coin_flip_sound_link_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:gravity="start"
-                android:text="@string/link_text_coin_flip_sound"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_sound_link" />
-
-            <TextView
-                android:id="@+id/TextView_help_timer_alarm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/help_timer_alarm"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_sound_link_text" />
-
-            <TextView
-                android:id="@+id/TextView_help_timer_alarm_link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:text="@string/link_timer_alarm"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_alarm"
-                tools:ignore="TextContrastCheck" />
-
-            <TextView
-                android:id="@+id/TextView_help_timer_alarm_link_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:gravity="start"
-                android:text="@string/link_text_timer_alarm"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_alarm_link" />
-
-            <TextView
                 android:id="@+id/TextView_help_images_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -224,8 +125,68 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_alarm_link_text"
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_alarm_link"
                 tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/TextView_help_task_checkmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/help_coin_flip_history_checkmark"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_background_link" />
+
+            <TextView
+                android:id="@+id/TextView_help_task_checkmark_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="3dp"
+                android:autoLink="web"
+                android:text="@string/link_help_coin_flip_history_checkmark"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_task_checkmark"
+                tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/TextView_help_coin_flip_history_x_mark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/help_coin_flip_history_x_mark"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_task_checkmark_link" />
+
+            <TextView
+                android:id="@+id/TextView_help_coin_flip_history_x_mark_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="3dp"
+                android:autoLink="web"
+                android:text="@string/link_help_coin_flip_history_x_mark"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_history_x_mark"
+                tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/TextView_help_timer_background"
@@ -247,114 +208,92 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="3dp"
-                android:gravity="start"
-                android:text="@string/link_timer_background"
+                android:autoLink="web"
+                android:text="@string/link_help_timer_background"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_background"
-                tools:ignore="TextContrastCheck" />
+                tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
             <TextView
-                android:id="@+id/TextView_help_timer_background_link_text"
+                android:id="@+id/TextView_help_sounds_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:text="@string/link_text_timer_background"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="14sp"
+                android:layout_marginTop="20dp"
+                android:text="@string/subtitle_help_sounds"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="25sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_background_link" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_copyright_subtitle"
+                tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/TextView_help_task_checkmark"
+                android:id="@+id/TextView_help_coin_flip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/help_task_checkmark"
+                android:text="@string/help_coin_flip_sound"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_background_link_text" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_sounds_subtitle" />
 
             <TextView
-                android:id="@+id/TextView_help_task_checkmark_link"
+                android:id="@+id/TextView_help_coin_flip_sound_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="3dp"
+                android:autoLink="web"
                 android:gravity="start"
-                android:text="@string/link_task_checkmark"
+                android:text="@string/link_help_coin_flip_sound"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_task_checkmark"
-                tools:ignore="TextContrastCheck" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip"
+                tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
             <TextView
-                android:id="@+id/TextView_help_task_checkmark_link_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:text="@string/link_text_task_checkmark"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_task_checkmark_link" />
-
-            <TextView
-                android:id="@+id/TextView_help_coin_flip_history_x_mark"
+                android:id="@+id/TextView_help_timer_alarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/help_coin_flip_history_x_mark"
+                android:text="@string/help_timer_alarm"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_task_checkmark_link_text" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_sound_link" />
 
             <TextView
-                android:id="@+id/TextView_help_coin_flip_history_x_mark_link"
+                android:id="@+id/TextView_help_timer_alarm_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="3dp"
+                android:autoLink="web"
                 android:gravity="start"
-                android:text="@string/link_coin_flip_history_x_mark"
+                android:text="@string/link_help_timer_alarm"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_history_x_mark"
-                tools:ignore="TextContrastCheck" />
-
-            <TextView
-                android:id="@+id/TextView_help_coin_flip_history_x_mark_link_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="3dp"
-                android:text="@string/link_text_coin_flip_history_x_mark"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_history_x_mark_link" />
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_alarm"
+                tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
             <TextView
                 android:id="@+id/TextView_help_sfu_copyright_footer"
@@ -367,7 +306,7 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_history_x_mark_link_text"
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_history_x_mark_link"
                 tools:ignore="TextContrastCheck" />
         </LinearLayout>
     </ScrollView>

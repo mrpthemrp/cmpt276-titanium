@@ -7,10 +7,10 @@
     android:backgroundTint="?attr/colorPrimary"
     android:backgroundTintMode="src_in"
     android:theme="@style/Theme.Titanium"
-    tools:context=".ui.tasks.TasksAddActivity">
+    tools:context=".ui.tasks.TaskEditActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/ToolBar_tasks_add"
+        android:id="@+id/ToolBar_task_edit"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/style_rounded_toolbar"
@@ -24,50 +24,50 @@
         app:titleTextColor="?attr/colorOnSecondary" />
 
     <TextView
-        android:id="@+id/TextView_tasks_add_task_name_subtitle"
+        android:id="@+id/TextView_task_edit_task_name_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="177dp"
-        android:text="@string/subtitle_task_name"
+        android:text="@string/subtitle_tasks_task_name"
         android:textColor="?attr/colorPrimary"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ToolBar_tasks_add"
+        app:layout_constraintTop_toBottomOf="@+id/ToolBar_task_edit"
         tools:ignore="TextContrastCheck" />
 
     <EditText
-        android:id="@+id/EditText_tasks_add_task_name"
+        android:id="@+id/EditText_task_edit_task_name"
         android:layout_width="253dp"
         android:layout_height="48dp"
         android:layout_marginTop="28dp"
-        android:autofillHints="@string/DEFAULT_TEXT"
+        android:autofillHints="@string/AUTOFILL_HINTS"
         android:backgroundTint="?attr/colorPrimary"
         android:backgroundTintMode="add"
         android:ems="10"
-        android:hint="@string/hint_task_name"
+        android:hint="@string/hint_task_edit_task_name"
         android:inputType="textPersonName"
         android:textAlignment="center"
         android:textColor="?attr/colorPrimaryVariant"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextView_tasks_add_task_name_subtitle"
+        app:layout_constraintTop_toBottomOf="@+id/TextView_task_edit_task_name_subtitle"
         tools:ignore="TextContrastCheck" />
 
     <Button
-        android:id="@+id/Button_tasks_add_save"
+        android:id="@+id/Button_task_edit_save_task"
         android:layout_width="120dp"
         android:layout_height="48dp"
         android:layout_marginTop="39dp"
         android:background="@drawable/style_rounded_button_20"
         android:backgroundTint="?attr/colorPrimary"
-        android:text="@string/button_save_task"
+        android:text="@string/button_task_edit_save_task"
         android:textColor="?attr/colorOnSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditText_tasks_add_task_name"
+        app:layout_constraintTop_toBottomOf="@+id/EditText_task_edit_task_name"
         tools:ignore="TextContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@
 
     <item
         android:id="@+id/menu_item_child_queue_change_child"
-        android:title="@string/toolbar_button_change_child"
+        android:title="@string/menu_item_child_queue_change_child"
         app:showAsAction="ifRoom" />
+
 </menu>

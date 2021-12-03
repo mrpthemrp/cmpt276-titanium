@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- General -->
+    <!-- App -->
+    <string name="AUTOFILL_HINTS">AUTOFILL_HINTS</string>
     <string name="CONTENT_DESCRIPTION">CONTENT_DESCRIPTION</string>
     <string name="DEFAULT_TEXT">DEFAULT_TEXT</string>
 
@@ -9,69 +10,63 @@
     <string name="app_name">Practical Parent</string>
 
     <!-- Child -->
-    <string name="button_delete_child">Delete Child</string>
-    <string name="button_save_child">Save</string>
+    <string name="button_child_save">Save</string>
     <string name="hint_child_name">Child name</string>
-    <string name="prompt_message_delete_child">Are you sure? This action cannot be reversed.\n\nAll associated coin flips will also be deleted.</string>
-    <string name="prompt_message_discard_changes">Are you sure? All changes will be lost.</string>
-    <string name="prompt_negative">No</string>
-    <string name="prompt_option1_select_image">Take Photo</string>
-    <string name="prompt_option2_select_image">Select from Gallery</string>
-    <string name="prompt_option3_select_image">Cancel</string>
-    <string name="prompt_positive">Yes</string>
-    <string name="prompt_title_delete_child">Delete %1$s?</string>
-    <string name="prompt_title_discard_changes">Discard Changes</string>
-    <string name="prompt_title_select_image">Select Image</string>
-    <string name="title_add_child">Add Child</string>
-    <string name="title_edit_child">Edit Child</string>
-    <string name="title_view_child">Manage Child</string>
-    <string name="toast_changes_discarded">Changes discarded</string>
+    <string name="menu_item_child_delete">Delete Child</string>
+    <string name="menu_item_child_edit">Edit Child</string>
+    <string name="prompt_message_child_delete">Are you sure? This action cannot be reversed.\n\nAll associated coin flips will also be deleted.</string>
+    <string name="prompt_message_child_discard_changes">Are you sure? All changes will be lost.</string>
+    <string name="prompt_negative_child">No</string>
+    <string name="prompt_option1_child_select_image">Take Photo</string>
+    <string name="prompt_option2_child_select_image">Select from Gallery</string>
+    <string name="prompt_option3_child_select_image">Cancel</string>
+    <string name="prompt_positive_child">Yes</string>
+    <string name="prompt_title_child_delete">Delete %1$s?</string>
+    <string name="prompt_title_child_discard_changes">Discard Changes</string>
+    <string name="prompt_title_child_select_image">Select Image</string>
+    <string name="title_child_edit">Edit Child</string>
+    <string name="toast_child_changes_discarded">Changes discarded</string>
     <string name="toast_child_deleted">Child deleted</string>
+    <string name="toast_child_name_field_empty">Name field cannot be empty</string>
+    <string name="toast_child_permission_denied">Permission denied</string>
     <string name="toast_child_saved">Child saved</string>
-    <string name="toast_name_field_empty">Name field cannot be empty</string>
-    <string name="toast_permission_denied">Permission denied</string>
 
     <!-- Coin Flip -->
-    <string name="button_flip">Flip</string>
-    <string name="button_select_heads">Heads</string>
-    <string name="button_select_tails">Tails</string>
+    <string name="button_coin_flip">Flip</string>
+    <string name="button_coin_flip_select_heads">Heads</string>
+    <string name="button_coin_flip_select_tails">Tails</string>
     <string name="coin_flip_child_name">%1$s\'s turn to pick</string>
-    <string name="coin_flip_empty_state_message_no_children">No childManager to display.</string>
-    <string name="coin_flip_empty_state_message_no_coin_flips">No coin flips to show.</string>
-    <string name="coin_flip_history_child_choice">&#160;chose&#160;</string> <!-- &#160; = space -->
-    <string name="coin_flip_history_result">Landed on&#160;</string> <!-- &#160; = space -->
     <string name="coin_flip_result_heads">Heads</string>
     <string name="coin_flip_result_tails">Tails</string>
     <string name="coin_flip_side_chosen">Side chosen: %1$s</string>
-    <string name="default_no_children">No child data recorded</string>
-    <string name="subtitle_coin_flip_current_child">Current Child</string>
-    <string name="title_change_child">Change Current Child</string>
+    <string name="empty_state_coin_flip_no_children">No children to display</string>
+    <string name="empty_state_coin_flip_no_coin_flips">No coin flips to display</string>
+    <string name="item_coin_flip_child_choice">&#160;chose:&#160;</string> <!-- &#160; = space -->
+    <string name="item_coin_flip_result">Result:&#160;</string> <!-- &#160; = space -->
+    <string name="menu_item_child_queue_change_child">Change Child</string>
+    <string name="menu_item_coin_fip_child_queue">Queue</string>
+    <string name="menu_item_coin_flip_coin_flip_history">History</string>
+    <string name="subtitle_child_queue">Queue</string>
+    <string name="subtitle_child_queue_current_child">Current Child</string>
+    <string name="title_change_child">Change Child</string>
+    <string name="title_child_queue">Child Queue</string>
+    <string name="title_coin_flip">Coin Flip</string>
     <string name="title_coin_flip_history">Coin Flip History</string>
-    <string name="title_flip_coin">Flip Coin</string>
-    <string name="title_view_queue">Queue</string>
-    <string name="toolbar_button_change_child">Change Child</string>
-    <string name="toolbar_button_coin_flip_history">History</string>
-    <string name="toolbar_coin_flip_history_view_queue">Queue</string>
 
     <!-- Help -->
     <string name="footer_help_sfu_copyright">SFU Fall 2021 | CMPT 276</string>
-    <string name="help_coin_flip">Coin Flip</string>
+    <string name="help_coin_flip_history_checkmark">Coin Flip History Checkmark</string>
     <string name="help_coin_flip_history_x_mark">Coin Flip History X-Mark</string>
+    <string name="help_coin_flip_sound">Coin Flip Sound</string>
     <string name="help_developer_names">• Haris Ahmad\n• Christopher Torunski\n• Michelle Vong\n• Deborah Wang</string>
-    <string name="help_task_checkmark">Task Checkmark</string>
     <string name="help_team_name">Team Titanium</string>
     <string name="help_timer_alarm">Timer Alarm</string>
     <string name="help_timer_background">Timer Background</string>
-    <string name="link_coin_flip_history_x_mark"><a href="https://www.nicepng.com/png/full/910-9107823_circle-cross-png.png">Click here to go to image link</a></string>
-    <string name="link_coin_flip_sound"><a href="https://www.youtube.com/watch?v=1QxX9ruPUXM">Click here to go to YouTube link</a></string>
-    <string name="link_task_checkmark"><a href="https://www.vhv.rs/dpng/f/406-4067045_checkmark-png.png">Click here to go to image link</a></string>
-    <string name="link_text_coin_flip_history_x_mark">Link Address: www.nicepng.com/png/full/910–9107823_circle-cross-png.png</string>
-    <string name="link_text_coin_flip_sound">Link Address: youtube.com/watch?v=1QxX9ruPUXM</string>
-    <string name="link_text_task_checkmark">Link Address: www.vhv.rs/dpng/f/406–4067045_checkmark-png.png</string>
-    <string name="link_text_timer_alarm">Link Address: youtube.com/watch?v=kcT-i9xzC-8</string>
-    <string name="link_text_timer_background">Link Address: unsplash.com/photos/4N6qT784t3A</string>
-    <string name="link_timer_alarm"><a href="https://www.youtube.com/watch?v=kcT-i9xzC-8">Click here to go to YouTube link</a></string>
-    <string name="link_timer_background"><a href="https://unsplash.com/photos/4N6qT784t3A">Click here to go to image link</a></string>
+    <string name="link_help_coin_flip_history_checkmark">Link: <a href="https://www.vhv.rs/dpng/f/406-4067045_checkmark-png.png">https://www.vhv.rs/dpng/f/406–4067045_checkmark-png.png</a></string>
+    <string name="link_help_coin_flip_history_x_mark">Link: <a href="https://www.nicepng.com/png/full/910-9107823_circle-cross-png.png">https://www.nicepng.com/png/full/910–9107823_circle-cross-png.png</a></string>
+    <string name="link_help_coin_flip_sound">Link: <a href="https://www.youtube.com/watch?v=1QxX9ruPUXM">https://www.youtube.com/watch?v=1QxX9ruPUXM</a></string>
+    <string name="link_help_timer_alarm">Link: <a href="https://www.youtube.com/watch?v=kcT-i9xzC-8">https://www.youtube.com/watch?v=kcT-i9xzC-8</a></string>
+    <string name="link_help_timer_background">Link: <a href="https://unsplash.com/photos/4N6qT784t3A">https://unsplash.com/photos/4N6qT784t3A</a></string>
     <string name="subtitle_help_app_info">App Information</string>
     <string name="subtitle_help_copyright">Copyright Information</string>
     <string name="subtitle_help_developers">Developers</string>
@@ -81,7 +76,7 @@
 
     <!-- Menu -->
     <string name="button_menu_add_child">Add Child</string>
-    <string name="button_menu_flip_coin">Flip Coin</string>
+    <string name="button_menu_coin_flip">Coin Flip</string>
     <string name="button_menu_tasks">Tasks</string>
     <string name="button_menu_timer">Timer</string>
     <string name="button_menu_breath">Breathe</string>
@@ -91,28 +86,41 @@
     <string name="subtitle_menu_afternoon">Good Afternoon</string>
     <string name="subtitle_menu_evening">Good Evening</string>
     <string name="subtitle_menu_morning">Good Morning</string>
+    <string name="empty_state_menu_no_children">No children to display</string>
+    <string name="subtitle_menu_welcome_afternoon">Good Afternoon</string>
+    <string name="subtitle_menu_welcome_evening">Good Evening</string>
+    <string name="subtitle_menu_welcome_morning">Good Morning</string>
+    <string name="title_menu_child_add">Add Child</string>
+    <string name="title_menu_child_manage">Manage Child</string>
 
     <!-- Tasks -->
-    <string name="button_complete_task">Complete</string>
-    <string name="button_save_task">Save</string>
-    <string name="default_name_no_children">N/A (No childManager added!)</string>
-    <string name="hint_task_name">Task name</string>
-    <string name="prompt_delete_task_message">Are you sure? This action cannot be reversed.</string>
-    <string name="prompt_title_delete_task">Delete Task</string>
-    <string name="subtitle_task_name">Task Name</string>
-    <string name="tasks_empty_state_message">No tasks to display</string>
+    <string name="button_task_edit_save_task">Save</string>
+    <string name="button_task_manage_complete_task">Complete</string>
+    <string name="empty_state_tasks_no_children">N/A (No children added)</string>
+    <string name="empty_state_tasks_no_tasks">No tasks to display</string>
+    <string name="hint_task_edit_task_name">Task name</string>
+    <string name="item_task_task_name">Task: %1$s</string>
+    <string name="item_task_date">Date: %1$s</string>
+    <string name="menu_item_task_manage_delete">Delete Task</string>
+    <string name="menu_item_task_manage_edit">Edit Task</string>
+    <string name="menu_item_tasks_add">Add Task</string>
+    <string name="prompt_message_task_edit_discard_changes">Are you sure? All changes will be lost.</string>
+    <string name="prompt_message_task_manage_delete">Are you sure? This action cannot be reversed.</string>
+    <string name="prompt_negative_tasks">No</string>
+    <string name="prompt_positive_tasks">Yes</string>
+    <string name="prompt_title_task_edit_discard_changes">Discard Changes</string>
+    <string name="prompt_title_task_manage_delete">Delete %1$s?</string>
+    <string name="subtitle_tasks_task_name">Task Name</string>
     <string name="tasks_next_child_name">%1$s\'s turn next</string>
-    <string name="tasks_task_name">Task: %1$s</string>
-    <string name="title_add_task">Add Task</string>
-    <string name="title_edit_task">Edit Task</string>
-    <string name="title_view_all_tasks">All Tasks</string>
-    <string name="title_view_task">Manage Task</string>
-    <string name="toast_task_completed">Task completed</string>
-    <string name="toast_task_deleted">Task deleted</string>
-    <string name="toast_task_saved">Task saved</string>
-    <string name="toolbar_button_add_task">Add Task</string>
-    <string name="toolbar_button_delete_task">Delete Task</string>
-    <string name="toolbar_button_edit_task">Edit Task</string>
+    <string name="title_task_add">Add Task</string>
+    <string name="title_task_edit">Edit Task</string>
+    <string name="title_task_manage">Manage Task</string>
+    <string name="title_tasks">All Tasks</string>
+    <string name="toast_task_edit_changes_discarded">Changes discarded</string>
+    <string name="toast_task_edit_name_field_empty">Name field cannot be empty</string>
+    <string name="toast_task_edit_saved">Task saved</string>
+    <string name="toast_task_manage_completed">Task completed</string>
+    <string name="toast_task_manage_deleted">Task deleted</string>
 
     <!-- Timer -->
     <string name="button_timer_notification_cancel">Cancel</string>
@@ -126,8 +134,16 @@
     <string name="button_timer_select_3_minutes">3</string>
     <string name="button_timer_select_5_minutes">5</string>
     <string name="button_timer_set">Set</string>
-    <string name="default_timer_time">00:00:00</string>
-    <string name="hint_timer_input_minutes">Enter minutes</string>
+    <string name="hint_timer_enter_minutes">Enter minutes</string>
+    <string name="prompt_option1_timer_select_time_factor">25%</string>
+    <string name="prompt_option2_timer_select_time_factor">50%</string>
+    <string name="prompt_option3_timer_select_time_factor">75%</string>
+    <string name="prompt_option4_timer_select_time_factor">100%</string>
+    <string name="prompt_option5_timer_select_time_factor">200%</string>
+    <string name="prompt_option6_timer_select_time_factor">300%</string>
+    <string name="prompt_option7_timer_select_time_factor">400%</string>
+    <string name="prompt_option8_timer_select_time_factor">Cancel</string>
+    <string name="prompt_title_timer_select_time_factor">Select Time Factor</string>
     <string name="subtitle_timer_minutes">Minutes</string>
     <string name="timer_notification_channel_name">Timers</string>
     <string name="title_timer">Timer</string>
@@ -149,5 +165,7 @@
 
     <!-- New -->
     <string name="NEW_STRINGS_BELOW">NEW_STRINGS_BELOW</string>
+    <string name="button_task_manage_history">History</string>
+    <string name="item_task_child_name">"Child: %1$s"</string>
 
 </resources>

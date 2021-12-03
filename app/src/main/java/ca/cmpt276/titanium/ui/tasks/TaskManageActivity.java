@@ -28,7 +28,7 @@ import ca.cmpt276.titanium.model.TaskManager;
 /**
  * This class displays the details for a single task.
  */
-public class TasksViewActivity extends AppCompatActivity {
+public class TaskManageActivity extends AppCompatActivity {
   private static final String TASK_INDEX_KEY = "taskIndex";
   private static final int INVALID_TASK_INDEX = -1;
 
@@ -38,9 +38,10 @@ public class TasksViewActivity extends AppCompatActivity {
   private int taskIndex;
   private Task task;
   private Child child;
+  TextView taskNameText;
 
   public static Intent makeIntent(Context context, int taskIndex) {
-    Intent intent = new Intent(context, TasksViewActivity.class);
+    Intent intent = new Intent(context, TaskManageActivity.class);
     intent.putExtra(TASK_INDEX_KEY, taskIndex);
     return intent;
   }
@@ -48,9 +49,9 @@ public class TasksViewActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_tasks_view);
+    setContentView(R.layout.activity_task_manage);
 
-    Toolbar toolbar = findViewById(R.id.ToolBar_tasks_view);
+    Toolbar toolbar = findViewById(R.id.ToolBar_task_manage);
     setSupportActionBar(toolbar);
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
@@ -74,7 +75,7 @@ public class TasksViewActivity extends AppCompatActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.menu_tasks_view, menu);
+    getMenuInflater().inflate(R.menu.menu_task_manage, menu);
     return true;
   }
 
@@ -89,10 +90,11 @@ public class TasksViewActivity extends AppCompatActivity {
     if (item.getItemId() == android.R.id.home) {
       finish();
       return true;
-    } else if (item.getItemId() == R.id.menu_item_tasks_view_edit_task) {
-      startActivity(TasksEditActivity.makeIntent(this, taskIndex));
+    } else if (item.getItemId() == R.id.menu_item_task_manage_edit) {
+      startActivity(TaskEditActivity.makeIntent(
+          this, getString(R.string.title_task_edit), taskIndex));
       return true;
-    } else if (item.getItemId() == R.id.menu_item_tasks_view_delete_task) {
+    } else if (item.getItemId() == R.id.menu_item_task_manage_delete) {
       launchDeleteTaskPrompt();
       return true;
     } else {
@@ -101,19 +103,18 @@ public class TasksViewActivity extends AppCompatActivity {
   }
 
   private void displayTaskData() {
-    String taskName = task.getTaskName();
-    String childName =
-        task.getChildUniqueID() == null
-            ? getString(R.string.default_name_no_children)
-            : child.getName();
+    taskNameText = findViewById(R.id.TextView_task_manage_task_name);
+    taskNameText.setText(taskManager.getTasks().get(taskIndex).getTaskName());
 
-    TextView taskNameText = findViewById(R.id.TextView_tasks_view_task_name);
-    taskNameText.setText(taskName);
+    TextView childNameText = findViewById(R.id.TextView_task_manage_child_name);
 
-    TextView childNameText = findViewById(R.id.TextView_tasks_view_child_name);
-    childNameText.setText(getString(R.string.tasks_next_child_name, childName));
+    if (task.getChildUniqueID() == null) {
+      childNameText.setText(getString(R.string.empty_state_tasks_no_children));
+    } else {
+      childNameText.setText(getString(R.string.tasks_next_child_name, child.getName()));
+    }
 
-    ImageView childPortraitView = findViewById(R.id.ImageView_tasks_view_child_portrait);
+    ImageView childPortraitView = findViewById(R.id.ImageView_task_manage_child_portrait);
 
     if (task.getChildUniqueID() == null) {
       childPortraitView.setImageResource(R.drawable.ic_default_portrait_green);
@@ -123,19 +124,25 @@ public class TasksViewActivity extends AppCompatActivity {
   }
 
   private void setupButtons() {
-    Button completeTaskButton = findViewById(R.id.Button_tasks_view_complete_task);
+    Button completeTaskButton = findViewById(R.id.Button_task_manage_complete_task);
     completeTaskButton.setOnClickListener(view -> {
       ArrayList<Child> children = childManager.getChildren();
 
       if (task.getChildUniqueID() != null) {
+        String taskName = taskNameText.getText().toString();
+        UUID childID = task.getChildUniqueID();
+        taskManager.addHistoryTask(taskName, childID);
+
         int nextChildIndex = (children.indexOf(child) + 1) % children.size();
         UUID nextChildUniqueID = children.get(nextChildIndex).getUniqueID();
         taskManager.setChildUniqueID(taskIndex, nextChildUniqueID);
       }
-
-      updateToast(getString(R.string.toast_task_completed));
+      updateToast(getString(R.string.toast_task_manage_completed));
       finish();
     });
+
+    Button historyTaskButton = findViewById(R.id.Button_task_manage_history);
+    historyTaskButton.setOnClickListener(view -> startActivity(TaskHistoryActivity.makeIntent(TaskManageActivity.this, taskIndex)));
   }
 
   private void updateToast(String toastText) {
@@ -147,14 +154,15 @@ public class TasksViewActivity extends AppCompatActivity {
   private void launchDeleteTaskPrompt() {
     new AlertDialog.Builder(this)
         .setIcon(R.drawable.ic_baseline_delete_black_24)
-        .setTitle(getString(R.string.prompt_title_delete_task))
-        .setMessage(getString(R.string.prompt_delete_task_message))
-        .setPositiveButton(R.string.prompt_positive, (dialog, which) -> {
+        .setTitle(getString(R.string.prompt_title_task_manage_delete))
+        .setMessage(getString(R.string.prompt_message_task_manage_delete))
+        .setPositiveButton(R.string.prompt_positive_tasks, (dialog, which) -> {
+          taskManager.taskDeletedFromHistory(task.getTaskName());
           taskManager.removeTask(taskIndex);
-          updateToast(getString(R.string.toast_task_deleted));
+          updateToast(getString(R.string.toast_task_manage_deleted));
           finish();
         })
-        .setNegativeButton(R.string.prompt_negative, null)
+        .setNegativeButton(R.string.prompt_negative_tasks, null)
         .show();
   }
 }

@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.MenuActivity">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/MaterialButton_menu_help"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@android:color/transparent"
+        app:icon="@drawable/ic_baseline_help_outline_white_24"
+        app:iconTint="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <TextView
         android:id="@+id/TextView_menu_welcome_message"
         android:layout_width="wrap_content"
@@ -63,7 +74,7 @@
             android:background="@drawable/style_rounded_button_20"
             android:backgroundTint="?attr/colorPrimary"
             android:backgroundTintMode="src_in"
-            android:text="@string/button_menu_flip_coin"
+            android:text="@string/button_menu_coin_flip"
             android:textSize="11sp"
             android:textColor="?attr/colorOnSecondary"
             app:icon="@drawable/ic_coin_button_white_24"
@@ -178,10 +189,10 @@
         app:layout_constraintTop_toBottomOf="@+id/GridLayout_menu_buttons" />
 
     <TextView
-        android:id="@+id/TextView_menu_empty_state_message"
+        android:id="@+id/TextView_menu_empty_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/menu_empty_state_message"
+        android:text="@string/empty_state_menu_no_children"
         android:textColor="?attr/colorPrimary"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"

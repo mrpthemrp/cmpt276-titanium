@@ -3,14 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_item_tasks_view_edit_task"
+        android:id="@+id/menu_item_task_manage_edit"
         android:icon="@drawable/ic_baseline_edit_white_24"
-        android:title="@string/toolbar_button_edit_task"
+        android:title="@string/menu_item_task_manage_edit"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_item_tasks_view_delete_task"
+        android:id="@+id/menu_item_task_manage_delete"
         android:icon="@drawable/ic_baseline_delete_white_24"
-        android:title="@string/toolbar_button_delete_task"
+        android:title="@string/menu_item_task_manage_delete"
         app:showAsAction="ifRoom" />
+
 </menu>
