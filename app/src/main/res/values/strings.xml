@@ -48,6 +48,7 @@
     <string name="menu_item_coin_flip_coin_flip_history">History</string>
     <string name="subtitle_child_queue">Queue</string>
     <string name="subtitle_child_queue_current_child">Current Child</string>
+    <string name="subtitle_child_turn_nobody">Nobody</string>
     <string name="button_change_child_nobody">Nobody</string>
     <string name="title_change_child">Change Child</string>
     <string name="title_child_queue">Child Queue</string>

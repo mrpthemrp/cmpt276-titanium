@@ -71,10 +71,13 @@ public class ChildQueueActivity extends AppCompatActivity {
         findViewById(R.id.ImageView_child_queue_current_child_portrait);
     TextView currentChildName = findViewById(R.id.TextView_child_queue_current_child_name);
 
-    if (childManager.getCoinFlipQueue().size() > 0) {
+    if (childManager.getCoinFlipQueue().size() > 0 && childManager.isChildIsChoosing()) {
       Child currentChild = childManager.getChoosingChild();
       currentChildPortrait.setImageDrawable(currentChild.getPortrait(getResources()));
       currentChildName.setText(currentChild.getName());
+    } else if (childManager.getCoinFlipQueue().size() > 0 && !childManager.isChildIsChoosing()) {
+      currentChildPortrait.setImageResource(R.drawable.ic_default_portrait_green);
+      currentChildName.setText(R.string.subtitle_child_turn_nobody);
     } else {
       currentChildPortrait.setImageResource(R.drawable.ic_default_portrait_green);
       currentChildName.setText(R.string.empty_state_coin_flip_no_children);
