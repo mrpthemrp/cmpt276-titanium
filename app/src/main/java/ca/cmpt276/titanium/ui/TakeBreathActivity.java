@@ -53,6 +53,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         numPicker.setEnabled(false);
         numPicker.setVisibility(View.INVISIBLE);
         showNumber.setVisibility(View.VISIBLE);
+        showNumber.setText(Integer.toString(selectedNumberOfBreaths));
         state = IN_PROGRESS;
       }
       if(state == IN_PROGRESS){
@@ -72,6 +73,7 @@ public class TakeBreathActivity extends AppCompatActivity {
 //             if(){
 //             }
             selectedNumberOfBreaths--;
+            showNumber.setText(Integer.toString(selectedNumberOfBreaths));
           }
         }
         if(state == END_SCREEN){
