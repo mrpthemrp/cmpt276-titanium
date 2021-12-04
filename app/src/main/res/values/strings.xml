@@ -154,14 +154,23 @@
 
     <!-- Take Breath -->
     <string name="breath_start">Begin</string>
-    <string name="breath_message">Let\'\s take ______ breaths together</string>
-    <string name="breath_num_breaths_title">Number of Breaths: </string>
-    <string name="breath_num_breaths_btn_text">Set Breath Number</string>
+    <string name="breath_message1">Let\'\s take</string>
+    <string name="breath_message2">breaths together</string>
     <string name="breath_in">In</string>
     <string name="breath_out">Out</string>
     <string name="breath_help_in">Hold button and breath in</string>
     <string name="breath_help_out_10">Release button and breath out</string>
     <string name="breath_done">Good Job</string>
+    <string name="breath_num1">1</string>
+    <string name="breath_num2">2</string>
+    <string name="breath_num3">3</string>
+    <string name="breath_num4">4</string>
+    <string name="breath_num5">5</string>
+    <string name="breath_num6">6</string>
+    <string name="breath_num7">7</string>
+    <string name="breath_num8">8</string>
+    <string name="breath_num9">9</string>
+    <string name="breath_num10">10</string>
 
     <!-- New -->
     <string name="NEW_STRINGS_BELOW">NEW_STRINGS_BELOW</string>
