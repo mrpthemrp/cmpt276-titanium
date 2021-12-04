@@ -12,9 +12,9 @@
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:contextClickable="true"
         android:background="@drawable/ic_baseline_home_24"
         android:backgroundTint="?attr/colorSecondary"
+        android:contextClickable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -62,16 +62,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/takeBreathInputNum"
-        android:layout_width="73dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="111dp"
-        android:ems="10"
-        android:inputType="number"
-        android:minHeight="48dp"
+
+    <NumberPicker
+        android:id="@+id/breathNumPicker"
+        android:layout_width="30dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="85dp"
         app:layout_constraintEnd_toStartOf="@+id/breathMessage2"
         app:layout_constraintStart_toEndOf="@+id/breathMessage1"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/breathSelectedNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:text="@string/breath_empty_breath"
+        android:textColor="?attr/colorSecondary"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/breathMessage2"
+        app:layout_constraintStart_toEndOf="@+id/breathMessage1"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
