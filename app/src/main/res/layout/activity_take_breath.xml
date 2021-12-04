@@ -14,37 +14,77 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/ic_baseline_home_24"
         android:backgroundTint="?attr/colorSecondary"
+        android:contextClickable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/breathBtn"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_marginBottom="248dp"
-        android:background="@drawable/style_rounded_button_60"
+        android:layout_width="309dp"
+        android:layout_height="309dp"
+        android:layout_marginBottom="160dp"
+        android:background="@drawable/style_rounded_button_400"
         android:backgroundTint="?attr/colorPrimary"
         android:backgroundTintMode="src_in"
         android:text="@string/breath_start"
-        android:textSize="15sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/breathMessage"
+        android:id="@+id/breathMessage1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="260dp"
-        android:text="@string/breath_message"
+        android:layout_marginTop="120dp"
+        android:text="@string/breath_message1"
         android:textColor="?attr/colorSecondaryVariant"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.156"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/breathMessage2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:text="@string/breath_message2"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.803"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <NumberPicker
+        android:id="@+id/breathNumPicker"
+        android:layout_width="30dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="85dp"
+        app:layout_constraintEnd_toStartOf="@+id/breathMessage2"
+        app:layout_constraintStart_toEndOf="@+id/breathMessage1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/breathSelectedNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:text="@string/breath_empty_breath"
+        android:textColor="?attr/colorSecondary"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/breathMessage2"
+        app:layout_constraintStart_toEndOf="@+id/breathMessage1"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
