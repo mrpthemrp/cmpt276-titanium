@@ -2,6 +2,7 @@ package ca.cmpt276.titanium.ui.coinflip;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.Child;
 import ca.cmpt276.titanium.model.ChildManager;
+import ca.cmpt276.titanium.model.Coin;
 import ca.cmpt276.titanium.ui.ChildAdapter;
 
 /**
@@ -31,7 +33,17 @@ public class ChangeChildActivity extends AppCompatActivity {
     setSupportActionBar(findViewById(R.id.ToolBar_change_child));
     Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
+    setupNobodyButton();
     displayChildren();
+  }
+
+  private void setupNobodyButton() {
+    ChildManager childManager = ChildManager.getInstance(this);
+    Button nobodyButton = findViewById(R.id.button_change_child_nobody);
+    nobodyButton.setOnClickListener((View view) -> {
+            childManager.setChildIsChoosing(false);
+            finish();
+            });
   }
 
   private void displayChildren() {

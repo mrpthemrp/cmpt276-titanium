@@ -23,6 +23,8 @@ public class ChildManager {
   private static final String CHILDREN_JSON_KEY = "childrenJson";
   private static final String COIN_FLIP_QUEUE_JSON_KEY = "coinFlipQueueJson";
 
+  private static final boolean DEFAULT_CHILD_IS_CHOOSING = true;
+
   private static ChildManager instance;
   private static SharedPreferences prefs;
   private static CoinFlipManager coinFlipManager;
@@ -30,6 +32,8 @@ public class ChildManager {
 
   private static ArrayList<Child> children = new ArrayList<>();
   private static ArrayList<UUID> coinFlipQueue = new ArrayList<>();
+
+  private static boolean childIsChoosing = DEFAULT_CHILD_IS_CHOOSING;
 
   private ChildManager(Context context) {
     ChildManager.prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -148,5 +152,13 @@ public class ChildManager {
 
   public ArrayList<UUID> getCoinFlipQueue() {
     return coinFlipQueue;
+  }
+
+  public boolean isChildIsChoosing() {
+    return childIsChoosing;
+  }
+
+  public void setChildIsChoosing(boolean childIsChoosing) {
+    ChildManager.childIsChoosing = childIsChoosing;
   }
 }

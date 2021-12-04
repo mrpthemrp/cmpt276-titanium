@@ -6,6 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.coinflip.ChangeChildActivity">
 
+    <Button
+        android:id="@+id/button_change_child_nobody"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="150dp"
+        android:background="@drawable/style_rounded_button_20"
+        android:backgroundTint="?attr/colorPrimary"
+        android:backgroundTintMode="src_in"
+        android:text="@string/button_change_child_nobody"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/ListView_change_child"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ToolBar_change_child"
+        tools:ignore="TextContrastCheck" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/ToolBar_change_child"
         android:layout_width="match_parent"
@@ -23,16 +40,14 @@
 
     <ListView
         android:id="@+id/ListView_change_child"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="20dp"
+        android:layout_width="372dp"
+        android:layout_height="499dp"
+        android:layout_marginTop="100dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp"
         android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ToolBar_change_child" />
 

@@ -105,11 +105,17 @@ public class CoinFlipActivity extends AppCompatActivity {
     Button headsButton = findViewById(R.id.Button_coin_flip_select_heads);
     Button tailsButton = findViewById(R.id.Button_coin_flip_select_tails);
 
-    if (childManager.getCoinFlipQueue().size() > 0) {
+    if (childManager.getCoinFlipQueue().size() > 0 && childManager.isChildIsChoosing()) {
       Child nextChild = childManager.getChoosingChild();
       childPortrait.setImageDrawable(nextChild.getPortrait(getResources()));
       childName.setText(getString(R.string.coin_flip_child_name, nextChild.getName()));
       sideChosen.setText(getString(R.string.coin_flip_side_chosen, coinChosen.toString()));
+
+      childPortrait.setVisibility(View.VISIBLE);
+      childName.setVisibility(View.VISIBLE);
+      sideChosen.setVisibility(View.VISIBLE);
+      headsButton.setVisibility(View.VISIBLE);
+      tailsButton.setVisibility(View.VISIBLE);
     } else {
       childPortrait.setVisibility(View.INVISIBLE);
       childName.setVisibility(View.INVISIBLE);
@@ -144,8 +150,11 @@ public class CoinFlipActivity extends AppCompatActivity {
     coinResultMessage.postDelayed(() ->
         coinResultMessage.setVisibility(View.VISIBLE), COIN_FLIP_DELAY);
 
-    if (childManager.getCoinFlipQueue().size() > 0) {
+    if (childManager.getCoinFlipQueue().size() > 0 && childManager.isChildIsChoosing()) {
       coinFlipManager.addCoinFlip(coinChosen, coinResult);
+      new Handler(Looper.getMainLooper()).postDelayed(() -> updateGUI(coinChosen), COIN_FLIP_DELAY);
+    } else if (childManager.getCoinFlipQueue().size() > 0 && !childManager.isChildIsChoosing()) {
+      childManager.setChildIsChoosing(true); // TODO: Update GUI after coin is flipped
       new Handler(Looper.getMainLooper()).postDelayed(() -> updateGUI(coinChosen), COIN_FLIP_DELAY);
     }
   }
