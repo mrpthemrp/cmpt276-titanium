@@ -54,10 +54,8 @@ public class TakeBreathActivity extends AppCompatActivity {
       numPicker.setEnabled(true);
       numPicker.setVisibility(View.VISIBLE);
       showNumber.setVisibility(View.INVISIBLE);
-      showNumber.setText(Integer.toString(selectedNumberOfBreaths));
       breathsRemaining = selectedNumberOfBreaths;
     }
-
     if (state == END_SCREEN) {
       mainBtn.setText(R.string.breath_done);
       numPicker.setVisibility(View.VISIBLE);
@@ -69,6 +67,7 @@ public class TakeBreathActivity extends AppCompatActivity {
       if (state == START_SCREEN) {
         numPicker.setEnabled(false);
         numPicker.setVisibility(View.INVISIBLE);
+        showNumber.setText(Integer.toString(selectedNumberOfBreaths));
         showNumber.setVisibility(View.VISIBLE);
         state = IN_PROGRESS;
       }
@@ -84,10 +83,12 @@ public class TakeBreathActivity extends AppCompatActivity {
         if (breathsRemaining > 0) {
           switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
+              mainBtn.setText(getString(R.string.breath_in));
               mainBtn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.breath_button));
               breathState = BREATH_OUT_3SEC;
               return true;
             case MotionEvent.ACTION_UP:
+              mainBtn.setText(getString(R.string.breath_out));
               breathsRemaining--;
               mainBtn.clearAnimation();
               breathState = BREATH_IN;
