@@ -20,14 +20,10 @@ import com.google.android.material.button.MaterialButton;
 import ca.cmpt276.titanium.R;
 
 public class TakeBreathActivity extends AppCompatActivity {
-  public static final int START_SCREEN = 0;
-  public static final int END_SCREEN = 1;
-  public static final int IN_PROGRESS = 2;
+  public static final int NOT_IN_PROGRESS = 0;
+  public static final int IN_PROGRESS = 1;
 
-  public static final int BREATH_IN = 0;
-  public static final int BREATH_OUT = 1;
-
-  private int state, breathState;
+  private int state;
   private NumberPicker numPicker;
   private int selectedNumberOfBreaths, breathsRemaining;
   private TextView showNumber;
@@ -42,19 +38,19 @@ public class TakeBreathActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_take_breath);
 
-    state = START_SCREEN;
-    breathState = BREATH_IN;
     MaterialButton goHome = findViewById(R.id.breathGoHomeBtn);
     goHome.setOnClickListener(view -> finish()); //TODO update with proper method
 
+    state = NOT_IN_PROGRESS;
     setupBreathNumPicker();
     mainBtn = findViewById(R.id.breathBtn);
     numPicker.setEnabled(true);
     numPicker.setVisibility(View.VISIBLE);
     showNumber.setVisibility(View.INVISIBLE);
 
+
     mainBtn.setOnTouchListener((view, motionEvent) -> {
-      if (state == START_SCREEN) {
+      if (state == NOT_IN_PROGRESS) {
         numPicker.setEnabled(false);
         numPicker.setVisibility(View.INVISIBLE);
         showNumber.setText(Integer.toString(selectedNumberOfBreaths));
@@ -69,28 +65,26 @@ public class TakeBreathActivity extends AppCompatActivity {
       if (state == IN_PROGRESS) {
         if (breathsRemaining > 0) {
           switch (motionEvent.getAction()) {
+
             case MotionEvent.ACTION_DOWN:
-              Toast.makeText(this, "action down" + breathsRemaining, Toast.LENGTH_SHORT).show();
               mainBtn.setText(TakeBreathActivity.this.getString(R.string.breath_in));
               mainBtn.startAnimation(AnimationUtils.loadAnimation(TakeBreathActivity.this, R.anim.breath_button));
-              breathState = BREATH_IN;
               return true;
+
             case MotionEvent.ACTION_UP:
-              Toast.makeText(this, "action up" + breathsRemaining, Toast.LENGTH_SHORT).show();
               mainBtn.setText(TakeBreathActivity.this.getString(R.string.breath_out));
               breathsRemaining--;
               showNumber.setText(Integer.toString(breathsRemaining));
               mainBtn.clearAnimation();
-              breathState = BREATH_OUT;
-              if(breathsRemaining ==0){
-                Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
+
+              if (breathsRemaining == 0) {
                 mainBtn.setText(R.string.breath_done);
                 numPicker.setVisibility(View.VISIBLE);
                 showNumber.setVisibility(View.INVISIBLE);
                 numPicker.setEnabled(true);
-                breathState = BREATH_IN;
-                state = START_SCREEN;
+                state = NOT_IN_PROGRESS;
               }
+
               return true;
           }
         }
