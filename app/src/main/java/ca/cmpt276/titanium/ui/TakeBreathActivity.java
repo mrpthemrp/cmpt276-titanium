@@ -9,8 +9,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
-
+import ca.cmpt276.titanium.model.BreathManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
@@ -72,6 +71,8 @@ public class TakeBreathActivity extends AppCompatActivity {
         state = IN_PROGRESS;
       }
     });
+
+
 
     mainBtn.setOnTouchListener((view, motionEvent) -> {
       if(state == IN_PROGRESS) {
