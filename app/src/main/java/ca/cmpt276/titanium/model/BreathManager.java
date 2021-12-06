@@ -48,7 +48,6 @@ public class BreathManager {
         }
     }
 
-
     public void saveData() {
         String breathJson = GSON.toJson(numBreaths);
 
