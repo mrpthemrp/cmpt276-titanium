@@ -3,6 +3,7 @@ package ca.cmpt276.titanium.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -25,13 +26,13 @@ public class TakeBreathActivity extends AppCompatActivity {
   private final long SECONDS_3 = 3;
   private final long SECONDS_10 = 10;
 
-
   private int state;
-  private long startTime, timeHeld, currentTime, previousSecond;
   private NumberPicker numPicker;
   private int selectedNumberOfBreaths, breathsRemaining;
   private TextView showNumber;
   private Button mainBtn;
+  private boolean isPressed = false;
+  private CountDownTimer threeSecond, tenSecond;
 
   public static Intent makeIntent(Context context) {
     return new Intent(context, TakeBreathActivity.class);
@@ -46,14 +47,41 @@ public class TakeBreathActivity extends AppCompatActivity {
     goHome.setOnClickListener(view -> finish()); //TODO update with proper method
 
     state = NOT_IN_PROGRESS;
-    startTime = 0;
-    timeHeld =0;
     setupBreathNumPicker();
     mainBtn = findViewById(R.id.breathBtn);
     numPicker.setEnabled(true);
     numPicker.setVisibility(View.VISIBLE);
     showNumber.setVisibility(View.INVISIBLE);
 
+    threeSecond = new CountDownTimer(3000, 1000) {
+      @Override
+      public void onTick(long l) {
+      }
+
+      @Override
+      public void onFinish() {
+        if(isPressed){
+          Toast.makeText(TakeBreathActivity.this, "3 seconds", Toast.LENGTH_SHORT).show();
+        }
+        if(!isPressed){
+          changeToIn();
+        }
+      }
+    };
+
+    tenSecond = new CountDownTimer(3000, 1000) {
+      @Override
+      public void onTick(long l) {
+      }
+
+      @Override
+      public void onFinish() {
+        if(isPressed){
+          Toast.makeText(TakeBreathActivity.this, "10 seconds", Toast.LENGTH_SHORT).show();
+          mainBtn.clearAnimation();
+        }
+      }
+    };
 
     mainBtn.setOnTouchListener((view, motionEvent) -> {
       if (state == NOT_IN_PROGRESS) {
@@ -68,15 +96,19 @@ public class TakeBreathActivity extends AppCompatActivity {
 
       if (state == IN_PROGRESS) {
         if (breathsRemaining >= 0) {
-          calculateTimeHeld();
-
           switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
-              startTime = System.currentTimeMillis();
+              isPressed = true;
               changeToIn();
+              Toast.makeText(this, getString(R.string.breath_help_in), Toast.LENGTH_SHORT).show();
+              threeSecond.start();
+              tenSecond.start();
               return true;
             case MotionEvent.ACTION_UP:
               mainBtn.clearAnimation();
+              isPressed = false;
+              threeSecond.cancel();
+              tenSecond.cancel();
               changeToOut();
               if (breathsRemaining == 0) {
                 mainBtn.setText(R.string.breath_done);
@@ -87,14 +119,7 @@ public class TakeBreathActivity extends AppCompatActivity {
               }
               return true;
           }
-          if(timeHeld == SECONDS_3) {
-            timeHeld = 0;
-            Toast.makeText(this, "3 seoncds", Toast.LENGTH_SHORT).show();
-          }
-          if(timeHeld == SECONDS_10){
-            Toast.makeText(this, "10 seoncds", Toast.LENGTH_SHORT).show();
-            timeHeld =0;
-          }
+
         }
       }
       return false;
@@ -122,19 +147,5 @@ public class TakeBreathActivity extends AppCompatActivity {
     breathsRemaining--;
     mainBtn.setText(TakeBreathActivity.this.getString(R.string.breath_out));
     showNumber.setText(Integer.toString(breathsRemaining));
-  }
-
-  private void calculateTimeHeld() {
-    previousSecond = currentTime;
-    currentTime = System.currentTimeMillis() - startTime;
-    if (currentTime != previousSecond) {
-      currentTime /= 1000;
-      if(currentTime == SECONDS_3){
-        timeHeld = 3;
-      }
-      if (currentTime == SECONDS_10){
-        timeHeld =10;
-      }
-    }
   }
 }
