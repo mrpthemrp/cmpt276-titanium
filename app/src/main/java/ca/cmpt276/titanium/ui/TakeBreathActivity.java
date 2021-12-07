@@ -1,5 +1,6 @@
 package ca.cmpt276.titanium.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -38,6 +39,7 @@ public class TakeBreathActivity extends AppCompatActivity {
     return new Intent(context, TakeBreathActivity.class);
   }
 
+  @SuppressLint("ClickableViewAccessibility")
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -52,6 +54,7 @@ public class TakeBreathActivity extends AppCompatActivity {
     mainBtn = findViewById(R.id.breathBtn);
     numPicker.setEnabled(true);
     numPicker.setVisibility(View.VISIBLE);
+    numPicker.setValue(selectedNumberOfBreaths);
     showNumber.setVisibility(View.INVISIBLE);
 
     threeSecondStart = new CountDownTimer(3000, 1000) {
@@ -109,7 +112,7 @@ public class TakeBreathActivity extends AppCompatActivity {
           mPlayer.pause();
           changeToOut();
           Toast.makeText(TakeBreathActivity.this, getString(R.string.breath_help_out_10), Toast.LENGTH_SHORT).show();
-          if(atLeast3Seconds){
+          if (atLeast3Seconds) {
             threeSecondStart.start();
           }
         }
@@ -124,7 +127,6 @@ public class TakeBreathActivity extends AppCompatActivity {
         showNumber.setVisibility(View.VISIBLE);
         BreathManager.setNumBreaths(selectedNumberOfBreaths);
         breathsRemaining = selectedNumberOfBreaths;
-//        breathsRemaining++;//for calculations
         state = IN_PROGRESS;
       }
 
@@ -143,7 +145,7 @@ public class TakeBreathActivity extends AppCompatActivity {
               mPlayer.pause();
               mainBtn.clearAnimation();
               isPressed = false;
-              if(atLeast3Seconds){
+              if (atLeast3Seconds) {
                 breathsRemaining--;
               }
               if (breathsRemaining == 0) {
@@ -165,7 +167,7 @@ public class TakeBreathActivity extends AppCompatActivity {
 
   private void setupBreathNumPicker() {
     //reference for number picker: https://www.youtube.com/watch?v=dWq5CJDBDVE
-    selectedNumberOfBreaths = 1;
+    selectedNumberOfBreaths = BreathManager.getInstance(this).getNumBreaths();
 
     showNumber = findViewById(R.id.breathSelectedNumber);
     numPicker = findViewById(R.id.breathNumPicker);
