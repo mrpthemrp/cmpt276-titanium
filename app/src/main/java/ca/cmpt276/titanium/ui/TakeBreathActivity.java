@@ -126,6 +126,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         showNumber.setText(Integer.toString(selectedNumberOfBreaths));
         showNumber.setVisibility(View.VISIBLE);
         BreathManager.setNumBreaths(selectedNumberOfBreaths);
+        BreathManager.getInstance(this).saveData();
         breathsRemaining = selectedNumberOfBreaths;
         state = IN_PROGRESS;
       }
@@ -158,7 +159,6 @@ public class TakeBreathActivity extends AppCompatActivity {
               }
               return true;
           }
-
         }
       }
       return false;
