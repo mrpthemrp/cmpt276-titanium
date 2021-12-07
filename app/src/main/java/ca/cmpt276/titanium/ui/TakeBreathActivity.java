@@ -1,33 +1,36 @@
 package ca.cmpt276.titanium.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.BreathManager;
 
 public class TakeBreathActivity extends AppCompatActivity {
-  public static final int START_SCREEN =0;
-  public static final int IN_PROGRESS =1;
-  public static final int END_SCREEN =2;
+  public static final int NOT_IN_PROGRESS = 0;
+  public static final int IN_PROGRESS = 1;
 
-  public static final int BREATH_IN =0;
-  public static final int BREATH_OUT_3SEC =1;
-  public static final int BREATH_OUT_10SEC =2;
 
-  private int state, breathState;
+  private int state;
   private NumberPicker numPicker;
-  private int selectedNumberOfBreaths;
+  private int selectedNumberOfBreaths, breathsRemaining;
   private TextView showNumber;
   private Button mainBtn;
+  private boolean isPressed = false, atLeast3Seconds = false;
+  private CountDownTimer threeSecond, tenSecond, threeSecondStart;
 
   public static Intent makeIntent(Context context) {
     return new Intent(context, TakeBreathActivity.class);
@@ -38,67 +41,138 @@ public class TakeBreathActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_take_breath);
 
-    state = START_SCREEN;
-    breathState = BREATH_IN;
     MaterialButton goHome = findViewById(R.id.breathGoHomeBtn);
     goHome.setOnClickListener(view -> finish()); //TODO update with proper method
 
+    state = NOT_IN_PROGRESS;
     setupBreathNumPicker();
     mainBtn = findViewById(R.id.breathBtn);
+    numPicker.setEnabled(true);
+    numPicker.setVisibility(View.VISIBLE);
+    showNumber.setVisibility(View.INVISIBLE);
 
-    mainBtn.setOnClickListener(view -> {
-      //STATES
-      if(state == START_SCREEN){
-        //do smt
+    threeSecondStart = new CountDownTimer(3000, 1000) {
+      @Override
+      public void onTick(long l) {
+      }
+
+      @Override
+      public void onFinish() {
+        atLeast3Seconds = false;
+        if (breathsRemaining > 0) {
+          Toast.makeText(TakeBreathActivity.this, getString(R.string.breath_help_in), Toast.LENGTH_SHORT).show();
+          changeToIn();
+          mainBtn.clearAnimation();
+        }
+      }
+    };
+
+    threeSecond = new CountDownTimer(3000, 1000) {
+      @Override
+      public void onTick(long l) {
+        if (!isPressed) {
+          threeSecond.cancel();
+          tenSecond.cancel();
+        }
+      }
+
+      @Override
+      public void onFinish() {
+        atLeast3Seconds = true;
+        if (isPressed) {
+          Toast.makeText(TakeBreathActivity.this, getString(R.string.breath_help_out_10), Toast.LENGTH_SHORT).show();
+          changeToOut();
+        }
+        if (!isPressed) {
+          mainBtn.setText(TakeBreathActivity.this.getString(R.string.breath_in));
+          tenSecond.cancel();
+        }
+      }
+    };
+
+    tenSecond = new CountDownTimer(10000, 1000) {
+      @Override
+      public void onTick(long l) {
+        if (!isPressed) {
+          threeSecond.cancel();
+          tenSecond.cancel();
+        }
+      }
+
+      @Override
+      public void onFinish() {
+        if (isPressed) {
+          mainBtn.clearAnimation();
+          changeToOut();
+          Toast.makeText(TakeBreathActivity.this, getString(R.string.breath_help_out_10), Toast.LENGTH_SHORT).show();
+          threeSecondStart.start();
+        }
+      }
+    };
+
+    mainBtn.setOnTouchListener((view, motionEvent) -> {
+      if (state == NOT_IN_PROGRESS) {
         numPicker.setEnabled(false);
         numPicker.setVisibility(View.INVISIBLE);
-        showNumber.setVisibility(View.VISIBLE);
         showNumber.setText(Integer.toString(selectedNumberOfBreaths));
+        showNumber.setVisibility(View.VISIBLE);
+        BreathManager.setNumBreaths(selectedNumberOfBreaths);
+        breathsRemaining = selectedNumberOfBreaths;
+//        breathsRemaining++;//for calculations
         state = IN_PROGRESS;
       }
-      if(state == IN_PROGRESS){
-        if(selectedNumberOfBreaths >= 0){
-          if(selectedNumberOfBreaths == 0){
-            state = END_SCREEN;
+
+      if (state == IN_PROGRESS) {
+        if (breathsRemaining >= 0) {
+          showNumber.setText(Integer.toString(breathsRemaining));
+          switch (motionEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+              isPressed = true;
+              changeToIn();
+              threeSecond.start();
+              tenSecond.start();
+              return true;
+            case MotionEvent.ACTION_UP:
+              mainBtn.clearAnimation();
+              isPressed = false;
+              if(atLeast3Seconds){
+                breathsRemaining--;
+              }
+              if (breathsRemaining == 0) {
+                mainBtn.clearAnimation();
+                mainBtn.setText(R.string.breath_done);
+                numPicker.setVisibility(View.VISIBLE);
+                showNumber.setVisibility(View.INVISIBLE);
+                numPicker.setEnabled(true);
+                state = NOT_IN_PROGRESS;
+              }
+              return true;
           }
-          if(breathState == BREATH_IN){
-            //do smt
-            mainBtn.setText(R.string.breath_in);
-            breathState = BREATH_OUT_3SEC;
-          }
-          else if(breathState == BREATH_OUT_3SEC){
-            //do smt
-            mainBtn.setText(R.string.breath_out);
-            breathState = BREATH_IN;
-//             if(){
-//             }
-            selectedNumberOfBreaths--;
-            showNumber.setText(Integer.toString(selectedNumberOfBreaths));
-          }
-        }
-        if(state == END_SCREEN){
-          mainBtn.setText(R.string.breath_done);
-          showNumber.setVisibility(View.INVISIBLE);
-          numPicker.setVisibility(View.VISIBLE);
-          numPicker.setEnabled(true);
+
         }
       }
-
+      return false;
     });
   }
 
   private void setupBreathNumPicker() {
     //reference for number picker: https://www.youtube.com/watch?v=dWq5CJDBDVE
-    selectedNumberOfBreaths =1;// default value
-    showNumber = findViewById(R.id.breathSelectedNumber);
+    selectedNumberOfBreaths = 1;
 
+    showNumber = findViewById(R.id.breathSelectedNumber);
     numPicker = findViewById(R.id.breathNumPicker);
 
     numPicker.setMinValue(1);
     numPicker.setMaxValue(10);
+    numPicker.setOnValueChangedListener((picker, oldVal, newVal) -> selectedNumberOfBreaths = newVal);
+  }
 
-    numPicker.setOnValueChangedListener((picker, oldVal, newVal) -> {
-        selectedNumberOfBreaths = newVal;
-    });
+  private void changeToIn() {
+    mainBtn.setText(TakeBreathActivity.this.getString(R.string.breath_in));
+    mainBtn.startAnimation(AnimationUtils.loadAnimation(TakeBreathActivity.this, R.anim.breath_button));
+  }
+
+  private void changeToOut() {
+    mainBtn.setText(TakeBreathActivity.this.getString(R.string.breath_out));
   }
 }
