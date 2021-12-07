@@ -2,6 +2,7 @@ package ca.cmpt276.titanium.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.MotionEvent;
@@ -31,6 +32,7 @@ public class TakeBreathActivity extends AppCompatActivity {
   private Button mainBtn;
   private boolean isPressed = false, atLeast3Seconds = false;
   private CountDownTimer threeSecond, tenSecond, threeSecondStart;
+  private MediaPlayer mPlayer;
 
   public static Intent makeIntent(Context context) {
     return new Intent(context, TakeBreathActivity.class);
@@ -43,6 +45,7 @@ public class TakeBreathActivity extends AppCompatActivity {
 
     MaterialButton goHome = findViewById(R.id.breathGoHomeBtn);
     goHome.setOnClickListener(view -> finish()); //TODO update with proper method
+    mPlayer = MediaPlayer.create(TakeBreathActivity.this, R.raw.sound_calm_music);
 
     state = NOT_IN_PROGRESS;
     setupBreathNumPicker();
@@ -103,9 +106,12 @@ public class TakeBreathActivity extends AppCompatActivity {
       public void onFinish() {
         if (isPressed) {
           mainBtn.clearAnimation();
+          mPlayer.pause();
           changeToOut();
           Toast.makeText(TakeBreathActivity.this, getString(R.string.breath_help_out_10), Toast.LENGTH_SHORT).show();
-          threeSecondStart.start();
+          if(atLeast3Seconds){
+            threeSecondStart.start();
+          }
         }
       }
     };
@@ -127,12 +133,14 @@ public class TakeBreathActivity extends AppCompatActivity {
           showNumber.setText(Integer.toString(breathsRemaining));
           switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
+              mPlayer.start();
               isPressed = true;
               changeToIn();
               threeSecond.start();
               tenSecond.start();
               return true;
             case MotionEvent.ACTION_UP:
+              mPlayer.pause();
               mainBtn.clearAnimation();
               isPressed = false;
               if(atLeast3Seconds){
