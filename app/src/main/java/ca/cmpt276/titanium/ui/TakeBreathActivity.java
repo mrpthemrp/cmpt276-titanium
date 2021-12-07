@@ -11,19 +11,23 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ca.cmpt276.titanium.model.BreathManager;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 
 import ca.cmpt276.titanium.R;
+import ca.cmpt276.titanium.model.BreathManager;
 
 public class TakeBreathActivity extends AppCompatActivity {
   public static final int NOT_IN_PROGRESS = 0;
   public static final int IN_PROGRESS = 1;
 
+  private final long SECONDS_3 = 3;
+  private final long SECONDS_10 = 10;
+
+
   private int state;
+  private long startTime, timeHeld, currentTime, previousSecond;
   private NumberPicker numPicker;
   private int selectedNumberOfBreaths, breathsRemaining;
   private TextView showNumber;
@@ -42,6 +46,8 @@ public class TakeBreathActivity extends AppCompatActivity {
     goHome.setOnClickListener(view -> finish()); //TODO update with proper method
 
     state = NOT_IN_PROGRESS;
+    startTime = 0;
+    timeHeld =0;
     setupBreathNumPicker();
     mainBtn = findViewById(R.id.breathBtn);
     numPicker.setEnabled(true);
@@ -54,29 +60,24 @@ public class TakeBreathActivity extends AppCompatActivity {
         numPicker.setEnabled(false);
         numPicker.setVisibility(View.INVISIBLE);
         showNumber.setText(Integer.toString(selectedNumberOfBreaths));
-//        BreathManager.setNumBreaths(selectedNumberOfBreaths);
         showNumber.setVisibility(View.VISIBLE);
         breathsRemaining = selectedNumberOfBreaths;
-//        BreathManager.setNumBreaths(selectedNumberOfBreaths);
-//        BreathManager.getInstance(this).saveData();
+        BreathManager.setNumBreaths(selectedNumberOfBreaths);
         state = IN_PROGRESS;
       }
 
       if (state == IN_PROGRESS) {
-        if (breathsRemaining > 0) {
+        if (breathsRemaining >= 0) {
+          calculateTimeHeld();
+
           switch (motionEvent.getAction()) {
-
             case MotionEvent.ACTION_DOWN:
-              mainBtn.setText(TakeBreathActivity.this.getString(R.string.breath_in));
-              mainBtn.startAnimation(AnimationUtils.loadAnimation(TakeBreathActivity.this, R.anim.breath_button));
+              startTime = System.currentTimeMillis();
+              changeToIn();
               return true;
-
             case MotionEvent.ACTION_UP:
-              mainBtn.setText(TakeBreathActivity.this.getString(R.string.breath_out));
-              breathsRemaining--;
-              showNumber.setText(Integer.toString(breathsRemaining));
               mainBtn.clearAnimation();
-
+              changeToOut();
               if (breathsRemaining == 0) {
                 mainBtn.setText(R.string.breath_done);
                 numPicker.setVisibility(View.VISIBLE);
@@ -84,8 +85,15 @@ public class TakeBreathActivity extends AppCompatActivity {
                 numPicker.setEnabled(true);
                 state = NOT_IN_PROGRESS;
               }
-
               return true;
+          }
+          if(timeHeld == SECONDS_3) {
+            timeHeld = 0;
+            Toast.makeText(this, "3 seoncds", Toast.LENGTH_SHORT).show();
+          }
+          if(timeHeld == SECONDS_10){
+            Toast.makeText(this, "10 seoncds", Toast.LENGTH_SHORT).show();
+            timeHeld =0;
           }
         }
       }
@@ -96,7 +104,6 @@ public class TakeBreathActivity extends AppCompatActivity {
   private void setupBreathNumPicker() {
     //reference for number picker: https://www.youtube.com/watch?v=dWq5CJDBDVE
     selectedNumberOfBreaths = 1;
-//    Toast.makeText(this, "number of selected breaths: " + selectedNumberOfBreaths, Toast.LENGTH_SHORT).show();
 
     showNumber = findViewById(R.id.breathSelectedNumber);
     numPicker = findViewById(R.id.breathNumPicker);
@@ -104,5 +111,30 @@ public class TakeBreathActivity extends AppCompatActivity {
     numPicker.setMinValue(1);
     numPicker.setMaxValue(10);
     numPicker.setOnValueChangedListener((picker, oldVal, newVal) -> selectedNumberOfBreaths = newVal);
+  }
+
+  private void changeToIn() {
+    mainBtn.setText(TakeBreathActivity.this.getString(R.string.breath_in));
+    mainBtn.startAnimation(AnimationUtils.loadAnimation(TakeBreathActivity.this, R.anim.breath_button));
+  }
+
+  private void changeToOut() {
+    breathsRemaining--;
+    mainBtn.setText(TakeBreathActivity.this.getString(R.string.breath_out));
+    showNumber.setText(Integer.toString(breathsRemaining));
+  }
+
+  private void calculateTimeHeld() {
+    previousSecond = currentTime;
+    currentTime = System.currentTimeMillis() - startTime;
+    if (currentTime != previousSecond) {
+      currentTime /= 1000;
+      if(currentTime == SECONDS_3){
+        timeHeld = 3;
+      }
+      if (currentTime == SECONDS_10){
+        timeHeld =10;
+      }
+    }
   }
 }
