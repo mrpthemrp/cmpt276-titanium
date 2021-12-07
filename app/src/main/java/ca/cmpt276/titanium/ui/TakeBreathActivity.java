@@ -20,11 +20,13 @@ import com.google.android.material.button.MaterialButton;
 
 import ca.cmpt276.titanium.R;
 import ca.cmpt276.titanium.model.BreathManager;
+import ca.cmpt276.titanium.model.ChildManager;
 
 public class TakeBreathActivity extends AppCompatActivity {
   public static final int NOT_IN_PROGRESS = 0;
   public static final int IN_PROGRESS = 1;
 
+  private BreathManager breathManager;
 
   private int state;
   private NumberPicker numPicker;
@@ -48,6 +50,8 @@ public class TakeBreathActivity extends AppCompatActivity {
     MaterialButton goHome = findViewById(R.id.breathGoHomeBtn);
     goHome.setOnClickListener(view -> finish()); //TODO update with proper method
     mPlayer = MediaPlayer.create(TakeBreathActivity.this, R.raw.sound_calm_music);
+
+    breathManager = BreathManager.getInstance(this);
 
     state = NOT_IN_PROGRESS;
     setupBreathNumPicker();
@@ -125,8 +129,8 @@ public class TakeBreathActivity extends AppCompatActivity {
         numPicker.setVisibility(View.INVISIBLE);
         showNumber.setText(Integer.toString(selectedNumberOfBreaths));
         showNumber.setVisibility(View.VISIBLE);
-        BreathManager.setNumBreaths(selectedNumberOfBreaths);
-        BreathManager.getInstance(this).saveData();
+        breathManager.setNumBreaths(selectedNumberOfBreaths);
+        breathManager.saveData();
         breathsRemaining = selectedNumberOfBreaths;
         state = IN_PROGRESS;
       }
@@ -167,7 +171,7 @@ public class TakeBreathActivity extends AppCompatActivity {
 
   private void setupBreathNumPicker() {
     //reference for number picker: https://www.youtube.com/watch?v=dWq5CJDBDVE
-    selectedNumberOfBreaths = BreathManager.getInstance(this).getNumBreaths();
+    selectedNumberOfBreaths = breathManager.getNumBreaths();
 
     showNumber = findViewById(R.id.breathSelectedNumber);
     numPicker = findViewById(R.id.breathNumPicker);
