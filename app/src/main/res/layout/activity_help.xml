@@ -296,6 +296,37 @@
                 tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
             <TextView
+                android:id="@+id/TextView_help_take_breath"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/help_take_breath"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_timer_alarm_link" />
+
+            <TextView
+                android:id="@+id/TextView_help_take_breath_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="3dp"
+                android:autoLink="web"
+                android:gravity="start"
+                android:text="@string/link_help_take_breath"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_take_breath"
+                tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+            <TextView
                 android:id="@+id/TextView_help_sfu_copyright_footer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -306,7 +337,7 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TextView_help_coin_flip_history_x_mark_link"
+                app:layout_constraintTop_toBottomOf="@+id/TextView_help_take_breath_link"
                 tools:ignore="TextContrastCheck" />
         </LinearLayout>
     </ScrollView>

@@ -61,12 +61,14 @@
     <string name="help_coin_flip_history_x_mark">Coin Flip History X-Mark</string>
     <string name="help_coin_flip_sound">Coin Flip Sound</string>
     <string name="help_developer_names">• Haris Ahmad\n• Christopher Torunski\n• Michelle Vong\n• Deborah Wang</string>
+    <string name="help_take_breath">Take Breath Music</string>
     <string name="help_team_name">Team Titanium</string>
     <string name="help_timer_alarm">Timer Alarm</string>
     <string name="help_timer_background">Timer Background</string>
     <string name="link_help_coin_flip_history_checkmark">Link: <a href="https://www.vhv.rs/dpng/f/406-4067045_checkmark-png.png">https://www.vhv.rs/dpng/f/406–4067045_checkmark-png.png</a></string>
     <string name="link_help_coin_flip_history_x_mark">Link: <a href="https://www.nicepng.com/png/full/910-9107823_circle-cross-png.png">https://www.nicepng.com/png/full/910–9107823_circle-cross-png.png</a></string>
     <string name="link_help_coin_flip_sound">Link: <a href="https://www.youtube.com/watch?v=1QxX9ruPUXM">https://www.youtube.com/watch?v=1QxX9ruPUXM</a></string>
+    <string name="link_help_take_breath">Link: <a href="https://soundcloud.com/chriszabriskie/cylinder-two">https://soundcloud.com/chriszabriskie/cylinder-two</a></string>
     <string name="link_help_timer_alarm">Link: <a href="https://www.youtube.com/watch?v=kcT-i9xzC-8">https://www.youtube.com/watch?v=kcT-i9xzC-8</a></string>
     <string name="link_help_timer_background">Link: <a href="https://unsplash.com/photos/4N6qT784t3A">https://unsplash.com/photos/4N6qT784t3A</a></string>
     <string name="subtitle_help_app_info">App Information</string>
