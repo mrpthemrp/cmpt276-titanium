@@ -23,16 +23,14 @@ public class TakeBreathActivity extends AppCompatActivity {
   public static final int NOT_IN_PROGRESS = 0;
   public static final int IN_PROGRESS = 1;
 
-  private final long SECONDS_3 = 3;
-  private final long SECONDS_10 = 10;
 
   private int state;
   private NumberPicker numPicker;
   private int selectedNumberOfBreaths, breathsRemaining;
   private TextView showNumber;
   private Button mainBtn;
-  private boolean isPressed = false;
-  private CountDownTimer threeSecond, tenSecond;
+  private boolean isPressed = false, atLeast3Seconds = false;
+  private CountDownTimer threeSecond, tenSecond, threeSecondStart;
 
   public static Intent makeIntent(Context context) {
     return new Intent(context, TakeBreathActivity.class);
@@ -53,32 +51,61 @@ public class TakeBreathActivity extends AppCompatActivity {
     numPicker.setVisibility(View.VISIBLE);
     showNumber.setVisibility(View.INVISIBLE);
 
-    threeSecond = new CountDownTimer(3000, 1000) {
+    threeSecondStart = new CountDownTimer(3000, 1000) {
       @Override
       public void onTick(long l) {
       }
 
       @Override
       public void onFinish() {
-        if(isPressed){
-          Toast.makeText(TakeBreathActivity.this, "3 seconds", Toast.LENGTH_SHORT).show();
-        }
-        if(!isPressed){
+        atLeast3Seconds = false;
+        if (breathsRemaining > 0) {
+          Toast.makeText(TakeBreathActivity.this, getString(R.string.breath_help_in), Toast.LENGTH_SHORT).show();
           changeToIn();
+          mainBtn.clearAnimation();
         }
       }
     };
 
-    tenSecond = new CountDownTimer(3000, 1000) {
+    threeSecond = new CountDownTimer(3000, 1000) {
       @Override
       public void onTick(long l) {
+        if (!isPressed) {
+          threeSecond.cancel();
+          tenSecond.cancel();
+        }
       }
 
       @Override
       public void onFinish() {
-        if(isPressed){
-          Toast.makeText(TakeBreathActivity.this, "10 seconds", Toast.LENGTH_SHORT).show();
+        atLeast3Seconds = true;
+        if (isPressed) {
+          Toast.makeText(TakeBreathActivity.this, getString(R.string.breath_help_out_10), Toast.LENGTH_SHORT).show();
+          changeToOut();
+        }
+        if (!isPressed) {
+          mainBtn.setText(TakeBreathActivity.this.getString(R.string.breath_in));
+          tenSecond.cancel();
+        }
+      }
+    };
+
+    tenSecond = new CountDownTimer(10000, 1000) {
+      @Override
+      public void onTick(long l) {
+        if (!isPressed) {
+          threeSecond.cancel();
+          tenSecond.cancel();
+        }
+      }
+
+      @Override
+      public void onFinish() {
+        if (isPressed) {
           mainBtn.clearAnimation();
+          changeToOut();
+          Toast.makeText(TakeBreathActivity.this, getString(R.string.breath_help_out_10), Toast.LENGTH_SHORT).show();
+          threeSecondStart.start();
         }
       }
     };
@@ -89,28 +116,30 @@ public class TakeBreathActivity extends AppCompatActivity {
         numPicker.setVisibility(View.INVISIBLE);
         showNumber.setText(Integer.toString(selectedNumberOfBreaths));
         showNumber.setVisibility(View.VISIBLE);
-        breathsRemaining = selectedNumberOfBreaths;
         BreathManager.setNumBreaths(selectedNumberOfBreaths);
+        breathsRemaining = selectedNumberOfBreaths;
+//        breathsRemaining++;//for calculations
         state = IN_PROGRESS;
       }
 
       if (state == IN_PROGRESS) {
         if (breathsRemaining >= 0) {
+          showNumber.setText(Integer.toString(breathsRemaining));
           switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
               isPressed = true;
               changeToIn();
-              Toast.makeText(this, getString(R.string.breath_help_in), Toast.LENGTH_SHORT).show();
               threeSecond.start();
               tenSecond.start();
               return true;
             case MotionEvent.ACTION_UP:
               mainBtn.clearAnimation();
               isPressed = false;
-              threeSecond.cancel();
-              tenSecond.cancel();
-              changeToOut();
+              if(atLeast3Seconds){
+                breathsRemaining--;
+              }
               if (breathsRemaining == 0) {
+                mainBtn.clearAnimation();
                 mainBtn.setText(R.string.breath_done);
                 numPicker.setVisibility(View.VISIBLE);
                 showNumber.setVisibility(View.INVISIBLE);
@@ -144,8 +173,6 @@ public class TakeBreathActivity extends AppCompatActivity {
   }
 
   private void changeToOut() {
-    breathsRemaining--;
     mainBtn.setText(TakeBreathActivity.this.getString(R.string.breath_out));
-    showNumber.setText(Integer.toString(breathsRemaining));
   }
 }
