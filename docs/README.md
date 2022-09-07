@@ -47,7 +47,7 @@ This project runs an Android App that ???
 
 ### :exclamation: Project Shortcomings
 
-- :beetle: There are bugs!
+- :lady_beetle: There are bugs!
 - 
 
 ## 2. Installation Guide
@@ -57,12 +57,12 @@ This project runs an Android App that ???
 ### :computer: OS Requirements
 - **Android OS**
 	- Use on Tablets is NOT recommended. 
-- **Minimum APK 21**
+- **Minimum APK 31**
   - Any lower APKs have not been tested with this app and is NOT recommended.
 
 ### :memo: Steps
 
-1. Click into the **[milkCartonSweeper.apk file](/milkCartonSweeper.apk)**.
+1. Click into the **[practicalParentApp.apk file](/practicalParentApp.apk)**.
 2. Click **'Download'** to download the file.
 3. Navigate your phone's directory to **find the downloaded file**.
 	- Check **'Internal storage'** and then the **'Downloads'** folder
