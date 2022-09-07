@@ -6,7 +6,7 @@ This repository contains an Android App created through an iterative process wit
 
 :mechanical_arm: **Team Members**  
 - [Haris Ahmad](https://github.com/HarisAhmad16)
-- Christopher Torunski
+- [Christopher Torunski](https://github.com/cjtorunski)
 - [Michelle Vong](https://github.com/michvong)
 - [Deborah Wang](https://github.com/mrpthemrp)
 
