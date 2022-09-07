@@ -22,8 +22,9 @@ Watch quick demos of the project through the link below!
 
 ## :bookmark_tabs: Table of Contents
 1. [Project Description and Summary](#1-project-description-and-summary)
-   1. [Project Takeaways](#sparkles-project-takeaways)
-   2. [Project Shortcomings](#exclamation-project-shortcomings)
+   1. [App Features](#bulb-app-features)
+   2. [Project Takeaways](#sparkles-project-takeaways)
+   3. [Project Shortcomings](#exclamation-project-shortcomings)
 2. [Installation Guide](#2-installation-guide)
    1. [OS Requirements](#computer-os-requirements)
    2. [Steps](#memo-steps)
@@ -36,19 +37,74 @@ Watch quick demos of the project through the link below!
 
 This project is a group project for CMPT 276 ([Dr. Brian Fraser](https://opencoursehub.cs.sfu.ca/bfraser/grav-cms)). This project allowed team members to practice what it would be like to write an application in a scrum team.
 
-This project runs an Android App that ???
+This project runs an Android App that helps parents manage their family. It allows parents to help determine which child's turn it is to do a task, and helps with determining what's "fair" (through the flip coin feature) in tricky situations. The app keeps track of all children added on the front page and allows the user to add the child's name and image. There are more features explained below.
+
+### :bulb: App Features
+- **Timer** :stopwatch:
+	- Play, pause, reset timer
+	- Timer still runs when navigated outside of feature
+	- Alarm rings when timer is up
+	- Banner notification shows when timer is running
+	- Graphical view of timer counting down
+	- Show remaining time
+	- Quick buttons that set timer without needing to input number (1,2,3,5,10 mins)
+
+- **Coin Flip** :balance_scale:
+	- On tap, the coin flips and a sound plays when flipped
+	- Results are pseudo-random
+	- Has queue of which child's turn it is to flip the coin
+	- Can override which child's turn; manually select child to flip coin
+	- Shows history of coin flip results and which child flipped the coin
+		- Child's profile picture can be shown
+		- Date, time, and result is recorded
+
+- **Add Child** :child:
+	- Add, edit, configure a child - name and photo
+	- Add a profile picture to the child, general picture is used if there is none
+		- Can take picture with phone's camera, crop picture, or use picture from library
+	- Saves data of the child across all uses in app
+	
+- **Breathe** :cloud:
+	- Main button is held down to help user take deep breaths
+	- User can toggle number of breaths to take
+	- Calming music plays when the button is pressed down, paused when the button is released
+	- Main button increases/decreases in circumference as it is being held
+	- Words 'In'/'Out' are displayed to show if a breath needs to be taken or let out
+
+- **Tasks** :heavy_check_mark:
+	- Maintains a list of tasks that all children need to do, as each task is completed the next child in the queue is assigned the task
+	- Tasks are named on created
+	- Shows history of which child did what task in the past
+		- Updates as children are added or deleted
+	- Tasks can be cancelled, or child's turn can be skipped
+	- Shows picture of the child associated with task
+	
+- **App Info** :grey_question:
+	- References to external sources linked
+	- Developers credited
+	- Copyright information listed
 
 **See [video demos](#practical-parent-app-anchor) for more comprehensive walkthrough.**
 
 ### :sparkles: Project Takeaways
 
-- Learned how to do Shared Preferences
-- ??
+***[App Features](#bulb-app-features) lists a lot of different skills we had to learn as a team in order to implement this app properly.***
+
+- Practiced using Shared Preferences extensively
+- Utilized [Java Threads](https://www.geeksforgeeks.org/java-threads/) for timer and alarms
+- Practiced programming for both Light mode and Dark mode
+- Utilized [Singleton Design](https://en.wikipedia.org/wiki/Singleton_pattern) for app navigation (as opposed to fragments)
+- Created a main menu that takes users to different features of the app 
+- Created a timer feature from scratch
+- Created a digital coin flip feature with sound and graphics
+- Practiced designing UI in Android Studio
+- Practiced serializing and deserializing objects
+- Practiced doing code reviews and using pull requests
 
 ### :exclamation: Project Shortcomings
 
-- :lady_beetle: There are bugs!
-- 
+- :lady_beetle: There are minor bugs! Depending on which type of Android phone is used, vibrations from the timer may not always work.
+- UI Visuals were not a priority in this project as the main goals were focused on developing something as a team.
 
 ## 2. Installation Guide
 ***This project was created for phones that run Android OS.**  
@@ -75,15 +131,20 @@ This project runs an Android App that ???
 
 
 ## 3. References
-[Code Style Format](https://google.github.io/styleguide/javaguide.html)  
-All images used are not of my own work. The JPG files can be found in the **[drawable folder](/app/src/main/res/drawable)**.  
+
+[Code Style Format Used](https://google.github.io/styleguide/javaguide.html)
+
+Most of the graphics in this app were created by the developers, the listed ones below are creative commons work found from open-source libraries online.
 
 ### :art: Images
-- [Milk Carton Image Source](https://dribbble.com/shots/14312353-Kawaii-flavored-milk)
-- [Peach Background Image Source](https://wallpaperforu.com/peach-aesthetic-wallpaper-pc/)
-- [3D Render Background Image Source](https://unsplash.com/photos/SXigdcQPbd8)
+- [Coin Flip History Checkmark Source](https://www.vhv.rs/dpng/f/406-4067045_checkmark-png.png)
+- [Coin Flip History X-Mark Source](https://www.nicepng.com/png/full/910-9107823_circle-cross-png.png)
+- [Timer Background Image Source](https://unsplash.com/photos/4N6qT784t3A)
 
 ### :headphones: Audio
+- [Coin Flip Sound](https://www.youtube.com/watch?v=1QxX9ruPUXM)
+- [Timer Alarm](https://www.youtube.com/watch?v=kcT-i9xzC-8)
+- [Take Breath Music](https://soundcloud.com/chriszabriskie/cylinder-two)
 
 ## 4. Citation Format
 Example of citing this project as a reference:
